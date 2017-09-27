@@ -13,6 +13,7 @@ namespace Amphenol.AUPS
     public partial class StationNameDialog : Form
     {
         private MainWindow parent;
+        private int counter;
 
         public MainWindow Parent
         {
@@ -26,6 +27,18 @@ namespace Amphenol.AUPS
             }
         }
 
+        public int Counter
+        {
+            get
+            {
+                return counter;
+            }
+            set
+            {
+                counter = value;
+            }
+        }
+
         public StationNameDialog()
         {
             InitializeComponent();
@@ -35,7 +48,8 @@ namespace Amphenol.AUPS
         {
             if (textBoxStationName.Text.Length == 0)
                 return;
-            TestPanel child = new TestPanel(parent, textBoxStationName.Text);
+            // TestPanel child = new TestPanel(parent, textBoxStationName.Text);
+            TestPanel child = new TestPanel(parent, textBoxStationName.Text, counter);
             Close();
             child.Show();
         }
