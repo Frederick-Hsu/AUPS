@@ -46,10 +46,10 @@ namespace Amphenol.AUPS
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (textBoxStationName.Text.Length == 0)
+            if ((textBoxStationName.Text.Length == 0) || (textBoxStationNumber.Text.Length == 0))
                 return;
             // TestPanel child = new TestPanel(parent, textBoxStationName.Text);
-            TestPanel child = new TestPanel(parent, textBoxStationName.Text, counter);
+            TestPanel child = new TestPanel(parent, textBoxStationName.Text, Convert.ToInt16(textBoxStationNumber.Text));
             Close();
             child.Show();
         }
