@@ -56,6 +56,12 @@ namespace Amphenol.AUPS
         {
             LayoutMdi(MdiLayout.Cascade);
         }
+
+        private void sequenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SequenceEditor seq = new SequenceEditor(this);
+            seq.Show();
+        }
         #endregion
 
         private int GetChildWindowCount()
