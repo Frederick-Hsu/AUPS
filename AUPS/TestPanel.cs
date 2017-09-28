@@ -51,7 +51,23 @@ namespace Amphenol.AUPS
         {
             InitializeComponent();
             MdiParent = parent;
-            stationName = testStationName;
+            labelStationName.Text = testStationName;
+        }
+
+        public TestPanel(MainWindow parent, string testStationName, int counter)
+        {
+            InitializeComponent();
+            MdiParent = parent;
+            labelStationName.Text = testStationName;
+            labelCellNumber.Text = counter.ToString();
+
+            this.Text = "Test Panel (" + counter.ToString() + ") : " + testStationName;
+            // textBoxSerialNum.Focus();
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            /* Implement the Click event method here */
         }
     }
 }

@@ -30,9 +30,16 @@ namespace Amphenol.AUPS
         #region Main Window Events Pool
         private void testPanelToolStripMenuItem_Click(object sender, EventArgs e)
         {
+        #if false
             StationNameDialog dialog = new StationNameDialog();
             dialog.Parent = this;
             dialog.ShowDialog();
+        #else
+            StationNameDialog dialog = new StationNameDialog();
+            dialog.Parent = this;
+            dialog.Counter = GetChildWindowCount() + 1;
+            dialog.ShowDialog();    
+        #endif
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -49,6 +56,22 @@ namespace Amphenol.AUPS
         {
             LayoutMdi(MdiLayout.Cascade);
         }
+
+        private void sequenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SequenceEditor seq = new SequenceEditor(this);
+            seq.Show();
+        }
         #endregion
+
+        private int GetChildWindowCount()
+        {
+            int count = 0;
+            foreach (Form frm in this.MdiChildren)
+            {
+                count++;
+            }
+            return count;
+        }
     }
 }
