@@ -97,6 +97,7 @@
             // 
             // sequenceEditorToolStrip
             // 
+            this.sequenceEditorToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.sequenceEditorToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripBtnNew,
             this.toolStripBtnOpen,
@@ -111,7 +112,7 @@
             this.toolStripTextBoxSequenceFilePath});
             this.sequenceEditorToolStrip.Location = new System.Drawing.Point(0, 0);
             this.sequenceEditorToolStrip.Name = "sequenceEditorToolStrip";
-            this.sequenceEditorToolStrip.Size = new System.Drawing.Size(1189, 38);
+            this.sequenceEditorToolStrip.Size = new System.Drawing.Size(1783, 52);
             this.sequenceEditorToolStrip.TabIndex = 1;
             this.sequenceEditorToolStrip.Text = "toolStrip1";
             // 
@@ -120,7 +121,7 @@
             this.toolStripBtnNew.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnNew.Image")));
             this.toolStripBtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnNew.Name = "toolStripBtnNew";
-            this.toolStripBtnNew.Size = new System.Drawing.Size(35, 35);
+            this.toolStripBtnNew.Size = new System.Drawing.Size(51, 49);
             this.toolStripBtnNew.Text = "New";
             this.toolStripBtnNew.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -129,16 +130,17 @@
             this.toolStripBtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnOpen.Image")));
             this.toolStripBtnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnOpen.Name = "toolStripBtnOpen";
-            this.toolStripBtnOpen.Size = new System.Drawing.Size(40, 35);
+            this.toolStripBtnOpen.Size = new System.Drawing.Size(60, 49);
             this.toolStripBtnOpen.Text = "Open";
             this.toolStripBtnOpen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnOpen.Click += new System.EventHandler(this.toolStripBtnOpen_Click);
             // 
             // toolStripBtnSave
             // 
             this.toolStripBtnSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnSave.Image")));
             this.toolStripBtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnSave.Name = "toolStripBtnSave";
-            this.toolStripBtnSave.Size = new System.Drawing.Size(35, 35);
+            this.toolStripBtnSave.Size = new System.Drawing.Size(53, 49);
             this.toolStripBtnSave.Text = "Save";
             this.toolStripBtnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -147,21 +149,21 @@
             this.toolStripBtnSaveAs.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnSaveAs.Image")));
             this.toolStripBtnSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnSaveAs.Name = "toolStripBtnSaveAs";
-            this.toolStripBtnSaveAs.Size = new System.Drawing.Size(51, 35);
+            this.toolStripBtnSaveAs.Size = new System.Drawing.Size(78, 49);
             this.toolStripBtnSaveAs.Text = "Save As";
             this.toolStripBtnSaveAs.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 52);
             // 
             // toolStripBtnRefresh
             // 
             this.toolStripBtnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnRefresh.Image")));
             this.toolStripBtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnRefresh.Name = "toolStripBtnRefresh";
-            this.toolStripBtnRefresh.Size = new System.Drawing.Size(50, 35);
+            this.toolStripBtnRefresh.Size = new System.Drawing.Size(74, 49);
             this.toolStripBtnRefresh.Text = "Refresh";
             this.toolStripBtnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -170,7 +172,7 @@
             this.toolStripBtnCopyStep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnCopyStep.Image")));
             this.toolStripBtnCopyStep.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnCopyStep.Name = "toolStripBtnCopyStep";
-            this.toolStripBtnCopyStep.Size = new System.Drawing.Size(64, 35);
+            this.toolStripBtnCopyStep.Size = new System.Drawing.Size(97, 49);
             this.toolStripBtnCopyStep.Text = "Copy step";
             this.toolStripBtnCopyStep.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -179,7 +181,7 @@
             this.toolStripBtnCutStep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnCutStep.Image")));
             this.toolStripBtnCutStep.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnCutStep.Name = "toolStripBtnCutStep";
-            this.toolStripBtnCutStep.Size = new System.Drawing.Size(55, 35);
+            this.toolStripBtnCutStep.Size = new System.Drawing.Size(82, 49);
             this.toolStripBtnCutStep.Text = "Cut step";
             this.toolStripBtnCutStep.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -188,26 +190,27 @@
             this.toolStripBtnPasteStep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnPasteStep.Image")));
             this.toolStripBtnPasteStep.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBtnPasteStep.Name = "toolStripBtnPasteStep";
-            this.toolStripBtnPasteStep.Size = new System.Drawing.Size(64, 35);
+            this.toolStripBtnPasteStep.Size = new System.Drawing.Size(96, 49);
             this.toolStripBtnPasteStep.Text = "Paste step";
             this.toolStripBtnPasteStep.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 52);
             // 
             // toolStripTextBoxSequenceFilePath
             // 
             this.toolStripTextBoxSequenceFilePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.toolStripTextBoxSequenceFilePath.Name = "toolStripTextBoxSequenceFilePath";
             this.toolStripTextBoxSequenceFilePath.ReadOnly = true;
-            this.toolStripTextBoxSequenceFilePath.Size = new System.Drawing.Size(500, 38);
+            this.toolStripTextBoxSequenceFilePath.Size = new System.Drawing.Size(749, 52);
             // 
             // editorSplitContainer
             // 
             this.editorSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.editorSplitContainer.Location = new System.Drawing.Point(0, 38);
+            this.editorSplitContainer.Location = new System.Drawing.Point(0, 52);
+            this.editorSplitContainer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.editorSplitContainer.Name = "editorSplitContainer";
             // 
             // editorSplitContainer.Panel1
@@ -218,14 +221,16 @@
             // editorSplitContainer.Panel2
             // 
             this.editorSplitContainer.Panel2.Controls.Add(this.editorTabControl);
-            this.editorSplitContainer.Size = new System.Drawing.Size(1189, 614);
-            this.editorSplitContainer.SplitterDistance = 265;
+            this.editorSplitContainer.Size = new System.Drawing.Size(1783, 950);
+            this.editorSplitContainer.SplitterDistance = 397;
+            this.editorSplitContainer.SplitterWidth = 6;
             this.editorSplitContainer.TabIndex = 2;
             // 
             // treeView1
             // 
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 13);
+            this.treeView1.Location = new System.Drawing.Point(0, 20);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeView1.Name = "treeView1";
             treeNode1.Name = "Block1_Item1";
             treeNode1.Text = "Open COM port";
@@ -246,7 +251,7 @@
             treeNode4,
             treeNode7});
             this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.Size = new System.Drawing.Size(265, 601);
+            this.treeView1.Size = new System.Drawing.Size(397, 930);
             this.treeView1.TabIndex = 3;
             // 
             // labelItemList
@@ -254,8 +259,9 @@
             this.labelItemList.AutoSize = true;
             this.labelItemList.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelItemList.Location = new System.Drawing.Point(0, 0);
+            this.labelItemList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelItemList.Name = "labelItemList";
-            this.labelItemList.Size = new System.Drawing.Size(115, 13);
+            this.labelItemList.Size = new System.Drawing.Size(171, 20);
             this.labelItemList.TabIndex = 4;
             this.labelItemList.Text = "Test sequence item list";
             // 
@@ -264,9 +270,10 @@
             this.editorTabControl.Controls.Add(this.tabPageEditStep);
             this.editorTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editorTabControl.Location = new System.Drawing.Point(0, 0);
+            this.editorTabControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.editorTabControl.Name = "editorTabControl";
             this.editorTabControl.SelectedIndex = 0;
-            this.editorTabControl.Size = new System.Drawing.Size(920, 614);
+            this.editorTabControl.Size = new System.Drawing.Size(1380, 950);
             this.editorTabControl.TabIndex = 3;
             // 
             // tabPageEditStep
@@ -274,10 +281,11 @@
             this.tabPageEditStep.Controls.Add(this.groupBoxSpecification);
             this.tabPageEditStep.Controls.Add(this.groupBoxTestFunctionParams);
             this.tabPageEditStep.Controls.Add(this.groupBoxBasicTestStepInfo);
-            this.tabPageEditStep.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEditStep.Location = new System.Drawing.Point(4, 29);
+            this.tabPageEditStep.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPageEditStep.Name = "tabPageEditStep";
-            this.tabPageEditStep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditStep.Size = new System.Drawing.Size(912, 588);
+            this.tabPageEditStep.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPageEditStep.Size = new System.Drawing.Size(1372, 917);
             this.tabPageEditStep.TabIndex = 0;
             this.tabPageEditStep.Text = "Edit step";
             this.tabPageEditStep.UseVisualStyleBackColor = true;
@@ -289,9 +297,11 @@
             this.groupBoxSpecification.Controls.Add(this.listViewTestSepc);
             this.groupBoxSpecification.Controls.Add(this.comboBoxLimitType);
             this.groupBoxSpecification.Controls.Add(this.labelLimitType);
-            this.groupBoxSpecification.Location = new System.Drawing.Point(7, 275);
+            this.groupBoxSpecification.Location = new System.Drawing.Point(10, 422);
+            this.groupBoxSpecification.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxSpecification.Name = "groupBoxSpecification";
-            this.groupBoxSpecification.Size = new System.Drawing.Size(897, 126);
+            this.groupBoxSpecification.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBoxSpecification.Size = new System.Drawing.Size(1346, 194);
             this.groupBoxSpecification.TabIndex = 2;
             this.groupBoxSpecification.TabStop = false;
             this.groupBoxSpecification.Text = "Specification";
@@ -303,9 +313,10 @@
             this.columnHeaderTypical,
             this.columnHeaderUpperLimit,
             this.columnHeaderResult});
-            this.listViewTestSepc.Location = new System.Drawing.Point(7, 37);
+            this.listViewTestSepc.Location = new System.Drawing.Point(10, 58);
+            this.listViewTestSepc.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.listViewTestSepc.Name = "listViewTestSepc";
-            this.listViewTestSepc.Size = new System.Drawing.Size(884, 83);
+            this.listViewTestSepc.Size = new System.Drawing.Size(1324, 125);
             this.listViewTestSepc.TabIndex = 2;
             this.listViewTestSepc.UseCompatibleStateImageBehavior = false;
             this.listViewTestSepc.View = System.Windows.Forms.View.Details;
@@ -336,17 +347,19 @@
             this.comboBoxLimitType.Items.AddRange(new object[] {
             "Numerical",
             "String"});
-            this.comboBoxLimitType.Location = new System.Drawing.Point(641, 12);
+            this.comboBoxLimitType.Location = new System.Drawing.Point(962, 19);
+            this.comboBoxLimitType.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxLimitType.Name = "comboBoxLimitType";
-            this.comboBoxLimitType.Size = new System.Drawing.Size(250, 21);
+            this.comboBoxLimitType.Size = new System.Drawing.Size(373, 28);
             this.comboBoxLimitType.TabIndex = 1;
             // 
             // labelLimitType
             // 
             this.labelLimitType.AutoSize = true;
-            this.labelLimitType.Location = new System.Drawing.Point(548, 15);
+            this.labelLimitType.Location = new System.Drawing.Point(822, 22);
+            this.labelLimitType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelLimitType.Name = "labelLimitType";
-            this.labelLimitType.Size = new System.Drawing.Size(60, 13);
+            this.labelLimitType.Size = new System.Drawing.Size(88, 20);
             this.labelLimitType.TabIndex = 0;
             this.labelLimitType.Text = "Limit type : ";
             // 
@@ -363,9 +376,11 @@
             this.groupBoxTestFunctionParams.Controls.Add(this.labelParameters);
             this.groupBoxTestFunctionParams.Controls.Add(this.comboBoxTestFunctionName);
             this.groupBoxTestFunctionParams.Controls.Add(this.labelTestFunctionName);
-            this.groupBoxTestFunctionParams.Location = new System.Drawing.Point(6, 133);
+            this.groupBoxTestFunctionParams.Location = new System.Drawing.Point(9, 205);
+            this.groupBoxTestFunctionParams.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxTestFunctionParams.Name = "groupBoxTestFunctionParams";
-            this.groupBoxTestFunctionParams.Size = new System.Drawing.Size(898, 135);
+            this.groupBoxTestFunctionParams.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBoxTestFunctionParams.Size = new System.Drawing.Size(1347, 208);
             this.groupBoxTestFunctionParams.TabIndex = 1;
             this.groupBoxTestFunctionParams.TabStop = false;
             // 
@@ -374,25 +389,28 @@
             this.textBoxParameter6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxParameter6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxParameter6.Location = new System.Drawing.Point(642, 93);
+            this.textBoxParameter6.Location = new System.Drawing.Point(963, 142);
+            this.textBoxParameter6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxParameter6.Name = "textBoxParameter6";
-            this.textBoxParameter6.Size = new System.Drawing.Size(250, 20);
+            this.textBoxParameter6.Size = new System.Drawing.Size(374, 26);
             this.textBoxParameter6.TabIndex = 8;
             // 
             // textBoxParameter5
             // 
             this.textBoxParameter5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxParameter5.Location = new System.Drawing.Point(378, 93);
+            this.textBoxParameter5.Location = new System.Drawing.Point(567, 142);
+            this.textBoxParameter5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxParameter5.Name = "textBoxParameter5";
-            this.textBoxParameter5.Size = new System.Drawing.Size(250, 20);
+            this.textBoxParameter5.Size = new System.Drawing.Size(374, 26);
             this.textBoxParameter5.TabIndex = 7;
             // 
             // textBoxParameter4
             // 
             this.textBoxParameter4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxParameter4.Location = new System.Drawing.Point(113, 93);
+            this.textBoxParameter4.Location = new System.Drawing.Point(170, 142);
+            this.textBoxParameter4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxParameter4.Name = "textBoxParameter4";
-            this.textBoxParameter4.Size = new System.Drawing.Size(250, 20);
+            this.textBoxParameter4.Size = new System.Drawing.Size(374, 26);
             this.textBoxParameter4.TabIndex = 6;
             this.textBoxParameter4.Text = "STOP:1";
             // 
@@ -401,36 +419,40 @@
             this.textBoxParameter3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxParameter3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxParameter3.Location = new System.Drawing.Point(642, 57);
+            this.textBoxParameter3.Location = new System.Drawing.Point(963, 88);
+            this.textBoxParameter3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxParameter3.Name = "textBoxParameter3";
-            this.textBoxParameter3.Size = new System.Drawing.Size(250, 20);
+            this.textBoxParameter3.Size = new System.Drawing.Size(374, 26);
             this.textBoxParameter3.TabIndex = 5;
             this.textBoxParameter3.Text = "LEN:8";
             // 
             // textBoxParameter2
             // 
             this.textBoxParameter2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxParameter2.Location = new System.Drawing.Point(378, 57);
+            this.textBoxParameter2.Location = new System.Drawing.Point(567, 88);
+            this.textBoxParameter2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxParameter2.Name = "textBoxParameter2";
-            this.textBoxParameter2.Size = new System.Drawing.Size(250, 20);
+            this.textBoxParameter2.Size = new System.Drawing.Size(374, 26);
             this.textBoxParameter2.TabIndex = 4;
             this.textBoxParameter2.Text = "BAUD:115200";
             // 
             // textBoxParameter1
             // 
             this.textBoxParameter1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxParameter1.Location = new System.Drawing.Point(113, 57);
+            this.textBoxParameter1.Location = new System.Drawing.Point(170, 88);
+            this.textBoxParameter1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxParameter1.Name = "textBoxParameter1";
-            this.textBoxParameter1.Size = new System.Drawing.Size(250, 20);
+            this.textBoxParameter1.Size = new System.Drawing.Size(374, 26);
             this.textBoxParameter1.TabIndex = 3;
             this.textBoxParameter1.Text = "COM:1";
             // 
             // labelParameters
             // 
             this.labelParameters.AutoSize = true;
-            this.labelParameters.Location = new System.Drawing.Point(16, 64);
+            this.labelParameters.Location = new System.Drawing.Point(24, 99);
+            this.labelParameters.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelParameters.Name = "labelParameters";
-            this.labelParameters.Size = new System.Drawing.Size(83, 13);
+            this.labelParameters.Size = new System.Drawing.Size(124, 20);
             this.labelParameters.TabIndex = 2;
             this.labelParameters.Text = "Parameter List : ";
             // 
@@ -442,17 +464,19 @@
             this.comboBoxTestFunctionName.Items.AddRange(new object[] {
             "ProjTestItem.OpenComPort",
             "ProjTestItem.MeasureS11Impedence"});
-            this.comboBoxTestFunctionName.Location = new System.Drawing.Point(113, 25);
+            this.comboBoxTestFunctionName.Location = new System.Drawing.Point(170, 39);
+            this.comboBoxTestFunctionName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxTestFunctionName.Name = "comboBoxTestFunctionName";
-            this.comboBoxTestFunctionName.Size = new System.Drawing.Size(775, 21);
+            this.comboBoxTestFunctionName.Size = new System.Drawing.Size(1160, 28);
             this.comboBoxTestFunctionName.TabIndex = 1;
             // 
             // labelTestFunctionName
             // 
             this.labelTestFunctionName.AutoSize = true;
-            this.labelTestFunctionName.Location = new System.Drawing.Point(13, 25);
+            this.labelTestFunctionName.Location = new System.Drawing.Point(19, 39);
+            this.labelTestFunctionName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTestFunctionName.Name = "labelTestFunctionName";
-            this.labelTestFunctionName.Size = new System.Drawing.Size(88, 13);
+            this.labelTestFunctionName.Size = new System.Drawing.Size(129, 20);
             this.labelTestFunctionName.TabIndex = 0;
             this.labelTestFunctionName.Text = "Function Name : ";
             // 
@@ -466,9 +490,11 @@
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepDescription);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepName);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepNo);
-            this.groupBoxBasicTestStepInfo.Location = new System.Drawing.Point(6, 6);
+            this.groupBoxBasicTestStepInfo.Location = new System.Drawing.Point(9, 9);
+            this.groupBoxBasicTestStepInfo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxBasicTestStepInfo.Name = "groupBoxBasicTestStepInfo";
-            this.groupBoxBasicTestStepInfo.Size = new System.Drawing.Size(567, 121);
+            this.groupBoxBasicTestStepInfo.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBoxBasicTestStepInfo.Size = new System.Drawing.Size(850, 186);
             this.groupBoxBasicTestStepInfo.TabIndex = 0;
             this.groupBoxBasicTestStepInfo.TabStop = false;
             // 
@@ -477,9 +503,10 @@
             this.textBoxStepDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxStepDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxStepDescription.Location = new System.Drawing.Point(113, 85);
+            this.textBoxStepDescription.Location = new System.Drawing.Point(170, 131);
+            this.textBoxStepDescription.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxStepDescription.Name = "textBoxStepDescription";
-            this.textBoxStepDescription.Size = new System.Drawing.Size(444, 20);
+            this.textBoxStepDescription.Size = new System.Drawing.Size(665, 26);
             this.textBoxStepDescription.TabIndex = 5;
             this.textBoxStepDescription.Text = "Open the COM port to intialize the network analyzer";
             // 
@@ -488,9 +515,10 @@
             this.textBoxStepName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxStepName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxStepName.Location = new System.Drawing.Point(113, 53);
+            this.textBoxStepName.Location = new System.Drawing.Point(170, 81);
+            this.textBoxStepName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxStepName.Name = "textBoxStepName";
-            this.textBoxStepName.Size = new System.Drawing.Size(444, 20);
+            this.textBoxStepName.Size = new System.Drawing.Size(665, 26);
             this.textBoxStepName.TabIndex = 4;
             this.textBoxStepName.Text = "Open COM port";
             // 
@@ -499,47 +527,52 @@
             this.textBoxStepNo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxStepNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxStepNo.Location = new System.Drawing.Point(113, 17);
+            this.textBoxStepNo.Location = new System.Drawing.Point(170, 26);
+            this.textBoxStepNo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxStepNo.Name = "textBoxStepNo";
-            this.textBoxStepNo.Size = new System.Drawing.Size(444, 20);
+            this.textBoxStepNo.Size = new System.Drawing.Size(665, 26);
             this.textBoxStepNo.TabIndex = 3;
             this.textBoxStepNo.Text = "1.1";
             // 
             // labelStepDescription
             // 
             this.labelStepDescription.AutoSize = true;
-            this.labelStepDescription.Location = new System.Drawing.Point(13, 85);
+            this.labelStepDescription.Location = new System.Drawing.Point(19, 131);
+            this.labelStepDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStepDescription.Name = "labelStepDescription";
-            this.labelStepDescription.Size = new System.Drawing.Size(94, 13);
+            this.labelStepDescription.Size = new System.Drawing.Size(139, 20);
             this.labelStepDescription.TabIndex = 2;
             this.labelStepDescription.Text = "Step Description : ";
             // 
             // labelStepName
             // 
             this.labelStepName.AutoSize = true;
-            this.labelStepName.Location = new System.Drawing.Point(13, 53);
+            this.labelStepName.Location = new System.Drawing.Point(19, 81);
+            this.labelStepName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStepName.Name = "labelStepName";
-            this.labelStepName.Size = new System.Drawing.Size(69, 13);
+            this.labelStepName.Size = new System.Drawing.Size(101, 20);
             this.labelStepName.TabIndex = 1;
             this.labelStepName.Text = "Step Name : ";
             // 
             // labelStepNo
             // 
             this.labelStepNo.AutoSize = true;
-            this.labelStepNo.Location = new System.Drawing.Point(13, 20);
+            this.labelStepNo.Location = new System.Drawing.Point(19, 31);
+            this.labelStepNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStepNo.Name = "labelStepNo";
-            this.labelStepNo.Size = new System.Drawing.Size(58, 13);
+            this.labelStepNo.Size = new System.Drawing.Size(83, 20);
             this.labelStepNo.TabIndex = 0;
             this.labelStepNo.Text = "Step No. : ";
             // 
             // SequenceEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1189, 652);
+            this.ClientSize = new System.Drawing.Size(1783, 1002);
             this.Controls.Add(this.editorSplitContainer);
             this.Controls.Add(this.sequenceEditorToolStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SequenceEditor";
             this.Text = "Sequence Editor";
             this.sequenceEditorToolStrip.ResumeLayout(false);
