@@ -25,9 +25,39 @@ namespace Amphenol.Seq
             limitList = new Spec(stepNode.SelectSingleNode("spec"));
         }
 
-        public string StepNum { get; set; }
-        public string StepName { get; set; }
-        public string StepDescription { get; set; }
+        public string StepNum
+        {
+            get
+            {
+                return stepNum;
+            }
+            set
+            {
+                stepNum = value;
+            }
+        }
+        public string StepName
+        {
+            get
+            {
+                return stepName;
+            }
+            set
+            {
+                stepName = value;
+            }
+        }
+        public string StepDescription
+        {
+            get
+            {
+                return stepDescription;
+            }
+            set
+            {
+                stepDescription = value;
+            }
+        }
         public string StepFunctionName
         {
             get
@@ -46,12 +76,36 @@ namespace Amphenol.Seq
                 return parameterList.Parameters;
             }
         }
-        public string LimitType { get; set; }
+        public ParameterList ParamList
+        {
+            get
+            {
+                return parameterList;
+            }
+        }
+        public string LimitType
+        {
+            get
+            {
+                return limitType;
+            }
+            set
+            {
+                limitType = value;
+            }
+        }
         public IList<string> Limits
         {
             get
             {
                 return limitList.Limits;
+            }
+        }
+        public Spec LimitList
+        {
+            get
+            {
+                return limitList;
             }
         }
     }
