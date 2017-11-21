@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SequenceEditor));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Open COM port");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Communicate with DMM");
@@ -54,16 +55,21 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTextBoxSequenceFilePath = new System.Windows.Forms.ToolStripTextBox();
             this.editorSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.treeViewSequence = new System.Windows.Forms.TreeView();
+            this.sequenceTreeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addNewBlockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeCurrentSelectedBlockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sequenceToolStripMenuItemSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.addNewStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeCurrentSelectedStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyCurrentSelectedStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cutCurrentSelectedStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteStepAfterCurrentSelectedStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelItemList = new System.Windows.Forms.Label();
             this.editorTabControl = new System.Windows.Forms.TabControl();
             this.tabPageEditStep = new System.Windows.Forms.TabPage();
             this.groupBoxSpecification = new System.Windows.Forms.GroupBox();
-            this.listViewTestSepc = new System.Windows.Forms.ListView();
-            this.columnHeaderLowerLimit = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderTypical = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderUpperLimit = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderResult = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dataGridViewTestSpec = new System.Windows.Forms.DataGridView();
             this.comboBoxLimitType = new System.Windows.Forms.ComboBox();
             this.labelLimitType = new System.Windows.Forms.Label();
             this.groupBoxTestFunctionParams = new System.Windows.Forms.GroupBox();
@@ -88,9 +94,11 @@
             this.editorSplitContainer.Panel1.SuspendLayout();
             this.editorSplitContainer.Panel2.SuspendLayout();
             this.editorSplitContainer.SuspendLayout();
+            this.sequenceTreeContextMenuStrip.SuspendLayout();
             this.editorTabControl.SuspendLayout();
             this.tabPageEditStep.SuspendLayout();
             this.groupBoxSpecification.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestSpec)).BeginInit();
             this.groupBoxTestFunctionParams.SuspendLayout();
             this.groupBoxBasicTestStepInfo.SuspendLayout();
             this.SuspendLayout();
@@ -215,7 +223,7 @@
             // 
             // editorSplitContainer.Panel1
             // 
-            this.editorSplitContainer.Panel1.Controls.Add(this.treeView1);
+            this.editorSplitContainer.Panel1.Controls.Add(this.treeViewSequence);
             this.editorSplitContainer.Panel1.Controls.Add(this.labelItemList);
             // 
             // editorSplitContainer.Panel2
@@ -226,12 +234,13 @@
             this.editorSplitContainer.SplitterWidth = 6;
             this.editorSplitContainer.TabIndex = 2;
             // 
-            // treeView1
+            // treeViewSequence
             // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 20);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.treeView1.Name = "treeView1";
+            this.treeViewSequence.ContextMenuStrip = this.sequenceTreeContextMenuStrip;
+            this.treeViewSequence.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewSequence.Location = new System.Drawing.Point(0, 20);
+            this.treeViewSequence.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.treeViewSequence.Name = "treeViewSequence";
             treeNode1.Name = "Block1_Item1";
             treeNode1.Text = "Open COM port";
             treeNode2.Name = "Block1_Item2";
@@ -247,12 +256,75 @@
             treeNode6.Text = "Measure Vref";
             treeNode7.Name = "Block2";
             treeNode7.Text = "Voltage measurement";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            this.treeViewSequence.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode4,
             treeNode7});
-            this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.Size = new System.Drawing.Size(397, 930);
-            this.treeView1.TabIndex = 3;
+            this.treeViewSequence.ShowNodeToolTips = true;
+            this.treeViewSequence.Size = new System.Drawing.Size(397, 930);
+            this.treeViewSequence.TabIndex = 3;
+            this.treeViewSequence.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSequence_AfterSelect);
+            // 
+            // sequenceTreeContextMenuStrip
+            // 
+            this.sequenceTreeContextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.sequenceTreeContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNewBlockToolStripMenuItem,
+            this.removeCurrentSelectedBlockToolStripMenuItem,
+            this.sequenceToolStripMenuItemSeparator1,
+            this.addNewStepToolStripMenuItem,
+            this.removeCurrentSelectedStepToolStripMenuItem,
+            this.copyCurrentSelectedStepToolStripMenuItem,
+            this.cutCurrentSelectedStepToolStripMenuItem,
+            this.pasteStepAfterCurrentSelectedStepToolStripMenuItem});
+            this.sequenceTreeContextMenuStrip.Name = "sequenceTreeContextMenuStrip";
+            this.sequenceTreeContextMenuStrip.Size = new System.Drawing.Size(374, 220);
+            // 
+            // addNewBlockToolStripMenuItem
+            // 
+            this.addNewBlockToolStripMenuItem.Name = "addNewBlockToolStripMenuItem";
+            this.addNewBlockToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.addNewBlockToolStripMenuItem.Text = "Add new block";
+            // 
+            // removeCurrentSelectedBlockToolStripMenuItem
+            // 
+            this.removeCurrentSelectedBlockToolStripMenuItem.Name = "removeCurrentSelectedBlockToolStripMenuItem";
+            this.removeCurrentSelectedBlockToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.removeCurrentSelectedBlockToolStripMenuItem.Text = "Remove current selected block";
+            // 
+            // sequenceToolStripMenuItemSeparator1
+            // 
+            this.sequenceToolStripMenuItemSeparator1.Name = "sequenceToolStripMenuItemSeparator1";
+            this.sequenceToolStripMenuItemSeparator1.Size = new System.Drawing.Size(370, 6);
+            // 
+            // addNewStepToolStripMenuItem
+            // 
+            this.addNewStepToolStripMenuItem.Name = "addNewStepToolStripMenuItem";
+            this.addNewStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.addNewStepToolStripMenuItem.Text = "Add new step";
+            // 
+            // removeCurrentSelectedStepToolStripMenuItem
+            // 
+            this.removeCurrentSelectedStepToolStripMenuItem.Name = "removeCurrentSelectedStepToolStripMenuItem";
+            this.removeCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.removeCurrentSelectedStepToolStripMenuItem.Text = "Remove current selected step";
+            // 
+            // copyCurrentSelectedStepToolStripMenuItem
+            // 
+            this.copyCurrentSelectedStepToolStripMenuItem.Name = "copyCurrentSelectedStepToolStripMenuItem";
+            this.copyCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.copyCurrentSelectedStepToolStripMenuItem.Text = "Copy current selected step";
+            // 
+            // cutCurrentSelectedStepToolStripMenuItem
+            // 
+            this.cutCurrentSelectedStepToolStripMenuItem.Name = "cutCurrentSelectedStepToolStripMenuItem";
+            this.cutCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.cutCurrentSelectedStepToolStripMenuItem.Text = "Cut current selected step";
+            // 
+            // pasteStepAfterCurrentSelectedStepToolStripMenuItem
+            // 
+            this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Name = "pasteStepAfterCurrentSelectedStepToolStripMenuItem";
+            this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Text = "Paste step after current selected step";
             // 
             // labelItemList
             // 
@@ -294,7 +366,7 @@
             // 
             this.groupBoxSpecification.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxSpecification.Controls.Add(this.listViewTestSepc);
+            this.groupBoxSpecification.Controls.Add(this.dataGridViewTestSpec);
             this.groupBoxSpecification.Controls.Add(this.comboBoxLimitType);
             this.groupBoxSpecification.Controls.Add(this.labelLimitType);
             this.groupBoxSpecification.Location = new System.Drawing.Point(10, 422);
@@ -306,40 +378,14 @@
             this.groupBoxSpecification.TabStop = false;
             this.groupBoxSpecification.Text = "Specification";
             // 
-            // listViewTestSepc
+            // dataGridViewTestSpec
             // 
-            this.listViewTestSepc.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderLowerLimit,
-            this.columnHeaderTypical,
-            this.columnHeaderUpperLimit,
-            this.columnHeaderResult});
-            this.listViewTestSepc.Location = new System.Drawing.Point(10, 58);
-            this.listViewTestSepc.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.listViewTestSepc.Name = "listViewTestSepc";
-            this.listViewTestSepc.Size = new System.Drawing.Size(1324, 125);
-            this.listViewTestSepc.TabIndex = 2;
-            this.listViewTestSepc.UseCompatibleStateImageBehavior = false;
-            this.listViewTestSepc.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeaderLowerLimit
-            // 
-            this.columnHeaderLowerLimit.Text = "Lower Limit";
-            this.columnHeaderLowerLimit.Width = 200;
-            // 
-            // columnHeaderTypical
-            // 
-            this.columnHeaderTypical.Text = "Typical";
-            this.columnHeaderTypical.Width = 200;
-            // 
-            // columnHeaderUpperLimit
-            // 
-            this.columnHeaderUpperLimit.Text = "Upper Limit";
-            this.columnHeaderUpperLimit.Width = 200;
-            // 
-            // columnHeaderResult
-            // 
-            this.columnHeaderResult.Text = "Result";
-            this.columnHeaderResult.Width = 250;
+            this.dataGridViewTestSpec.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTestSpec.Location = new System.Drawing.Point(7, 55);
+            this.dataGridViewTestSpec.Name = "dataGridViewTestSpec";
+            this.dataGridViewTestSpec.RowTemplate.Height = 28;
+            this.dataGridViewTestSpec.Size = new System.Drawing.Size(1332, 131);
+            this.dataGridViewTestSpec.TabIndex = 3;
             // 
             // comboBoxLimitType
             // 
@@ -352,6 +398,7 @@
             this.comboBoxLimitType.Name = "comboBoxLimitType";
             this.comboBoxLimitType.Size = new System.Drawing.Size(373, 28);
             this.comboBoxLimitType.TabIndex = 1;
+            this.comboBoxLimitType.SelectedIndexChanged += new System.EventHandler(this.comboBoxLimitType_SelectedIndexChanged);
             // 
             // labelLimitType
             // 
@@ -389,7 +436,7 @@
             this.textBoxParameter6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxParameter6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxParameter6.Location = new System.Drawing.Point(963, 142);
+            this.textBoxParameter6.Location = new System.Drawing.Point(962, 142);
             this.textBoxParameter6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxParameter6.Name = "textBoxParameter6";
             this.textBoxParameter6.Size = new System.Drawing.Size(374, 26);
@@ -582,10 +629,12 @@
             this.editorSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitContainer)).EndInit();
             this.editorSplitContainer.ResumeLayout(false);
+            this.sequenceTreeContextMenuStrip.ResumeLayout(false);
             this.editorTabControl.ResumeLayout(false);
             this.tabPageEditStep.ResumeLayout(false);
             this.groupBoxSpecification.ResumeLayout(false);
             this.groupBoxSpecification.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestSpec)).EndInit();
             this.groupBoxTestFunctionParams.ResumeLayout(false);
             this.groupBoxTestFunctionParams.PerformLayout();
             this.groupBoxBasicTestStepInfo.ResumeLayout(false);
@@ -609,7 +658,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxSequenceFilePath;
         private System.Windows.Forms.SplitContainer editorSplitContainer;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView treeViewSequence;
         private System.Windows.Forms.Label labelItemList;
         private System.Windows.Forms.TabControl editorTabControl;
         private System.Windows.Forms.TabPage tabPageEditStep;
@@ -633,10 +682,15 @@
         private System.Windows.Forms.GroupBox groupBoxSpecification;
         private System.Windows.Forms.Label labelLimitType;
         private System.Windows.Forms.ComboBox comboBoxLimitType;
-        private System.Windows.Forms.ListView listViewTestSepc;
-        private System.Windows.Forms.ColumnHeader columnHeaderLowerLimit;
-        private System.Windows.Forms.ColumnHeader columnHeaderTypical;
-        private System.Windows.Forms.ColumnHeader columnHeaderUpperLimit;
-        private System.Windows.Forms.ColumnHeader columnHeaderResult;
+        private System.Windows.Forms.DataGridView dataGridViewTestSpec;
+        private System.Windows.Forms.ContextMenuStrip sequenceTreeContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addNewBlockToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeCurrentSelectedBlockToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator sequenceToolStripMenuItemSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem addNewStepToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeCurrentSelectedStepToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyCurrentSelectedStepToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cutCurrentSelectedStepToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteStepAfterCurrentSelectedStepToolStripMenuItem;
     }
 }
