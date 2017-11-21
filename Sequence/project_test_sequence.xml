@@ -105,4 +105,27 @@
             </spec>
         </step>
     </block>
+
+    <block>
+        <blocknum>B3</blocknum>
+        <blockname>RF frequency-response feature</blockname>
+
+        <step>
+            <stepnum>S6</stepnum>
+            <stepname>Measure S11 impedance</stepname>
+            <stepdescription>Measure the attenuation of RF shielding cable itself, i.e. S11 impedance (unit : dB)</stepdescription>
+
+            <functionname>ProjectTestItem.MeasureS11</functionname>
+            <parameterlist>
+                <parameter>REF:-12.5dBm</parameter>
+                <parameter>FREQ:2.4GHz</parameter>
+            </parameterlist>
+            <limittype>Numerical</limittype>
+            <spec>
+                <limit>20.5</limit>
+                <limit>25.0</limit>
+                <limit>28.5</limit>
+            </spec>
+        </step>
+    </block>
 </sequence>
