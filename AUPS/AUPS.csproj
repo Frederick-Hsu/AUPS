@@ -57,11 +57,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SequenceEditor.cs">
+    <Compile Include="SequenceEditor\SequenceEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SequenceEditor.Designer.cs">
+    <Compile Include="SequenceEditor\SequenceEditor.Designer.cs">
       <DependentUpon>SequenceEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceEditor\SequenceEditor_ToolbarEvent.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="StationNameDialog.cs">
       <SubType>Form</SubType>
@@ -69,10 +72,10 @@
     <Compile Include="StationNameDialog.Designer.cs">
       <DependentUpon>StationNameDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestPanel.cs">
+    <Compile Include="TestPanel\TestPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TestPanel.Designer.cs">
+    <Compile Include="TestPanel\TestPanel.Designer.cs">
       <DependentUpon>TestPanel.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainWindow.resx">
@@ -87,13 +90,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SequenceEditor.resx">
+    <EmbeddedResource Include="SequenceEditor\SequenceEditor.resx">
       <DependentUpon>SequenceEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StationNameDialog.resx">
       <DependentUpon>StationNameDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestPanel.resx">
+    <EmbeddedResource Include="TestPanel\TestPanel.resx">
       <DependentUpon>TestPanel.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -108,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sequence\Sequence.csproj">
+      <Project>{06c70c05-56d0-4edf-9d16-783d95509037}</Project>
+      <Name>Sequence</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

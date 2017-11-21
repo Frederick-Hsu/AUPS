@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sequence>
+    <block>
+        <blocknum>B1</blocknum>
+        <blockname>Initialization</blockname>
+
+        <step>
+            <stepnum>S1</stepnum>
+            <stepname>Open COM port</stepname>
+            <stepdescription>Open the COM port to initialize the network analyzer</stepdescription>
+
+            <functionname>ProjectTestItem.OpenCom</functionname>
+            <parameterlist>
+                <parameter>COM:1</parameter>
+                <parameter>BAUD:115200</parameter>
+                <parameter>LEN:8</parameter>
+                <parameter>STOP:1</parameter>
+                <parameter>PARITY:none</parameter>
+                <parameter>CRC:none</parameter>
+            </parameterlist>
+            <limittype>Numerical</limittype>
+            <spec>
+                <limit>12.5</limit>
+                <limit>15</limit>
+                <limit>17.5</limit>
+            </spec>
+        </step>
+
+        <step>
+            <stepnum>S2</stepnum>
+            <stepname>Communicate with DMM</stepname>
+            <stepdescription>Connect with DMM over the GPIB interface</stepdescription>
+
+            <functionname>ProjectTestItem.ConnectDmm</functionname>
+            <parameterlist>
+                <parameter>PRIM:23</parameter>
+                <parameter>SECN:15</parameter>
+                <parameter>TIMEOUT:200</parameter>
+                <parameter></parameter>
+            </parameterlist>
+            <limittype>String</limittype>
+            <spec>
+                <limit>OK</limit>
+            </spec>
+        </step>
+
+        <step>
+            <stepnum>S3</stepnum>
+            <stepname>Configure network</stepname>
+            <stepdescription>Configure the ethernet for the distributed test stations</stepdescription>
+
+            <functionname>ProjecttestItem.ConfigNetwork</functionname>
+            <parameterlist>
+                <parameter>IP:192.168.10.105</parameter>
+                <parameter>PORT:3680</parameter>
+                <parameter>SOCKET:UDP</parameter>
+            </parameterlist>
+            <limittype>String</limittype>
+            <spec>
+                <limit>OK</limit>
+                <limit></limit>
+                <limit></limit>
+            </spec>
+        </step>
+    </block>
+
+    <block>
+        <blocknum>B2</blocknum>
+        <blockname>Voltage measurement</blockname>
+
+        <step>
+            <stepnum>S4</stepnum>
+            <stepname>Measure VDD</stepname>
+            <stepdescription>Measure the voltage of power supply circuit : VDD</stepdescription>
+
+            <functionname>ProjectTestItem.MeasureVdd</functionname>
+            <parameterlist>
+                <parameter>POS:TP503</parameter>
+                <parameter>NEG:TP125</parameter>
+            </parameterlist>
+            <limittype>Numerical</limittype>
+            <spec>
+                <limit>3.0</limit>
+                <limit>3.3</limit>
+                <limit>3.6</limit>
+            </spec>
+        </step>
+
+        <step>
+            <stepnum>S5</stepnum>
+            <stepname>Measure Vref</stepname>
+            <stepdescription>Measure the reference voltage of ADC sampling circuit</stepdescription>
+
+            <functionname>ProjectTestItem.MeasureVref</functionname>
+            <parameterlist>
+                <parameter>POS:TP159</parameter>
+                <parameter>NEG:TP125</parameter>
+                <parameter></parameter>
+            </parameterlist>
+            <limittype>Numerical</limittype>
+            <spec>
+                <limit>4.9</limit>
+                <limit>5.0</limit>
+                <limit>5.1</limit>
+            </spec>
+        </step>
+    </block>
+
+    <block>
+        <blocknum>B3</blocknum>
+        <blockname>RF frequency-response feature</blockname>
+
+        <step>
+            <stepnum>S6</stepnum>
+            <stepname>Measure S11 impedance</stepname>
+            <stepdescription>Measure the attenuation of RF shielding cable itself, i.e. S11 impedance (unit : dB)</stepdescription>
+
+            <functionname>ProjectTestItem.MeasureS11</functionname>
+            <parameterlist>
+                <parameter>REF:-12.5dBm</parameter>
+                <parameter>FREQ:2.4GHz</parameter>
+            </parameterlist>
+            <limittype>Numerical</limittype>
+            <spec>
+                <limit>20.5</limit>
+                <limit>25.0</limit>
+                <limit>28.5</limit>
+            </spec>
+        </step>
+    </block>
+</sequence>
