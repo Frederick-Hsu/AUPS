@@ -8,6 +8,11 @@
 *.sln.docstates
 
 XML/
+Sequence/
+SequenceLib/
+XmlSerialization/
+ManipulateXML/
+DataContractSerialization/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
