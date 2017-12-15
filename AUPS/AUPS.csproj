@@ -63,6 +63,9 @@
     <Compile Include="SequenceEditor\SequenceEditor.Designer.cs">
       <DependentUpon>SequenceEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="SequenceEditor\SequenceEditor_MenubarEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SequenceEditor\SequenceEditor_ToolbarEvent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,9 +116,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sequence\Sequence.csproj">
-      <Project>{06c70c05-56d0-4edf-9d16-783d95509037}</Project>
-      <Name>Sequence</Name>
+    <ProjectReference Include="..\Amphenol.SequenceLib\Amphenol.SequenceLib.csproj">
+      <Project>{fa0a37c1-f916-43e8-a0cc-10eb2098f0d2}</Project>
+      <Name>Amphenol.SequenceLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
