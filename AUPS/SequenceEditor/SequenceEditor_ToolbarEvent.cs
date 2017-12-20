@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
 
-using Amphenol.Seq;
+using Amphenol.SequenceLib;
 
 namespace Amphenol.AUPS
 {
     partial class SequenceEditor
     {
         private string previousOpenedDirectory = "";
+
+        private Sequence seq;
 
         private void toolStripBtnOpen_Click(object sender, EventArgs e)
         {
@@ -30,7 +32,7 @@ namespace Amphenol.AUPS
             previousOpenedDirectory = Path.GetFullPath(dlg.FileName);
             toolStripTextBoxSequenceFilePath.Text = dlg.FileName;
 
-            Sequence seq = new Sequence();
+            seq = new Sequence();
             seq.Load(dlg.FileName);
 
             VisualizeSequenceInTreeView(seq);
@@ -59,18 +61,37 @@ namespace Amphenol.AUPS
             }
 
             /* Only display the content of Block[0]-->Step[0] on the panel. */
+            DisplayBlockContentOnPanel(seq.Blocks[0]);
             DisplayStepContentOnPanel(seq.Blocks[0].Steps[0]);
+
+            /* Expand the sequence tree, and selected the Block[0].Step[0] node */
+            treeViewSequence.ExpandAll();
+            treeViewSequence.SelectedNode = treeViewSequence.Nodes[0].Nodes[0];
+        }
+
+        private void DisplayBlockContentOnPanel(Block blockNode)
+        {
+            if (blockNode.BlockNum != null)
+                textBoxBlockNum.Text = blockNode.BlockNum;
+            if (blockNode.BlockName != null)
+                textBoxBlockName.Text = blockNode.BlockName;
         }
 
         private void DisplayStepContentOnPanel(Step stepNode)
         {
-            textBoxStepNo.Text = stepNode.StepNum;
-            textBoxStepName.Text = stepNode.StepName;
-            textBoxStepDescription.Text = stepNode.StepDescription;
+            if (stepNode.StepNum != null)
+                textBoxStepNo.Text = stepNode.StepNum;
+            if (stepNode.StepName != null)
+                textBoxStepName.Text = stepNode.StepName;
+            if (stepNode.StepDescription != null)
+                textBoxStepDescription.Text = stepNode.StepDescription;
 
-            comboBoxTestFunctionName.Text = stepNode.StepFunctionName;
-            AssignParameterList(stepNode.ParamList);
-            AssignSpecification(stepNode.LimitType, stepNode.LimitList);
+            if (stepNode.StepFunctionName != null)
+                comboBoxTestFunctionName.Text = stepNode.StepFunctionName;
+            if (stepNode.ParamList != null)
+                AssignParameterList(stepNode.ParamList);
+            if ((stepNode.LimitType != null) && (stepNode.LimitList != null))
+                AssignSpecification(stepNode.LimitType, stepNode.LimitList);
         }
 
         private void AssignParameterList(ParameterList paramList)
@@ -166,6 +187,167 @@ namespace Amphenol.AUPS
 
                 dataGridViewTestSpec.Rows[0].Cells[0].Value = spec.Limits[0];
             }
+        }
+
+        private void CleanupStepContentPanel()
+        {
+            textBoxStepNo.Text = "";
+            textBoxStepName.Text = "";
+            textBoxStepDescription.Text = "";
+
+            comboBoxTestFunctionName.Text = "";
+
+            textBoxParameter1.Text = "";
+            textBoxParameter2.Text = "";
+            textBoxParameter3.Text = "";
+            textBoxParameter4.Text = "";
+            textBoxParameter5.Text = "";
+            textBoxParameter6.Text = "";
+
+            comboBoxLimitType.Text = "";
+            if (dataGridViewTestSpec.Columns.Count != 0)
+            {
+                dataGridViewTestSpec.Columns.Clear();
+            }
+        }
+
+        /*=========================================================================================*/
+
+        private void toolStripBtnSave_Click(object sender, EventArgs e)
+        {
+            /* Save the changes into XML file */
+            if (treeViewSequence.SelectedNode.Tag is Block)
+            {
+                TreeNode currentSelectedBlockTreeNode = treeViewSequence.SelectedNode;
+                Block currentBlockNode = currentSelectedBlockTreeNode.Tag as Block;
+
+                UpdateAndSaveBlockContent(currentBlockNode);
+                seq.SaveSequenceToXml();
+            }
+            else if (treeViewSequence.SelectedNode.Tag is Step)
+            {
+                ModifyStepContent();
+            }
+        }
+
+        private void toolStripBtnSaveAs_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save your own XML file, enter your file name.";
+            dlg.InitialDirectory = previousOpenedDirectory;
+            dlg.DefaultExt = "xml";
+            dlg.Filter = "XML file | *.xml";
+            dlg.AddExtension = true;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                seq.SaveAsSequenceToXml(dlg.FileName);
+
+                /* Change the previous directory accordingly */
+                previousOpenedDirectory = Path.GetFullPath(dlg.FileName);
+                toolStripTextBoxSequenceFilePath.Text = dlg.FileName;
+            }
+        }
+
+
+        /*=========================================================================================*/
+
+        private void SequenceEditor_KeyDown(object sender, KeyEventArgs e)
+        {
+            /* Ctrl+S shortcut key */
+            if ((e.KeyCode == Keys.S) && (e.Modifiers == Keys.Control))
+            {
+                if (treeViewSequence.SelectedNode.Tag is Block)
+                {
+                    TreeNode currentSelectedBlockTreeNode = treeViewSequence.SelectedNode;
+                    Block currentBlockNode = currentSelectedBlockTreeNode.Tag as Block;
+
+                    UpdateAndSaveBlockContent(currentBlockNode);
+                    seq.SaveSequenceToXml();
+                }
+                else if (treeViewSequence.SelectedNode.Tag is Step)
+                {
+                    ModifyStepContent();
+                }
+            }
+        }
+
+        private void UpdateAndSaveBlockContent(Block block)
+        {
+            string blockNo = textBoxBlockNum.Text;
+            string blockName = textBoxBlockName.Text;
+
+            block.UpdateCurrentBlockContentForItems(blockNo, blockName);
+            seq.SaveSequenceToXml();
+        }
+
+        private void ModifyStepContent()
+        {
+            TreeNode currentSelectedStepTreeNode = treeViewSequence.SelectedNode;
+            TreeNode currentBlockTreeNode = treeViewSequence.SelectedNode.Parent;
+
+            Block currentBlockNode = currentBlockTreeNode.Tag as Block;
+            Step currentStepNode = currentSelectedStepTreeNode.Tag as Step;
+
+            int indexOfCurrentSelectedStepTreeNode = treeViewSequence.SelectedNode.Index;
+
+            /*=============================================================================*/
+
+            string stepNum = textBoxStepNo.Text;
+            string stepName = textBoxStepName.Text;
+            string stepDescription = textBoxStepDescription.Text;
+            string stepFunctionName = comboBoxTestFunctionName.Text;
+
+            List<string> parameterList = new List<string>();
+            string parameter1 = textBoxParameter1.Text;
+            if (parameter1 != string.Empty)
+                parameterList.Add(parameter1);
+            string parameter2 = textBoxParameter2.Text;
+            if (parameter2 != string.Empty)
+                parameterList.Add(parameter2);
+            string parameter3 = textBoxParameter3.Text;
+            if (parameter3 != string.Empty)
+                parameterList.Add(parameter3);
+            string parameter4 = textBoxParameter4.Text;
+            if (parameter4 != string.Empty)
+                parameterList.Add(parameter4);
+            string parameter5 = textBoxParameter5.Text;
+            if (parameter5 != string.Empty)
+                parameterList.Add(parameter5);
+            string parameter6 = textBoxParameter6.Text;
+            if (parameter6 != string.Empty)
+                parameterList.Add(parameter6);
+            ParameterList stepParameterList = new ParameterList(parameterList, seq.SeqXml);
+
+            string stepLimitType = comboBoxLimitType.Text;
+
+            List<string> limits = new List<string>();
+            if (stepLimitType == "String")
+            {
+                limits.Add(dataGridViewTestSpec.Rows[0].Cells[0].Value as string);
+            }
+            else if (stepLimitType == "Numerical")
+            {
+                limits.Add(dataGridViewTestSpec.Rows[0].Cells[0].Value as string);
+                limits.Add(dataGridViewTestSpec.Rows[0].Cells[1].Value as string);
+                limits.Add(dataGridViewTestSpec.Rows[0].Cells[2].Value as string);
+            }
+            else if (stepLimitType == string.Empty)
+            {
+                /* Assign 3 empty strings */
+                limits.Add(string.Empty);
+                limits.Add(string.Empty);
+                limits.Add(string.Empty);
+            }
+            Spec stepSpec = new Spec(limits, seq.SeqXml);
+
+            /*=============================================================================*/
+            /* MUST modify current step node firstly */
+            currentStepNode.ModifyCurrentStep(stepNum, stepName, stepDescription, stepFunctionName, stepParameterList, stepLimitType, stepSpec);
+            /* then modify its parent block node for current step node */
+            currentBlockNode.ModifyStepAt(indexOfCurrentSelectedStepTreeNode, currentStepNode);
+
+            seq.SaveSequenceToXml();
         }
     }
 }
