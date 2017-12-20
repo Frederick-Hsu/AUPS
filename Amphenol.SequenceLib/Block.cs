@@ -287,5 +287,19 @@ namespace Amphenol.SequenceLib
             XmlNode blocknameNode = currentBlockNode.SelectSingleNode("blockname");
             blocknameNode.InnerText = blockNameValueChanged;
         }
+
+        public void ModifyStepAt(int index, Step newStep)
+        {
+            XmlNode stepNodeToModify = (currentBlockNode.SelectNodes("step"))[index];
+            /* Replace <step> node at index position with this newStep */
+            currentBlockNode.ReplaceChild(newStep.CurrentStepNode, stepNodeToModify);
+
+            /* Replace original Step object at index */
+            steps.RemoveAt(index);
+            steps.Insert(index, newStep);
+            /* and Step XmlNode object */
+            stepXmlNodes.RemoveAt(index);
+            stepXmlNodes.Insert(index, newStep.CurrentStepNode);
+        }
     }
 }
