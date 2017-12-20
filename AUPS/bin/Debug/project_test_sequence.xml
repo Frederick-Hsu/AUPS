@@ -94,6 +94,22 @@
         <limit>3.6</limit>
       </spec>
     </step>
+    <step>
+      <stepnum>VOL10</stepnum>
+      <stepname>Measure the Vref for ADC sampling channels.</stepname>
+      <stepdescription>Make sure that the reference voltage is absolutely stable.</stepdescription>
+      <functionname>ProjectTestItem.MeasureAdcVref</functionname>
+      <parameterlist>
+        <parameter>POS:Vref</parameter>
+        <parameter>NEG:GND</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>4.8</limit>
+        <limit>5.0</limit>
+        <limit>5.2</limit>
+      </spec>
+    </step>
   </block>
   <block>
     <blocknum>B4</blocknum>
@@ -117,44 +133,10 @@
         <limit>-28.5</limit>
       </spec>
     </step>
-    <step>
-      <stepnum>S5</stepnum>
-      <stepname>Measure VDD</stepname>
-      <stepdescription>Measure the voltage of power supply circuit : VDD</stepdescription>
-      <functionname>ProjectTestItem.MeasureVdd</functionname>
-      <parameterlist>
-        <parameter>POS:TP503</parameter>
-        <parameter>NEG:TP125</parameter>
-      </parameterlist>
-      <limittype>Numerical</limittype>
-      <spec>
-        <limit>3.0</limit>
-        <limit>3.3</limit>
-        <limit>3.6</limit>
-      </spec>
-    </step>
   </block>
   <block>
     <blocknum>B5</blocknum>
     <blockname>RF frequency-response feature</blockname>
-    <step>
-      <stepnum>S6</stepnum>
-      <stepname>Control the fixture</stepname>
-      <stepdescription>Turn table rotates to move to next station</stepdescription>
-      <functionname>ProjectTestItem.RotateTurnTable</functionname>
-      <parameterlist>
-        <parameter>BenchID:13</parameter>
-        <parameter>Connectivity</parameter>
-        <parameter>Calibration</parameter>
-        <parameter>RefValue:-30dBm</parameter>
-      </parameterlist>
-      <limittype>Numerical</limittype>
-      <spec>
-        <limit>100</limit>
-        <limit>200</limit>
-        <limit>300</limit>
-      </spec>
-    </step>
     <step>
       <stepnum>S7</stepnum>
       <stepname>Measure S11 impedance</stepname>
@@ -169,6 +151,47 @@
         <limit>20.5</limit>
         <limit>25.0</limit>
         <limit>28.5</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B20</blocknum>
+    <blockname>Field testing</blockname>
+    <step>
+      <stepnum>RSSI-10</stepnum>
+      <stepname>Measure the RSSI (i.e. receiver sensitivity) performance</stepname>
+      <stepdescription>Check the sensitity index for antenna array.</stepdescription>
+      <functionname>ProjTestItem.MeasureRssiPerformance</functionname>
+      <parameterlist>
+        <parameter>CentralFreq:2900MHz</parameter>
+        <parameter>Span:2MHz</parameter>
+        <parameter>Attenuation:10dB</parameter>
+        <parameter>RefPower:-80dBm</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>-65dBm</limit>
+        <limit>-70dBm</limit>
+        <limit>-75dBm</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>SPwr10</stepnum>
+      <stepname>Measure the max power</stepname>
+      <stepdescription>Measure RF Tx power at the working freq.</stepdescription>
+      <functionname>ProjTestItem.MeasurePower</functionname>
+      <parameterlist>
+        <parameter>CentralFreq:2900MHz</parameter>
+        <parameter>Span:2MHz</parameter>
+        <parameter>Deviation:0.5KHz</parameter>
+        <parameter>Attenuation:10dB</parameter>
+        <parameter>BasePower:-25dBm</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>-35.5</limit>
+        <limit>-37.5</limit>
+        <limit>-39.5</limit>
       </spec>
     </step>
   </block>
@@ -222,6 +245,22 @@
         <limit>-32.5</limit>
         <limit>-30</limit>
         <limit>-28.5</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>SP10</stepnum>
+      <stepname>Measure the peak power for remote key</stepname>
+      <stepdescription>RF transmitting power at 433MHz</stepdescription>
+      <functionname>ProjTestitem.MeasureTxPower</functionname>
+      <parameterlist>
+        <parameter>Freq:2.4GHz</parameter>
+        <parameter>Attenuation:10dB</parameter>
+        <parameter>Span:160KHz</parameter>
+        <parameter>BasePower:-25dBm</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>Peak power is out of spec.</limit>
       </spec>
     </step>
   </block>
