@@ -203,6 +203,7 @@ namespace Amphenol.SequenceLib
             currentStepNode.AppendChild(specNode);
         }
 
+#if false
         public Step(string stepnum, 
                     string stepname, 
                     string stepdescription, 
@@ -340,6 +341,46 @@ namespace Amphenol.SequenceLib
             {
                 specNode = limits.CurrentSpecNode.CloneNode(true);
             }
+        }
+#endif
+
+        public void ModifyCurrentStep(string stepNumValue, 
+                                      string stepNameValue, 
+                                      string stepDesriptionValue,
+                                      string stepFunctionNameValue,
+                                      ParameterList stepParamListValue,
+                                      string stepLimitTypeValue,
+                                      Spec   stepSpecValue)
+        {
+            this.stepNum = stepNumValue;
+            this.stepName = stepNameValue;
+            this.stepDescription = stepDesriptionValue;
+            this.stepFunctionName = stepFunctionNameValue;
+            this.parameterList = stepParamListValue;
+            this.limitType = stepLimitTypeValue;
+            this.limitList = stepSpecValue;
+
+            /* Change <stepnum> node */
+            XmlNode stepnumNode = currentStepNode.SelectSingleNode("stepnum");
+            stepnumNode.InnerText = stepNumValue;
+            /* Change <stepname> node */
+            XmlNode stepnameNode = currentStepNode.SelectSingleNode("stepname");
+            stepnameNode.InnerText = stepNameValue;
+            /* Change <stepdescription> node */
+            XmlNode stepdescriptionNode = currentStepNode.SelectSingleNode("stepdescription");
+            stepdescriptionNode.InnerText = stepDesriptionValue;
+            /* Change <functionname> node */
+            XmlNode functionnameNode = currentStepNode.SelectSingleNode("functionname");
+            functionnameNode.InnerText = stepFunctionNameValue;
+            /* Replace <parameterlist> node */
+            XmlNode parameterlistNode = currentStepNode.SelectSingleNode("parameterlist");
+            currentStepNode.ReplaceChild(stepParamListValue.CurrentParameterListNode, parameterlistNode);
+            /* Change <limittype> node */
+            XmlNode limittypeNode = currentStepNode.SelectSingleNode("limittype");
+            limittypeNode.InnerText = stepLimitTypeValue;
+            /* Replace <spec> node */
+            XmlNode specNode = currentStepNode.SelectSingleNode("spec");
+            currentStepNode.ReplaceChild(stepSpecValue.CurrentSpecNode, specNode);
         }
     }
 }

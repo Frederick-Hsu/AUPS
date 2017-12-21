@@ -205,6 +205,57 @@ namespace Amphenol.AUPS
 
         private void addNewStepBeforeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string stepNo = textBoxStepNo.Text;
+            string stepName = textBoxStepName.Text;
+            string stepDescription = textBoxStepDescription.Text;
+            string stepFunctionName = comboBoxTestFunctionName.Text;
+
+            List<string> parameterList = new List<string>();
+            string parameter1 = textBoxParameter1.Text;
+            if (parameter1 != string.Empty)
+                parameterList.Add(parameter1);
+            string parameter2 = textBoxParameter2.Text;
+            if (parameter2 != string.Empty)
+                parameterList.Add(parameter2);
+            string parameter3 = textBoxParameter3.Text;
+            if (parameter3 != string.Empty)
+                parameterList.Add(parameter3);
+            string parameter4 = textBoxParameter4.Text;
+            if (parameter4 != string.Empty)
+                parameterList.Add(parameter4);
+            string parameter5 = textBoxParameter5.Text;
+            if (parameter5 != string.Empty)
+                parameterList.Add(parameter5);
+            string parameter6 = textBoxParameter6.Text;
+            if (parameter6 != string.Empty)
+                parameterList.Add(parameter6);
+
+            ParameterList paramlist = new ParameterList(parameterList, seq.SeqXml);
+
+            string stepLimitType = comboBoxLimitType.Text;
+
+            List<string> limitList = new List<string>();
+            if (stepLimitType == "String")
+            {
+                limitList.Add(dataGridViewTestSpec.Rows[0].Cells[0].Value as string);
+            }
+            else if (stepLimitType == "Numerical")
+            {
+                limitList.Add(dataGridViewTestSpec.Rows[0].Cells[0].Value as string);
+                limitList.Add(dataGridViewTestSpec.Rows[0].Cells[1].Value as string);
+                limitList.Add(dataGridViewTestSpec.Rows[0].Cells[2].Value as string);
+            }
+            else if (stepLimitType == string.Empty)
+            {
+                limitList.Add(string.Empty);
+                limitList.Add(string.Empty);
+                limitList.Add(string.Empty);
+            }
+
+            Spec limits = new Spec(limitList, seq.SeqXml);
+
+            /*=========================================================================================================*/
+
             int index = treeViewSequence.SelectedNode.Index;
             /* This context menu item only valids after user selected step tree node */
             if (treeViewSequence.SelectedNode.Tag is Step)
@@ -221,7 +272,14 @@ namespace Amphenol.AUPS
                 newStepTreeNode.BeginEdit();
 
                 /* Synch to add a new <step> node into the XML file. */
-                Step newStep = new Step(textBoxStepNo.Text, textBoxStepName.Text, textBoxStepDescription.Text, seq.SeqXml);
+                Step newStep = new Step(stepNo, 
+                                        stepName, 
+                                        stepDescription, 
+                                        stepFunctionName, 
+                                        paramlist, 
+                                        stepLimitType, 
+                                        limits, 
+                                        seq.SeqXml);
                 blockNode.InsertNewStepBefore(index, newStep);
                 seq.SaveSequenceToXml();
 
