@@ -705,6 +705,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SequenceEditor";
             this.Text = "Sequence Editor";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SequenceEditor_KeyDown);
             this.sequenceEditorToolStrip.ResumeLayout(false);
             this.sequenceEditorToolStrip.PerformLayout();
             this.editorSplitContainer.Panel1.ResumeLayout(false);
