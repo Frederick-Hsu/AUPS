@@ -97,6 +97,13 @@ namespace Amphenol.AUPS
         private void textBoxStepName_TextChanged(object sender, EventArgs e)
         {
             string enteredStepNameText = textBoxStepName.Text;
+
+            /* Similar way as the "textBoxBlockName_TextChanged" event. */
+            if (treeViewSequence.SelectedNode == null)
+            {
+                return;
+            }
+
             /* Filter to modify the step name, not the block name. */
             if (treeViewSequence.SelectedNode.Tag is Step)      /* Scenario : user selected the step tree node. */
             {
@@ -135,8 +142,16 @@ namespace Amphenol.AUPS
         {
             string enteredBlockNameText = textBoxBlockName.Text;
 
+            /* Shielding from one special scenario that user has not selected any tree node 
+             * during loading sequence.xml and visualize the sequence to map into the tree view.
+             */
+            if (treeViewSequence.SelectedNode == null)
+            {
+                return;
+            }
+
             /* Filter to modify the block tree node, not the step node. */
-            if (treeViewSequence.SelectedNode.Tag is Block)     /* Scenario : user selected the block tree node.*/
+            if (treeViewSequence.SelectedNode.Tag is Block)    /* Scenario : user selected the block tree node.*/
             {
                 TreeNode blockTreeNode = treeViewSequence.SelectedNode;
                 blockTreeNode.Text = enteredBlockNameText;
