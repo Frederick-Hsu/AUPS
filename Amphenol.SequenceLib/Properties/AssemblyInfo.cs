@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Sequence")]
+[assembly: AssemblyTitle("Amphenol.SequenceLib")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Sequence")]
+[assembly: AssemblyProduct("Amphenol.SequenceLib")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("06c70c05-56d0-4edf-9d16-783d95509037")]
+[assembly: Guid("fa0a37c1-f916-43e8-a0cc-10eb2098f0d2")]
 
 // Version information for an assembly consists of the following four values:
 //

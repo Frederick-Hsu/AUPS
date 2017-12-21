@@ -57,10 +57,12 @@
             this.editorSplitContainer = new System.Windows.Forms.SplitContainer();
             this.treeViewSequence = new System.Windows.Forms.TreeView();
             this.sequenceTreeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addNewBlockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNewBlockAfterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNewBlockBeforeBlockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeCurrentSelectedBlockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sequenceToolStripMenuItemSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.addNewStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNewStepBeforeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeCurrentSelectedStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyCurrentSelectedStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutCurrentSelectedStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +70,11 @@
             this.labelItemList = new System.Windows.Forms.Label();
             this.editorTabControl = new System.Windows.Forms.TabControl();
             this.tabPageEditStep = new System.Windows.Forms.TabPage();
+            this.groupBoxBlockInfo = new System.Windows.Forms.GroupBox();
+            this.textBoxBlockName = new System.Windows.Forms.TextBox();
+            this.labelBlockName = new System.Windows.Forms.Label();
+            this.textBoxBlockNum = new System.Windows.Forms.TextBox();
+            this.labelBlockNo = new System.Windows.Forms.Label();
             this.groupBoxSpecification = new System.Windows.Forms.GroupBox();
             this.dataGridViewTestSpec = new System.Windows.Forms.DataGridView();
             this.comboBoxLimitType = new System.Windows.Forms.ComboBox();
@@ -97,6 +104,7 @@
             this.sequenceTreeContextMenuStrip.SuspendLayout();
             this.editorTabControl.SuspendLayout();
             this.tabPageEditStep.SuspendLayout();
+            this.groupBoxBlockInfo.SuspendLayout();
             this.groupBoxSpecification.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestSpec)).BeginInit();
             this.groupBoxTestFunctionParams.SuspendLayout();
@@ -151,6 +159,7 @@
             this.toolStripBtnSave.Size = new System.Drawing.Size(53, 49);
             this.toolStripBtnSave.Text = "Save";
             this.toolStripBtnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnSave.Click += new System.EventHandler(this.toolStripBtnSave_Click);
             // 
             // toolStripBtnSaveAs
             // 
@@ -160,6 +169,7 @@
             this.toolStripBtnSaveAs.Size = new System.Drawing.Size(78, 49);
             this.toolStripBtnSaveAs.Text = "Save As";
             this.toolStripBtnSaveAs.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnSaveAs.Click += new System.EventHandler(this.toolStripBtnSaveAs_Click);
             // 
             // toolStripSeparator1
             // 
@@ -238,6 +248,7 @@
             // 
             this.treeViewSequence.ContextMenuStrip = this.sequenceTreeContextMenuStrip;
             this.treeViewSequence.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewSequence.LabelEdit = true;
             this.treeViewSequence.Location = new System.Drawing.Point(0, 20);
             this.treeViewSequence.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeViewSequence.Name = "treeViewSequence";
@@ -262,68 +273,89 @@
             this.treeViewSequence.ShowNodeToolTips = true;
             this.treeViewSequence.Size = new System.Drawing.Size(397, 930);
             this.treeViewSequence.TabIndex = 3;
+            this.treeViewSequence.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewSequence_AfterLabelEdit);
             this.treeViewSequence.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSequence_AfterSelect);
             // 
             // sequenceTreeContextMenuStrip
             // 
             this.sequenceTreeContextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.sequenceTreeContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addNewBlockToolStripMenuItem,
+            this.addNewBlockAfterToolStripMenuItem,
+            this.addNewBlockBeforeBlockToolStripMenuItem,
             this.removeCurrentSelectedBlockToolStripMenuItem,
             this.sequenceToolStripMenuItemSeparator1,
             this.addNewStepToolStripMenuItem,
+            this.addNewStepBeforeToolStripMenuItem,
             this.removeCurrentSelectedStepToolStripMenuItem,
             this.copyCurrentSelectedStepToolStripMenuItem,
             this.cutCurrentSelectedStepToolStripMenuItem,
             this.pasteStepAfterCurrentSelectedStepToolStripMenuItem});
             this.sequenceTreeContextMenuStrip.Name = "sequenceTreeContextMenuStrip";
-            this.sequenceTreeContextMenuStrip.Size = new System.Drawing.Size(374, 220);
+            this.sequenceTreeContextMenuStrip.Size = new System.Drawing.Size(465, 280);
             // 
-            // addNewBlockToolStripMenuItem
+            // addNewBlockAfterToolStripMenuItem
             // 
-            this.addNewBlockToolStripMenuItem.Name = "addNewBlockToolStripMenuItem";
-            this.addNewBlockToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
-            this.addNewBlockToolStripMenuItem.Text = "Add new block";
+            this.addNewBlockAfterToolStripMenuItem.Name = "addNewBlockAfterToolStripMenuItem";
+            this.addNewBlockAfterToolStripMenuItem.Size = new System.Drawing.Size(464, 30);
+            this.addNewBlockAfterToolStripMenuItem.Text = "Add a new block after current selected block";
+            this.addNewBlockAfterToolStripMenuItem.Click += new System.EventHandler(this.addNewBlockAfterToolStripMenuItem_Click);
+            // 
+            // addNewBlockBeforeBlockToolStripMenuItem
+            // 
+            this.addNewBlockBeforeBlockToolStripMenuItem.Name = "addNewBlockBeforeBlockToolStripMenuItem";
+            this.addNewBlockBeforeBlockToolStripMenuItem.Size = new System.Drawing.Size(464, 30);
+            this.addNewBlockBeforeBlockToolStripMenuItem.Text = "Add a new block before current selected block";
+            this.addNewBlockBeforeBlockToolStripMenuItem.Click += new System.EventHandler(this.addNewBlockBeforeBlockToolStripMenuItem_Click);
             // 
             // removeCurrentSelectedBlockToolStripMenuItem
             // 
             this.removeCurrentSelectedBlockToolStripMenuItem.Name = "removeCurrentSelectedBlockToolStripMenuItem";
-            this.removeCurrentSelectedBlockToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.removeCurrentSelectedBlockToolStripMenuItem.Size = new System.Drawing.Size(464, 30);
             this.removeCurrentSelectedBlockToolStripMenuItem.Text = "Remove current selected block";
+            this.removeCurrentSelectedBlockToolStripMenuItem.Click += new System.EventHandler(this.removeCurrentSelectedBlockToolStripMenuItem_Click);
             // 
             // sequenceToolStripMenuItemSeparator1
             // 
             this.sequenceToolStripMenuItemSeparator1.Name = "sequenceToolStripMenuItemSeparator1";
-            this.sequenceToolStripMenuItemSeparator1.Size = new System.Drawing.Size(370, 6);
+            this.sequenceToolStripMenuItemSeparator1.Size = new System.Drawing.Size(461, 6);
             // 
             // addNewStepToolStripMenuItem
             // 
             this.addNewStepToolStripMenuItem.Name = "addNewStepToolStripMenuItem";
-            this.addNewStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.addNewStepToolStripMenuItem.Size = new System.Drawing.Size(464, 30);
             this.addNewStepToolStripMenuItem.Text = "Add new step";
+            this.addNewStepToolStripMenuItem.Click += new System.EventHandler(this.addNewStepToolStripMenuItem_Click);
+            // 
+            // addNewStepBeforeToolStripMenuItem
+            // 
+            this.addNewStepBeforeToolStripMenuItem.Name = "addNewStepBeforeToolStripMenuItem";
+            this.addNewStepBeforeToolStripMenuItem.Size = new System.Drawing.Size(464, 30);
+            this.addNewStepBeforeToolStripMenuItem.Text = "Add a new step before current selected step";
+            this.addNewStepBeforeToolStripMenuItem.Click += new System.EventHandler(this.addNewStepBeforeToolStripMenuItem_Click);
             // 
             // removeCurrentSelectedStepToolStripMenuItem
             // 
             this.removeCurrentSelectedStepToolStripMenuItem.Name = "removeCurrentSelectedStepToolStripMenuItem";
-            this.removeCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.removeCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(464, 30);
             this.removeCurrentSelectedStepToolStripMenuItem.Text = "Remove current selected step";
+            this.removeCurrentSelectedStepToolStripMenuItem.Click += new System.EventHandler(this.removeCurrentSelectedStepToolStripMenuItem_Click);
             // 
             // copyCurrentSelectedStepToolStripMenuItem
             // 
             this.copyCurrentSelectedStepToolStripMenuItem.Name = "copyCurrentSelectedStepToolStripMenuItem";
-            this.copyCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.copyCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(464, 30);
             this.copyCurrentSelectedStepToolStripMenuItem.Text = "Copy current selected step";
             // 
             // cutCurrentSelectedStepToolStripMenuItem
             // 
             this.cutCurrentSelectedStepToolStripMenuItem.Name = "cutCurrentSelectedStepToolStripMenuItem";
-            this.cutCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.cutCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(464, 30);
             this.cutCurrentSelectedStepToolStripMenuItem.Text = "Cut current selected step";
             // 
             // pasteStepAfterCurrentSelectedStepToolStripMenuItem
             // 
             this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Name = "pasteStepAfterCurrentSelectedStepToolStripMenuItem";
-            this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(373, 30);
+            this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(464, 30);
             this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Text = "Paste step after current selected step";
             // 
             // labelItemList
@@ -350,6 +382,7 @@
             // 
             // tabPageEditStep
             // 
+            this.tabPageEditStep.Controls.Add(this.groupBoxBlockInfo);
             this.tabPageEditStep.Controls.Add(this.groupBoxSpecification);
             this.tabPageEditStep.Controls.Add(this.groupBoxTestFunctionParams);
             this.tabPageEditStep.Controls.Add(this.groupBoxBasicTestStepInfo);
@@ -362,6 +395,55 @@
             this.tabPageEditStep.Text = "Edit step";
             this.tabPageEditStep.UseVisualStyleBackColor = true;
             // 
+            // groupBoxBlockInfo
+            // 
+            this.groupBoxBlockInfo.Controls.Add(this.textBoxBlockName);
+            this.groupBoxBlockInfo.Controls.Add(this.labelBlockName);
+            this.groupBoxBlockInfo.Controls.Add(this.textBoxBlockNum);
+            this.groupBoxBlockInfo.Controls.Add(this.labelBlockNo);
+            this.groupBoxBlockInfo.Location = new System.Drawing.Point(17, 8);
+            this.groupBoxBlockInfo.Name = "groupBoxBlockInfo";
+            this.groupBoxBlockInfo.Size = new System.Drawing.Size(1332, 71);
+            this.groupBoxBlockInfo.TabIndex = 3;
+            this.groupBoxBlockInfo.TabStop = false;
+            // 
+            // textBoxBlockName
+            // 
+            this.textBoxBlockName.Location = new System.Drawing.Point(548, 27);
+            this.textBoxBlockName.Name = "textBoxBlockName";
+            this.textBoxBlockName.Size = new System.Drawing.Size(774, 26);
+            this.textBoxBlockName.TabIndex = 9;
+            this.textBoxBlockName.Text = "Initialization";
+            this.textBoxBlockName.TextChanged += new System.EventHandler(this.textBoxBlockName_TextChanged);
+            // 
+            // labelBlockName
+            // 
+            this.labelBlockName.AutoSize = true;
+            this.labelBlockName.Location = new System.Drawing.Point(435, 33);
+            this.labelBlockName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelBlockName.Name = "labelBlockName";
+            this.labelBlockName.Size = new System.Drawing.Size(106, 20);
+            this.labelBlockName.TabIndex = 8;
+            this.labelBlockName.Text = "Block Name : ";
+            // 
+            // textBoxBlockNum
+            // 
+            this.textBoxBlockNum.Location = new System.Drawing.Point(162, 30);
+            this.textBoxBlockNum.Name = "textBoxBlockNum";
+            this.textBoxBlockNum.Size = new System.Drawing.Size(227, 26);
+            this.textBoxBlockNum.TabIndex = 7;
+            this.textBoxBlockNum.Text = "B1";
+            // 
+            // labelBlockNo
+            // 
+            this.labelBlockNo.AutoSize = true;
+            this.labelBlockNo.Location = new System.Drawing.Point(16, 33);
+            this.labelBlockNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelBlockNo.Name = "labelBlockNo";
+            this.labelBlockNo.Size = new System.Drawing.Size(88, 20);
+            this.labelBlockNo.TabIndex = 6;
+            this.labelBlockNo.Text = "Block No. : ";
+            // 
             // groupBoxSpecification
             // 
             this.groupBoxSpecification.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -369,7 +451,7 @@
             this.groupBoxSpecification.Controls.Add(this.dataGridViewTestSpec);
             this.groupBoxSpecification.Controls.Add(this.comboBoxLimitType);
             this.groupBoxSpecification.Controls.Add(this.labelLimitType);
-            this.groupBoxSpecification.Location = new System.Drawing.Point(10, 422);
+            this.groupBoxSpecification.Location = new System.Drawing.Point(10, 500);
             this.groupBoxSpecification.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxSpecification.Name = "groupBoxSpecification";
             this.groupBoxSpecification.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -423,7 +505,7 @@
             this.groupBoxTestFunctionParams.Controls.Add(this.labelParameters);
             this.groupBoxTestFunctionParams.Controls.Add(this.comboBoxTestFunctionName);
             this.groupBoxTestFunctionParams.Controls.Add(this.labelTestFunctionName);
-            this.groupBoxTestFunctionParams.Location = new System.Drawing.Point(9, 205);
+            this.groupBoxTestFunctionParams.Location = new System.Drawing.Point(9, 283);
             this.groupBoxTestFunctionParams.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxTestFunctionParams.Name = "groupBoxTestFunctionParams";
             this.groupBoxTestFunctionParams.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -537,7 +619,7 @@
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepDescription);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepName);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepNo);
-            this.groupBoxBasicTestStepInfo.Location = new System.Drawing.Point(9, 9);
+            this.groupBoxBasicTestStepInfo.Location = new System.Drawing.Point(9, 87);
             this.groupBoxBasicTestStepInfo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxBasicTestStepInfo.Name = "groupBoxBasicTestStepInfo";
             this.groupBoxBasicTestStepInfo.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -568,6 +650,7 @@
             this.textBoxStepName.Size = new System.Drawing.Size(665, 26);
             this.textBoxStepName.TabIndex = 4;
             this.textBoxStepName.Text = "Open COM port";
+            this.textBoxStepName.TextChanged += new System.EventHandler(this.textBoxStepName_TextChanged);
             // 
             // textBoxStepNo
             // 
@@ -622,6 +705,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SequenceEditor";
             this.Text = "Sequence Editor";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SequenceEditor_KeyDown);
             this.sequenceEditorToolStrip.ResumeLayout(false);
             this.sequenceEditorToolStrip.PerformLayout();
             this.editorSplitContainer.Panel1.ResumeLayout(false);
@@ -632,6 +716,8 @@
             this.sequenceTreeContextMenuStrip.ResumeLayout(false);
             this.editorTabControl.ResumeLayout(false);
             this.tabPageEditStep.ResumeLayout(false);
+            this.groupBoxBlockInfo.ResumeLayout(false);
+            this.groupBoxBlockInfo.PerformLayout();
             this.groupBoxSpecification.ResumeLayout(false);
             this.groupBoxSpecification.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestSpec)).EndInit();
@@ -684,7 +770,7 @@
         private System.Windows.Forms.ComboBox comboBoxLimitType;
         private System.Windows.Forms.DataGridView dataGridViewTestSpec;
         private System.Windows.Forms.ContextMenuStrip sequenceTreeContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem addNewBlockToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addNewBlockAfterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeCurrentSelectedBlockToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator sequenceToolStripMenuItemSeparator1;
         private System.Windows.Forms.ToolStripMenuItem addNewStepToolStripMenuItem;
@@ -692,5 +778,12 @@
         private System.Windows.Forms.ToolStripMenuItem copyCurrentSelectedStepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutCurrentSelectedStepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteStepAfterCurrentSelectedStepToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBoxBlockInfo;
+        private System.Windows.Forms.Label labelBlockNo;
+        private System.Windows.Forms.TextBox textBoxBlockNum;
+        private System.Windows.Forms.Label labelBlockName;
+        private System.Windows.Forms.TextBox textBoxBlockName;
+        private System.Windows.Forms.ToolStripMenuItem addNewBlockBeforeBlockToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addNewStepBeforeToolStripMenuItem;
     }
 }
