@@ -88,6 +88,14 @@ namespace Amphenol.AUPS
 
         private void addNewStepToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            /* Preventing from adding new step before loading sequence.xml, because no seq object was 
+             * instantiated, exception will happen while calling ParameterList and Spec constructors.
+             */
+            if (!((treeViewSequence.SelectedNode.Tag is Step) || (treeViewSequence.SelectedNode.Tag is Block)))
+            {
+                return;
+            }
+
             string stepNo = textBoxStepNo.Text;
             string stepName = textBoxStepName.Text;
             string stepDescription = textBoxStepDescription.Text;
@@ -155,10 +163,10 @@ namespace Amphenol.AUPS
                 newStepTreeNode.BeginEdit();
 
                 /* Synchronously add a new <step> node into the XML file */
-                Step newStep = new Step(stepNo, 
-                                        stepName, 
-                                        stepDescription, 
-                                        stepFunctionName, 
+                Step newStep = new Step("",     // stepNo, 
+                                        "New step, please assign your step name",     //stepName, 
+                                        "",     // stepDescription, 
+                                        "",     // stepFunctionName, 
                                         paramlist, 
                                         stepLimitType, 
                                         limits, 
@@ -187,10 +195,10 @@ namespace Amphenol.AUPS
                 newStepTreeNode.BeginEdit();
 
                 /* Sync to add a new <step> node into XML file. */
-                Step newStep = new Step(stepNo,
-                                        stepName,
-                                        stepDescription,
-                                        stepFunctionName,
+                Step newStep = new Step("",     // stepNo, 
+                                        "New step, please assign your step name",     //stepName, 
+                                        "",     // stepDescription, 
+                                        "",     // stepFunctionName, 
                                         paramlist,
                                         stepLimitType,
                                         limits,
@@ -205,6 +213,14 @@ namespace Amphenol.AUPS
 
         private void addNewStepBeforeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            /* Preventing from adding new step before loading sequence.xml, because no seq object was 
+             * instantiated, exception will happen while calling ParameterList and Spec constructors.
+             */
+            if (!((treeViewSequence.SelectedNode.Tag is Step) || (treeViewSequence.SelectedNode.Tag is Block)))
+            {
+                return;
+            }
+
             string stepNo = textBoxStepNo.Text;
             string stepName = textBoxStepName.Text;
             string stepDescription = textBoxStepDescription.Text;
@@ -272,10 +288,10 @@ namespace Amphenol.AUPS
                 newStepTreeNode.BeginEdit();
 
                 /* Synch to add a new <step> node into the XML file. */
-                Step newStep = new Step(stepNo, 
-                                        stepName, 
-                                        stepDescription, 
-                                        stepFunctionName, 
+                Step newStep = new Step("",     // stepNo, 
+                                        "New step, please assign your step name",     //stepName, 
+                                        "",     // stepDescription, 
+                                        "",     // stepFunctionName, 
                                         paramlist, 
                                         stepLimitType, 
                                         limits, 

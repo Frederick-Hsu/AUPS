@@ -74,6 +74,21 @@
         <limit>15</limit>
       </spec>
     </step>
+    <step>
+      <stepnum>S2.2</stepnum>
+      <stepname>Check the LED indicators' status</stepname>
+      <stepdescription>Make sure DUT's 3 LEDs can work well, DUT starts to work after power on.</stepdescription>
+      <functionname>ProjTestItem.CheckLED</functionname>
+      <parameterlist>
+        <parameter>PowerLED</parameter>
+        <parameter>LinkLED</parameter>
+        <parameter>DataLED</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
   </block>
   <block>
     <blocknum>B3</blocknum>
@@ -115,6 +130,24 @@
     <blocknum>B4</blocknum>
     <blockname>RF calibration and validation</blockname>
     <step>
+      <stepnum>S4.1</stepnum>
+      <stepname>Network analyzer configuration</stepname>
+      <stepdescription>Configure the Agilent network analyzer NA3692B.</stepdescription>
+      <functionname>ProjectTestItem.CheckStatus</functionname>
+      <parameterlist>
+        <parameter>IP:192.168.10.13</parameter>
+        <parameter>Port:1205</parameter>
+        <parameter>Cleanup</parameter>
+        <parameter>SmithDiagram</parameter>
+        <parameter>BaudDiagram</parameter>
+        <parameter>AttenuationPath</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
       <stepnum>S10</stepnum>
       <stepname>Power meter configuration</stepname>
       <stepdescription>Configure the power meter (Agilent P73A2) and calibrate its base power.</stepdescription>
@@ -151,6 +184,22 @@
         <limit>20.5</limit>
         <limit>25.0</limit>
         <limit>28.5</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>S8</stepnum>
+      <stepname>Measure S12 Smith-Baud attenuation feature</stepname>
+      <stepdescription>View the Smith-Baud diagram in the network analyzer, and acquire the attenuation path feature.</stepdescription>
+      <functionname>ProjTestItem.MeasureS12Attenuation</functionname>
+      <parameterlist>
+        <parameter>FreqBand:Start:2.35GHz</parameter>
+        <parameter>FreqBand:End:2.45GHz</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>8dB</limit>
+        <limit>10dB</limit>
+        <limit>12dB</limit>
       </spec>
     </step>
   </block>

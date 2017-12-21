@@ -65,6 +65,59 @@ namespace Amphenol.SequenceLib
             }
         }
 
+        public void CreateNewSequence(string sequenceXmlFile)
+        {
+            seqFileName = sequenceXmlFile;
+            blocks = new List<Block>();
+            blockXmlNodes = new List<XmlNode>();
+
+            seqXml = new XmlDocument();
+            XmlDeclaration declaration = seqXml.CreateXmlDeclaration("1.0", "UTF-8", "");
+            seqXml.AppendChild(declaration);
+
+            /* Create the <sequence> root node */
+            sequenceNode = seqXml.CreateElement("sequence");
+            seqXml.AppendChild(sequenceNode);
+
+            /* Create the <parameterlist> node */
+            List<string> parameterList = new List<string>();
+            parameterList.Add("");
+            ParameterList parameters = new ParameterList(parameterList, SeqXml);
+            XmlNode parameterlistNode = parameters.CurrentParameterListNode;
+
+            /* Create the <spec> node */
+            List<string> limits = new List<string>();
+            limits.Add("OK");
+            Spec spec = new Spec(limits, seqXml);
+            XmlNode specNode = spec.CurrentSpecNode;
+
+            /* Create a dummy <step> node */
+            Step dummyStep = new Step("1.1",
+                                      "First step, please edit your step name",
+                                      "This is a new step",
+                                      "", 
+                                      parameters,
+                                      "String",
+                                      spec,
+                                      SeqXml);
+            XmlNode stepNode = dummyStep.CurrentStepNode;
+
+            /* Create a new <block> node */
+            Block newBlock = new Block("B1", 
+                                       "First block, please edit your block name", 
+                                       seqXml);
+            newBlock.AddNewStep(dummyStep);
+            blocks.Add(newBlock);
+
+            XmlNode blockNode = newBlock.CurrentBlockNode;
+            blockXmlNodes.Add(newBlock.CurrentBlockNode);
+
+            /* Append the <block> node under <sequence> node */
+            sequenceNode.AppendChild(blockNode);
+
+            /* Save the new created sequence.xml file */
+            seqXml.Save(seqFileName);
+        }
         /******************************************************************************************/
         public void SaveSequenceToXml()
         {

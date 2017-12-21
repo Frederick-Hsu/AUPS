@@ -249,6 +249,37 @@ namespace Amphenol.AUPS
             }
         }
 
+        private void toolStripBtnNew_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Enter your sequence XML file name, and save.";
+            
+            if (previousOpenedDirectory == string.Empty)
+            {
+                dlg.InitialDirectory = @"C:\";
+            }
+            else
+            {
+                dlg.InitialDirectory = previousOpenedDirectory;
+            }
+            dlg.DefaultExt = "xml";
+            dlg.Filter = "XML file | *.xml";
+            dlg.AddExtension = true;
+
+            if (dlg.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            /* Create new sequence instance, and save into user-specified sequence.xml file. */
+            seq = new Sequence();
+            seq.CreateNewSequence(dlg.FileName);
+
+            /* Change the previous directory accordingly */
+            previousOpenedDirectory = Path.GetFullPath(dlg.FileName);
+            toolStripTextBoxSequenceFilePath.Text = dlg.FileName;
+
+            VisualizeSequenceInTreeView(seq);
+        }
 
         /*=========================================================================================*/
 
