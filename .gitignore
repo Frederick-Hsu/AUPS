@@ -13,6 +13,7 @@ SequenceLib/
 XmlSerialization/
 ManipulateXML/
 DataContractSerialization/
+ManipulateClipboard/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
