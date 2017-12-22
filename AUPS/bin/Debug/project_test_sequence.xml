@@ -74,6 +74,21 @@
         <limit>15</limit>
       </spec>
     </step>
+    <step>
+      <stepnum>S2.2</stepnum>
+      <stepname>Check the LED indicators' status</stepname>
+      <stepdescription>Make sure DUT's 3 LEDs can work well, DUT starts to work after power on.</stepdescription>
+      <functionname>ProjTestItem.CheckLED</functionname>
+      <parameterlist>
+        <parameter>PowerLED</parameter>
+        <parameter>LinkLED</parameter>
+        <parameter>DataLED</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
   </block>
   <block>
     <blocknum>B3</blocknum>
@@ -149,6 +164,22 @@
         <limit>-32.5</limit>
         <limit>-30</limit>
         <limit>-28.5</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>SP10</stepnum>
+      <stepname>Measure the peak power for remote key</stepname>
+      <stepdescription>RF transmitting power at 433MHz</stepdescription>
+      <functionname>ProjTestitem.MeasureTxPower</functionname>
+      <parameterlist>
+        <parameter>Freq:2.4GHz</parameter>
+        <parameter>Attenuation:10dB</parameter>
+        <parameter>Span:160KHz</parameter>
+        <parameter>BasePower:-25dBm</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>Peak power is out of spec.</limit>
       </spec>
     </step>
   </block>
@@ -262,6 +293,23 @@
       </spec>
     </step>
     <step>
+      <stepnum>S2</stepnum>
+      <stepname>Communicate with DMM</stepname>
+      <stepdescription>Connect with DMM over the GPIB interface</stepdescription>
+      <functionname>ProjectTestItem.ConnectDmm</functionname>
+      <parameterlist>
+        <parameter>PRIM:23</parameter>
+        <parameter>SECN:15</parameter>
+        <parameter>TIMEOUT:200</parameter>
+        <parameter>
+        </parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
       <stepnum>S9</stepnum>
       <stepname>Network analyzer settings</stepname>
       <stepdescription>Setup the network analyzer (Agilent A6530B)</stepdescription>
@@ -309,22 +357,6 @@
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
-      </spec>
-    </step>
-    <step>
-      <stepnum>SP10</stepnum>
-      <stepname>Measure the peak power for remote key</stepname>
-      <stepdescription>RF transmitting power at 433MHz</stepdescription>
-      <functionname>ProjTestitem.MeasureTxPower</functionname>
-      <parameterlist>
-        <parameter>Freq:2.4GHz</parameter>
-        <parameter>Attenuation:10dB</parameter>
-        <parameter>Span:160KHz</parameter>
-        <parameter>BasePower:-25dBm</parameter>
-      </parameterlist>
-      <limittype>String</limittype>
-      <spec>
-        <limit>Peak power is out of spec.</limit>
       </spec>
     </step>
   </block>
