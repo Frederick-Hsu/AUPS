@@ -80,5 +80,71 @@ namespace Amphenol.AUPS
             /* At last, please remember to discard the intermediateStep object after each pasting. */
             intermediateStep = null;
         }
+
+        private void toolStripBtnCopyStep_Click(object sender, EventArgs e)
+        {
+            /* This toolbar button only activates when user selected step tree node */
+            if (treeViewSequence.SelectedNode.Tag is Step)
+            {
+                TreeNode currentSelectedStepTreeNode = treeViewSequence.SelectedNode;
+                Step copiedStep = currentSelectedStepTreeNode.Tag as Step;
+
+                intermediateStep = copiedStep;
+            }
+        }
+
+        private void toolStripBtnCutStep_Click(object sender, EventArgs e)
+        {
+            if (treeViewSequence.SelectedNode.Tag is Step)
+            {
+                TreeNode currentSelectedStepTreeNode = treeViewSequence.SelectedNode;
+                Step currentStepNode = currentSelectedStepTreeNode.Tag as Step;
+
+                TreeNode currentBlockTreeNode = currentSelectedStepTreeNode.Parent;
+                Block currentBlockNode = currentBlockTreeNode.Tag as Block;
+
+                intermediateStep = currentStepNode;     /* Assign the currentStepNode to the intermediate */
+
+                /* Remove current selected step tree node */
+                currentBlockTreeNode.Nodes.Remove(currentSelectedStepTreeNode);
+                /* and sync to remove the <step> node from XML file */
+                currentBlockNode.RemoveSpecifiedStep(currentStepNode);
+                seq.SaveSequenceToXml();
+            }
+        }
+
+        private void toolStripBtnPasteStep_Click(object sender, EventArgs e)
+        {
+            if (treeViewSequence.SelectedNode.Tag is Step)
+            {
+                TreeNode currentSelectedStepTreeNode = treeViewSequence.SelectedNode;
+                Step currentStepNode = currentSelectedStepTreeNode.Tag as Step;
+
+                TreeNode currentBlockTreeNode = currentSelectedStepTreeNode.Parent;
+                Block currentBlock = currentBlockTreeNode.Tag as Block;
+                int index = treeViewSequence.SelectedNode.Index;
+
+                if (intermediateStep == null)
+                {
+                    return;
+                }
+                Step stepToPaste = intermediateStep;    /* Retrieve the Step object from the intermediate */
+
+                /* Insert this Step object after current selected step tree node. */
+                TreeNode stepTreeNodeToPaste = new TreeNode();
+                stepTreeNodeToPaste.Text = stepToPaste.StepName;
+                stepTreeNodeToPaste.Tag = stepToPaste;
+
+                currentBlockTreeNode.Nodes.Insert(index + 1, stepTreeNodeToPaste);
+                treeViewSequence.LabelEdit = true;
+
+                /* meanwhile, remember to insert the <step> node into sequence.xml file */
+                currentBlock.InsertNewStepAfter(index, stepToPaste);
+                seq.SaveSequenceToXml();
+
+                /* At last, please remember to discard the intermediateStep object after each pasting. */
+                intermediateStep = null;
+            }
+        }
     }
 }
