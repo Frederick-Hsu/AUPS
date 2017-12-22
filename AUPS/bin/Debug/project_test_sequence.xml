@@ -74,21 +74,6 @@
         <limit>15</limit>
       </spec>
     </step>
-    <step>
-      <stepnum>S2.2</stepnum>
-      <stepname>Check the LED indicators' status</stepname>
-      <stepdescription>Make sure DUT's 3 LEDs can work well, DUT starts to work after power on.</stepdescription>
-      <functionname>ProjTestItem.CheckLED</functionname>
-      <parameterlist>
-        <parameter>PowerLED</parameter>
-        <parameter>LinkLED</parameter>
-        <parameter>DataLED</parameter>
-      </parameterlist>
-      <limittype>String</limittype>
-      <spec>
-        <limit>OK</limit>
-      </spec>
-    </step>
   </block>
   <block>
     <blocknum>B3</blocknum>
@@ -243,6 +228,21 @@
         <limit>-39.5</limit>
       </spec>
     </step>
+    <step>
+      <stepnum>S2.2</stepnum>
+      <stepname>Check the LED indicators' status</stepname>
+      <stepdescription>Make sure DUT's 3 LEDs can work well, DUT starts to work after power on.</stepdescription>
+      <functionname>ProjTestItem.CheckLED</functionname>
+      <parameterlist>
+        <parameter>PowerLED</parameter>
+        <parameter>LinkLED</parameter>
+        <parameter>DataLED</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
   </block>
   <block>
     <blocknum>B6</blocknum>
@@ -294,6 +294,21 @@
         <limit>-32.5</limit>
         <limit>-30</limit>
         <limit>-28.5</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>S3</stepnum>
+      <stepname>Configure network</stepname>
+      <stepdescription>Configure the ethernet for the distributed test stations</stepdescription>
+      <functionname>ProjecttestItem.ConfigNetwork</functionname>
+      <parameterlist>
+        <parameter>IP:192.168.10.105</parameter>
+        <parameter>PORT:3680</parameter>
+        <parameter>SOCKET:UDP</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
       </spec>
     </step>
     <step>
