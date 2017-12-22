@@ -194,6 +194,7 @@
             this.toolStripBtnCopyStep.Size = new System.Drawing.Size(64, 39);
             this.toolStripBtnCopyStep.Text = "Copy step";
             this.toolStripBtnCopyStep.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnCopyStep.Click += new System.EventHandler(this.toolStripBtnCopyStep_Click);
             // 
             // toolStripBtnCutStep
             // 
@@ -203,6 +204,7 @@
             this.toolStripBtnCutStep.Size = new System.Drawing.Size(55, 39);
             this.toolStripBtnCutStep.Text = "Cut step";
             this.toolStripBtnCutStep.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnCutStep.Click += new System.EventHandler(this.toolStripBtnCutStep_Click);
             // 
             // toolStripBtnPasteStep
             // 
@@ -212,6 +214,7 @@
             this.toolStripBtnPasteStep.Size = new System.Drawing.Size(64, 39);
             this.toolStripBtnPasteStep.Text = "Paste step";
             this.toolStripBtnPasteStep.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnPasteStep.Click += new System.EventHandler(this.toolStripBtnPasteStep_Click);
             // 
             // toolStripSeparator2
             // 
