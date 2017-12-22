@@ -194,6 +194,7 @@
             this.toolStripBtnCopyStep.Size = new System.Drawing.Size(64, 39);
             this.toolStripBtnCopyStep.Text = "Copy step";
             this.toolStripBtnCopyStep.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnCopyStep.Click += new System.EventHandler(this.toolStripBtnCopyStep_Click);
             // 
             // toolStripBtnCutStep
             // 
@@ -203,6 +204,7 @@
             this.toolStripBtnCutStep.Size = new System.Drawing.Size(55, 39);
             this.toolStripBtnCutStep.Text = "Cut step";
             this.toolStripBtnCutStep.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnCutStep.Click += new System.EventHandler(this.toolStripBtnCutStep_Click);
             // 
             // toolStripBtnPasteStep
             // 
@@ -212,6 +214,7 @@
             this.toolStripBtnPasteStep.Size = new System.Drawing.Size(64, 39);
             this.toolStripBtnPasteStep.Text = "Paste step";
             this.toolStripBtnPasteStep.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnPasteStep.Click += new System.EventHandler(this.toolStripBtnPasteStep_Click);
             // 
             // toolStripSeparator2
             // 
@@ -343,18 +346,21 @@
             this.copyCurrentSelectedStepToolStripMenuItem.Name = "copyCurrentSelectedStepToolStripMenuItem";
             this.copyCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(318, 22);
             this.copyCurrentSelectedStepToolStripMenuItem.Text = "Copy current selected step";
+            this.copyCurrentSelectedStepToolStripMenuItem.Click += new System.EventHandler(this.copyCurrentSelectedStepToolStripMenuItem_Click);
             // 
             // cutCurrentSelectedStepToolStripMenuItem
             // 
             this.cutCurrentSelectedStepToolStripMenuItem.Name = "cutCurrentSelectedStepToolStripMenuItem";
             this.cutCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(318, 22);
             this.cutCurrentSelectedStepToolStripMenuItem.Text = "Cut current selected step";
+            this.cutCurrentSelectedStepToolStripMenuItem.Click += new System.EventHandler(this.cutCurrentSelectedStepToolStripMenuItem_Click);
             // 
             // pasteStepAfterCurrentSelectedStepToolStripMenuItem
             // 
             this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Name = "pasteStepAfterCurrentSelectedStepToolStripMenuItem";
             this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Size = new System.Drawing.Size(318, 22);
             this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Text = "Paste step after current selected step";
+            this.pasteStepAfterCurrentSelectedStepToolStripMenuItem.Click += new System.EventHandler(this.pasteStepAfterCurrentSelectedStepToolStripMenuItem_Click);
             // 
             // labelItemList
             // 

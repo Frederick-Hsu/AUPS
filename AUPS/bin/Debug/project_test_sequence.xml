@@ -166,6 +166,22 @@
         <limit>-28.5</limit>
       </spec>
     </step>
+    <step>
+      <stepnum>SP10</stepnum>
+      <stepname>Measure the peak power for remote key</stepname>
+      <stepdescription>RF transmitting power at 433MHz</stepdescription>
+      <functionname>ProjTestitem.MeasureTxPower</functionname>
+      <parameterlist>
+        <parameter>Freq:2.4GHz</parameter>
+        <parameter>Attenuation:10dB</parameter>
+        <parameter>Span:160KHz</parameter>
+        <parameter>BasePower:-25dBm</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>Peak power is out of spec.</limit>
+      </spec>
+    </step>
   </block>
   <block>
     <blocknum>B5</blocknum>
@@ -243,6 +259,21 @@
         <limit>-39.5</limit>
       </spec>
     </step>
+    <step>
+      <stepnum>S2.2</stepnum>
+      <stepname>Check the LED indicators' status</stepname>
+      <stepdescription>Make sure DUT's 3 LEDs can work well, DUT starts to work after power on.</stepdescription>
+      <functionname>ProjTestItem.CheckLED</functionname>
+      <parameterlist>
+        <parameter>PowerLED</parameter>
+        <parameter>LinkLED</parameter>
+        <parameter>DataLED</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
   </block>
   <block>
     <blocknum>B6</blocknum>
@@ -255,6 +286,23 @@
       <parameterlist>
         <parameter>IP:192.168.10.25</parameter>
         <parameter>PORT:2506</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>S2</stepnum>
+      <stepname>Communicate with DMM</stepname>
+      <stepdescription>Connect with DMM over the GPIB interface</stepdescription>
+      <functionname>ProjectTestItem.ConnectDmm</functionname>
+      <parameterlist>
+        <parameter>PRIM:23</parameter>
+        <parameter>SECN:15</parameter>
+        <parameter>TIMEOUT:200</parameter>
+        <parameter>
+        </parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
@@ -297,19 +345,18 @@
       </spec>
     </step>
     <step>
-      <stepnum>SP10</stepnum>
-      <stepname>Measure the peak power for remote key</stepname>
-      <stepdescription>RF transmitting power at 433MHz</stepdescription>
-      <functionname>ProjTestitem.MeasureTxPower</functionname>
+      <stepnum>S3</stepnum>
+      <stepname>Configure network</stepname>
+      <stepdescription>Configure the ethernet for the distributed test stations</stepdescription>
+      <functionname>ProjecttestItem.ConfigNetwork</functionname>
       <parameterlist>
-        <parameter>Freq:2.4GHz</parameter>
-        <parameter>Attenuation:10dB</parameter>
-        <parameter>Span:160KHz</parameter>
-        <parameter>BasePower:-25dBm</parameter>
+        <parameter>IP:192.168.10.105</parameter>
+        <parameter>PORT:3680</parameter>
+        <parameter>SOCKET:UDP</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
-        <limit>Peak power is out of spec.</limit>
+        <limit>OK</limit>
       </spec>
     </step>
   </block>
