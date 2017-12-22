@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlSerialization", "XmlSeri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataContractSerialization", "DataContractSerialization\DataContractSerialization.csproj", "{BF912A3A-0F6E-43B5-ADC8-05DA4F3684DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManipulateClipboard", "ManipulateClipboard\ManipulateClipboard.csproj", "{257174B5-3108-4B6B-AD5F-54070C97AA4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{BF912A3A-0F6E-43B5-ADC8-05DA4F3684DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF912A3A-0F6E-43B5-ADC8-05DA4F3684DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF912A3A-0F6E-43B5-ADC8-05DA4F3684DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{257174B5-3108-4B6B-AD5F-54070C97AA4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{257174B5-3108-4B6B-AD5F-54070C97AA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{257174B5-3108-4B6B-AD5F-54070C97AA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{257174B5-3108-4B6B-AD5F-54070C97AA4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
