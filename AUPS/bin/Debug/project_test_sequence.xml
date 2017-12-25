@@ -16,11 +16,9 @@
         <parameter>PARITY:none</parameter>
         <parameter>CRC:none</parameter>
       </parameterlist>
-      <limittype>Numerical</limittype>
+      <limittype>String</limittype>
       <spec>
-        <limit>12.5</limit>
-        <limit>15</limit>
-        <limit>17.5</limit>
+        <limit>OK</limit>
       </spec>
     </step>
     <step>
