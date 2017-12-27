@@ -84,6 +84,9 @@
     <Compile Include="TestPanel\TestPanel.Designer.cs">
       <DependentUpon>TestPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestPanel\TestPanel_ToolbarEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
