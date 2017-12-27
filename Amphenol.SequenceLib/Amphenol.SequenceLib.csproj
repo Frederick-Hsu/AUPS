@@ -48,6 +48,12 @@
     <Compile Include="Serialization.cs" />
     <Compile Include="Spec.cs" />
     <Compile Include="Step.cs" />
+    <Compile Include="TestBlock.cs" />
+    <Compile Include="TestConclusion.cs" />
+    <Compile Include="TestParameterList.cs" />
+    <Compile Include="TestSequence.cs" />
+    <Compile Include="TestSpec.cs" />
+    <Compile Include="TestStep.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UML_Diagram.cd" />
