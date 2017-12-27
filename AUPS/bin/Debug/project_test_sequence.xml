@@ -22,9 +22,11 @@
         <result>OK</result>
       </spec>
       <conclusion>
-      	<status>Pass</status>
-      	<errorcode></errorcode>
-      	<errordescription></errordescription>
+        <status>Pass</status>
+        <errorcode>
+        </errorcode>
+        <errordescription>
+        </errordescription>
       </conclusion>
     </step>
     <step>
@@ -45,9 +47,11 @@
         <result>OK</result>
       </spec>
       <conclusion>
-      	<status>Pass</status>
-      	<errorcode></errorcode>
-      	<errordescription></errordescription>
+        <status>Pass</status>
+        <errorcode>
+        </errorcode>
+        <errordescription>
+        </errordescription>
       </conclusion>
     </step>
     <step>
@@ -66,9 +70,9 @@
         <result>OK</result>
       </spec>
       <conclusion>
-      	<status>Fail</status>
-      	<errorcode>NA05F</errorcode>
-      	<errordescription>Network analyzer disconnect GPIB.</errordescription>
+        <status>Fail</status>
+        <errorcode>NA05F</errorcode>
+        <errordescription>Network analyzer disconnect GPIB.</errordescription>
       </conclusion>
     </step>
   </block>
@@ -88,12 +92,13 @@
         <limit>10</limit>
         <limit>12</limit>
         <limit>15</limit>
-        <result>13</result>
       </spec>
       <conclusion>
-      	<status>Pass</status>
-      	<errorcode></errorcode>
-      	<errordescription></errordescription>
+        <status>Pass</status>
+        <errorcode>
+        </errorcode>
+        <errordescription>
+        </errordescription>
       </conclusion>
     </step>
     <step>
