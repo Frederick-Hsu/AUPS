@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Amphenol.Project.X577;
 
 namespace Amphenol.SequenceLib
 {
@@ -95,6 +96,37 @@ namespace Amphenol.SequenceLib
         public TestConclusion StepConclusion
         {
             get { return stepConclusion; }
+        }
+
+        /******************************************************************************************/
+
+        public bool PerformTestStep(XmlDocument doc)
+        {
+            string stepResult = string.Empty;
+            string stepStatus = string.Empty;
+            string stepErrorCode = string.Empty;
+            string stepErrorDescription = string.Empty;
+
+            bool success = TestItems.Execute(stepFunctionName,
+                                             stepParamList.Parameters,
+                                             stepSpec.Limits,
+                                             out stepResult,
+                                             out stepStatus,
+                                             out stepErrorCode,
+                                             out stepErrorDescription);
+
+            stepSpec.UpdateTestResult(stepResult, doc);
+
+            if (stepConclusion == null)
+            {
+                stepConclusion = new TestConclusion(stepStatus, stepErrorCode, stepErrorDescription, doc);
+                currentStepNode.AppendChild(stepConclusion.CurrentConclusionNode.CloneNode(true));
+            }
+            else
+            {
+                stepConclusion.UpdateTestConclusion(stepStatus, stepErrorCode, stepDescription, doc);
+            }
+            return success;
         }
     }
 }
