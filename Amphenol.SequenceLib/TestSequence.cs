@@ -44,5 +44,10 @@ namespace Amphenol.SequenceLib
         {
             get { return currentSequenceNode; }
         }
+
+        public void SaveAsTestRecord(string recordXmlFile)
+        {
+            seqXmlDoc.Save(recordXmlFile);
+        }
     }
 }
