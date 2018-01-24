@@ -7,7 +7,7 @@ namespace Amphenol.AUPS
     partial class TestPanel
     {
         private static string prevOpenedDir = "";
-        private TestSequence testSeq;
+        private TestSequence testSeq = null;
 
         private void toolStripBtnOpenSequence_Click(object sender, EventArgs e)
         {

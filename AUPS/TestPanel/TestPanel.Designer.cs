@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestPanel));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Open COM port");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Coomunicate with DMM");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Configure network");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Initialization", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Measure VDD");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Measure Vref");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Voltage measurement", new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6});
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Open COM port");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Coomunicate with DMM");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Configure network");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Initialization", new System.Windows.Forms.TreeNode[] {
+            treeNode15,
+            treeNode16,
+            treeNode17});
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Measure VDD");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Measure Vref");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Voltage measurement", new System.Windows.Forms.TreeNode[] {
+            treeNode19,
+            treeNode20});
             this.cellToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripBtnOpenSequence = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnSettings = new System.Windows.Forms.ToolStripButton();
@@ -331,6 +331,7 @@
             this.btnEnd.TabIndex = 2;
             this.btnEnd.Text = "&End";
             this.btnEnd.UseVisualStyleBackColor = true;
+            this.btnEnd.Visible = false;
             // 
             // btnStart
             // 
@@ -480,23 +481,23 @@
             this.treeViewSequenceItemList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewSequenceItemList.Location = new System.Drawing.Point(0, 23);
             this.treeViewSequenceItemList.Name = "treeViewSequenceItemList";
-            treeNode1.Name = "Block1_Item1";
-            treeNode1.Text = "Open COM port";
-            treeNode2.Name = "Blcok1_Item2";
-            treeNode2.Text = "Coomunicate with DMM";
-            treeNode3.Name = "Block1_Item3";
-            treeNode3.Text = "Configure network";
-            treeNode4.Name = "Block1";
-            treeNode4.Text = "Initialization";
-            treeNode5.Name = "Block2_Item1";
-            treeNode5.Text = "Measure VDD";
-            treeNode6.Name = "Block2_Item2";
-            treeNode6.Text = "Measure Vref";
-            treeNode7.Name = "Block2";
-            treeNode7.Text = "Voltage measurement";
+            treeNode15.Name = "Block1_Item1";
+            treeNode15.Text = "Open COM port";
+            treeNode16.Name = "Blcok1_Item2";
+            treeNode16.Text = "Coomunicate with DMM";
+            treeNode17.Name = "Block1_Item3";
+            treeNode17.Text = "Configure network";
+            treeNode18.Name = "Block1";
+            treeNode18.Text = "Initialization";
+            treeNode19.Name = "Block2_Item1";
+            treeNode19.Text = "Measure VDD";
+            treeNode20.Name = "Block2_Item2";
+            treeNode20.Text = "Measure Vref";
+            treeNode21.Name = "Block2";
+            treeNode21.Text = "Voltage measurement";
             this.treeViewSequenceItemList.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode7});
+            treeNode18,
+            treeNode21});
             this.treeViewSequenceItemList.Size = new System.Drawing.Size(208, 590);
             this.treeViewSequenceItemList.TabIndex = 1;
             this.treeViewSequenceItemList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSequenceItemList_AfterSelect);
