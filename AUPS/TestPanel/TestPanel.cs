@@ -64,10 +64,5 @@ namespace Amphenol.AUPS
             this.Text = "Test Panel (" + counter.ToString() + ") : " + testStationName;
             // textBoxSerialNum.Focus();
         }
-
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            /* Implement the Click event method here */
-        }
     }
 }
