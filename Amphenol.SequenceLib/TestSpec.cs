@@ -48,5 +48,22 @@ namespace Amphenol.SequenceLib
             get { return result; }
             set { result = value; }
         }
+
+        public void UpdateTestResult(string testResult, XmlDocument doc)
+        {
+            result = testResult;
+
+            XmlNode resultNode = currentSpecNode.SelectSingleNode("result");
+            if (resultNode != null)
+            {
+                resultNode.InnerText = testResult;
+            }
+            else
+            {
+                resultNode = doc.CreateElement("result");
+                resultNode.InnerText = testResult;
+                currentSpecNode.AppendChild(resultNode);
+            }
+        }
     }
 }
