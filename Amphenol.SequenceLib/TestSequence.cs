@@ -49,5 +49,20 @@ namespace Amphenol.SequenceLib
         {
             seqXmlDoc.Save(recordXmlFile);
         }
+
+        public int TotalBlockNum()
+        {
+            return testBlockList.Count;
+        }
+
+        public int TotalStepNum()
+        {
+            int num = 0;
+            foreach (TestBlock block in testBlockList)
+            {
+                num += block.TestStepList.Count;
+            }
+            return num;
+        }
     }
 }

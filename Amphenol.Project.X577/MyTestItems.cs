@@ -21,7 +21,7 @@ namespace Amphenol.Project.X577
             try
             {
                 serial = new SerialPort(comnum, baud, Parity.None, databits, StopBits.One);
-                serial.Open();
+                // serial.Open();
             }
             catch (System.IO.IOException exception)
             {

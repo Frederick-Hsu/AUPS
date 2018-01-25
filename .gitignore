@@ -15,6 +15,7 @@ XmlSerialization/
 ManipulateXML/
 DataContractSerialization/
 ManipulateClipboard/
+ProgressBarDemo/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

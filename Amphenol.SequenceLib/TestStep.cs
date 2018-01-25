@@ -25,35 +25,51 @@ namespace Amphenol.SequenceLib
             /* Retrieve the <stepnum> node */
             XmlNode stepnumNode = stepNode.SelectSingleNode("stepnum");
             if (stepnumNode != null)
+            {
                 stepNum = stepnumNode.InnerText;
+            }
             /* Retrieve the <stepname> node */
             XmlNode stepNameNode = stepNode.SelectSingleNode("stepname");
             if (stepNameNode != null)
+            {
                 stepName = stepNameNode.InnerText;
+            }
             /* Retrieve the <stepdescription> node */
             XmlNode stepDescriptionNode = stepNode.SelectSingleNode("stepdescription");
             if (stepDescriptionNode != null)
+            {
                 stepDescription = stepDescriptionNode.InnerText;
+            }
             /* Retrieve the <functionname> node */
             XmlNode stepFunctionNameNode = stepNode.SelectSingleNode("functionname");
             if (stepFunctionNameNode != null)
+            {
                 stepFunctionName = stepFunctionNameNode.InnerText;
+            }
             /* Retrieve the <parameterlist> node */
             XmlNode stepParameterListNode = stepNode.SelectSingleNode("parameterlist");
             if (stepParameterListNode != null)
+            {
                 stepParamList = new TestParameterList(stepParameterListNode);
+            }
             /* Retrieve the <limittype> node */
             XmlNode stepLimitTypeNode = stepNode.SelectSingleNode("limittype");
             if (stepLimitTypeNode != null)
+            {
                 stepLimitType = stepLimitTypeNode.InnerText;
+            }
             /*Retrieve the <spec> node */
             XmlNode stepSpecNode = stepNode.SelectSingleNode("spec");
             if (stepSpecNode != null)
+            {
                 stepSpec = new TestSpec(stepSpecNode);
+            }
             /* Retrieve the <conclusion> node */
             XmlNode stepConclusionNode = stepNode.SelectSingleNode("conclusion");
             if (stepConclusionNode != null)
+            {
                 stepConclusion = new TestConclusion(stepConclusionNode);
+            }
         }
 
         public XmlNode CurrentStepNode
