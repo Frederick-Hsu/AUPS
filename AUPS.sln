@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amphenol.SequenceLib", "Amp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amphenol.Project.X577", "Amphenol.Project.X577\Amphenol.Project.X577.csproj", "{EAD45F69-6789-4FF5-A44E-6DB3E69B96A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amphenol.Instruments", "Amphenol.Instruments\Amphenol.Instruments.csproj", "{3589C3EB-F46A-42E6-B7DE-9C4471302719}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +25,16 @@ Global
 		{FA0A37C1-F916-43E8-A0CC-10EB2098F0D2}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{FA0A37C1-F916-43E8-A0CC-10EB2098F0D2}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{FA0A37C1-F916-43E8-A0CC-10EB2098F0D2}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{FA0A37C1-F916-43E8-A0CC-10EB2098F0D2}.Release|Any CPU.Deploy.0 = Debug|Any CPU
 		{EAD45F69-6789-4FF5-A44E-6DB3E69B96A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EAD45F69-6789-4FF5-A44E-6DB3E69B96A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAD45F69-6789-4FF5-A44E-6DB3E69B96A6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{EAD45F69-6789-4FF5-A44E-6DB3E69B96A6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{3589C3EB-F46A-42E6-B7DE-9C4471302719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3589C3EB-F46A-42E6-B7DE-9C4471302719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3589C3EB-F46A-42E6-B7DE-9C4471302719}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{3589C3EB-F46A-42E6-B7DE-9C4471302719}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{3589C3EB-F46A-42E6-B7DE-9C4471302719}.Release|Any CPU.Deploy.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
