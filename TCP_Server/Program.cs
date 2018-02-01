@@ -16,7 +16,8 @@ namespace TCP_Server
 
         static void Main(string[] args)
         {
-            IPAddress ip = IPAddress.Loopback;
+            IPAddress ip = IPAddress.Parse("192.168.30.52");        /* This IP address must assign server own IP address, not the client's IP. */
+            ip = IPAddress.Any;                                     /* or any IP address, it means that any client can connect with this server. */
 
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(new IPEndPoint(ip, m_Port));
