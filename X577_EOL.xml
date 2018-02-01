@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sequence>
+  <block>
+    <blocknum>B1</blocknum>
+    <blockname>Resistor measurement.</blockname>
+    <step>
+      <stepnum>1.1</stepnum>
+      <stepname>Initialize the Keysight Digitial Multimeter 34461A.</stepname>
+      <stepdescription>Through the ethernet to initialize and connect to DMM.</stepdescription>
+      <functionname>InitializeDigitalMultimeter</functionname>
+      <parameterlist>
+        <parameter>192.168.30.54</parameter>
+        <parameter>5025</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+</sequence>
