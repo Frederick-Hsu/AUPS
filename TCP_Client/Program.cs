@@ -14,7 +14,7 @@ namespace TCP_Client
 
         static void Main(string[] args)
         {
-            IPAddress ip = IPAddress.Loopback;
+            IPAddress ip = IPAddress.Parse("192.168.30.52");
             Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             try
