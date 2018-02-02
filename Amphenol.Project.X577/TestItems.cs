@@ -28,6 +28,13 @@ namespace Amphenol.Project.X577
                                       out errorCode, 
                                       out errorDesc);
                     break;
+                case "InitializeDigitalMultimeter":
+                    success = InitializeDigitalMultimeter(stepParameters, 
+                                                          out result, 
+                                                          out status, 
+                                                          out errorCode, 
+                                                          out errorDesc);
+                    break;
                 default:
                     DummyStep();
                     break;
