@@ -8,6 +8,7 @@
 *.sln.docstates
 *.stackdump
 *.pdf
+*.xml
 
 XML/
 Sequence/
