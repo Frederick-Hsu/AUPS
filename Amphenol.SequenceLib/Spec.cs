@@ -37,11 +37,15 @@ namespace Amphenol.SequenceLib
             currentSpecNode = specNode;
 
             limits = new List<string>();
-            XmlNodeList limitNodes = specNode.ChildNodes;
-            foreach (XmlNode limitNode in limitNodes)
+            /* Only focus on the <limit> nodes */
+            XmlNodeList limitNodes = specNode.SelectNodes("limit");
+            if (limitNodes != null)
             {
-                string limitStr = limitNode.InnerText;
-                limits.Add(limitStr);
+                foreach (XmlNode limitNode in limitNodes)
+                {
+                    string limitStr = limitNode.InnerText;
+                    limits.Add(limitStr);
+                }
             }
         }
 

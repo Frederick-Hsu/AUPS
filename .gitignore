@@ -6,6 +6,9 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.stackdump
+*.pdf
+*.xml
 
 XML/
 Sequence/
@@ -14,6 +17,7 @@ XmlSerialization/
 ManipulateXML/
 DataContractSerialization/
 ManipulateClipboard/
+ProgressBarDemo/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

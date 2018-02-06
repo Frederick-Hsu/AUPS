@@ -7,27 +7,16 @@
       <stepnum>S1</stepnum>
       <stepname>Open COM port</stepname>
       <stepdescription>Open the COM port to initialize the network analyzer</stepdescription>
-      <functionname>ProjectTestItem.OpenCom</functionname>
+      <functionname>OpenCom</functionname>
       <parameterlist>
-        <parameter>COM:1</parameter>
-        <parameter>BAUD:115200</parameter>
-        <parameter>LEN:8</parameter>
-        <parameter>STOP:1</parameter>
-        <parameter>PARITY:none</parameter>
-        <parameter>CRC:none</parameter>
+        <parameter>COM1</parameter>
+        <parameter>115200</parameter>
+        <parameter>8</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
-        <result>OK</result>
       </spec>
-      <conclusion>
-        <status>Pass</status>
-        <errorcode>
-        </errorcode>
-        <errordescription>
-        </errordescription>
-      </conclusion>
     </step>
     <step>
       <stepnum>S2</stepnum>
@@ -44,15 +33,7 @@
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
-        <result>OK</result>
       </spec>
-      <conclusion>
-        <status>Pass</status>
-        <errorcode>
-        </errorcode>
-        <errordescription>
-        </errordescription>
-      </conclusion>
     </step>
     <step>
       <stepnum>S3</stepnum>
@@ -67,13 +48,7 @@
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
-        <result>OK</result>
       </spec>
-      <conclusion>
-        <status>Fail</status>
-        <errorcode>NA05F</errorcode>
-        <errordescription>Network analyzer disconnect GPIB.</errordescription>
-      </conclusion>
     </step>
   </block>
   <block>
@@ -93,13 +68,6 @@
         <limit>12</limit>
         <limit>15</limit>
       </spec>
-      <conclusion>
-        <status>Pass</status>
-        <errorcode>
-        </errorcode>
-        <errordescription>
-        </errordescription>
-      </conclusion>
     </step>
     <step>
       <stepnum>S2.2</stepnum>

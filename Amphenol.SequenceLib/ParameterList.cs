@@ -37,10 +37,14 @@ namespace Amphenol.SequenceLib
             currentParameterListNode = paramListNode;
 
             parameters = new List<string>();
-            foreach (XmlNode paramNode in paramListNode.ChildNodes)
+            XmlNodeList parameterNodeList = paramListNode.ChildNodes;
+            if (parameterNodeList.Count >= 1)
             {
-                string paramStr = paramNode.InnerText;
-                parameters.Add(paramStr);
+                foreach (XmlNode paramNode in parameterNodeList)
+                {
+                    string paramStr = paramNode.InnerText;
+                    parameters.Add(paramStr);
+                }
             }
         }
 

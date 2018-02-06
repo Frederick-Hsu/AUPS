@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA0A37C1-F916-43E8-A0CC-10EB2098F0D2}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{2C539120-0FEE-4F13-AFF3-3B8B5342F443}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Amphenol.SequenceLib</RootNamespace>
-    <AssemblyName>Amphenol.SequenceLib</AssemblyName>
+    <RootNamespace>TCP_Client</RootNamespace>
+    <AssemblyName>TCP_Client</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,7 +34,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,26 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Block.cs" />
-    <Compile Include="ObjectCopier.cs" />
-    <Compile Include="ParameterList.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sequence.cs" />
-    <Compile Include="Serialization.cs" />
-    <Compile Include="Spec.cs" />
-    <Compile Include="Step.cs" />
-    <Compile Include="TestBlock.cs" />
-    <Compile Include="TestConclusion.cs" />
-    <Compile Include="TestParameterList.cs" />
-    <Compile Include="TestSequence.cs" />
-    <Compile Include="TestSpec.cs" />
-    <Compile Include="TestStep.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Amphenol.Project.X577\Amphenol.Project.X577.csproj">
-      <Project>{ead45f69-6789-4ff5-a44e-6db3e69b96a6}</Project>
-      <Name>Amphenol.Project.X577</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

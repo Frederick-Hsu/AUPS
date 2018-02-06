@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8C484313-186C-4E5E-8669-7D5CE9469069}</ProjectGuid>
+    <ProjectGuid>{C2E3D4C5-44D5-4C5A-84D2-E9CD5076113A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AUPS</RootNamespace>
-    <AssemblyName>AUPS</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>Socket_Client</RootNamespace>
+    <AssemblyName>Socket_Client</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,55 +40,21 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Callbacks.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow_Utilities.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SequenceEditor\Copy_Cut_Paste.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SequenceEditor\SequenceEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SequenceEditor\SequenceEditor.Designer.cs">
-      <DependentUpon>SequenceEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SequenceEditor\SequenceEditor_MenubarEvent.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SequenceEditor\SequenceEditor_ToolbarEvent.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StationNameDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StationNameDialog.Designer.cs">
-      <DependentUpon>StationNameDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestPanel\TestPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestPanel\TestPanel.Designer.cs">
-      <DependentUpon>TestPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestPanel\TestPanel_Home.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestPanel\TestPanel_ToolbarEvent.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -102,15 +67,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SequenceEditor\SequenceEditor.resx">
-      <DependentUpon>SequenceEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StationNameDialog.resx">
-      <DependentUpon>StationNameDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestPanel\TestPanel.resx">
-      <DependentUpon>TestPanel.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -120,15 +76,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Amphenol.SequenceLib\Amphenol.SequenceLib.csproj">
-      <Project>{fa0a37c1-f916-43e8-a0cc-10eb2098f0d2}</Project>
-      <Name>Amphenol.SequenceLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
