@@ -96,6 +96,42 @@ namespace Amphenol.Instruments.Keysight
             resistance = Convert.ToSingle(response);
             return viError;
         }
+
+        public int MeasureResistorVia4Wires(out float resistance)
+        {
+            int viError;
+            int actualCount;
+            string response;
+            string[] valueArray = new string[3];
+            float[] resistanceArray = new float[3];
+
+            string command = "CONFigure:FRESistance";
+            viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                resistance = 0.00F;
+                return viError;
+            }
+
+            command = "SAMP:COUNt 3";
+            viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
+            command = "READ?";
+            viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
+            viError = visa32.viRead(dmmSession, out response, 512);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                resistance = 0.00F;
+                return viError;
+            }
+
+            valueArray = response.Split(',');
+            for (int index = 0; index < 3; index++)
+            {
+                resistanceArray[index] = Convert.ToSingle(valueArray[index]);
+            }
+            resistance = (resistanceArray[0] + resistanceArray[1] + resistanceArray[2]) / 3;
+            return viError;
+        }
     }
 
     public class CharsetEncodingDecoding
