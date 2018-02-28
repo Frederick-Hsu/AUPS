@@ -37,7 +37,9 @@ namespace Amphenol.AUPS
             {
                 foreach (TestStep step in block.TestStepList)
                 {
-                    flag = step.PerformTestStep(testSeq.SeqXmlDoc);      /* Perform current test step */
+                    string serialnumber = textBoxSerialNum.Text;        /* Get the serial number for current DUT */
+
+                    flag = step.PerformTestStep(serialnumber, testSeq.SeqXmlDoc);      /* Perform current test step */
                     finishedStepNum++;
 
                     string[] stepSubItems = new string[3];

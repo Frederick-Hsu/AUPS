@@ -7,7 +7,8 @@ namespace Amphenol.Project.X577
 {
     public partial class TestItems
     {
-        public static bool Execute(string stepFuncname,                 /* Argument IN */
+        public static bool Execute(string dutSerialNum, 
+                                   string stepFuncname,                 /* Argument IN */
                                    List<string> stepParameters,         /* Argument IN */
                                    List<string> limits,                 /* Argument IN */
                                    out string stepResult,                   /* Argument OUT */
