@@ -21,19 +21,25 @@ namespace Amphenol.Project.X577
 
             switch (stepFuncname)
             {
-                case "OpenCom":
-                    success = OpenCom(stepParameters, 
-                                      out result, 
-                                      out status, 
-                                      out errorCode, 
-                                      out errorDesc);
-                    break;
                 case "InitializeDigitalMultimeter":
                     success = InitializeDigitalMultimeter(stepParameters, 
                                                           out result, 
                                                           out status, 
                                                           out errorCode, 
                                                           out errorDesc);
+                    break;
+                case "CloseDMM":
+                    success = CloseDMM(out result,
+                                       out status,
+                                       out errorCode,
+                                       out errorDesc);
+                    break;
+                case "MeasureResistorOver2Wires":
+                    success = MeasureResistorOver2Wires(limits,
+                                                        out result,
+                                                        out status,
+                                                        out errorCode,
+                                                        out errorDesc);
                     break;
                 default:
                     DummyStep();

@@ -9,49 +9,92 @@ namespace Amphenol.Instruments.Keysight
 {
     public class DigitalMultiMeter_34461A
     {
-        private IPAddress ip;
-        private IPEndPoint iep;
+        private int resourceMgr;
+        private int dmmSession;
 
         public DigitalMultiMeter_34461A()
         {
-            string localHostName = Dns.GetHostName();
-            IPHostEntry container = Dns.GetHostEntry(localHostName);
-            IPAddress[] ipList = container.AddressList;
-            IPAddress loopbackIP = IPAddress.Loopback;
-
-            NetworkInterface[] nic = NetworkInterface.GetAllNetworkInterfaces();
-            int nicNum = nic.Length;
-            IPInterfaceProperties property = nic[nicNum - 1].GetIPProperties();
-            IPAddressCollection dns = property.DnsAddresses;
-
-            IPGlobalProperties netProperties = IPGlobalProperties.GetIPGlobalProperties();
-            IPGlobalStatistics ipStats = netProperties.GetIPv4GlobalStatistics();
+            resourceMgr = 0;
+            dmmSession = 0;
         }
 
-        public DigitalMultiMeter_34461A(string ipAddr, int portNum)
+        public int Open(string dmmVisaAddress)
         {
-            ip = IPAddress.Parse(ipAddr);
-            iep = new IPEndPoint(ip, portNum);
+            int viError;
+
+            /* Open the default resource manager */
+            viError = visa32.viOpenDefaultRM(out resourceMgr);
+            if (viError != visa32.VI_SUCCESS)
+                return viError;
+            /* Open the seesion for current Keysight 34461A DMM. */
+            viError = visa32.viOpen(resourceMgr, dmmVisaAddress, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out dmmSession);
+            if (viError != visa32.VI_SUCCESS)
+                return viError;
+
+            return viError;
         }
 
-        public bool PingDMM()
+        public int Close()
         {
-            bool result = false;
+            int viError;
+            viError = visa32.viClose(dmmSession);
+            dmmSession = 0;
 
-            Ping pingSender = new Ping();
-            PingOptions options = new PingOptions();
-            options.DontFragment = true;
+            viError = visa32.viClose(resourceMgr);
+            resourceMgr = 0;
+            return viError;
+        }
 
-            byte[] buffer = Encoding.ASCII.GetBytes("Hi, Keysight Digital Multimeter.");
-            int timeout = 128;      /* TTL : 128ms */
+        public int GetInstrumentIdentifier(out string idn)
+        {
+            int viError;
+            int actualCount;
+            string command = "*IDN?";
+            string response;
 
-            PingReply reply = pingSender.Send(ip, timeout, buffer, options);
-            IPStatus status = reply.Status;
-            if (status == IPStatus.Success)
+            viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
+            if (viError != visa32.VI_SUCCESS)
             {
-                result = true;
+                idn = "";
+                return viError;
             }
-            return result;
+
+            viError = visa32.viRead(dmmSession, out response, 256);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                idn = string.Empty;
+                return viError;
+            }
+
+            idn = response;
+            return viError;
+        }
+
+        public int MeasureResistorVia2Wires(out float resistance)
+        {
+            int viError;
+            int actualCount;
+            string response;
+
+            string command = "CONFigure:RESistance";
+            viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                resistance = 0.00F;
+                return viError;
+            }
+
+            command = "READ?";
+            viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
+            viError = visa32.viRead(dmmSession, out response, 256);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                resistance = 0.00F;
+                return viError;
+            }
+
+            resistance = Convert.ToSingle(response);
+            return viError;
         }
     }
 

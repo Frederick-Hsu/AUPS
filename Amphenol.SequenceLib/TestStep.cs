@@ -140,7 +140,7 @@ namespace Amphenol.SequenceLib
             }
             else
             {
-                stepConclusion.UpdateTestConclusion(stepStatus, stepErrorCode, stepDescription, doc);
+                stepConclusion.UpdateTestConclusion(stepStatus, stepErrorCode, stepErrorDescription, doc);
             }
             return success;
         }
