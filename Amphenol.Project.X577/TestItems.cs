@@ -42,6 +42,13 @@ namespace Amphenol.Project.X577
                                                         out errorCode,
                                                         out errorDesc);
                     break;
+                case "MeasureResistorOver4Wires":
+                    success = MeasureResistorOver4Wires(limits,
+                                                        out result,
+                                                        out status,
+                                                        out errorCode,
+                                                        out errorDesc);
+                    break;
                 default:
                     DummyStep();
                     break;

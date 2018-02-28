@@ -85,7 +85,37 @@ namespace Amphenol.Project.X577
             {
                 stepStatus = "Fail";
                 stepErrorCode = "RES01";
-                stepErrorDesc = "Resistance value is out of the range.";
+                stepErrorDesc = "2Wires resistance value is out of the range.";
+                return false;
+            }
+        }
+
+        private static bool MeasureResistorOver4Wires(List<string> limits,
+                                                      out string stepResult,
+                                                      out string stepStatus,
+                                                      out string stepErrorCode,
+                                                      out string stepErrorDesc)
+        {
+            float lower = Convert.ToSingle(limits[0]),
+                  typical = Convert.ToSingle(limits[1]),
+                  upper = Convert.ToSingle(limits[2]),
+                  resistor = 0.00F;
+
+            int successFlag = dmm.MeasureResistorVia4Wires(out resistor);
+            stepResult = Convert.ToString(resistor);
+
+            if ((resistor > lower) && (resistor < upper))
+            {
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+                return true;
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "RES02";
+                stepErrorDesc = "4Wires resistance value is out of the range.";
                 return false;
             }
         }
