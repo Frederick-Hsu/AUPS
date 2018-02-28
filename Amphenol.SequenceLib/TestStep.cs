@@ -116,14 +116,15 @@ namespace Amphenol.SequenceLib
 
         /******************************************************************************************/
 
-        public bool PerformTestStep(XmlDocument doc)
+        public bool PerformTestStep(string serialNumber, XmlDocument doc)
         {
             string stepResult = string.Empty;
             string stepStatus = string.Empty;
             string stepErrorCode = string.Empty;
             string stepErrorDescription = string.Empty;
 
-            bool success = TestItems.Execute(stepFunctionName,
+            bool success = TestItems.Execute(serialNumber,
+                                             stepFunctionName,
                                              stepParamList.Parameters,
                                              stepSpec.Limits,
                                              out stepResult,

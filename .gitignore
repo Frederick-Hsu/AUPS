@@ -19,13 +19,13 @@ ManipulateXML/
 DataContractSerialization/
 ManipulateClipboard/
 ProgressBarDemo/
+Stream/
 AccessInstruments/
 Socket_Client/
 Socket_Server/
 TCP_Client/
 TCP_Server/
 VISA.lib/
-
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

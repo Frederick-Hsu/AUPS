@@ -18,19 +18,32 @@
     </step>
     <step>
       <stepnum>1.2</stepnum>
-      <stepname>Measure the resistor</stepname>
+      <stepname>Measure the 2wires resistor</stepname>
       <stepdescription>Over the 2 wires, measure the resistance value of your resstor</stepdescription>
       <functionname>MeasureResistorOver2Wires</functionname>
       <parameterlist />
       <limittype>Numerical</limittype>
       <spec>
-        <limit>1990.00</limit>
+        <limit>1800.00</limit>
         <limit>2000.00</limit>
-        <limit>2010.00</limit>
+        <limit>2200.00</limit>
       </spec>
     </step>
     <step>
       <stepnum>1.3</stepnum>
+      <stepname>Measure the 4wires resistor</stepname>
+      <stepdescription>Over the 4 wires, measure the resistance value of your resstor</stepdescription>
+      <functionname>MeasureResistorOver4Wires</functionname>
+      <parameterlist />
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>1800.00</limit>
+        <limit>2000.00</limit>
+        <limit>2200.00</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.4</stepnum>
       <stepname>Close the Digitial Multi Meter.</stepname>
       <stepdescription>Close the session of communicating with Keysight DMM.</stepdescription>
       <functionname>CloseDMM</functionname>
