@@ -32,13 +32,12 @@ namespace Amphenol.AUPS
             labelIndicator.ForeColor = System.Drawing.Color.Black;
 
             listViewTestItems.Items.Clear();        /* Clean up all old test steps */
+            string serialnumber = textBoxSerialNum.Text;        /* Get the serial number for current DUT */
 
             foreach (TestBlock block in testSeq.TestBlockList)
             {
                 foreach (TestStep step in block.TestStepList)
                 {
-                    string serialnumber = textBoxSerialNum.Text;        /* Get the serial number for current DUT */
-
                     flag = step.PerformTestStep(serialnumber, testSeq.SeqXmlDoc);      /* Perform current test step */
                     finishedStepNum++;
 
