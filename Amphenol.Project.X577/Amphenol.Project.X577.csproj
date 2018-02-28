@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyTestItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestItems.cs" />
     <Compile Include="TestItems_Measurement.cs" />

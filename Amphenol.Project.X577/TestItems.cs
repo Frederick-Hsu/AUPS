@@ -7,7 +7,8 @@ namespace Amphenol.Project.X577
 {
     public partial class TestItems
     {
-        public static bool Execute(string stepFuncname,                 /* Argument IN */
+        public static bool Execute(string dutSerialNum, 
+                                   string stepFuncname,                 /* Argument IN */
                                    List<string> stepParameters,         /* Argument IN */
                                    List<string> limits,                 /* Argument IN */
                                    out string stepResult,                   /* Argument OUT */
@@ -21,19 +22,32 @@ namespace Amphenol.Project.X577
 
             switch (stepFuncname)
             {
-                case "OpenCom":
-                    success = OpenCom(stepParameters, 
-                                      out result, 
-                                      out status, 
-                                      out errorCode, 
-                                      out errorDesc);
-                    break;
                 case "InitializeDigitalMultimeter":
                     success = InitializeDigitalMultimeter(stepParameters, 
                                                           out result, 
                                                           out status, 
                                                           out errorCode, 
                                                           out errorDesc);
+                    break;
+                case "CloseDMM":
+                    success = CloseDMM(out result,
+                                       out status,
+                                       out errorCode,
+                                       out errorDesc);
+                    break;
+                case "MeasureResistorOver2Wires":
+                    success = MeasureResistorOver2Wires(limits,
+                                                        out result,
+                                                        out status,
+                                                        out errorCode,
+                                                        out errorDesc);
+                    break;
+                case "MeasureResistorOver4Wires":
+                    success = MeasureResistorOver4Wires(limits,
+                                                        out result,
+                                                        out status,
+                                                        out errorCode,
+                                                        out errorDesc);
                     break;
                 default:
                     DummyStep();
