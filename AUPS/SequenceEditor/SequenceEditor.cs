@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Amphenol.SequenceLib;
+using Amphenol.Project.X577;
 
 namespace Amphenol.AUPS
 {
@@ -25,6 +26,18 @@ namespace Amphenol.AUPS
             MdiParent = parent;
 
             this.KeyPreview = true;     /* Allow to accept the shortcut key pressing event. */
+            Initial(TestItems.GatherTestFunctionsList());
+        }
+
+        private void Initial(List<string> testFunctionNameList)
+        {
+            /* Clean up the olde items */
+            comboBoxTestFunctionName.Items.Clear();
+
+            foreach (string item in testFunctionNameList)
+            {
+                comboBoxTestFunctionName.Items.Add(item);
+            }
         }
 
         private void treeViewSequence_AfterSelect(object sender, TreeViewEventArgs e)
