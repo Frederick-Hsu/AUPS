@@ -2,18 +2,34 @@
 <sequence>
   <block>
     <blocknum>B1</blocknum>
-    <blockname>First block, please edit your block name</blockname>
+    <blockname>Access Keysight network analyzer E5071C</blockname>
     <step>
       <stepnum>1.1</stepnum>
-      <stepname>Initialize Keysight network analyzer</stepname>
+      <stepname>Initialize Keysight network analyzer E5071C</stepname>
       <stepdescription>Access the Keysight network analyzer E5071A over USB, and initialize it.</stepdescription>
-      <functionname>
-      </functionname>
+      <functionname>InitializeNetworkAnalyzer</functionname>
+      <parameterlist>
+        <parameter>USB0::0x0957::0x0D09::MY46527492::0::INSTR</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>Agilent Technologies,E5071C,MY46527492,B.13.20</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.2</stepnum>
+      <stepname>Close the network analyzer</stepname>
+      <stepdescription>After finished the antenna RF testing, MUST close the communication with network analyzer.</stepdescription>
+      <functionname>CloseNetworkAnalyzer</functionname>
       <parameterlist />
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
       </spec>
     </step>
+  </block>
+  <block>
+    <blocknum>B1</blocknum>
+    <blockname>Access Agilent DC power supply E3646A.</blockname>
   </block>
 </sequence>
