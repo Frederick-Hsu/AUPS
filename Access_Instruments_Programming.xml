@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sequence>
+  <block>
+    <blocknum>B1</blocknum>
+    <blockname>First block, please edit your block name</blockname>
+    <step>
+      <stepnum>1.1</stepnum>
+      <stepname>Initialize Keysight network analyzer</stepname>
+      <stepdescription>Access the Keysight network analyzer E5071A over USB, and initialize it.</stepdescription>
+      <functionname>
+      </functionname>
+      <parameterlist />
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+</sequence>
