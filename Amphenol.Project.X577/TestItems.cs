@@ -61,6 +61,18 @@ namespace Amphenol.Project.X577
             return success;
         }
 
+        public static List<string> GatherTestFunctionsList()
+        {
+            List<string> functionsList = new List<string>();
+
+            functionsList.Add("InitializeDigitalMultimeter");
+            functionsList.Add("CloseDMM");
+            functionsList.Add("MeasureResistorOver2Wires");
+            functionsList.Add("MeasureResistorOver4Wires");
+
+            return functionsList;
+        }
+
         private static void DummyStep()
         {
         }
