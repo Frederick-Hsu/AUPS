@@ -26,6 +26,7 @@ Socket_Server/
 TCP_Client/
 TCP_Server/
 VISA.lib/
+Access_PList/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
