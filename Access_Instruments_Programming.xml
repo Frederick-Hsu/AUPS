@@ -9,6 +9,9 @@
       <stepdescription>Access the Keysight network analyzer E5071A over USB, and initialize it.</stepdescription>
       <functionname>InitializeNetworkAnalyzer</functionname>
       <parameterlist>
+        <parameter>TCPIP0::169.254.9.12::inst0::INSTR</parameter>
+        <parameter>TCPIP0::169.254.9.12::inst0::INSTR</parameter>
+        <parameter>TCPIP0::169.254.9.12::5025::SOCKET</parameter>
         <parameter>USB0::0x0957::0x0D09::MY46527492::0::INSTR</parameter>
       </parameterlist>
       <limittype>String</limittype>
@@ -29,7 +32,31 @@
     </step>
   </block>
   <block>
-    <blocknum>B1</blocknum>
+    <blocknum>B2</blocknum>
     <blockname>Access Agilent DC power supply E3646A.</blockname>
+    <step>
+      <stepnum>2.1</stepnum>
+      <stepname>Initialize Keysight DC power supply E3646A.</stepname>
+      <stepdescription>Over the serial port, initialize the DC power supply, and get its IDN.</stepdescription>
+      <functionname>InitializeDCPowerSupply</functionname>
+      <parameterlist>
+        <parameter>ASRL3::INSTR</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>Agilent Technologies,E3646A,0,1.7-5.0-1.0</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.2</stepnum>
+      <stepname>Close the DC power supply</stepname>
+      <stepdescription>Finished the DC power supply test items, you should remember to close the power supply.</stepdescription>
+      <functionname>CloseDCPowerSupply</functionname>
+      <parameterlist />
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
   </block>
 </sequence>
