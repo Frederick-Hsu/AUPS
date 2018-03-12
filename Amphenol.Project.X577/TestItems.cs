@@ -7,7 +7,7 @@ namespace Amphenol.Project.X577
 {
     public partial class TestItems
     {
-        public static bool Execute(string dutSerialNum, 
+        public static bool Execute(string dutSerialNum,                 /* Argument IN */
                                    string stepFuncname,                 /* Argument IN */
                                    List<string> stepParameters,         /* Argument IN */
                                    List<string> limits,                 /* Argument IN */
@@ -62,6 +62,19 @@ namespace Amphenol.Project.X577
                                                    out errorCode,
                                                    out errorDesc);
                     break;
+                case "InitializeDCPowerSupply":
+                    success = InitializeDCPowerSupply(stepParameters,
+                                                      out result,
+                                                      out status,
+                                                      out errorCode,
+                                                      out errorDesc);
+                    break;
+                case "CloseDCPowerSupply":
+                    success = CloseDCPowerSupply(out result,
+                                                 out status,
+                                                 out errorCode,
+                                                 out errorDesc);
+                    break;
                 default:
                     DummyStep();
                     break;
@@ -85,6 +98,9 @@ namespace Amphenol.Project.X577
 
             functionsList.Add("InitializeNetworkAnalyzer");
             functionsList.Add("CloseNetworkAnalyzer");
+
+            functionsList.Add("InitializeDCPowerSupply");
+            functionsList.Add("CloseDCPowerSupply");
 
             return functionsList;
         }
