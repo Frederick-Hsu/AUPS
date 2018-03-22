@@ -57,6 +57,29 @@ namespace Amphenol.Project.X577
             }
             return (successFlag == 0);
         }
+
+        private static bool PresetNetworkAnalyzer(out string stepResult,
+                                                  out string stepStatus,
+                                                  out string stepErrorCode,
+                                                  out string stepErrorDesc)
+        {
+            int successFlag = networkAnalyzer.Preset();
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "PRESE";
+                stepErrorDesc = "Fail to reset the network analyzer.";
+            }
+            return (successFlag == 0);
+        }
     }
 
     partial class TestItems
