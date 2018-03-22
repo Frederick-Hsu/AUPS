@@ -65,5 +65,31 @@ namespace Amphenol.Instruments.Keysight
             idn = response;
             return viError;
         }
+
+        public int Preset()
+        {
+            int errorno;
+            string command = ":SYSTem:PRESet", response;
+            int count = 0;
+
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                return errorno;
+            }
+
+            command = "SYSTem:ERRor?";
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 128);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                return errorno;
+            }
+
+            string[] array = new string[2];
+            array = response.Split(',');
+            errorno = Convert.ToInt32(array[0]);
+            return errorno;
+        }
     }
 }
