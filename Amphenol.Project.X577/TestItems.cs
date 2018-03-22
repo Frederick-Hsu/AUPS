@@ -22,6 +22,7 @@ namespace Amphenol.Project.X577
 
             switch (stepFuncname)
             {
+                #region DMM Test Items section
                 case "InitializeDigitalMultimeter":
                     success = InitializeDigitalMultimeter(stepParameters, 
                                                           out result, 
@@ -49,19 +50,21 @@ namespace Amphenol.Project.X577
                                                         out errorCode,
                                                         out errorDesc);
                     break;
+                #endregion
+
+                #region Network Analyzer Test Items section
                 case "InitializeNetworkAnalyzer":
-                    success = InitializeNetworkAnalyzer(stepParameters,
-                                                        out result,
-                                                        out status,
-                                                        out errorCode,
-                                                        out errorDesc);
+                    success = InitializeNetworkAnalyzer(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
                 case "CloseNetworkAnalyzer":
-                    success = CloseNetworkAnalyzer(out result,
-                                                   out status,
-                                                   out errorCode,
-                                                   out errorDesc);
+                    success = CloseNetworkAnalyzer(out result, out status, out errorCode, out errorDesc);
                     break;
+                case "PresetNetworkAnalyzer":
+                    success = PresetNetworkAnalyzer(out result, out status, out errorCode, out errorDesc);
+                    break;
+                #endregion
+
+                #region Power Supply Test Items section
                 case "InitializeDCPowerSupply":
                     success = InitializeDCPowerSupply(stepParameters,
                                                       out result,
@@ -75,6 +78,8 @@ namespace Amphenol.Project.X577
                                                  out errorCode,
                                                  out errorDesc);
                     break;
+                #endregion
+
                 default:
                     DummyStep();
                     break;
@@ -90,18 +95,21 @@ namespace Amphenol.Project.X577
         public static List<string> GatherTestFunctionsList()
         {
             List<string> functionsList = new List<string>();
-
+            #region DMM Test Functions
             functionsList.Add("InitializeDigitalMultimeter");
             functionsList.Add("CloseDMM");
             functionsList.Add("MeasureResistorOver2Wires");
             functionsList.Add("MeasureResistorOver4Wires");
-
+            #endregion
+            #region Network Analyzer Test Functions
             functionsList.Add("InitializeNetworkAnalyzer");
             functionsList.Add("CloseNetworkAnalyzer");
-
+            functionsList.Add("PresetNetworkAnalyzer");
+            #endregion
+            #region Power Supply Test Functions
             functionsList.Add("InitializeDCPowerSupply");
             functionsList.Add("CloseDCPowerSupply");
-
+            #endregion
             return functionsList;
         }
 
