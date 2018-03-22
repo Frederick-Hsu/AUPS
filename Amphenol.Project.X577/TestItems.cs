@@ -62,6 +62,18 @@ namespace Amphenol.Project.X577
                 case "PresetNetworkAnalyzer":
                     success = PresetNetworkAnalyzer(out result, out status, out errorCode, out errorDesc);
                     break;
+                case "SetNetAnalyzerWindowLayout":
+                    success = SetNetAnalyzerWindowLayout(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SetNetAnalyzerGraphLayout":
+                    success = SetNetAnalyzerGraphLayout(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "ConfigureTraceCount":
+                    success = ConfigureTraceCount(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "GetTraceCount":
+                    success = GetTraceCount(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
                 #endregion
 
                 #region Power Supply Test Items section
@@ -105,6 +117,10 @@ namespace Amphenol.Project.X577
             functionsList.Add("InitializeNetworkAnalyzer");
             functionsList.Add("CloseNetworkAnalyzer");
             functionsList.Add("PresetNetworkAnalyzer");
+            functionsList.Add("SetNetAnalyzerWindowLayout");
+            functionsList.Add("SetNetAnalyzerGraphLayout");
+            functionsList.Add("ConfigureTraceCount");
+            functionsList.Add("GetTraceCount");
             #endregion
             #region Power Supply Test Functions
             functionsList.Add("InitializeDCPowerSupply");

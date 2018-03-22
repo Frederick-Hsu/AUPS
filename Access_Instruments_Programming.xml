@@ -11,7 +11,7 @@
       <parameterlist>
         <parameter>USB0::0x0957::0x0D09::MY41501331::0::INSTR</parameter>
         <parameter>TCPIP0::169.254.9.12::inst0::INSTR</parameter>
-        <parameter>TCPIP0::169.254.9.12::5025::SOCKET</parameter>
+        <parameter>TCPIP0::192.168.30.89::inst0::INSTR</parameter>
         <parameter>USB0::0x0957::0x0D09::MY46527492::0::INSTR</parameter>
       </parameterlist>
       <limittype>String</limittype>
@@ -25,6 +25,47 @@
       <stepdescription>Setup and configure the E5071C, preset the entire system.</stepdescription>
       <functionname>PresetNetworkAnalyzer</functionname>
       <parameterlist />
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.3</stepnum>
+      <stepname>Setup the window layout.</stepname>
+      <stepdescription>Setup and configure the E5071C, configure its channel display mode.</stepdescription>
+      <functionname>SetNetAnalyzerWindowLayout</functionname>
+      <parameterlist>
+        <parameter>D1_1_2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.4</stepnum>
+      <stepname>Setup the trace count in channel 1.</stepname>
+      <stepdescription>How many traces do you want to display in window1.</stepdescription>
+      <functionname>ConfigureTraceCount</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>4</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.5</stepnum>
+      <stepname>Configure the trace layout in window 1.</stepname>
+      <stepdescription>Select your trace display mode in the channel 1.</stepdescription>
+      <functionname>SetNetAnalyzerGraphLayout</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>D12_34</parameter>
+      </parameterlist>
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
