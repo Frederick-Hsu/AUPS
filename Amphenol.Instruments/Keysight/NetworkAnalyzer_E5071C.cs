@@ -91,5 +91,97 @@ namespace Amphenol.Instruments.Keysight
             errorno = Convert.ToInt32(array[0]);
             return errorno;
         }
+
+        public int SelectChannelDisplayMode(string windowLayout = "D1")
+        {
+            int errorno;
+            int count = 0;
+            string command = ":DISPlay:SPLit " + windowLayout;
+
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                return errorno;
+            }
+
+            command = "SYSTem:ERRor?";
+            string response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 128);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                return errorno;
+            }
+
+            string[] array = new string[2];
+            array = response.Split(',');
+            errorno = Convert.ToInt32(array[0]);
+            return errorno;
+        }
+
+        public int SelectTraceDisplayMode(int windowNum = 1, string graphLayout = "D1")
+        {
+            int errorno, count;
+            string command = ":DISPlay:WINDow" + windowNum + ":SPLit " + graphLayout;
+
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                return errorno;
+            }
+
+            string response;
+            errorno = QueryErrorStatus(out response);
+            return errorno;
+        }
+
+        public int ConfigTraceNumInChannel(uint channelNum = 1, uint traceNum = 1)
+        {
+            int errorno, count;
+            string command = ":CALCulate" + channelNum + ":PARameter:COUNt " + traceNum;
+
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (errorno != visa32.VI_SUCCESS)
+                return errorno;
+
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        public int QueryTraceNumberInChannel(uint channelNum, out uint traceNum)
+        {
+            int errorno, count;
+            string command = ":CALCulate" + channelNum + ":PARameter:COUNt?", response;
+
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                traceNum = 0;
+                return errorno;
+            }
+            traceNum = Convert.ToUInt32(response);
+            return errorno;
+        }
+
+        public int QueryErrorStatus(out string errorMesg)
+        {
+            int errorno, count;
+            string command = "SYSTem:ERRor?", response;
+
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                errorMesg = "VISA library error : " + errorno;
+                return errorno;
+            }
+
+            string[] messages = new string[2];
+            messages = response.Split(',');
+            errorno = Convert.ToInt32(messages[0]);
+            errorMesg = messages[1];
+            return errorno;
+        }
     }
 }
