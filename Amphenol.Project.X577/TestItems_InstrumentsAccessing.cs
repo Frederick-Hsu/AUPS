@@ -80,6 +80,151 @@ namespace Amphenol.Project.X577
             }
             return (successFlag == 0);
         }
+
+        private static bool SetNetAnalyzerWindowLayout(List<string> stepParameters,
+                                                       out string stepResult,
+                                                       out string stepStatus,
+                                                       out string stepErrorCode,
+                                                       out string stepErrorDesc)
+        {
+            int successFlag; 
+
+            if ((stepParameters.Count == 0) || (stepParameters[0].Length == 0))
+            {
+                successFlag = networkAnalyzer.SelectChannelDisplayMode();
+            }
+            else
+            {
+                string windowLayout = stepParameters[0];
+                successFlag = networkAnalyzer.SelectChannelDisplayMode(windowLayout);
+            }
+
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "WINDLE";
+                stepErrorDesc = "Fail in setting up the window layout.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SetNetAnalyzerGraphLayout(List<string> stepParameters,
+                                                      out string stepResult,
+                                                      out string stepStatus,
+                                                      out string stepErrorCode,
+                                                      out string stepErrorDesc)
+        {
+            int successFlag;
+            int windowNum;
+            string graphLayut;
+            if (stepParameters.Count == 0)
+            {
+                successFlag = networkAnalyzer.SelectTraceDisplayMode();
+            }
+            else if (stepParameters.Count == 1)
+            {
+                windowNum = Convert.ToInt32(stepParameters[0]);
+                successFlag = networkAnalyzer.SelectTraceDisplayMode(windowNum);
+            }
+            else
+            {
+                windowNum = Convert.ToInt32(stepParameters[0]);
+                graphLayut = stepParameters[1];
+                successFlag = networkAnalyzer.SelectTraceDisplayMode(windowNum, graphLayut);
+            }
+
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "TRALYT";
+                stepErrorDesc = "Fail in setting up the trace layout";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool ConfigureTraceCount(List<string> stepParameters,
+                                                out string stepResult,
+                                                out string stepStatus,
+                                                out string stepErrorCode,
+                                                out string stepErrorDesc)
+        {
+            int successFlag;
+            uint channelNum, traceNum;
+            if (stepParameters.Count == 0)
+            {
+                successFlag = networkAnalyzer.ConfigTraceNumInChannel();
+            }
+            else if (stepParameters.Count == 1)
+            {
+                channelNum = Convert.ToUInt32(stepParameters[0]);
+                successFlag = networkAnalyzer.ConfigTraceNumInChannel(channelNum);
+            }
+            else
+            {
+                channelNum = Convert.ToUInt32(stepParameters[0]);
+                traceNum = Convert.ToUInt32(stepParameters[1]);
+                successFlag = networkAnalyzer.ConfigTraceNumInChannel(channelNum, traceNum);
+            }
+
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "TRACNT";
+                stepErrorDesc = "Fail in configuring the trace number.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool GetTraceCount(List<string> stepParameters,
+                                          out string stepResult,
+                                          out string stepStatus,
+                                          out string stepErrorCode,
+                                          out string stepErrorDesc)
+        {
+            int successFlag;
+            int channelNum = Convert.ToInt32(stepParameters[0]);
+            uint traceNum;
+            successFlag = networkAnalyzer.QueryTraceNumberInChannel((uint)channelNum, out traceNum);
+
+            stepResult = traceNum.ToString();
+            if (successFlag == 0)
+            {
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "QTRACNT";
+                stepErrorDesc = "Fail in query the trace number.";
+            }
+            return (successFlag == 0);
+        }
     }
 
     partial class TestItems
