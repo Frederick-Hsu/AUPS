@@ -10,7 +10,7 @@ namespace Amphenol.Project.X577
         public static bool Execute(string dutSerialNum,                 /* Argument IN */
                                    string stepFuncname,                 /* Argument IN */
                                    List<string> stepParameters,         /* Argument IN */
-                                   List<string> limits,                 /* Argument IN */
+                                   List<string> stepLimits,                 /* Argument IN */
                                    out string stepResult,                   /* Argument OUT */
                                    out string stepStatus,                   /* Argument OUT */
                                    out string stepErrorCode,                /* Argument OUT */
@@ -37,14 +37,14 @@ namespace Amphenol.Project.X577
                                        out errorDesc);
                     break;
                 case "MeasureResistorOver2Wires":
-                    success = MeasureResistorOver2Wires(limits,
+                    success = MeasureResistorOver2Wires(stepLimits,
                                                         out result,
                                                         out status,
                                                         out errorCode,
                                                         out errorDesc);
                     break;
                 case "MeasureResistorOver4Wires":
-                    success = MeasureResistorOver4Wires(limits,
+                    success = MeasureResistorOver4Wires(stepLimits,
                                                         out result,
                                                         out status,
                                                         out errorCode,
@@ -72,7 +72,25 @@ namespace Amphenol.Project.X577
                     success = ConfigureTraceCount(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
                 case "GetTraceCount":
-                    success = GetTraceCount(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    success = GetTraceCount(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SelectActiveChannel":
+                    success = SelectActiveChannel(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SelectActiveTrace":
+                    success = SelectActiveTrace(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SelectMeasurementParameter":
+                    success = SelectMeasurementParameter(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "QueryMeasurementParameter":
+                    success = QueryMeasurementParameter(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SelectDataFormat":
+                    success = SelectDataFormat(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "QueryDataFormat":
+                    success = QueryDataFormat(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
                     break;
                 #endregion
 
@@ -121,6 +139,12 @@ namespace Amphenol.Project.X577
             functionsList.Add("SetNetAnalyzerGraphLayout");
             functionsList.Add("ConfigureTraceCount");
             functionsList.Add("GetTraceCount");
+            functionsList.Add("SelectActiveChannel");
+            functionsList.Add("SelectActiveTrace");
+            functionsList.Add("SelectMeasurementParameter");
+            functionsList.Add("QueryMeasurementParameter");
+            functionsList.Add("SelectDataFormat");
+            functionsList.Add("QueryDataFormat");
             #endregion
             #region Power Supply Test Functions
             functionsList.Add("InitializeDCPowerSupply");

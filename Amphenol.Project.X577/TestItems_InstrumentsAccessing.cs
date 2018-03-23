@@ -200,6 +200,7 @@ namespace Amphenol.Project.X577
         }
 
         private static bool GetTraceCount(List<string> stepParameters,
+                                          List<string> stepLimits,
                                           out string stepResult,
                                           out string stepStatus,
                                           out string stepErrorCode,
@@ -211,19 +212,212 @@ namespace Amphenol.Project.X577
             successFlag = networkAnalyzer.QueryTraceNumberInChannel((uint)channelNum, out traceNum);
 
             stepResult = traceNum.ToString();
+
+            int lower = Convert.ToInt32(stepLimits[0]),
+                typical = Convert.ToInt32(stepLimits[1]),
+                upper = Convert.ToInt32(stepLimits[2]);
+
             if (successFlag == 0)
             {
+                if ((traceNum == lower) && (traceNum == typical) && (traceNum == upper))
+                {
+                    stepStatus = "Pass";
+                    stepErrorCode = "";
+                    stepErrorDesc = "";
+                    return true;
+                }
+                else
+                {
+                    stepStatus = "Fail";
+                    stepErrorCode = "OUTSPEC";
+                    stepErrorDesc = "Trace count is out of spec.";
+                    return false;
+                }
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "TRACNT";
+                stepErrorDesc = "Failed in get the trace number";
+                return false;
+            }
+        }
+
+        private static bool SelectActiveChannel(List<string> stepParameters,
+                                                out string stepResult,
+                                                out string stepStatus,
+                                                out string stepErrorCode,
+                                                out string stepErrorDesc)
+        {
+            int channelNum = Convert.ToInt32(stepParameters[0]);
+            int successFlag = networkAnalyzer.ActivateChannelAt(channelNum);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
                 stepStatus = "Pass";
                 stepErrorCode = "";
                 stepErrorDesc = "";
             }
             else
             {
+                stepResult = "NG";
                 stepStatus = "Fail";
-                stepErrorCode = "QTRACNT";
-                stepErrorDesc = "Fail in query the trace number.";
+                stepErrorCode = "CHACTI";
+                stepErrorDesc = "Failed in activate user-specified channel.";
             }
             return (successFlag == 0);
+        }
+
+        private static bool SelectActiveTrace(List<string> stepParameters,
+                                              out string stepResult,
+                                              out string stepStatus,
+                                              out string stepErrorCode,
+                                              out string stepErrorDesc)
+        {
+            int channelNum = Convert.ToInt32(stepParameters[0]), traceNum = Convert.ToInt32(stepParameters[1]);
+            int successFlag = networkAnalyzer.ActivateTraceAt(channelNum, traceNum);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "TRACTI";
+                stepErrorDesc = "Failed in activate user-specified trace";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SelectMeasurementParameter(List<string> stepParameters,
+                                                       out string stepResult,
+                                                       out string stepStatus,
+                                                       out string stepErrorCode,
+                                                       out string stepErrorDesc)
+        {
+            int channelNum = Convert.ToInt32(stepParameters[0]), traceNum = Convert.ToInt32(stepParameters[1]);
+            string measParam = stepParameters[2];
+            int successFlag = networkAnalyzer.SelectMeasurementParameterFor(channelNum, traceNum, measParam);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "SPARAM";
+                stepErrorDesc = "Failed in selecting the S parameter for user-specified trace.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool QueryMeasurementParameter(List<string> stepParameters,
+                                                      List<string> stepLimits,
+                                                      out string stepResult,
+                                                      out string stepStatus,
+                                                      out string stepErrorCode,
+                                                      out string stepErrorDesc)
+        {
+            int channelNum = Convert.ToInt32(stepParameters[0]), traceNum = Convert.ToInt32(stepParameters[1]);
+            string expected = stepLimits[0];
+
+            int successFlag = networkAnalyzer.QueryMeasurementParameterFor(channelNum, traceNum, out stepResult);
+            if (successFlag == 0)
+            {
+                if (stepResult.Contains(expected))
+                {
+                    stepStatus = "Pass";
+                    stepErrorCode = "";
+                    stepErrorDesc = "";
+                    return true;
+                }
+                else
+                {
+                    stepStatus = "Fail";
+                    stepErrorCode = "OUTSPEC";
+                    stepErrorDesc = "The queried S parameter for Channel" + channelNum + ":Trace" + traceNum + " is out of spec.";
+                    return false; 
+                }
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "ERRSPAR";
+                stepErrorDesc = "Failed in querying the S parameter.";
+                return false;
+            }
+        }
+
+        private static bool SelectDataFormat(List<string> stepParameters,
+                                             out string stepResult,
+                                             out string stepStatus,
+                                             out string stepErrorCode,
+                                             out string stepErrorDesc)
+        {
+            int channelNum = Convert.ToInt32(stepParameters[0]), traceNum = Convert.ToInt32(stepParameters[1]);
+            string format = stepParameters[2];
+
+            int successFlag = networkAnalyzer.SelectDataFormatForActiveTraceOfChannel(channelNum, traceNum, format);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "FORMERR";
+                stepErrorDesc = "Failed in setting up the data format.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool QueryDataFormat(List<string> stepParameters,
+                                            List<string> stepLimits,
+                                            out string stepResult,
+                                            out string stepStatus,
+                                            out string stepErrorCode,
+                                            out string stepErrorDesc)
+        {
+            int channelNum = Convert.ToInt32(stepParameters[0]), traceNum = Convert.ToInt32(stepParameters[1]);
+            string expected = stepLimits[0];
+
+            int successFlag = networkAnalyzer.QueryDataFormatForActiveTraceOfChannel(channelNum, traceNum, out stepResult);
+            if (successFlag == 0)
+            {
+                if (stepResult.Contains(expected))
+                {
+                    stepStatus = "Pass";
+                    stepErrorCode = "";
+                    stepErrorDesc = "";
+                    return true;
+                }
+                else
+                {
+                    stepStatus = "Fail";
+                    stepErrorCode = "FORMOUT";
+                    stepErrorDesc = "The queried data format is different from spec.";
+                    return false;
+                }
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "QFORMERR";
+                stepErrorDesc = "Failed in querying the data format.";
+                return false;
+            }
         }
     }
 

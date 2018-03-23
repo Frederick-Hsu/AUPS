@@ -9,10 +9,11 @@
       <stepdescription>Access the Keysight network analyzer E5071A over USB, and initialize it.</stepdescription>
       <functionname>InitializeNetworkAnalyzer</functionname>
       <parameterlist>
-        <parameter>USB0::0x0957::0x0D09::MY41501331::0::INSTR</parameter>
+        <parameter>TCPIP0::192.168.30.89::inst0::INSTR</parameter>
         <parameter>TCPIP0::169.254.9.12::inst0::INSTR</parameter>
         <parameter>TCPIP0::192.168.30.89::inst0::INSTR</parameter>
         <parameter>USB0::0x0957::0x0D09::MY46527492::0::INSTR</parameter>
+        <parameter>USB0::0x0957::0x0D09::MY41501331::0::INSTR</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
@@ -65,6 +66,267 @@
       <parameterlist>
         <parameter>1</parameter>
         <parameter>D12_34</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.6</stepnum>
+      <stepname>Query the trace count in channel1.</stepname>
+      <stepdescription>To confirm whether trace layout had been set correctly, check the trace count.</stepdescription>
+      <functionname>GetTraceCount</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>4</limit>
+        <limit>4</limit>
+        <limit>4</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.7</stepnum>
+      <stepname>Select S-parameter S11 for trace1 of channel1.</stepname>
+      <stepdescription>For Channel1.Trace1, select the S-parameter as S11.</stepdescription>
+      <functionname>SelectMeasurementParameter</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>S11</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.8</stepnum>
+      <stepname>Query the S-parameter of Channel1.Trace1.</stepname>
+      <stepdescription>Check whether the S-parameter had been configured correctly for Channel1.Trace1.</stepdescription>
+      <functionname>QueryMeasurementParameter</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>S11</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.9</stepnum>
+      <stepname>Select the data format "SLIN" for channel1.Trace1.</stepname>
+      <stepdescription>Setup the trace format as "Smith Lin/Phase".</stepdescription>
+      <functionname>SelectDataFormat</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>SLIN</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.10</stepnum>
+      <stepname>Check the data format for Channel1.Trace1</stepname>
+      <stepdescription>Query the data format of channel1.trace1, to confirm with test specification.</stepdescription>
+      <functionname>QueryDataFormat</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>SLIN</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.11</stepnum>
+      <stepname>Select the S-parameter "S21" for channel1.trace2</stepname>
+      <stepdescription>For channel1.trace2, configure the S-parameter as S12</stepdescription>
+      <functionname>SelectMeasurementParameter</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>S12</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>SLIN</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.12</stepnum>
+      <stepname>Select the data format "MLOG" for channel1.trace2</stepname>
+      <stepdescription>Configure the data format "Log mag" for channel1.trace2.</stepdescription>
+      <functionname>SelectDataFormat</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.13</stepnum>
+      <stepname>Select the S-parameter "S12" for channel1.trace3.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SelectMeasurementParameter</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>S12</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.14</stepnum>
+      <stepname>Select the data format "MLOG" for channel1.trace3.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SelectDataFormat</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.15</stepnum>
+      <stepname>Select the S-parameter "S22" for channel1.trace4</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SelectMeasurementParameter</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>4</parameter>
+        <parameter>S22</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.16</stepnum>
+      <stepname>Select data format "SLIN" for channel1.trace4.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SelectDataFormat</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>4</parameter>
+        <parameter>IMAG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.17</stepnum>
+      <stepname>Configure 2 traces in channel2.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>ConfigureTraceCount</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.18</stepnum>
+      <stepname>Configure the trace layout for channel2</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SetNetAnalyzerGraphLayout</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>D12</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.19</stepnum>
+      <stepname>Select S-parameter "S31" for channel2.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SelectMeasurementParameter</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>S31</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.20</stepnum>
+      <stepname>Config the data format "MLOG" for channel2.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SelectDataFormat</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.21</stepnum>
+      <stepname>Select the S-parameter "S33 for channel2.trace2</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SelectMeasurementParameter</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>2</parameter>
+        <parameter>S33</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.22</stepnum>
+      <stepname>Configure the data format for channel2.trace2</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SelectDataFormat</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>2</parameter>
+        <parameter>SLIN</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
