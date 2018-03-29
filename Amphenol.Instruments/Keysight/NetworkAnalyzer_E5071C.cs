@@ -324,5 +324,342 @@ namespace Amphenol.Instruments.Keysight
             dataFormat = response;
             return errorno;
         }
+
+        /* :SENS1:SWE:TYPE SEGM */
+        public int SetSweepTypeForChannel(int channelNum, string sweepType)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":SWEep:TYPE " + sweepType;
+
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                return errorno;
+            }
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* SENS2:SWE:TYPE? */
+        public int QuerySweepTypeForChannel(int channelNum, out string sweepType)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":SWEep:TYPE?", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+            sweepType = response;
+            return errorno;
+        }
+
+        /* OUTP:STAT ON */
+        public int TurnOnOffStimulusSignalOutput(int status /* 1: ON,  0: OFF*/)
+        {
+            int errorno, count;
+            string command;
+            if (status == 1)
+            {
+                command = ":OUTPut:STATe ON";
+            }
+            else if (status == 0)
+            {
+                command = ":OUTPut:STATe OFF";
+            }
+            else
+            {
+                command = "";
+            }
+
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                return errorno;
+            }
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:FREQ:START 50E6 */
+        public int SetSweepStartFreqValueForChannel(int channelNum = 1, string startFreqValue = "3E5" /* Support formats : 345356.05 or 356E3,  unit : Hz */)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":FREQ:STARt " + startFreqValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:FREQ:STOP 8.5E9 */
+        public int SetSweepStopFreqValueForChannel(int channelNum = 1, string stopFreqValue = "8.5E9")
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":FREQ:STOP " + stopFreqValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:FREQ:CENT 4.25E9 */
+        public int SetSweepCenterFreqValueForChannel(int channelNum = 1, string centerFreqValue = "4.25015E9")
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":FREQ:CENTer " + centerFreqValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:FREQ:SPAN 8.499E9 */
+        public int SetSweepSpanFreqValueForChannel(int channelNum = 1, string spanFreqValue = "8.499E9")
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":FREQ:SPAN " + spanFreqValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:SWE:POIN 201 */
+        public int SetSweepMeasurementPoints(int channelNum = 1, int pointNum = 201)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":SWEep:POINts " + pointNum;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:SWE:TIME 1.5 */
+        public int SetSweepTimeForChannel(int channelNum, float time /* unit : second */)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":SWEep:TIME " + time;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:SWE:TIME:AUTO ON */
+        public int AutoSetSweepTimeForChannel(int channelNum = 1, string autoOnOff = "ON")
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":SWEep:TIME:AUTO " + autoOnOff.ToUpper();
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:SWE:DEL 0.05 */
+        public int SetSweepDelayTimeForChannel(int channelNum = 1, float delayTime = 0 /* unit : second */)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":SWEep:DELay " + delayTime;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:BAND 1.5E3 */
+        public int SetIFBandwidthForChannel(int channelNum = 1, string bandwidth = "1.0E5" /* unit : Hz */)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":BANDwidth " + bandwidth;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SOUR1:POW -12.5 */
+        public int SetPowerLevelForChannel(int channelNum = 1, double powerLevel = 0 /* unit : dBm */)
+        {
+            int errorno, count;
+            string command = ":SOURce" + channelNum + ":POWer:LEVel " + powerLevel;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SOUR1:POW:LEV? */
+        public int QueryPowerLevelForChannel(int channelNum, out double powerLevel)
+        {
+            int errorno, count;
+            string command = ":SOURce" + channelNum + ":POWer:LEVel?", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+            powerLevel = Convert.ToDouble(response);
+            return errorno;
+        }
+
+        /* :SOUR1:POW:ATT 15 */
+        public int SetPowerRangeForChannel(int channelNum = 1, int attenuatorValue = 0 /* unit : dB */)
+        {
+            int errorno, count;
+            string command = ":SOURce" + channelNum + ":POWer:ATTenuation " + attenuatorValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SOUR1:POW:STAR -10 */
+        public int SetPowerSweepRangeStartValueForChannel(int channelNum = 1, double startPowerValue = -15.00 /* unit : dBm */)
+        {
+            int errorno, count;
+            string command = ":SOURce" + channelNum + ":POWer:STARt " + startPowerValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SOUR1:POW:STOP 10 */
+        public int SetPowerSweepRangeStopValueForChannel(int channelNum = 1, double stopPowerValue = 0 /* unit : dBm */)
+        {
+            int errorno, count;
+            string command = ":SOURce" + channelNum + ":POWer:STOP " + stopPowerValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* SOUR1:POW:CENT 0 */
+        public int SetPowerSweepCenterValueForChannel(int channelNum, double centerPowerValue = -7.5)
+        {
+            int errorno, count;
+            string command = ":SOURce" + channelNum + ":POWer:CENTer " + centerPowerValue, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SOUR1:POW:SPAN 10 */
+        public int SetPowerSweepSpanValueForChannel(int channelNum = 1, double spanPowerValue = 15.00)
+        {
+            int errorno, count;
+            string command = ":SOURce" + channelNum + ":POWer:SPAN " + spanPowerValue, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:FREQ 1E9 */
+        public int SetPowerSweepFixedFrequenceForChannel(int channelNum = 1, string CWFrequency = "3E5" /* unit : Hz */)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":FREQuency:CW " + CWFrequency, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* SENS1:AVER:STAT ON */
+        public int TurnOnOffAveragingFunctionForChannel(int channelNum = 1, string on_off = "OFF")
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":AVERage:STATe " + on_off, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* SENS1:AVER:COUN 4 */
+        public int SetAveragingFactorForChannel(int channelNum = 1, int factorValue = 16)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":AVERage:COUNt " + factorValue, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:AVER:CLE */
+        public int ClearAveragingMeasurementDataForChannel(int channelNum = 1)
+        {
+            int errorno, count;
+            string command = ":SENSe" + channelNum + ":AVERage:CLEar", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        public int ExecuteCommand(string command)
+        {
+            int errorno, count;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        public int QueryCommand(string command, out string response)
+        {
+            int errorno, count;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+            return errorno;
+        }
+
+        /* :MMEM:LOAD:SEGM "Segm01.csv" */
+        public int ConfigureSegmentSweepSettings(string segmentSweepTableCsvFile)
+        {
+            int errorno, count;
+            string command = "MMEMory:LOAD:SEGMent \"" + segmentSweepTableCsvFile + "\"", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :DISP:WIND1:Y:DIV 12 */
+        public int SetTraceDivisionNumberForChannel(int channelNum = 1, int divisionNumber = 10)
+        {
+            int errorno, count;
+            string command = ":DISPlay:WINDow" + channelNum + ":Y:SCALe:DIV " + divisionNumber, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :DISP:WIND1:TRAC1:Y:PDIV 2.5 */
+        public int SetScalePerDivisionForChannelTrace(int channelNum = 1, int traceNum = 1, string scaleValue = "0.2")
+        {
+            int errorno, count;
+            string command = ":DISPlay:WINDow" + channelNum + ":TRACe" + traceNum + ":Y:SCALe:PDIVision " + scaleValue, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }        
+
+        /* :DISP:WIND1:TRAC1:Y:RPOS 6 */
+        public int SetReferenceGraticuleLineNumber(int channelNum = 1, int traceNum = 1, int gradticuleLineNumber = 5)
+        {
+            int errorno, count;
+            string command = ":DISPlay:WINDow" + channelNum + ":TRACe" + traceNum + ":Y:SCALe:RPOSition " + gradticuleLineNumber, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :DISP:WIND1:TRAC1:Y:RLEV 1E2 */
+        public int SetReferenceGraticuleLineLevel(int channelNum = 1, int traceNum = 1, string referenceGraticuleLineValue = "1E2")
+        {
+            int errorno, count;
+            string command = ":DISPlay:WINDow" + channelNum + ":TRACe" + traceNum + ":Y:SCALe:RLEVel " + referenceGraticuleLineValue, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :DISP:WIND1:TRAC1:Y:AUTO */
+        public int AutoScaleTraceDisplay(int channelNum = 1, int traceNum = 1)
+        {
+            int errorno, count;
+            string command = ":DISPlay:WINDow" + channelNum + ":TRACe" + traceNum + ":Y:SCALe:AUTO", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :MMEM:STOR "state01.sta" */
+        public int SaveInstrumentStateIntoFile(string instrumentStateFileName = "State01.sta")
+        {
+            int errorno, count;
+            string command = ":MMEMory:STORe:STATe \"" + instrumentStateFileName + "\"", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :MMEM:LOAD "State01.sta" */
+        public int RecallSpecifiedInstrumentStateFile(string instrumentStateFileName)
+        {
+            int errorno, count;
+            string command = ":MMEMory:LOAD \"" + instrumentStateFileName + "\"", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
     }
 }
