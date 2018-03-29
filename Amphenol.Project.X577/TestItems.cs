@@ -10,7 +10,7 @@ namespace Amphenol.Project.X577
         public static bool Execute(string dutSerialNum,                 /* Argument IN */
                                    string stepFuncname,                 /* Argument IN */
                                    List<string> stepParameters,         /* Argument IN */
-                                   List<string> stepLimits,                 /* Argument IN */
+                                   List<string> stepLimits,             /* Argument IN */
                                    out string stepResult,                   /* Argument OUT */
                                    out string stepStatus,                   /* Argument OUT */
                                    out string stepErrorCode,                /* Argument OUT */
@@ -92,6 +92,39 @@ namespace Amphenol.Project.X577
                 case "QueryDataFormat":
                     success = QueryDataFormat(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "SetSweepType":
+                    success = SetSweepType(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "ExecuteNetworkAnalyzerCommand":
+                    success = ExecuteNetworkAnalyzerCommand(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SetTraceScalePerDivision":
+                    success = SetTraceScalePerDivision(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SetTraceGraticuleLineNumber":
+                    success = SetTraceGraticuleLineNumber(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SetTraceGraticuleLineLevel":
+                    success = SetTraceGraticuleLineLevel(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SetSweepCenterFrequency":
+                    success = SetSweepCenterFrequency(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SetSweepSpanFrequency":
+                    success = SetSweepSpanFrequency(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SetSweepPointNumber":
+                    success = SetSweepPointNumber(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SetIFBandwidth":
+                    success = SetIFBandwidth(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SetPowerLevel":
+                    success = SetPowerLevel(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SaveInstrumentState":
+                    success = SaveInstrumentState(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
                 #endregion
 
                 #region Power Supply Test Items section
@@ -145,6 +178,17 @@ namespace Amphenol.Project.X577
             functionsList.Add("QueryMeasurementParameter");
             functionsList.Add("SelectDataFormat");
             functionsList.Add("QueryDataFormat");
+            functionsList.Add("SetSweepType");
+            functionsList.Add("ExecuteNetworkAnalyzerCommand");
+            functionsList.Add("SetTraceScalePerDivision");
+            functionsList.Add("SetTraceGraticuleLineNumber");
+            functionsList.Add("SetTraceGraticuleLineLevel");
+            functionsList.Add("SetSweepCenterFrequency");
+            functionsList.Add("SetSweepSpanFrequency");
+            functionsList.Add("SetSweepPointNumber");
+            functionsList.Add("SetIFBandwidth");
+            functionsList.Add("SetPowerLevel");
+            functionsList.Add("SaveInstrumentState");
             #endregion
             #region Power Supply Test Functions
             functionsList.Add("InitializeDCPowerSupply");
