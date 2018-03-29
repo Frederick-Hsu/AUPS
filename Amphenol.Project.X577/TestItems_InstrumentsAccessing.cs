@@ -419,6 +419,297 @@ namespace Amphenol.Project.X577
                 return false;
             }
         }
+
+        private static bool SetSweepType(List<string> stepParameters,
+                                         out string stepResult,
+                                         out string stepStatus,
+                                         out string stepErrorCode,
+                                         out string stepErrorDesc)
+        {
+            int channel = Convert.ToInt32(stepParameters[0]);
+            string sweepType = stepParameters[1];
+
+            int successFlag = networkAnalyzer.SetSweepTypeForChannel(channel, sweepType);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "SWETYPE";
+                stepErrorDesc = "Failed in set the sweep type.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool ExecuteNetworkAnalyzerCommand(List<string> stepParameters,
+                                                          out string stepResult,
+                                                          out string stepStatus,
+                                                          out string stepErrorCode,
+                                                          out string stepErrorDesc)
+        {
+            string command = stepParameters[0];
+            int successFlag = networkAnalyzer.ExecuteCommand(command);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "EXECMD";
+                stepErrorDesc = "Failed in executing the command of network analyzer.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SetTraceScalePerDivision(List<string> stepParameters,
+                                                     out string stepResult,
+                                                     out string stepStatus,
+                                                     out string stepErrorCode,
+                                                     out string stepErrorDesc)
+        {
+            int channel = Convert.ToInt32(stepParameters[0]), trace = Convert.ToInt32(stepParameters[1]);
+            string scale = stepParameters[2];
+
+            int successFlag = networkAnalyzer.SetScalePerDivisionForChannelTrace(channel, trace, scale);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "SCALPDIV";
+                stepErrorDesc = "Failed in setting the scale per division for trace.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SetTraceGraticuleLineNumber(List<string> stepParameters,
+                                                        out string stepResult,
+                                                        out string stepStatus,
+                                                        out string stepErrorCode,
+                                                        out string stepErrorDesc)
+        {
+            int channel = Convert.ToInt32(stepParameters[0]),
+                trace = Convert.ToInt32(stepParameters[1]),
+                graticuleLineNumber = Convert.ToInt32(stepParameters[2]);
+
+            int successFlag = networkAnalyzer.SetReferenceGraticuleLineNumber(channel, trace, graticuleLineNumber);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NOK";
+                stepStatus = "Fail";
+                stepErrorCode = "GRATNUM";
+                stepErrorDesc = "Failed in setting the graticule line number for trace.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SetTraceGraticuleLineLevel(List<string> stepParameters,
+                                                       out string stepResult,
+                                                       out string stepStatus,
+                                                       out string stepErrorCode,
+                                                       out string stepErrorDesc)
+        {
+            int channel = Convert.ToInt32(stepParameters[0]), trace = Convert.ToInt32(stepParameters[1]);
+            string graticuleLineValue = stepParameters[2];
+
+            int successFlag = networkAnalyzer.SetReferenceGraticuleLineLevel(channel, trace, graticuleLineValue);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "GRATVAL";
+                stepErrorDesc = "Failed in setting the graticule line value for trace";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SetSweepCenterFrequency(List<string> stepParameters,
+                                                    out string stepResult,
+                                                    out string stepStatus,
+                                                    out string stepErrorCode,
+                                                    out string stepErrorDesc)
+        {
+            int channel = Convert.ToInt32(stepParameters[0]);
+            string freq = stepParameters[1];
+
+            int successFlag = networkAnalyzer.SetSweepCenterFreqValueForChannel(channel, freq);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "CENTFREQ";
+                stepErrorDesc = "Failed in setting the sweep center frequency.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SetSweepSpanFrequency(List<string> stepParameters,
+                                                  out string stepResult,
+                                                  out string stepStatus,
+                                                  out string stepErrorCode,
+                                                  out string stepErrorDesc)
+        {
+            int channel = Convert.ToInt32(stepParameters[0]);
+            string freq = stepParameters[1];
+
+            int successFlag = networkAnalyzer.SetSweepSpanFreqValueForChannel(channel, freq);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "SPANFREQ";
+                stepErrorDesc = "Failed in setting the sweep span frequency.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SetSweepPointNumber(List<string> stepParameters,
+                                                out string stepResult,
+                                                out string stepStatus,
+                                                out string stepErrorCode,
+                                                out string stepErrorDesc)
+        {
+            int channel = Convert.ToInt32(stepParameters[0]), points = Convert.ToInt32(stepParameters[1]);
+            int successFlag = networkAnalyzer.SetSweepMeasurementPoints(channel, points);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "SWEPOIN";
+                stepErrorDesc = "Failed in setting the sweep points";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SetIFBandwidth(List<string> stepParameters,
+                                           out string stepResult,
+                                           out string stepStatus,
+                                           out string stepErrorCode,
+                                           out string stepErrorDesc)
+        {
+            int channel = Convert.ToInt32(stepParameters[0]);
+            string bandwidth = stepParameters[1];
+
+            int successFlag = networkAnalyzer.SetIFBandwidthForChannel(channel, bandwidth);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "IFBAND";
+                stepErrorDesc = "Failed in setting the IF bandwidth.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SetPowerLevel(List<string> stepParameters,
+                                          out string stepResult,
+                                          out string stepStatus,
+                                          out string stepErrorCode,
+                                          out string stepErrorDesc)
+        {
+            int channel = Convert.ToInt32(stepParameters[0]);
+            double power = Convert.ToDouble(stepParameters[1]);
+            int successFlag = networkAnalyzer.SetPowerLevelForChannel(channel, power);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "POWLEV";
+                stepErrorDesc = "Failed in setting the power level.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SaveInstrumentState(List<string> stepParameters,
+                                                out string stepResult,
+                                                out string stepStatus,
+                                                out string stepErrorCode,
+                                                out string stepErrorDesc)
+        {
+            string fileName = stepParameters[0];
+            int successFlag = networkAnalyzer.SaveInstrumentStateIntoFile(fileName);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NOK";
+                stepStatus = "Fail";
+                stepErrorCode = "STATEFILE";
+                stepErrorDesc = "Failed in saving the instrument state file.";
+            }
+            return (successFlag == 0);
+        }
     }
 
     partial class TestItems
