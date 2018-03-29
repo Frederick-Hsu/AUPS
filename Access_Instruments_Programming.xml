@@ -9,7 +9,7 @@
       <stepdescription>Access the Keysight network analyzer E5071A over USB, and initialize it.</stepdescription>
       <functionname>InitializeNetworkAnalyzer</functionname>
       <parameterlist>
-        <parameter>TCPIP0::192.168.30.89::inst0::INSTR</parameter>
+        <parameter>TCPIP0::192.168.30.63::inst0::INSTR</parameter>
         <parameter>TCPIP0::169.254.9.12::inst0::INSTR</parameter>
         <parameter>TCPIP0::192.168.30.89::inst0::INSTR</parameter>
         <parameter>USB0::0x0957::0x0D09::MY46527492::0::INSTR</parameter>
@@ -46,6 +46,78 @@
     </step>
     <step>
       <stepnum>1.4</stepnum>
+      <stepname>Enable the continuous mode for channel1.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>ExecuteNetworkAnalyzerCommand</functionname>
+      <parameterlist>
+        <parameter>:INIT1:CONT ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.5</stepnum>
+      <stepname>Enable the continuous mode for channel 2.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>ExecuteNetworkAnalyzerCommand</functionname>
+      <parameterlist>
+        <parameter>:INIT2:CONT ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B2</blocknum>
+    <blockname>Configure Channel 1.</blockname>
+    <step>
+      <stepnum>2.1</stepnum>
+      <stepname>Activate channel 1.</stepname>
+      <stepdescription>Select window 1 as the active channel.</stepdescription>
+      <functionname>SelectActiveChannel</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.2</stepnum>
+      <stepname>Set the sweep type as Segment for channel 1.</stepname>
+      <stepdescription>For the window 1, se the sweep type "SEGM".</stepdescription>
+      <functionname>SetSweepType</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>SEGM</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.3</stepnum>
+      <stepname>Set the segment data array.</stepname>
+      <stepdescription>Directly input the command to execute.</stepdescription>
+      <functionname>ExecuteNetworkAnalyzerCommand</functionname>
+      <parameterlist>
+        <parameter>:SENS1:SEGM:DATA 5, 0, 1, 1, 0, 0, 3, 1.7E9, 1.9E9, 21, 50E3, 0, 1.9E9, 2.0E9, 101, 10E3, -10, 2.0E9, 2.2E9, 21, 50E3, 0</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.4</stepnum>
       <stepname>Setup the trace count in channel 1.</stepname>
       <stepdescription>How many traces do you want to display in window1.</stepdescription>
       <functionname>ConfigureTraceCount</functionname>
@@ -59,7 +131,7 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.5</stepnum>
+      <stepnum>2.5</stepnum>
       <stepname>Configure the trace layout in window 1.</stepname>
       <stepdescription>Select your trace display mode in the channel 1.</stepdescription>
       <functionname>SetNetAnalyzerGraphLayout</functionname>
@@ -73,7 +145,7 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.6</stepnum>
+      <stepnum>2.6</stepnum>
       <stepname>Query the trace count in channel1.</stepname>
       <stepdescription>To confirm whether trace layout had been set correctly, check the trace count.</stepdescription>
       <functionname>GetTraceCount</functionname>
@@ -87,8 +159,12 @@
         <limit>4</limit>
       </spec>
     </step>
+  </block>
+  <block>
+    <blocknum>B3</blocknum>
+    <blockname>Setup Channel1.Trace1</blockname>
     <step>
-      <stepnum>1.7</stepnum>
+      <stepnum>3.1</stepnum>
       <stepname>Select S-parameter S11 for trace1 of channel1.</stepname>
       <stepdescription>For Channel1.Trace1, select the S-parameter as S11.</stepdescription>
       <functionname>SelectMeasurementParameter</functionname>
@@ -103,7 +179,7 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.8</stepnum>
+      <stepnum>3.2</stepnum>
       <stepname>Query the S-parameter of Channel1.Trace1.</stepname>
       <stepdescription>Check whether the S-parameter had been configured correctly for Channel1.Trace1.</stepdescription>
       <functionname>QueryMeasurementParameter</functionname>
@@ -117,7 +193,21 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.9</stepnum>
+      <stepnum>3.3</stepnum>
+      <stepname>Select channel1.trace1 as the active trace</stepname>
+      <stepdescription>Activate the channel1.trace1</stepdescription>
+      <functionname>SelectActiveTrace</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>3.4</stepnum>
       <stepname>Select the data format "SLIN" for channel1.Trace1.</stepname>
       <stepdescription>Setup the trace format as "Smith Lin/Phase".</stepdescription>
       <functionname>SelectDataFormat</functionname>
@@ -132,7 +222,7 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.10</stepnum>
+      <stepnum>3.5</stepnum>
       <stepname>Check the data format for Channel1.Trace1</stepname>
       <stepdescription>Query the data format of channel1.trace1, to confirm with test specification.</stepdescription>
       <functionname>QueryDataFormat</functionname>
@@ -146,24 +236,44 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.11</stepnum>
-      <stepname>Select the S-parameter "S21" for channel1.trace2</stepname>
-      <stepdescription>For channel1.trace2, configure the S-parameter as S12</stepdescription>
+      <stepnum>3.6</stepnum>
+      <stepname>Set the scale per division for window1.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SetTraceScalePerDivision</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B4</blocknum>
+    <blockname>Setup Channel1.Trace2</blockname>
+    <step>
+      <stepnum>4.1</stepnum>
+      <stepname>Configure the measurement S-parameter for channel1.trace2</stepname>
+      <stepdescription>Set the S-parameter as S21 for the trace 2 in window 1.</stepdescription>
       <functionname>SelectMeasurementParameter</functionname>
       <parameterlist>
         <parameter>1</parameter>
         <parameter>2</parameter>
-        <parameter>S12</parameter>
+        <parameter>S21</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
-        <limit>SLIN</limit>
+        <limit>OK</limit>
       </spec>
     </step>
     <step>
-      <stepnum>1.12</stepnum>
-      <stepname>Select the data format "MLOG" for channel1.trace2</stepname>
-      <stepdescription>Configure the data format "Log mag" for channel1.trace2.</stepdescription>
+      <stepnum>4.2</stepnum>
+      <stepname>Set the data format MLOG.</stepname>
+      <stepdescription>Select the data format "MLOG" for trace2 in channel1.</stepdescription>
       <functionname>SelectDataFormat</functionname>
       <parameterlist>
         <parameter>1</parameter>
@@ -176,10 +286,58 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.13</stepnum>
-      <stepname>Select the S-parameter "S12" for channel1.trace3.</stepname>
-      <stepdescription>
-      </stepdescription>
+      <stepnum>4.3</stepnum>
+      <stepname>Set the reference graticule line number.</stepname>
+      <stepdescription>Configure the reference graticule line number as 9.</stepdescription>
+      <functionname>SetTraceGraticuleLineNumber</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>4.4</stepnum>
+      <stepname>Configure the reference graticule line level</stepname>
+      <stepdescription>Set the graticule line level as 0 for channel1.trace2</stepdescription>
+      <functionname>SetTraceGraticuleLineLevel</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>0</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>4.5</stepnum>
+      <stepname>Set the scale per division</stepname>
+      <stepdescription>Configure the scale per division as "10" for channel1.trace2.</stepdescription>
+      <functionname>SetTraceScalePerDivision</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>10</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B5</blocknum>
+    <blockname>Setup Channel1.Trace3</blockname>
+    <step>
+      <stepnum>5.1</stepnum>
+      <stepname>Configure the measurement S-parameter for channel1.trace3</stepname>
+      <stepdescription>Select the S-parameter S12 for channel1.trace3.</stepdescription>
       <functionname>SelectMeasurementParameter</functionname>
       <parameterlist>
         <parameter>1</parameter>
@@ -192,10 +350,24 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.14</stepnum>
+      <stepnum>5.2</stepnum>
+      <stepname>Select channel1.trace3 as the active trace.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SelectActiveTrace</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>5.3</stepnum>
       <stepname>Select the data format "MLOG" for channel1.trace3.</stepname>
-      <stepdescription>
-      </stepdescription>
+      <stepdescription>Set the data display format for channel1.trace3 : Log. Mag.</stepdescription>
       <functionname>SelectDataFormat</functionname>
       <parameterlist>
         <parameter>1</parameter>
@@ -208,10 +380,58 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.15</stepnum>
-      <stepname>Select the S-parameter "S22" for channel1.trace4</stepname>
-      <stepdescription>
-      </stepdescription>
+      <stepnum>5.4</stepnum>
+      <stepname>Set the reference graticule line number.</stepname>
+      <stepdescription>Reference graticule line number : 9</stepdescription>
+      <functionname>SetTraceGraticuleLineNumber</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>5.5</stepnum>
+      <stepname>Set the reference graticule line level.</stepname>
+      <stepdescription>Graticule line level : 0</stepdescription>
+      <functionname>SetTraceGraticuleLineLevel</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>0</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>5.6</stepnum>
+      <stepname>Set the trace scale per division</stepname>
+      <stepdescription>Scale per division : 10,  for channel1.trace3.</stepdescription>
+      <functionname>SetTraceScalePerDivision</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>10</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B6</blocknum>
+    <blockname>Configure Channel1.Trace4</blockname>
+    <step>
+      <stepnum>6.1</stepnum>
+      <stepname>Select the measurement S-parameter "S22" for channel1.trace4</stepname>
+      <stepdescription>S-parameter : S22</stepdescription>
       <functionname>SelectMeasurementParameter</functionname>
       <parameterlist>
         <parameter>1</parameter>
@@ -224,15 +444,14 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.16</stepnum>
-      <stepname>Select data format "SLIN" for channel1.trace4.</stepname>
+      <stepnum>6.2</stepnum>
+      <stepname>Activate channel1.trace4</stepname>
       <stepdescription>
       </stepdescription>
-      <functionname>SelectDataFormat</functionname>
+      <functionname>SelectActiveTrace</functionname>
       <parameterlist>
         <parameter>1</parameter>
         <parameter>4</parameter>
-        <parameter>IMAG</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
@@ -240,10 +459,140 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.17</stepnum>
-      <stepname>Configure 2 traces in channel2.</stepname>
-      <stepdescription>
-      </stepdescription>
+      <stepnum>6.3</stepnum>
+      <stepname>Set the data display format : SLIN for channel1.trace4.</stepname>
+      <stepdescription>Data format : Smith (Lin/Phase)</stepdescription>
+      <functionname>SelectDataFormat</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>4</parameter>
+        <parameter>SLIN</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>6.4</stepnum>
+      <stepname>Set the trace scale per division for channel1.trace4</stepname>
+      <stepdescription>Scale per division : 2</stepdescription>
+      <functionname>SetTraceScalePerDivision</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>4</parameter>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B7</blocknum>
+    <blockname>Setup Channel2</blockname>
+    <step>
+      <stepnum>7.1</stepnum>
+      <stepname>Activate the channel 2.</stepname>
+      <stepdescription>Select the window 2 as the active channel.</stepdescription>
+      <functionname>SelectActiveChannel</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.2</stepnum>
+      <stepname>Set the sweep type : LIN for channel 2</stepname>
+      <stepdescription>Sweep type : LIN</stepdescription>
+      <functionname>SetSweepType</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>LIN</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.3</stepnum>
+      <stepname>Set the sweep center frequence 1.9GHz for channel 2.</stepname>
+      <stepdescription>Center frequence : 1.9E9,  unit : Hz</stepdescription>
+      <functionname>SetSweepCenterFrequency</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1.9E9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.4</stepnum>
+      <stepname>Set the sweep span frequency : 500MHz for channel2.</stepname>
+      <stepdescription>Span frequency : 5.00E8 unit : Hz.</stepdescription>
+      <functionname>SetSweepSpanFrequency</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>5.00E8</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.5</stepnum>
+      <stepname>Set the sweep points for channel 2.</stepname>
+      <stepdescription>Point number : 101</stepdescription>
+      <functionname>SetSweepPointNumber</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>101</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.6</stepnum>
+      <stepname>Set the sweep IF bandwidth 70KHz for channel 2.</stepname>
+      <stepdescription>IF bandwidth : 7.0E4,  unit : Hz</stepdescription>
+      <functionname>SetIFBandwidth</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>7.0E4</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.7</stepnum>
+      <stepname>Set the base sweep power level for channel 2.</stepname>
+      <stepdescription>Power level : 0dBm</stepdescription>
+      <functionname>SetPowerLevel</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>0</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.8</stepnum>
+      <stepname>Configure the trace number : 2 in the window 2</stepname>
+      <stepdescription>Trace number : 2</stepdescription>
       <functionname>ConfigureTraceCount</functionname>
       <parameterlist>
         <parameter>2</parameter>
@@ -255,10 +604,9 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.18</stepnum>
-      <stepname>Configure the trace layout for channel2</stepname>
-      <stepdescription>
-      </stepdescription>
+      <stepnum>7.9</stepnum>
+      <stepname>Set the trace layout in the window2.</stepname>
+      <stepdescription>Trace layout : D12</stepdescription>
       <functionname>SetNetAnalyzerGraphLayout</functionname>
       <parameterlist>
         <parameter>2</parameter>
@@ -269,11 +617,14 @@
         <limit>OK</limit>
       </spec>
     </step>
+  </block>
+  <block>
+    <blocknum>B8</blocknum>
+    <blockname>Configure Channel2.Trace1</blockname>
     <step>
-      <stepnum>1.19</stepnum>
-      <stepname>Select S-parameter "S31" for channel2.trace1</stepname>
-      <stepdescription>
-      </stepdescription>
+      <stepnum>8.1</stepnum>
+      <stepname>Define the measurement S-parameter for channel2.trace1.</stepname>
+      <stepdescription>S-parameter : S31</stepdescription>
       <functionname>SelectMeasurementParameter</functionname>
       <parameterlist>
         <parameter>2</parameter>
@@ -286,10 +637,23 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.20</stepnum>
-      <stepname>Config the data format "MLOG" for channel2.trace1</stepname>
-      <stepdescription>
-      </stepdescription>
+      <stepnum>8.2</stepnum>
+      <stepname>Select the active trace for channel2.trace1</stepname>
+      <stepdescription>Channel2.Trace1</stepdescription>
+      <functionname>SelectActiveTrace</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.3</stepnum>
+      <stepname>Define the data display format : MLOG for channel2.trace1.</stepname>
+      <stepdescription>Data format : MLOG.</stepdescription>
       <functionname>SelectDataFormat</functionname>
       <parameterlist>
         <parameter>2</parameter>
@@ -302,10 +666,58 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.21</stepnum>
-      <stepname>Select the S-parameter "S33 for channel2.trace2</stepname>
-      <stepdescription>
-      </stepdescription>
+      <stepnum>8.4</stepnum>
+      <stepname>Set the reference graticule line number</stepname>
+      <stepdescription>Graticule line number : 9</stepdescription>
+      <functionname>SetTraceGraticuleLineNumber</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.5</stepnum>
+      <stepname>Set the reference graticule line level</stepname>
+      <stepdescription>Graticule line level : 0</stepdescription>
+      <functionname>SetTraceGraticuleLineLevel</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>0</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.6</stepnum>
+      <stepname>Set the trace scale per division for channel2.trace1</stepname>
+      <stepdescription>Scale per division : 10</stepdescription>
+      <functionname>SetTraceScalePerDivision</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>10</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B9</blocknum>
+    <blockname>Configure Channel2.Trace2</blockname>
+    <step>
+      <stepnum>9.1</stepnum>
+      <stepname>Define the measurement S-parameter for channel2.trace2.</stepname>
+      <stepdescription>S-parameter : S33</stepdescription>
       <functionname>SelectMeasurementParameter</functionname>
       <parameterlist>
         <parameter>2</parameter>
@@ -318,10 +730,24 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.22</stepnum>
-      <stepname>Configure the data format for channel2.trace2</stepname>
+      <stepnum>9.2</stepnum>
+      <stepname>Activate the channel2.trace2</stepname>
       <stepdescription>
       </stepdescription>
+      <functionname>SelectActiveTrace</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.3</stepnum>
+      <stepname>Configure the data display format for channel2.trace2.</stepname>
+      <stepdescription>Data format : SLIN</stepdescription>
       <functionname>SelectDataFormat</functionname>
       <parameterlist>
         <parameter>2</parameter>
@@ -334,11 +760,29 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.2</stepnum>
-      <stepname>Close the network analyzer</stepname>
-      <stepdescription>After finished the antenna RF testing, MUST close the communication with network analyzer.</stepdescription>
-      <functionname>CloseNetworkAnalyzer</functionname>
-      <parameterlist />
+      <stepnum>9.4</stepnum>
+      <stepname>Set the trace scale per division for channel2.trace2</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>SetTraceScalePerDivision</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>2</parameter>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.5</stepnum>
+      <stepname>Save the network analyzer configuration.</stepname>
+      <stepdescription>Instrument state file name : "MyConfig.sta"</stepdescription>
+      <functionname>SaveInstrumentState</functionname>
+      <parameterlist>
+        <parameter>MyConfig.sta</parameter>
+      </parameterlist>
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
