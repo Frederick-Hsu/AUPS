@@ -27,6 +27,8 @@ TCP_Client/
 TCP_Server/
 VISA.lib/
 Access_PList/
+RunExternalCmd/
+RunIperfCmd/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
