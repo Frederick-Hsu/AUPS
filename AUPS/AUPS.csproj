@@ -92,10 +92,10 @@
     <Compile Include="TestPanel\TestPanel_ToolbarEvent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utilities\GMVehicleAntennaTesting.cs">
+    <Compile Include="Tools\GMVehicleAntennaTesting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utilities\GMVehicleAntennaTesting.Designer.cs">
+    <Compile Include="Tools\GMVehicleAntennaTesting.Designer.cs">
       <DependentUpon>GMVehicleAntennaTesting.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainWindow.resx">
@@ -120,7 +120,7 @@
     <EmbeddedResource Include="TestPanel\TestPanel.resx">
       <DependentUpon>TestPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\GMVehicleAntennaTesting.resx">
+    <EmbeddedResource Include="Tools\GMVehicleAntennaTesting.resx">
       <DependentUpon>GMVehicleAntennaTesting.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

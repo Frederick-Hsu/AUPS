@@ -18,7 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using AUPS.Utilities;
+using AUPS.Tools;
 
 namespace Amphenol.AUPS
 {
@@ -70,7 +70,7 @@ namespace Amphenol.AUPS
             bool openedFlag = false;
             foreach (Form frm in this.MdiChildren)
             {
-                if (frm.GetType().ToString() == "AUPS.Utilities.GMVehicleAntennaTesting")
+                if (frm.GetType().ToString() == "AUPS.Tools.GMVehicleAntennaTesting")
                 {
                     openedFlag = true;
                     break;
