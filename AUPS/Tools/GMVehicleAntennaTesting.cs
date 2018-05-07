@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AUPS.Utilities
+namespace AUPS.Tools
 {
     public partial class GMVehicleAntennaTesting : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace AUPS.Utilities
+﻿namespace AUPS.Tools
 {
     partial class GMVehicleAntennaTesting
     {
