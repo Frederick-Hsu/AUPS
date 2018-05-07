@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawing\Circle.cs" />
+    <Compile Include="Drawing\Shape.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +92,12 @@
     <Compile Include="TestPanel\TestPanel_ToolbarEvent.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utilities\GMVehicleAntennaTesting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\GMVehicleAntennaTesting.Designer.cs">
+      <DependentUpon>GMVehicleAntennaTesting.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +109,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SequenceEditor\SequenceEditor.resx">
       <DependentUpon>SequenceEditor.cs</DependentUpon>
@@ -110,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TestPanel\TestPanel.resx">
       <DependentUpon>TestPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\GMVehicleAntennaTesting.resx">
+      <DependentUpon>GMVehicleAntennaTesting.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -133,6 +145,13 @@
       <Project>{fa0a37c1-f916-43e8-a0cc-10eb2098f0d2}</Project>
       <Name>Amphenol.SequenceLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settings.ico" />
+    <None Include="Resources\load.ico" />
+    <None Include="Resources\new.ico" />
+    <None Include="Resources\antenna.ico" />
+    <Content Include="Resources\open.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

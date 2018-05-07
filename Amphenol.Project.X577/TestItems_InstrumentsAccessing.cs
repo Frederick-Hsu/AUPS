@@ -710,6 +710,38 @@ namespace Amphenol.Project.X577
             }
             return (successFlag == 0);
         }
+
+        private static bool PeaksMarkerSearchPreparation(List<string> stepParameters,
+                                                         out string stepResult,
+                                                         out string stepStatus,
+                                                         out string stepErrorCode,
+                                                         out string stepErrorDesc)
+        {
+            int eventStatusRegisterValue = Convert.ToInt32(stepParameters[0]),
+                serviceRequestRegisterValue = Convert.ToInt32(stepParameters[1]);
+            int eventCompletionStatus;
+
+            int successFlag = networkAnalyzer.SetStandardEventStatusEnableRegister((byte)eventStatusRegisterValue);
+            successFlag = networkAnalyzer.SetServiceRequestEnableRegister((byte)serviceRequestRegisterValue);
+            successFlag = networkAnalyzer.ClearInstrument();
+            successFlag = networkAnalyzer.QueryEventsCompletionStatus(out eventCompletionStatus);
+            stepResult = eventCompletionStatus.ToString();
+
+            if (eventCompletionStatus == 1)
+            {
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+                return true;
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "PEAKS";
+                stepErrorDesc = "Failed in preparing the peaks marker search.";
+                return false;
+            }
+        }
     }
 
     partial class TestItems

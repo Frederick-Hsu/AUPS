@@ -725,6 +725,15 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
+        /* *ESE 16 */
+        public int SetStandardEventStatusEnableRegister(byte registerValue)
+        {
+            int errorno, count;
+            string command = "*ESE " + registerValue, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
         /* :STAT:OPER:ENAB 16 */
         public int SetOperationStatusEnableRegister(ushort registerValue = 0x0010 /* range : [0x00, 0xFFFF] */ )
         {
@@ -840,6 +849,251 @@ namespace Amphenol.Instruments.Keysight
             string command = ":TRIGger:SEQuence:AVERage " + on_off.ToUpper(), response;
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK2 ON */
+        public int ShowHideGeneralMarkerForActiveTrace(int channelNum, int traceNum, int markerNo, string on_off = "OFF")
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":STATe " + on_off.ToUpper();
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK2? */
+        public int QueryGeneralMarkerDisplayStateForActiveTrace(int channelNum, int traceNum, int markerNo, out string on_off)
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":STATe?";
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+            if (1 == Convert.ToInt32(response))
+            {
+                on_off = "ON";
+            }
+            else if (0 == Convert.ToInt32(response))
+            {
+                on_off = "OFF";
+            }
+            else
+            {
+                on_off = "";
+            }
+            return errorno;
+        }
+
+        /* :CALC1:MARK:REF ON */
+        public int ShowHideReferenceMarkerForActiveTrace(int channelNum, int traceNum, string on_off = "OFF")
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer:REFerence:STATe " + on_off.ToUpper();
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK:REF? */
+        public int QueryReferenceMarkerDisplayStateForActiveTrace(int channelNum, int traceNum, out string on_off)
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer:REFerence:STATe?";
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+            if (1 == Convert.ToInt32(response))
+            {
+                on_off = "ON";
+            }
+            else if (0 == Convert.ToInt32(response))
+            {
+                on_off = "OFF";
+            }
+            else
+            {
+                on_off = "";
+            }
+            return errorno;
+        }
+
+        /* :CALC1:MARK1:X 1E9 */
+        public int SetStimulusFrequencyValueAtMarker(int channelNum, int traceNum, int markerNo, string frequencyValue = "1E9" /* Freq. unit : Hz */)
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":X " + frequencyValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK1:X? */
+        public int RetrieveFrequencyValueAtGeneralMarker(int channelNum, int traceNum, int markerNo, out double frequencyValue /* unit : Hz */)
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":X?";
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+            frequencyValue = Convert.ToDouble(response);
+            return errorno;
+        }
+
+        /* CALC1:MARK2:Y? */
+        public int RetrieveMeasurementResultAtGeneralMarker(int channelNum, int traceNum, int markerNo, out double attenuationAmplitude /* unit : dB */)
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":Y?";
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+
+            string[] resultArray = new string[2];
+            resultArray = response.Split(',');
+            attenuationAmplitude = Convert.ToDouble(resultArray[0]);
+            return errorno;
+        }
+
+        /* CALC1:MARK:FUNC:DOM ON */
+        public int SetMarkerSearchArbitraryRange(int channelNum, string on_off = "OFF")
+        {
+            int errorno, count;
+            string command = ":CALCulate" + channelNum + ":SELected:MARKer:FUNCtion:DOMain:STATe " + on_off, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK:FUNC:DOM:STAR 1.7E9
+         * :CALC1:MARK:FUNC:DOM:STOP 1.8E9 
+         */
+        public int SetMarkerSearchRangeStartStopValues(int channelNum, string startValue = "1.0E6", string stopValue = "3.0E9" /* unit : Hz, dBm or second */)
+        {
+            int errorno, count;
+            string command = ":CALCulate" + channelNum + ":SELected:MARKer:FUNCtion:DOMain:STARt " + startValue, response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer:FUNCtion:DOMain:STOP " + stopValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK:FUNC:DOM:COUP ON */
+        public int SpecifyMarkerSearchRangeWithTraceCoupling(int channelNum, string traceCouplingOnOff = "ON")
+        {
+            int errorno, count;
+            string command = ":CALCulate" + channelNum + ":SELected:MARKer:FUNCtion:DOMain:COUPle " + traceCouplingOnOff.ToUpper(), response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK1:FUNC:TYPE PEAK */
+        public int SelectMarkerSearchType(int channelNum, 
+                                          int traceNum, 
+                                          int markerNo, 
+                                          string searchType = "MAXimum" 
+                                          /* 8 types : MAXimum, MINimum, PEAK, LPEak, RPEak, TARGet, LTARget, RTARget */)
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":FUNCtion:TYPE " + searchType.ToUpper();
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK1:FUNC:PEXC 0.2 */
+        public int SetLowerLimitForPeakExcursionSearchAtMarker(int channelNum, int traceNum, int markerNo, string peakExcursionValue = "3.0")
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":FUNCtion:PEXCursion " + peakExcursionValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK1:FUNC:PPOL NEG */
+        public int SetPeakSearchPolarityAtMarker(int channelNum, int traceNum, int markerNo, string polarity = "POSitive")
+        {
+            int errorno, count;
+            string command = ":DISP:WIND" + channelNum + ":ACT", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL";
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":FUNCtion:PPOLarity " + polarity;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:MARK1:FUNC:TARG -12.5
+         * :CALC1:MARK1:FUNC:TTR  NEG
+         */
+        public int SetMarkerTargetSearch(int channelNum, int traceNum, int markerNo, string targetValue, string transitionalDirection)
+        {
+            int errorno, count;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":FUNCtion:TARGet " + targetValue;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":FUNCtion:TTRansition " + transitionalDirection;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:FUNC:EXEC */
+        public int PerformMarkerSearch(int channelNum = 1)
+        {
+            int errorno, count;
+            string command = ":CALCulate" + channelNum + ":SELected:FUNCtion:EXECute", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:FUNC:DATA? 
+         * :CALC1:FUNC:POIN?
+         */
+        public int RetrieveSearchResults(int channelNum, out int pointNum, out double[] results)
+        {
+            int errorno, count;
+            string command = ":CALCulate" + channelNum + ":FUNCtion:POINts?", response;
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+
+            pointNum = Convert.ToInt32(response);
+
+            command = ":CALCulate" + channelNum + ":FUNCtion:DATA?";
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(analyzerSession, out response, 256);
+
+            results = new double[pointNum + 1];
+            string[] array = new string[pointNum + 1];
+            array = response.Split(',');
+
+            for (int index = 0; index < (pointNum+1); index++)
+            {
+                results[index] = Convert.ToDouble(array[index]);
+            }
+            return errorno;
         }
     }
 }
