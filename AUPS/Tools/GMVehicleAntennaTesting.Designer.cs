@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GMVehicleAntennaTesting));
             this.toolTipToDisplayInfo = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxTestPointsSetting = new System.Windows.Forms.GroupBox();
             this.textBoxChannel = new System.Windows.Forms.TextBox();
@@ -212,6 +213,7 @@
             this.ClientSize = new System.Drawing.Size(1453, 1208);
             this.Controls.Add(this.tabControlTesting);
             this.Controls.Add(this.groupBoxTestPointsSetting);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GMVehicleAntennaTesting";
             this.Text = "GM vehicle Wi-Fi antenna testing";
             this.groupBoxTestPointsSetting.ResumeLayout(false);
