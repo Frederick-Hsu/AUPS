@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,6 +38,8 @@
             this.fileMenuItemSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vehicleAntennaTestingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,8 +47,6 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vehicleAntennaTestingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,7 +83,7 @@
             this.testPanelToolStripMenuItem,
             this.sequenceToolStripMenuItem});
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.newToolStripMenuItem.Text = "&New";
             // 
             // testPanelToolStripMenuItem
@@ -104,19 +105,19 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.openToolStripMenuItem.Text = "&Open";
             // 
             // fileMenuItemSeparator
             // 
             this.fileMenuItemSeparator.Name = "fileMenuItemSeparator";
-            this.fileMenuItemSeparator.Size = new System.Drawing.Size(207, 6);
+            this.fileMenuItemSeparator.Size = new System.Drawing.Size(185, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -125,6 +126,22 @@
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(61, 29);
             this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.vehicleAntennaTestingToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // vehicleAntennaTestingToolStripMenuItem
+            // 
+            this.vehicleAntennaTestingToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("vehicleAntennaTestingToolStripMenuItem.Image")));
+            this.vehicleAntennaTestingToolStripMenuItem.Name = "vehicleAntennaTestingToolStripMenuItem";
+            this.vehicleAntennaTestingToolStripMenuItem.Size = new System.Drawing.Size(277, 30);
+            this.vehicleAntennaTestingToolStripMenuItem.Text = "Vehicle antenna testing";
+            this.vehicleAntennaTestingToolStripMenuItem.Click += new System.EventHandler(this.vehicleAntennaTestingToolStripMenuItem_Click);
             // 
             // windowToolStripMenuItem
             // 
@@ -139,21 +156,21 @@
             // tileToolStripMenuItem
             // 
             this.tileToolStripMenuItem.Name = "tileToolStripMenuItem";
-            this.tileToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+            this.tileToolStripMenuItem.Size = new System.Drawing.Size(161, 30);
             this.tileToolStripMenuItem.Text = "Tile";
             this.tileToolStripMenuItem.Click += new System.EventHandler(this.tileToolStripMenuItem_Click);
             // 
             // cascadeToolStripMenuItem
             // 
             this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(161, 30);
             this.cascadeToolStripMenuItem.Text = "Cascade";
             this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.cascadeToolStripMenuItem_Click);
             // 
             // windowMenuItemSeparator
             // 
             this.windowMenuItemSeparator.Name = "windowMenuItemSeparator";
-            this.windowMenuItemSeparator.Size = new System.Drawing.Size(207, 6);
+            this.windowMenuItemSeparator.Size = new System.Drawing.Size(158, 6);
             // 
             // helpToolStripMenuItem
             // 
@@ -178,22 +195,6 @@
             this.mainStatusStrip.Size = new System.Drawing.Size(1462, 22);
             this.mainStatusStrip.TabIndex = 2;
             this.mainStatusStrip.Text = "Main Status Bar";
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.vehicleAntennaTestingToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // vehicleAntennaTestingToolStripMenuItem
-            // 
-            this.vehicleAntennaTestingToolStripMenuItem.Image = global::AUPS.Properties.Resources.antenna;
-            this.vehicleAntennaTestingToolStripMenuItem.Name = "vehicleAntennaTestingToolStripMenuItem";
-            this.vehicleAntennaTestingToolStripMenuItem.Size = new System.Drawing.Size(277, 30);
-            this.vehicleAntennaTestingToolStripMenuItem.Text = "Vehicle antenna testing";
-            this.vehicleAntennaTestingToolStripMenuItem.Click += new System.EventHandler(this.vehicleAntennaTestingToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
