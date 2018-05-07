@@ -105,6 +105,7 @@
             // 
             // openToolStripMenuItem
             // 
+            this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
             this.openToolStripMenuItem.Text = "&Open";
