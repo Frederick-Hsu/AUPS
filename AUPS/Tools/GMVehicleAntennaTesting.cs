@@ -263,6 +263,11 @@ namespace AUPS.Tools
             CheckBox currentTestPoint = sender as CheckBox;
             string toolTip = toolTipToDisplayInfo.GetToolTip(currentTestPoint);
 
+            if (currentTestPoint.Checked == false)
+            {
+                return;
+            }
+
             int radius, angle, height, freq, bandWidth, channel;
             ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel);
         }
@@ -323,6 +328,24 @@ namespace AUPS.Tools
 
             /* Move the picture box to the center of tabPageField. */
             pictureBoxCar.Location = new System.Drawing.Point(picBoxX, picBoxY);
+        }
+
+        private void btnBrowseIperf3_Click(object sender, EventArgs e)
+        {
+            textBoxIperf3Path.Text = string.Empty;
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "Browse the iPerf3 .exe file.";
+            dlg.DefaultExt = "exe";
+            dlg.Filter = "Exe file | *.exe";
+            dlg.AddExtension = true;
+            dlg.InitialDirectory = @"";
+
+            if (dlg.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            textBoxIperf3Path.Text = dlg.FileName;
         }
         #endregion
     }

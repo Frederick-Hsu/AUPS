@@ -32,6 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GMVehicleAntennaTesting));
             this.toolTipToDisplayInfo = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxTestPointsSetting = new System.Windows.Forms.GroupBox();
+            this.comboBoxBandWidth = new System.Windows.Forms.ComboBox();
+            this.labelBandWidth = new System.Windows.Forms.Label();
+            this.textBoxServerIP = new System.Windows.Forms.TextBox();
+            this.labelServerIP = new System.Windows.Forms.Label();
             this.textBoxChannel = new System.Windows.Forms.TextBox();
             this.btnRefreshDrawing = new System.Windows.Forms.Button();
             this.labelChannel = new System.Windows.Forms.Label();
@@ -48,12 +52,11 @@
             this.tabPageField = new System.Windows.Forms.TabPage();
             this.pictureBoxCar = new System.Windows.Forms.PictureBox();
             this.tabPageIperfLog = new System.Windows.Forms.TabPage();
-            this.tabPageResults = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.labelServerIP = new System.Windows.Forms.Label();
-            this.textBoxServerIP = new System.Windows.Forms.TextBox();
-            this.labelBandWidth = new System.Windows.Forms.Label();
-            this.comboBoxBandWidth = new System.Windows.Forms.ComboBox();
+            this.tabPageResults = new System.Windows.Forms.TabPage();
+            this.labelIperf3Path = new System.Windows.Forms.Label();
+            this.textBoxIperf3Path = new System.Windows.Forms.TextBox();
+            this.btnBrowseIperf3 = new System.Windows.Forms.Button();
             this.groupBoxTestPointsSetting.SuspendLayout();
             this.tabControlTesting.SuspendLayout();
             this.tabPageField.SuspendLayout();
@@ -64,6 +67,9 @@
             // groupBoxTestPointsSetting
             // 
             this.groupBoxTestPointsSetting.AutoSize = true;
+            this.groupBoxTestPointsSetting.Controls.Add(this.btnBrowseIperf3);
+            this.groupBoxTestPointsSetting.Controls.Add(this.textBoxIperf3Path);
+            this.groupBoxTestPointsSetting.Controls.Add(this.labelIperf3Path);
             this.groupBoxTestPointsSetting.Controls.Add(this.comboBoxBandWidth);
             this.groupBoxTestPointsSetting.Controls.Add(this.labelBandWidth);
             this.groupBoxTestPointsSetting.Controls.Add(this.textBoxServerIP);
@@ -88,6 +94,43 @@
             this.groupBoxTestPointsSetting.TabIndex = 1;
             this.groupBoxTestPointsSetting.TabStop = false;
             this.groupBoxTestPointsSetting.Text = "Testing points setting";
+            // 
+            // comboBoxBandWidth
+            // 
+            this.comboBoxBandWidth.FormattingEnabled = true;
+            this.comboBoxBandWidth.Items.AddRange(new object[] {
+            "20",
+            "40",
+            "80"});
+            this.comboBoxBandWidth.Location = new System.Drawing.Point(203, 245);
+            this.comboBoxBandWidth.Name = "comboBoxBandWidth";
+            this.comboBoxBandWidth.Size = new System.Drawing.Size(188, 28);
+            this.comboBoxBandWidth.TabIndex = 14;
+            // 
+            // labelBandWidth
+            // 
+            this.labelBandWidth.AutoSize = true;
+            this.labelBandWidth.Location = new System.Drawing.Point(19, 245);
+            this.labelBandWidth.Name = "labelBandWidth";
+            this.labelBandWidth.Size = new System.Drawing.Size(173, 20);
+            this.labelBandWidth.TabIndex = 13;
+            this.labelBandWidth.Text = "Band width (unit : MHz)";
+            // 
+            // textBoxServerIP
+            // 
+            this.textBoxServerIP.Location = new System.Drawing.Point(203, 537);
+            this.textBoxServerIP.Name = "textBoxServerIP";
+            this.textBoxServerIP.Size = new System.Drawing.Size(188, 26);
+            this.textBoxServerIP.TabIndex = 12;
+            // 
+            // labelServerIP
+            // 
+            this.labelServerIP.AutoSize = true;
+            this.labelServerIP.Location = new System.Drawing.Point(15, 537);
+            this.labelServerIP.Name = "labelServerIP";
+            this.labelServerIP.Size = new System.Drawing.Size(135, 20);
+            this.labelServerIP.TabIndex = 11;
+            this.labelServerIP.Text = "Server IP address";
             // 
             // textBoxChannel
             // 
@@ -236,15 +279,6 @@
             this.tabPageIperfLog.Text = "iPerf log";
             this.tabPageIperfLog.UseVisualStyleBackColor = true;
             // 
-            // tabPageResults
-            // 
-            this.tabPageResults.Location = new System.Drawing.Point(4, 29);
-            this.tabPageResults.Name = "tabPageResults";
-            this.tabPageResults.Size = new System.Drawing.Size(1574, 1286);
-            this.tabPageResults.TabIndex = 2;
-            this.tabPageResults.Text = "Test results";
-            this.tabPageResults.UseVisualStyleBackColor = true;
-            // 
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -255,42 +289,40 @@
             this.textBox1.Size = new System.Drawing.Size(1568, 1280);
             this.textBox1.TabIndex = 0;
             // 
-            // labelServerIP
+            // tabPageResults
             // 
-            this.labelServerIP.AutoSize = true;
-            this.labelServerIP.Location = new System.Drawing.Point(19, 537);
-            this.labelServerIP.Name = "labelServerIP";
-            this.labelServerIP.Size = new System.Drawing.Size(135, 20);
-            this.labelServerIP.TabIndex = 11;
-            this.labelServerIP.Text = "Server IP address";
+            this.tabPageResults.Location = new System.Drawing.Point(4, 29);
+            this.tabPageResults.Name = "tabPageResults";
+            this.tabPageResults.Size = new System.Drawing.Size(1574, 1286);
+            this.tabPageResults.TabIndex = 2;
+            this.tabPageResults.Text = "Test results";
+            this.tabPageResults.UseVisualStyleBackColor = true;
             // 
-            // textBoxServerIP
+            // labelIperf3Path
             // 
-            this.textBoxServerIP.Location = new System.Drawing.Point(203, 537);
-            this.textBoxServerIP.Name = "textBoxServerIP";
-            this.textBoxServerIP.Size = new System.Drawing.Size(188, 26);
-            this.textBoxServerIP.TabIndex = 12;
+            this.labelIperf3Path.AutoSize = true;
+            this.labelIperf3Path.Location = new System.Drawing.Point(19, 605);
+            this.labelIperf3Path.Name = "labelIperf3Path";
+            this.labelIperf3Path.Size = new System.Drawing.Size(86, 20);
+            this.labelIperf3Path.TabIndex = 15;
+            this.labelIperf3Path.Text = "iPerf3 path";
             // 
-            // labelBandWidth
+            // textBoxIperf3Path
             // 
-            this.labelBandWidth.AutoSize = true;
-            this.labelBandWidth.Location = new System.Drawing.Point(19, 245);
-            this.labelBandWidth.Name = "labelBandWidth";
-            this.labelBandWidth.Size = new System.Drawing.Size(173, 20);
-            this.labelBandWidth.TabIndex = 13;
-            this.labelBandWidth.Text = "Band width (unit : MHz)";
+            this.textBoxIperf3Path.Location = new System.Drawing.Point(19, 657);
+            this.textBoxIperf3Path.Name = "textBoxIperf3Path";
+            this.textBoxIperf3Path.Size = new System.Drawing.Size(372, 26);
+            this.textBoxIperf3Path.TabIndex = 16;
             // 
-            // comboBoxBandWidth
+            // btnBrowseIperf3
             // 
-            this.comboBoxBandWidth.FormattingEnabled = true;
-            this.comboBoxBandWidth.Items.AddRange(new object[] {
-            "20",
-            "40",
-            "80"});
-            this.comboBoxBandWidth.Location = new System.Drawing.Point(203, 245);
-            this.comboBoxBandWidth.Name = "comboBoxBandWidth";
-            this.comboBoxBandWidth.Size = new System.Drawing.Size(188, 28);
-            this.comboBoxBandWidth.TabIndex = 14;
+            this.btnBrowseIperf3.Location = new System.Drawing.Point(203, 605);
+            this.btnBrowseIperf3.Name = "btnBrowseIperf3";
+            this.btnBrowseIperf3.Size = new System.Drawing.Size(188, 37);
+            this.btnBrowseIperf3.TabIndex = 17;
+            this.btnBrowseIperf3.Text = "Browse iPerf3.exe";
+            this.btnBrowseIperf3.UseVisualStyleBackColor = true;
+            this.btnBrowseIperf3.Click += new System.EventHandler(this.btnBrowseIperf3_Click);
             // 
             // GMVehicleAntennaTesting
             // 
@@ -340,5 +372,8 @@
         private System.Windows.Forms.TextBox textBoxServerIP;
         private System.Windows.Forms.ComboBox comboBoxBandWidth;
         private System.Windows.Forms.Label labelBandWidth;
+        private System.Windows.Forms.Label labelIperf3Path;
+        private System.Windows.Forms.TextBox textBoxIperf3Path;
+        private System.Windows.Forms.Button btnBrowseIperf3;
     }
 }
