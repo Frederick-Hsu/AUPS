@@ -18,7 +18,7 @@ namespace Amphenol.AUPS
             OpenFileDialog dlg = new OpenFileDialog();
 
             if (previousOpenedDirectory.Length == 0)
-                dlg.InitialDirectory = @"C:\";
+                dlg.InitialDirectory = @"";
             else
                 dlg.InitialDirectory = previousOpenedDirectory;
 

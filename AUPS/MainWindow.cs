@@ -18,6 +18,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using AUPS.Tools;
+
 namespace Amphenol.AUPS
 {
     public partial class MainWindow : Form
@@ -61,6 +63,24 @@ namespace Amphenol.AUPS
         {
             SequenceEditor seq = new SequenceEditor(this);
             seq.Show();
+        }
+
+        private void vehicleAntennaTestingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool openedFlag = false;
+            foreach (Form frm in this.MdiChildren)
+            {
+                if (frm.GetType().ToString() == "AUPS.Tools.GMVehicleAntennaTesting")
+                {
+                    openedFlag = true;
+                    break;
+                }
+            }
+            if (openedFlag == false)
+            {
+                GMVehicleAntennaTesting vehicleAntenna = new GMVehicleAntennaTesting(this);
+                vehicleAntenna.Show();
+            }
         }
         #endregion
 

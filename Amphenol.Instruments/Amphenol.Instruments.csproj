@@ -43,7 +43,9 @@
       <Link>visa32.cs</Link>
     </Compile>
     <Compile Include="Keysight\DCPowerSupply_E3631A.cs" />
+    <Compile Include="Keysight\DCPowerSupply_E3646A.cs" />
     <Compile Include="Keysight\DigitalMultiMeter_34461A.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RohdeSchwarz\DigitalOscilloscope_RTB2004.cs" />
   </ItemGroup>
