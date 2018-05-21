@@ -24,6 +24,12 @@ namespace AUPS.Tools
             MdiParent = parent;
         }
 
+        private void CLearDataGridViewAllRows()
+        {
+            dataGridViewTestResults.Rows.Clear();
+            dataGridViewTestResults.DataSource = null;
+        }
+
         #region Dynamically generate the test field UI.
         /* In the real test field, you should change the scale down ratio accordingly to have the 
          * tab page window accommodated the max radius circle. 
@@ -270,6 +276,45 @@ namespace AUPS.Tools
 
             int radius, angle, height, freq, bandWidth, channel;
             ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel);
+
+            /* Perform the network connectivity test items */
+            string tcpUplinkThroughput   = "", tcpDownlinkThroughput = "";
+            string udpUplinkThroughput   = "", udpUplinkLatency   = "", udpUplinkPacketLoss   = "",
+                   udpDownlinkThroughput = "", udpDownlinkLatency = "", udpDownlinkPacketLoss = "";
+
+            InitializeIperfProcess();
+            MeasureTcpUplinkPerformance(out tcpUplinkThroughput);
+            CloseIperfProcess();
+
+            InitializeIperfProcess();
+            MeasureTcpDownlinkPerformance(out tcpDownlinkThroughput);
+            CloseIperfProcess();
+
+            InitializeIperfProcess();
+            MeasureUdpUplinkPerformance(out udpUplinkThroughput, out udpUplinkLatency, out udpUplinkPacketLoss);
+            CloseIperfProcess();
+
+            InitializeIperfProcess();
+            MeasureUdpDownlinkPerformance(out udpDownlinkThroughput, out udpDownlinkLatency, out udpDownlinkPacketLoss);
+            CloseIperfProcess();
+
+            FillTestResultsTable(currentTestPoint.Text, 
+                                 radius.ToString(), 
+                                 angle.ToString(), 
+                                 height.ToString(), 
+                                 freq.ToString(), 
+                                 bandWidth.ToString(), 
+                                 channel.ToString(),
+                                 tcpUplinkThroughput, 
+                                 tcpDownlinkThroughput,
+                                 udpUplinkThroughput, 
+                                 udpUplinkLatency, 
+                                 udpUplinkPacketLoss,
+                                 udpDownlinkThroughput, 
+                                 udpDownlinkLatency, 
+                                 udpDownlinkPacketLoss,
+                                 "", 
+                                 "");
         }
 
         private void btnRefreshDrawing_Click(object sender, EventArgs e)
@@ -347,6 +392,46 @@ namespace AUPS.Tools
             }
             textBoxIperf3Path.Text = dlg.FileName;
         }
-        #endregion
+#endregion
+
+        private void FillTestResultsTable(string pointNo,
+                                          string radius,
+                                          string angle,
+                                          string height,
+                                          string frequecy,
+                                          string band,
+                                          string channel,
+                                          string tcpUplinkThroughput,
+                                          string tcpDownlinkThroughput,
+                                          string udpUplinkThroughput,
+                                          string udpUplinkLatency,
+                                          string udpUplinkPacketLoss,
+                                          string udpDownlinkThroughput,
+                                          string udpDownlinkLatency,
+                                          string udpDownlinkPacketLoss,
+                                          string rssi,
+                                          string snr)
+        {
+            int existedRows = dataGridViewTestResults.Rows.Add();
+
+            dataGridViewTestResults.Rows[existedRows].Cells[0].Value = pointNo;
+            dataGridViewTestResults.Rows[existedRows].Cells[1].Value = radius;
+            dataGridViewTestResults.Rows[existedRows].Cells[2].Value = angle;
+            dataGridViewTestResults.Rows[existedRows].Cells[3].Value = height;
+            dataGridViewTestResults.Rows[existedRows].Cells[4].Value = frequecy;
+            dataGridViewTestResults.Rows[existedRows].Cells[5].Value = band;
+            dataGridViewTestResults.Rows[existedRows].Cells[6].Value = channel;
+            dataGridViewTestResults.Rows[existedRows].Cells[7].Value = tcpUplinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[8].Value = tcpDownlinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[9].Value = udpUplinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[10].Value = udpUplinkLatency;
+            dataGridViewTestResults.Rows[existedRows].Cells[11].Value = udpUplinkPacketLoss;
+            dataGridViewTestResults.Rows[existedRows].Cells[12].Value = udpDownlinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[13].Value = udpDownlinkLatency;
+            dataGridViewTestResults.Rows[existedRows].Cells[14].Value = udpDownlinkPacketLoss;
+            dataGridViewTestResults.Rows[existedRows].Cells[15].Value = rssi;
+            dataGridViewTestResults.Rows[existedRows].Cells[16].Value = snr;
+            dataGridViewTestResults.Rows[existedRows].Cells[17].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
     }
 }
