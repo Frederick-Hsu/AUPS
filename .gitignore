@@ -34,6 +34,7 @@ Access_PList/
 RunExternalCmd/
 RunIperfCmd/
 Drawing/
+AsyncExecuteDOSProcess/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
