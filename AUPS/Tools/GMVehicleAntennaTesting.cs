@@ -24,6 +24,12 @@ namespace AUPS.Tools
             MdiParent = parent;
         }
 
+        private void CLearDataGridViewAllRows()
+        {
+            dataGridViewTestResults.Rows.Clear();
+            dataGridViewTestResults.DataSource = null;
+        }
+
         #region Dynamically generate the test field UI.
         /* In the real test field, you should change the scale down ratio accordingly to have the 
          * tab page window accommodated the max radius circle. 
@@ -258,13 +264,77 @@ namespace AUPS.Tools
             return newCheckBox;
         }
 
+        private static bool doneFlag = false;
+        private static System.DateTime timer;
         private void newCheckBox_CheckStateChanged(object sender, EventArgs e)
         {
             CheckBox currentTestPoint = sender as CheckBox;
+            if (currentTestPoint.Checked == false)
+            {
+                return;
+            }
+
+            #region Trace the execution time and display progress 
+            System.Threading.Thread timerThread = new System.Threading.Thread(TraceTestingTime);
+            timerThread.IsBackground = true;
+            timerThread.Start();
+
+            doneFlag = false;
+            timer = DateTime.Now;
+            progressBarTesting.Maximum = 100;
+            progressBarTesting.Minimum = 0;
+            progressBarTesting.Value = 1;
+            #endregion
+
             string toolTip = toolTipToDisplayInfo.GetToolTip(currentTestPoint);
 
             int radius, angle, height, freq, bandWidth, channel;
             ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel);
+
+            /* Perform the network connectivity test items */
+            string tcpUplinkThroughput   = "", tcpDownlinkThroughput = "";
+            string udpUplinkThroughput   = "", udpUplinkLatency   = "", udpUplinkPacketLoss   = "",
+                   udpDownlinkThroughput = "", udpDownlinkLatency = "", udpDownlinkPacketLoss = "";
+
+            InitializeIperfProcess();
+            MeasureTcpUplinkPerformance(out tcpUplinkThroughput);
+            CloseIperfProcess();
+            progressBarTesting.Value = 20;
+
+            InitializeIperfProcess();
+            MeasureTcpDownlinkPerformance(out tcpDownlinkThroughput);
+            CloseIperfProcess();
+            progressBarTesting.Value = 40;
+
+            InitializeIperfProcess();
+            MeasureUdpUplinkPerformance(out udpUplinkThroughput, out udpUplinkLatency, out udpUplinkPacketLoss);
+            CloseIperfProcess();
+            progressBarTesting.Value = 60;
+
+            InitializeIperfProcess();
+            MeasureUdpDownlinkPerformance(out udpDownlinkThroughput, out udpDownlinkLatency, out udpDownlinkPacketLoss);
+            CloseIperfProcess();
+            progressBarTesting.Value = 80;
+
+            FillTestResultsTable(currentTestPoint.Text, 
+                                 radius.ToString(), 
+                                 angle.ToString(), 
+                                 height.ToString(), 
+                                 freq.ToString(), 
+                                 bandWidth.ToString(), 
+                                 channel.ToString(),
+                                 tcpUplinkThroughput, 
+                                 tcpDownlinkThroughput,
+                                 udpUplinkThroughput, 
+                                 udpUplinkLatency, 
+                                 udpUplinkPacketLoss,
+                                 udpDownlinkThroughput, 
+                                 udpDownlinkLatency, 
+                                 udpDownlinkPacketLoss,
+                                 "", 
+                                 "");
+            progressBarTesting.Value = 100;
+            doneFlag = true;
         }
 
         private void btnRefreshDrawing_Click(object sender, EventArgs e)
@@ -324,6 +394,86 @@ namespace AUPS.Tools
             /* Move the picture box to the center of tabPageField. */
             pictureBoxCar.Location = new System.Drawing.Point(picBoxX, picBoxY);
         }
-        #endregion
+
+        private void btnBrowseIperf3_Click(object sender, EventArgs e)
+        {
+            textBoxIperf3Path.Text = string.Empty;
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "Browse the iPerf3 .exe file.";
+            dlg.DefaultExt = "exe";
+            dlg.Filter = "Exe file | *.exe";
+            dlg.AddExtension = true;
+            dlg.InitialDirectory = @"";
+
+            if (dlg.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            textBoxIperf3Path.Text = dlg.FileName;
+        }
+#endregion
+
+        private void FillTestResultsTable(string pointNo,
+                                          string radius,
+                                          string angle,
+                                          string height,
+                                          string frequecy,
+                                          string band,
+                                          string channel,
+                                          string tcpUplinkThroughput,
+                                          string tcpDownlinkThroughput,
+                                          string udpUplinkThroughput,
+                                          string udpUplinkLatency,
+                                          string udpUplinkPacketLoss,
+                                          string udpDownlinkThroughput,
+                                          string udpDownlinkLatency,
+                                          string udpDownlinkPacketLoss,
+                                          string rssi,
+                                          string snr)
+        {
+            int existedRows = dataGridViewTestResults.Rows.Add();
+
+            dataGridViewTestResults.Rows[existedRows].Cells[0].Value = pointNo;
+            dataGridViewTestResults.Rows[existedRows].Cells[1].Value = radius;
+            dataGridViewTestResults.Rows[existedRows].Cells[2].Value = angle;
+            dataGridViewTestResults.Rows[existedRows].Cells[3].Value = height;
+            dataGridViewTestResults.Rows[existedRows].Cells[4].Value = frequecy;
+            dataGridViewTestResults.Rows[existedRows].Cells[5].Value = band;
+            dataGridViewTestResults.Rows[existedRows].Cells[6].Value = channel;
+            dataGridViewTestResults.Rows[existedRows].Cells[7].Value = tcpUplinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[8].Value = tcpDownlinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[9].Value = udpUplinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[10].Value = udpUplinkLatency;
+            dataGridViewTestResults.Rows[existedRows].Cells[11].Value = udpUplinkPacketLoss;
+            dataGridViewTestResults.Rows[existedRows].Cells[12].Value = udpDownlinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[13].Value = udpDownlinkLatency;
+            dataGridViewTestResults.Rows[existedRows].Cells[14].Value = udpDownlinkPacketLoss;
+            dataGridViewTestResults.Rows[existedRows].Cells[15].Value = rssi;
+            dataGridViewTestResults.Rows[existedRows].Cells[16].Value = snr;
+            dataGridViewTestResults.Rows[existedRows].Cells[17].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        private delegate void TraceTestingTimeDelegate();
+        private void TraceTestingTime()
+        {
+#if false
+            if (progressBarTesting.InvokeRequired)
+            {
+                TraceTestingTimeDelegate delg = TraceTestingTime;
+                // progressBarTesting.Invoke(delg, progress);
+            }
+            else
+#endif
+            {
+                // progressBarTesting.Maximum = (int)progress;
+                while (doneFlag == false)
+                {
+                    labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
+                    Application.DoEvents();
+                }
+                labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
+            }
+        }
     }
 }

@@ -98,6 +98,9 @@
     <Compile Include="Tools\GMVehicleAntennaTesting.Designer.cs">
       <DependentUpon>GMVehicleAntennaTesting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\TestItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +147,10 @@
     <ProjectReference Include="..\Amphenol.SequenceLib\Amphenol.SequenceLib.csproj">
       <Project>{fa0a37c1-f916-43e8-a0cc-10eb2098f0d2}</Project>
       <Name>Amphenol.SequenceLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{e55e51a6-8757-4e7c-90a0-571de68345a0}</Project>
+      <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
