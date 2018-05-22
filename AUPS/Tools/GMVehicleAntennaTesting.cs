@@ -264,15 +264,29 @@ namespace AUPS.Tools
             return newCheckBox;
         }
 
+        private static bool doneFlag = false;
+        private static System.DateTime timer;
         private void newCheckBox_CheckStateChanged(object sender, EventArgs e)
         {
             CheckBox currentTestPoint = sender as CheckBox;
-            string toolTip = toolTipToDisplayInfo.GetToolTip(currentTestPoint);
-
             if (currentTestPoint.Checked == false)
             {
                 return;
             }
+
+            #region Trace the execution time and display progress 
+            System.Threading.Thread timerThread = new System.Threading.Thread(TraceTestingTime);
+            timerThread.IsBackground = true;
+            timerThread.Start();
+
+            doneFlag = false;
+            timer = DateTime.Now;
+            progressBarTesting.Maximum = 100;
+            progressBarTesting.Minimum = 0;
+            progressBarTesting.Value = 1;
+            #endregion
+
+            string toolTip = toolTipToDisplayInfo.GetToolTip(currentTestPoint);
 
             int radius, angle, height, freq, bandWidth, channel;
             ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel);
@@ -285,18 +299,22 @@ namespace AUPS.Tools
             InitializeIperfProcess();
             MeasureTcpUplinkPerformance(out tcpUplinkThroughput);
             CloseIperfProcess();
+            progressBarTesting.Value = 20;
 
             InitializeIperfProcess();
             MeasureTcpDownlinkPerformance(out tcpDownlinkThroughput);
             CloseIperfProcess();
+            progressBarTesting.Value = 40;
 
             InitializeIperfProcess();
             MeasureUdpUplinkPerformance(out udpUplinkThroughput, out udpUplinkLatency, out udpUplinkPacketLoss);
             CloseIperfProcess();
+            progressBarTesting.Value = 60;
 
             InitializeIperfProcess();
             MeasureUdpDownlinkPerformance(out udpDownlinkThroughput, out udpDownlinkLatency, out udpDownlinkPacketLoss);
             CloseIperfProcess();
+            progressBarTesting.Value = 80;
 
             FillTestResultsTable(currentTestPoint.Text, 
                                  radius.ToString(), 
@@ -315,6 +333,8 @@ namespace AUPS.Tools
                                  udpDownlinkPacketLoss,
                                  "", 
                                  "");
+            progressBarTesting.Value = 100;
+            doneFlag = true;
         }
 
         private void btnRefreshDrawing_Click(object sender, EventArgs e)
@@ -432,6 +452,28 @@ namespace AUPS.Tools
             dataGridViewTestResults.Rows[existedRows].Cells[15].Value = rssi;
             dataGridViewTestResults.Rows[existedRows].Cells[16].Value = snr;
             dataGridViewTestResults.Rows[existedRows].Cells[17].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        private delegate void TraceTestingTimeDelegate();
+        private void TraceTestingTime()
+        {
+#if false
+            if (progressBarTesting.InvokeRequired)
+            {
+                TraceTestingTimeDelegate delg = TraceTestingTime;
+                // progressBarTesting.Invoke(delg, progress);
+            }
+            else
+#endif
+            {
+                // progressBarTesting.Maximum = (int)progress;
+                while (doneFlag == false)
+                {
+                    labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
+                    Application.DoEvents();
+                }
+                labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
+            }
         }
     }
 }
