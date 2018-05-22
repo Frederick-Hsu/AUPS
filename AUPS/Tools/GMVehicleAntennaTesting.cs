@@ -475,5 +475,66 @@ namespace AUPS.Tools
                 labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
             }
         }
+
+        private void btnClearTestResults_Click(object sender, EventArgs e)
+        {
+            dataGridViewTestResults.Rows.Clear();
+        }
+
+        private void btnSaveTestResults_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save the test results into .csv file you specified";
+            dlg.InitialDirectory = "";
+            dlg.DefaultExt = "csv";
+            dlg.Filter = "CSV file | *.csv";
+            dlg.AddExtension = true;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                labelFilePathToSave.Text = dlg.FileName;
+                SaveTestResultsToCsv(dlg.FileName);
+            }
+        }
+
+        private void SaveTestResultsToCsv(string csvFileName)
+        {
+            int cols = dataGridViewTestResults.Columns.Count;
+            int rows = dataGridViewTestResults.Rows.Count;
+            int colIndex = 0, rowIndex = 0;
+
+            System.IO.FileStream fs = new System.IO.FileStream(csvFileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(fs, System.Text.Encoding.UTF8);
+
+            string title = "";
+            for (colIndex = 0; colIndex < cols; colIndex++)
+            {
+                title += dataGridViewTestResults.Columns[colIndex].HeaderText;
+                if (colIndex < (cols -1))   /* Caution : the last column cannot append the comma(",") */
+                {
+                    title += ",";
+                }
+            }
+            sw.WriteLine(title);
+
+
+            string line = "";
+            for (rowIndex = 0; rowIndex < (rows -1); rowIndex++)    /* NOTICE : the last row is empty */
+            {
+                for (colIndex = 0; colIndex < cols; colIndex++)
+                {
+                    line += (dataGridViewTestResults.Rows[rowIndex].Cells[colIndex].Value as string);
+                    if (colIndex < (cols-1))
+                    {
+                        line += ",";
+                    }
+                }
+                sw.WriteLine(line);
+            }
+
+            sw.Close();
+            fs.Close();
+            MessageBox.Show("The .csv file of test results had been saved successfully.", "Save");
+        }
     }
 }
