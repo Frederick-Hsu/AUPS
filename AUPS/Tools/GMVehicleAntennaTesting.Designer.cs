@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GMVehicleAntennaTesting));
             this.toolTipToDisplayInfo = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxTestPointsSetting = new System.Windows.Forms.GroupBox();
+            this.labelElapsedTime = new System.Windows.Forms.Label();
             this.textBoxSaVisaAddress = new System.Windows.Forms.TextBox();
             this.labelSaVisaAddress = new System.Windows.Forms.Label();
             this.textBoxSgVisaAddress = new System.Windows.Forms.TextBox();
@@ -81,7 +82,9 @@
             this.columnSnr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnTimeStamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progressBarTesting = new System.Windows.Forms.ProgressBar();
-            this.labelElapsedTime = new System.Windows.Forms.Label();
+            this.btnSaveTestResults = new System.Windows.Forms.Button();
+            this.btnClearTestResults = new System.Windows.Forms.Button();
+            this.labelFilePathToSave = new System.Windows.Forms.Label();
             this.groupBoxTestPointsSetting.SuspendLayout();
             this.tabControlTesting.SuspendLayout();
             this.tabPageField.SuspendLayout();
@@ -126,6 +129,17 @@
             this.groupBoxTestPointsSetting.TabIndex = 1;
             this.groupBoxTestPointsSetting.TabStop = false;
             this.groupBoxTestPointsSetting.Text = "Testing points setting";
+            // 
+            // labelElapsedTime
+            // 
+            this.labelElapsedTime.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelElapsedTime.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.labelElapsedTime.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.labelElapsedTime.Location = new System.Drawing.Point(3, 1293);
+            this.labelElapsedTime.Name = "labelElapsedTime";
+            this.labelElapsedTime.Size = new System.Drawing.Size(391, 23);
+            this.labelElapsedTime.TabIndex = 7;
+            this.labelElapsedTime.Text = "Elapsed time : 00:00:00.000";
             // 
             // textBoxSaVisaAddress
             // 
@@ -384,6 +398,9 @@
             // 
             // tabPageResults
             // 
+            this.tabPageResults.Controls.Add(this.labelFilePathToSave);
+            this.tabPageResults.Controls.Add(this.btnClearTestResults);
+            this.tabPageResults.Controls.Add(this.btnSaveTestResults);
             this.tabPageResults.Controls.Add(this.dataGridViewTestResults);
             this.tabPageResults.Location = new System.Drawing.Point(4, 29);
             this.tabPageResults.Name = "tabPageResults";
@@ -520,16 +537,35 @@
             this.progressBarTesting.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBarTesting.TabIndex = 6;
             // 
-            // labelElapsedTime
+            // btnSaveTestResults
             // 
-            this.labelElapsedTime.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.labelElapsedTime.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.labelElapsedTime.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.labelElapsedTime.Location = new System.Drawing.Point(3, 1293);
-            this.labelElapsedTime.Name = "labelElapsedTime";
-            this.labelElapsedTime.Size = new System.Drawing.Size(391, 23);
-            this.labelElapsedTime.TabIndex = 7;
-            this.labelElapsedTime.Text = "Elapsed time : 00:00:00.000";
+            this.btnSaveTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveTestResults.Location = new System.Drawing.Point(1343, 798);
+            this.btnSaveTestResults.Name = "btnSaveTestResults";
+            this.btnSaveTestResults.Size = new System.Drawing.Size(175, 40);
+            this.btnSaveTestResults.TabIndex = 1;
+            this.btnSaveTestResults.Text = "Save test results";
+            this.btnSaveTestResults.UseVisualStyleBackColor = true;
+            this.btnSaveTestResults.Click += new System.EventHandler(this.btnSaveTestResults_Click);
+            // 
+            // btnClearTestResults
+            // 
+            this.btnClearTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearTestResults.Location = new System.Drawing.Point(1173, 798);
+            this.btnClearTestResults.Name = "btnClearTestResults";
+            this.btnClearTestResults.Size = new System.Drawing.Size(95, 40);
+            this.btnClearTestResults.TabIndex = 2;
+            this.btnClearTestResults.Text = "Clear";
+            this.btnClearTestResults.UseVisualStyleBackColor = true;
+            this.btnClearTestResults.Click += new System.EventHandler(this.btnClearTestResults_Click);
+            // 
+            // labelFilePathToSave
+            // 
+            this.labelFilePathToSave.AutoSize = true;
+            this.labelFilePathToSave.Location = new System.Drawing.Point(1173, 751);
+            this.labelFilePathToSave.Name = "labelFilePathToSave";
+            this.labelFilePathToSave.Size = new System.Drawing.Size(0, 20);
+            this.labelFilePathToSave.TabIndex = 3;
             // 
             // GMVehicleAntennaTesting
             // 
@@ -551,6 +587,7 @@
             this.tabPageIperfLog.ResumeLayout(false);
             this.tabPageIperfLog.PerformLayout();
             this.tabPageResults.ResumeLayout(false);
+            this.tabPageResults.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestResults)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -610,5 +647,8 @@
         private System.Windows.Forms.TextBox textBoxSaVisaAddress;
         private System.Windows.Forms.Label labelSaVisaAddress;
         private System.Windows.Forms.Label labelElapsedTime;
+        private System.Windows.Forms.Button btnSaveTestResults;
+        private System.Windows.Forms.Button btnClearTestResults;
+        private System.Windows.Forms.Label labelFilePathToSave;
     }
 }
