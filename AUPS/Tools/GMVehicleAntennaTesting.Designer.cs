@@ -32,6 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GMVehicleAntennaTesting));
             this.toolTipToDisplayInfo = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxTestPointsSetting = new System.Windows.Forms.GroupBox();
+            this.textBoxSaVisaAddress = new System.Windows.Forms.TextBox();
+            this.labelSaVisaAddress = new System.Windows.Forms.Label();
+            this.textBoxSgVisaAddress = new System.Windows.Forms.TextBox();
+            this.labelSgVisaAddress = new System.Windows.Forms.Label();
             this.btnBrowseIperf3 = new System.Windows.Forms.Button();
             this.textBoxIperf3Path = new System.Windows.Forms.TextBox();
             this.labelIperf3Path = new System.Windows.Forms.Label();
@@ -57,7 +61,6 @@
             this.tabPageIperfLog = new System.Windows.Forms.TabPage();
             this.textBoxIperfTestLog = new System.Windows.Forms.TextBox();
             this.tabPageResults = new System.Windows.Forms.TabPage();
-            this.progressBarTesting = new System.Windows.Forms.ProgressBar();
             this.dataGridViewTestResults = new System.Windows.Forms.DataGridView();
             this.columnPointNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnRadius = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -77,10 +80,8 @@
             this.columnRssi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnSnr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnTimeStamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.labelSgVisaAddress = new System.Windows.Forms.Label();
-            this.textBoxSgVisaAddress = new System.Windows.Forms.TextBox();
-            this.labelSaVisaAddress = new System.Windows.Forms.Label();
-            this.textBoxSaVisaAddress = new System.Windows.Forms.TextBox();
+            this.progressBarTesting = new System.Windows.Forms.ProgressBar();
+            this.labelElapsedTime = new System.Windows.Forms.Label();
             this.groupBoxTestPointsSetting.SuspendLayout();
             this.tabControlTesting.SuspendLayout();
             this.tabPageField.SuspendLayout();
@@ -93,6 +94,7 @@
             // groupBoxTestPointsSetting
             // 
             this.groupBoxTestPointsSetting.AutoSize = true;
+            this.groupBoxTestPointsSetting.Controls.Add(this.labelElapsedTime);
             this.groupBoxTestPointsSetting.Controls.Add(this.textBoxSaVisaAddress);
             this.groupBoxTestPointsSetting.Controls.Add(this.labelSaVisaAddress);
             this.groupBoxTestPointsSetting.Controls.Add(this.textBoxSgVisaAddress);
@@ -124,6 +126,38 @@
             this.groupBoxTestPointsSetting.TabIndex = 1;
             this.groupBoxTestPointsSetting.TabStop = false;
             this.groupBoxTestPointsSetting.Text = "Testing points setting";
+            // 
+            // textBoxSaVisaAddress
+            // 
+            this.textBoxSaVisaAddress.Location = new System.Drawing.Point(19, 870);
+            this.textBoxSaVisaAddress.Name = "textBoxSaVisaAddress";
+            this.textBoxSaVisaAddress.Size = new System.Drawing.Size(372, 26);
+            this.textBoxSaVisaAddress.TabIndex = 21;
+            // 
+            // labelSaVisaAddress
+            // 
+            this.labelSaVisaAddress.AutoSize = true;
+            this.labelSaVisaAddress.Location = new System.Drawing.Point(15, 827);
+            this.labelSaVisaAddress.Name = "labelSaVisaAddress";
+            this.labelSaVisaAddress.Size = new System.Drawing.Size(231, 20);
+            this.labelSaVisaAddress.TabIndex = 20;
+            this.labelSaVisaAddress.Text = "Signal analyzer VISA address : ";
+            // 
+            // textBoxSgVisaAddress
+            // 
+            this.textBoxSgVisaAddress.Location = new System.Drawing.Point(19, 764);
+            this.textBoxSgVisaAddress.Name = "textBoxSgVisaAddress";
+            this.textBoxSgVisaAddress.Size = new System.Drawing.Size(372, 26);
+            this.textBoxSgVisaAddress.TabIndex = 19;
+            // 
+            // labelSgVisaAddress
+            // 
+            this.labelSgVisaAddress.AutoSize = true;
+            this.labelSgVisaAddress.Location = new System.Drawing.Point(15, 729);
+            this.labelSgVisaAddress.Name = "labelSgVisaAddress";
+            this.labelSgVisaAddress.Size = new System.Drawing.Size(241, 20);
+            this.labelSgVisaAddress.TabIndex = 18;
+            this.labelSgVisaAddress.Text = "Signal generator VISA address : ";
             // 
             // btnBrowseIperf3
             // 
@@ -358,14 +392,6 @@
             this.tabPageResults.Text = "Test results";
             this.tabPageResults.UseVisualStyleBackColor = true;
             // 
-            // progressBarTesting
-            // 
-            this.progressBarTesting.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBarTesting.Location = new System.Drawing.Point(397, 1296);
-            this.progressBarTesting.Name = "progressBarTesting";
-            this.progressBarTesting.Size = new System.Drawing.Size(1582, 23);
-            this.progressBarTesting.TabIndex = 6;
-            // 
             // dataGridViewTestResults
             // 
             this.dataGridViewTestResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -485,37 +511,25 @@
             this.columnTimeStamp.HeaderText = "Time stamp";
             this.columnTimeStamp.Name = "columnTimeStamp";
             // 
-            // labelSgVisaAddress
+            // progressBarTesting
             // 
-            this.labelSgVisaAddress.AutoSize = true;
-            this.labelSgVisaAddress.Location = new System.Drawing.Point(15, 729);
-            this.labelSgVisaAddress.Name = "labelSgVisaAddress";
-            this.labelSgVisaAddress.Size = new System.Drawing.Size(241, 20);
-            this.labelSgVisaAddress.TabIndex = 18;
-            this.labelSgVisaAddress.Text = "Signal generator VISA address : ";
+            this.progressBarTesting.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBarTesting.Location = new System.Drawing.Point(397, 1293);
+            this.progressBarTesting.Name = "progressBarTesting";
+            this.progressBarTesting.Size = new System.Drawing.Size(1582, 26);
+            this.progressBarTesting.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBarTesting.TabIndex = 6;
             // 
-            // textBoxSgVisaAddress
+            // labelElapsedTime
             // 
-            this.textBoxSgVisaAddress.Location = new System.Drawing.Point(19, 764);
-            this.textBoxSgVisaAddress.Name = "textBoxSgVisaAddress";
-            this.textBoxSgVisaAddress.Size = new System.Drawing.Size(372, 26);
-            this.textBoxSgVisaAddress.TabIndex = 19;
-            // 
-            // labelSaVisaAddress
-            // 
-            this.labelSaVisaAddress.AutoSize = true;
-            this.labelSaVisaAddress.Location = new System.Drawing.Point(15, 827);
-            this.labelSaVisaAddress.Name = "labelSaVisaAddress";
-            this.labelSaVisaAddress.Size = new System.Drawing.Size(231, 20);
-            this.labelSaVisaAddress.TabIndex = 20;
-            this.labelSaVisaAddress.Text = "Signal analyzer VISA address : ";
-            // 
-            // textBoxSaVisaAddress
-            // 
-            this.textBoxSaVisaAddress.Location = new System.Drawing.Point(19, 870);
-            this.textBoxSaVisaAddress.Name = "textBoxSaVisaAddress";
-            this.textBoxSaVisaAddress.Size = new System.Drawing.Size(372, 26);
-            this.textBoxSaVisaAddress.TabIndex = 21;
+            this.labelElapsedTime.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelElapsedTime.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.labelElapsedTime.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.labelElapsedTime.Location = new System.Drawing.Point(3, 1293);
+            this.labelElapsedTime.Name = "labelElapsedTime";
+            this.labelElapsedTime.Size = new System.Drawing.Size(391, 23);
+            this.labelElapsedTime.TabIndex = 7;
+            this.labelElapsedTime.Text = "Elapsed time : 00:00:00.000";
             // 
             // GMVehicleAntennaTesting
             // 
@@ -595,5 +609,6 @@
         private System.Windows.Forms.Label labelSgVisaAddress;
         private System.Windows.Forms.TextBox textBoxSaVisaAddress;
         private System.Windows.Forms.Label labelSaVisaAddress;
+        private System.Windows.Forms.Label labelElapsedTime;
     }
 }
