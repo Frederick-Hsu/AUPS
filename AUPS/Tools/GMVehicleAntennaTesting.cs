@@ -205,26 +205,42 @@ namespace AUPS.Tools
         {
             if (textBoxRadius.Text == string.Empty)
             {
+                MessageBox.Show("Radius has not yet been set.", "Warning");
                 return false;
             }
             if (textBoxAngle.Text == string.Empty)
             {
+                MessageBox.Show("Angle has not yet been set.", "Warning");
                 return false;
             }
             if (textBoxHeight.Text == string.Empty)
             {
+                MessageBox.Show("Height has not yet been set.", "Warning");
                 return false;
             }
             if (textBoxFreqBand.Text == string.Empty)
             {
+                MessageBox.Show("Frequency has not yet been set.", "Warning");
                 return false;
             }
             if (comboBoxBandWidth.Text == string.Empty)
             {
+                MessageBox.Show("Bandwidth has not yet been selected.", "Warning");
                 return false;
             }
             if (textBoxChannel.Text == string.Empty)
             {
+                MessageBox.Show("Channel has not yet been set.", "Warning");
+                return false;
+            }
+            if (textBoxServerIP.Text == string.Empty)
+            {
+                MessageBox.Show("Server IP address has not yet been set.", "Warning");
+                return false;
+            }
+            if (textBoxIperf3Path.Text == string.Empty)
+            {
+                MessageBox.Show("iPerf3.exe path has not yet been browsed.", "Warning");
                 return false;
             }
             return true;
@@ -275,6 +291,7 @@ namespace AUPS.Tools
             }
 
             #region Trace the execution time and display progress 
+            // System.Threading.Thread timerThread = new System.Threading.Thread(new System.Threading.ThreadStart(TraceTestingTime));
             System.Threading.Thread timerThread = new System.Threading.Thread(TraceTestingTime);
             timerThread.IsBackground = true;
             timerThread.Start();
@@ -455,18 +472,21 @@ namespace AUPS.Tools
         }
 
         private delegate void TraceTestingTimeDelegate();
+
+        private void DisplayElapsedTestTime()
+        {
+            TraceTestingTime();
+        }
+
         private void TraceTestingTime()
         {
-#if false
-            if (progressBarTesting.InvokeRequired)
+            if (labelElapsedTime.InvokeRequired)
             {
-                TraceTestingTimeDelegate delg = TraceTestingTime;
-                // progressBarTesting.Invoke(delg, progress);
+                TraceTestingTimeDelegate delg = new TraceTestingTimeDelegate(TraceTestingTime);
+                this.Invoke(delg);
             }
             else
-#endif
             {
-                // progressBarTesting.Maximum = (int)progress;
                 while (doneFlag == false)
                 {
                     labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
