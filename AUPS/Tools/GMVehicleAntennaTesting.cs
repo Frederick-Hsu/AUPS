@@ -291,8 +291,8 @@ namespace AUPS.Tools
             }
 
             #region Trace the execution time and display progress 
-            // System.Threading.Thread timerThread = new System.Threading.Thread(new System.Threading.ThreadStart(TraceTestingTime));
-            System.Threading.Thread timerThread = new System.Threading.Thread(TraceTestingTime);
+            System.Threading.Thread timerThread = new System.Threading.Thread(new System.Threading.ThreadStart(TraceTestingTime));
+            // System.Threading.Thread timerThread = new System.Threading.Thread(TraceTestingTime);
             timerThread.IsBackground = true;
             timerThread.Start();
 
@@ -480,12 +480,14 @@ namespace AUPS.Tools
 
         private void TraceTestingTime()
         {
-            if (labelElapsedTime.InvokeRequired)
+#if false
+            if (progressBarTesting.InvokeRequired)
             {
                 TraceTestingTimeDelegate delg = new TraceTestingTimeDelegate(TraceTestingTime);
                 this.Invoke(delg);
             }
             else
+#endif
             {
                 while (doneFlag == false)
                 {
