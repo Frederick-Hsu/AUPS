@@ -22,6 +22,8 @@ namespace AUPS.Tools
         {
             InitializeComponent();
             MdiParent = parent;
+
+            // InitializeBackgroundWork();
         }
 
         private void CLearDataGridViewAllRows()
@@ -291,13 +293,10 @@ namespace AUPS.Tools
             }
 
             #region Trace the execution time and display progress 
-            System.Threading.Thread timerThread = new System.Threading.Thread(new System.Threading.ThreadStart(TraceTestingTime));
-            // System.Threading.Thread timerThread = new System.Threading.Thread(TraceTestingTime);
-            timerThread.IsBackground = true;
-            timerThread.Start();
-
             doneFlag = false;
             timer = DateTime.Now;
+            TraceAndShowElapsedTime();
+
             progressBarTesting.Maximum = 100;
             progressBarTesting.Minimum = 0;
             progressBarTesting.Value = 1;
@@ -471,32 +470,46 @@ namespace AUPS.Tools
             dataGridViewTestResults.Rows[existedRows].Cells[17].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        private delegate void TraceTestingTimeDelegate();
-
-        private void DisplayElapsedTestTime()
-        {
-            TraceTestingTime();
-        }
-
-        private void TraceTestingTime()
-        {
 #if false
-            if (progressBarTesting.InvokeRequired)
+        #region BackgroundWorker to trace the testing elapsed time asynchronously
+        private BackgroundWorker bgwork;
+
+        private void InitializeBackgroundWork()
+        {
+            bgwork = new BackgroundWorker();
+            bgwork.WorkerReportsProgress = true;
+
+            bgwork.DoWork += new DoWorkEventHandler(bgwork_DoWork);
+            bgwork.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwork_RunWorkerCompleted);
+            bgwork.ProgressChanged += new ProgressChangedEventHandler(bgwork_ProgressChanged);
+        }
+
+        private void bgwork_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            TraceAndDisplayTestingElapsedTime(worker, e);
+        }
+
+        private void TraceAndDisplayTestingElapsedTime(BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            while (doneFlag == false)
             {
-                TraceTestingTimeDelegate delg = new TraceTestingTimeDelegate(TraceTestingTime);
-                this.Invoke(delg);
-            }
-            else
-#endif
-            {
-                while (doneFlag == false)
-                {
-                    labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
-                    Application.DoEvents();
-                }
-                labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
+                e.Result = DateTime.Now.Subtract(timer).ToString();
+                Application.DoEvents();
             }
         }
+
+        private void bgwork_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            labelElapsedTime.Text = DateTime.Now.Subtract(timer).ToString();
+        }
+
+        private void bgwork_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
+        }
+#endregion
+#endif
 
         private void btnClearTestResults_Click(object sender, EventArgs e)
         {
@@ -505,6 +518,12 @@ namespace AUPS.Tools
 
         private void btnSaveTestResults_Click(object sender, EventArgs e)
         {
+            if (labelFilePathToSave.Text != string.Empty)
+            {
+                SaveTestResultsToCsv(labelFilePathToSave.Text);
+                return;
+            }
+
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Title = "Save the test results into .csv file you specified";
             dlg.InitialDirectory = "";
@@ -552,11 +571,27 @@ namespace AUPS.Tools
                     }
                 }
                 sw.WriteLine(line);
+                line = "";
             }
 
             sw.Close();
             fs.Close();
             MessageBox.Show("The .csv file of test results had been saved successfully.", "Save");
+        }
+
+        private void TraceAndShowElapsedTime()
+        {
+            System.Threading.Thread threadTraceTime = new System.Threading.Thread(new System.Threading.ThreadStart(()=>
+            {
+                while (doneFlag == false)
+                {
+                    labelElapsedTime.BeginInvoke(new MethodInvoker(()=>labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString()));
+                    Application.DoEvents();
+                    System.Threading.Thread.Sleep(500);
+                }
+            }));
+            threadTraceTime.IsBackground = true;
+            threadTraceTime.Start();
         }
     }
 }
