@@ -14,6 +14,7 @@
 *.png
 *.jpg
 *.jpeg
+*.csv
 
 XML/
 Sequence/
@@ -36,6 +37,7 @@ RunIperfCmd/
 Drawing/
 AsyncExecuteDOSProcess/
 ManipulateProgressBar/
+UserChangeControlLocationSizeInRunTime/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
