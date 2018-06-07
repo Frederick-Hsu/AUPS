@@ -8,11 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AUPS.Tools
 {
     public partial class GMVehicleAntennaTesting : Form
     {
+        private CustomizedResizableRectControl resizableDataGridView;
+
         public GMVehicleAntennaTesting()
         {
             InitializeComponent();
@@ -24,6 +27,12 @@ namespace AUPS.Tools
             MdiParent = parent;
 
             // InitializeBackgroundWork();
+            InitializeUI();
+        }
+
+        private void InitializeUI()
+        {
+            resizableDataGridView = new CustomizedResizableRectControl(dataGridViewPointSettings);
         }
 
         private void CLearDataGridViewAllRows()
@@ -47,8 +56,9 @@ namespace AUPS.Tools
                 return;
             }
             int radius, angle, height, freq, bandWidth, channel;
-            RetrieveTestingPointsSettings(out radius, out angle, out height, out freq, out bandWidth, out channel);
-            CheckBox newTestPoint = CreateNewCheckBoxBy(radius, angle, height, freq, bandWidth, channel);
+            double power;
+            RetrieveTestingPointsSettings(out radius, out angle, out height, out freq, out bandWidth, out channel, out power);
+            CheckBox newTestPoint = CreateNewCheckBoxBy(radius, angle, height, freq, bandWidth, channel, power);
 
             tabControlTesting.SuspendLayout();
             tabPageField.SuspendLayout();
@@ -157,7 +167,7 @@ namespace AUPS.Tools
             graph.DrawEllipse(bluePen, origin.X - radius, origin.Y - radius, 2 * radius, 2 * radius);
         }
 
-        private bool RetrieveTestingPointsSettings(out int radius, out int angle, out int height, out int freq, out int bandWidth, out int channel)
+        private bool RetrieveTestingPointsSettings(out int radius, out int angle, out int height, out int freq, out int bandWidth, out int channel, out double power)
         {
             try
             {
@@ -167,6 +177,7 @@ namespace AUPS.Tools
                 freq = Convert.ToInt32(textBoxFreqBand.Text);
                 bandWidth = Convert.ToInt32(comboBoxBandWidth.Text);
                 channel = Convert.ToInt32(textBoxChannel.Text);
+                power = Convert.ToDouble(textBoxTxPower.Text);
             }
             catch (FormatException formatEx)
             {
@@ -177,6 +188,7 @@ namespace AUPS.Tools
                 freq = 0;
                 bandWidth = 0;
                 channel = 0;
+                power = 0.00;
                 return false;
             }
             catch (OverflowException overflowEx)
@@ -188,6 +200,7 @@ namespace AUPS.Tools
                 freq = 0;
                 bandWidth = 0;
                 channel = 0;
+                power = 0.00;
                 return false;
             }
             return true;
@@ -201,6 +214,7 @@ namespace AUPS.Tools
             textBoxFreqBand.Text = string.Empty;
             comboBoxBandWidth.Text = string.Empty;
             textBoxChannel.Text = string.Empty;
+            textBoxTxPower.Text = string.Empty;
         }
 
         private bool CheckTestingPointsSettings()
@@ -235,6 +249,11 @@ namespace AUPS.Tools
                 MessageBox.Show("Channel has not yet been set.", "Warning");
                 return false;
             }
+            if (textBoxTxPower.Text == string.Empty)
+            {
+                MessageBox.Show("Tx power has not yet been set.", "Warning");
+                return false;
+            }
             if (textBoxServerIP.Text == string.Empty)
             {
                 MessageBox.Show("Server IP address has not yet been set.", "Warning");
@@ -251,7 +270,7 @@ namespace AUPS.Tools
         private List<CheckBox> testPoints = new List<CheckBox>();
         private List<int> radiusList = new List<int>();
 
-        private CheckBox CreateNewCheckBoxBy(int radius, int angle, int height, int freq, int bandWidth, int channel)
+        private CheckBox CreateNewCheckBoxBy(int radius, int angle, int height, int freq, int bandWidth, int channel, double power)
         {
             Point origin = getOriginPointOfCoordinateSystem();
             int x = origin.X + (int)((radius/scaleDownRatio) * Math.Cos(2 * Math.PI * angle / 360.00));
@@ -264,7 +283,8 @@ namespace AUPS.Tools
                           "Height = " + height + "\n" +
                           "Frequency = " + freq + "\n" +
                           "Bandwidth = " + bandWidth + "\n" +
-                          "Channel = " + channel;
+                          "Channel = " + channel + "\n" +
+                          "Tx Power = " + power;
 
             CheckBox newCheckBox = new CheckBox();
             // tabPageField.Controls.Add(newCheckBox);
@@ -276,9 +296,21 @@ namespace AUPS.Tools
             newCheckBox.Text = "Point #" + (testPoints.Count + 1);
             toolTipToDisplayInfo.SetToolTip(newCheckBox, info);
             newCheckBox.UseVisualStyleBackColor = true;
+            // newCheckBox.ContextMenuStrip = contextMenuStripModify;
             newCheckBox.CheckStateChanged += new EventHandler(newCheckBox_CheckStateChanged);
 
             testPoints.Add(newCheckBox);
+
+                int newRowIndex = dataGridViewPointSettings.Rows.Add();
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[1].Value = newCheckBox.Text;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[2].Value = radius;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[3].Value = angle;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[4].Value = height;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[5].Value = freq;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[6].Value = bandWidth;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[7].Value = channel;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[8].Value = power;
+
             return newCheckBox;
         }
 
@@ -295,22 +327,41 @@ namespace AUPS.Tools
             #region Trace the execution time and display progress 
             doneFlag = false;
             timer = DateTime.Now;
-            TraceAndShowElapsedTime();
-
-            progressBarTesting.Maximum = 100;
-            progressBarTesting.Minimum = 0;
-            progressBarTesting.Value = 1;
+            TraceAndShowElapsedTime();             
             #endregion
 
             string toolTip = toolTipToDisplayInfo.GetToolTip(currentTestPoint);
 
             int radius, angle, height, freq, bandWidth, channel;
-            ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel);
+            double power;
+            ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel, out power);
 
+            for (int row = 0; row < (dataGridViewPointSettings.Rows.Count-1); row++)
+            {
+                if ( ((dataGridViewPointSettings.Rows[row].Cells[1].Value as string) == currentTestPoint.Text) && 
+                     (true == Convert.ToBoolean(((DataGridViewCheckBoxCell)dataGridViewPointSettings.Rows[row].Cells[0]).Value)) )
+                {
+                    PerformTestingProcedure(currentTestPoint.Text,                                                     /* Point # */
+                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[2].Value),       /* Radius */
+                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[3].Value),       /* Angle */
+                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[4].Value),       /* Height */
+                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[5].Value),       /* Freq. */
+                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[6].Value),       /* Bandwidth */
+                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[7].Value),       /* Channel */
+                                            Convert.ToDouble(dataGridViewPointSettings.Rows[row].Cells[8].Value));     /* Power */
+                }
+            }               
+            doneFlag = true;
+        }
+
+        private void PerformTestingProcedure(string pointNo, int radius, int angle, int height, int freq, int bandWidth, int channel, double power)
+        {
             /* Perform the network connectivity test items */
-            string tcpUplinkThroughput   = "", tcpDownlinkThroughput = "";
-            string udpUplinkThroughput   = "", udpUplinkLatency   = "", udpUplinkPacketLoss   = "",
+            string tcpUplinkThroughput = "", tcpDownlinkThroughput = "";
+            string udpUplinkThroughput = "", udpUplinkLatency = "", udpUplinkPacketLoss = "",
                    udpDownlinkThroughput = "", udpDownlinkLatency = "", udpDownlinkPacketLoss = "";
+
+            progressBarTesting.Value = 1;
 
             InitializeIperfProcess();
             MeasureTcpUplinkPerformance(out tcpUplinkThroughput);
@@ -332,25 +383,25 @@ namespace AUPS.Tools
             CloseIperfProcess();
             progressBarTesting.Value = 80;
 
-            FillTestResultsTable(currentTestPoint.Text, 
-                                 radius.ToString(), 
-                                 angle.ToString(), 
-                                 height.ToString(), 
-                                 freq.ToString(), 
-                                 bandWidth.ToString(), 
+            FillTestResultsTable(pointNo,
+                                 radius.ToString(),
+                                 angle.ToString(),
+                                 height.ToString(),
+                                 freq.ToString(),
+                                 bandWidth.ToString(),
                                  channel.ToString(),
-                                 tcpUplinkThroughput, 
+                                 power.ToString(),
+                                 tcpUplinkThroughput,
                                  tcpDownlinkThroughput,
-                                 udpUplinkThroughput, 
-                                 udpUplinkLatency, 
+                                 udpUplinkThroughput,
+                                 udpUplinkLatency,
                                  udpUplinkPacketLoss,
-                                 udpDownlinkThroughput, 
-                                 udpDownlinkLatency, 
+                                 udpDownlinkThroughput,
+                                 udpDownlinkLatency,
                                  udpDownlinkPacketLoss,
-                                 "", 
+                                 "",
                                  "");
             progressBarTesting.Value = 100;
-            doneFlag = true;
         }
 
         private void btnRefreshDrawing_Click(object sender, EventArgs e)
@@ -367,7 +418,8 @@ namespace AUPS.Tools
             {
                 string toolTip = toolTipToDisplayInfo.GetToolTip(testPoint);
                 int radius, angle, height, freq, bandWidth, channel;
-                ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel);
+                double power;
+                ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel, out power);
 
                 int x = origin.X + (int)((radius / scaleDownRatio) * Math.Cos(2 * Math.PI * angle / 360.00));
                 int y = origin.Y - (int)((radius / scaleDownRatio) * Math.Sin(2 * Math.PI * angle / 360.00));
@@ -375,7 +427,7 @@ namespace AUPS.Tools
             }
         }
 
-        private void ParseOutToolTip(string toolTip, out int radius, out int angle, out int height, out int freq, out int bandWidth, out int channel)
+        private void ParseOutToolTip(string toolTip, out int radius, out int angle, out int height, out int freq, out int bandWidth, out int channel, out double power)
         {
             string[] fields = toolTip.Split(new char[] { '\n' });
             int count = fields.Length;
@@ -391,6 +443,7 @@ namespace AUPS.Tools
             freq = Convert.ToInt32(field_values[3]);
             bandWidth = Convert.ToInt32(field_values[4]);
             channel = Convert.ToInt32(field_values[5]);
+            power = Convert.ToDouble(field_values[6]);
         }
 
         private void tabControlTesting_Resize(object sender, EventArgs e)
@@ -437,6 +490,7 @@ namespace AUPS.Tools
                                           string frequecy,
                                           string band,
                                           string channel,
+                                          string power,
                                           string tcpUplinkThroughput,
                                           string tcpDownlinkThroughput,
                                           string udpUplinkThroughput,
@@ -457,17 +511,18 @@ namespace AUPS.Tools
             dataGridViewTestResults.Rows[existedRows].Cells[4].Value = frequecy;
             dataGridViewTestResults.Rows[existedRows].Cells[5].Value = band;
             dataGridViewTestResults.Rows[existedRows].Cells[6].Value = channel;
-            dataGridViewTestResults.Rows[existedRows].Cells[7].Value = tcpUplinkThroughput;
-            dataGridViewTestResults.Rows[existedRows].Cells[8].Value = tcpDownlinkThroughput;
-            dataGridViewTestResults.Rows[existedRows].Cells[9].Value = udpUplinkThroughput;
-            dataGridViewTestResults.Rows[existedRows].Cells[10].Value = udpUplinkLatency;
-            dataGridViewTestResults.Rows[existedRows].Cells[11].Value = udpUplinkPacketLoss;
-            dataGridViewTestResults.Rows[existedRows].Cells[12].Value = udpDownlinkThroughput;
-            dataGridViewTestResults.Rows[existedRows].Cells[13].Value = udpDownlinkLatency;
-            dataGridViewTestResults.Rows[existedRows].Cells[14].Value = udpDownlinkPacketLoss;
-            dataGridViewTestResults.Rows[existedRows].Cells[15].Value = rssi;
-            dataGridViewTestResults.Rows[existedRows].Cells[16].Value = snr;
-            dataGridViewTestResults.Rows[existedRows].Cells[17].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            dataGridViewTestResults.Rows[existedRows].Cells[7].Value = power;
+            dataGridViewTestResults.Rows[existedRows].Cells[8].Value = tcpUplinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[9].Value = tcpDownlinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[10].Value = udpUplinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[11].Value = udpUplinkLatency;
+            dataGridViewTestResults.Rows[existedRows].Cells[12].Value = udpUplinkPacketLoss;
+            dataGridViewTestResults.Rows[existedRows].Cells[13].Value = udpDownlinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[14].Value = udpDownlinkLatency;
+            dataGridViewTestResults.Rows[existedRows].Cells[15].Value = udpDownlinkPacketLoss;
+            dataGridViewTestResults.Rows[existedRows].Cells[16].Value = rssi;
+            dataGridViewTestResults.Rows[existedRows].Cells[17].Value = snr;
+            dataGridViewTestResults.Rows[existedRows].Cells[18].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
 #if false
@@ -592,6 +647,209 @@ namespace AUPS.Tools
             }));
             threadTraceTime.IsBackground = true;
             threadTraceTime.Start();
+        }
+
+        private void modifySettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeConfigurationForm changeConfigForm = new ChangeConfigurationForm();
+            changeConfigForm.ShowDialog();
+
+            int height = changeConfigForm.TestPointHeight;
+            int frequency = changeConfigForm.Frequency;
+            int bandwidth = changeConfigForm.Bandwidth;
+            int channel = changeConfigForm.Channel;
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            /* Load from the csv file to fill the test points setting table, and 
+             * draw all test points in the figure.
+             */
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "Open the .csv file to load into test points setting table.";
+            dlg.InitialDirectory = "";
+            dlg.DefaultExt = "csv";
+            dlg.Filter = "CSV file | *.csv";
+            dlg.AddExtension = true;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                dataGridViewPointSettings.Rows.Clear();
+                RemoveOldTestPoints();
+
+                DataTable table = ReadTestPointsSettingFrom(dlg.FileName);
+                FillTestPointsSettingTable(table);
+                CreateCheckBoxesInBatch(table);
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            /* Save the test points setting table into a csv file. */
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save the test points setting into .csv file.";
+            dlg.InitialDirectory = "";
+            dlg.DefaultExt = "csv";
+            dlg.Filter = "CSV file | *.csv";
+            dlg.AddExtension = true;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                SaveTestPointsSettingTable(dlg.FileName);
+            }
+        }
+
+        private void SaveTestPointsSettingTable(string csvFileName)
+        {
+            int rowCount = dataGridViewPointSettings.Rows.Count;
+            int colCount = dataGridViewPointSettings.Columns.Count;
+
+            int rowIndex, colIndex;
+            FileStream fs = new FileStream(csvFileName, FileMode.OpenOrCreate, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+
+            string title = "";
+            for (colIndex = 1; colIndex < colCount; colIndex++)     /* Ignore column 0 "Selected", which is checked by test engineer manually */
+            {
+                title += dataGridViewPointSettings.Columns[colIndex].HeaderText;
+                if (colIndex < (colCount-1))
+                {
+                    title += ",";
+                }
+            }
+            sw.WriteLine(title);
+
+            string line = "";
+            for (rowIndex = 0; rowIndex < (rowCount-1); rowIndex++)
+            {
+                for (colIndex = 1; colIndex < colCount; colIndex++)
+                {
+                    line += Convert.ToString(dataGridViewPointSettings.Rows[rowIndex].Cells[colIndex].Value);
+                    if (colIndex < (colCount-1))
+                    {
+                        line += ",";
+                    }
+                }
+                sw.WriteLine(line);
+                line = "";
+            }
+            sw.Close();
+            fs.Close();
+            MessageBox.Show("The test points setting table had been saved into .csv file!", "Save");
+        }
+
+        private DataTable ReadTestPointsSettingFrom(string csvFileName)
+        {
+            DataTable dt = new DataTable();
+            FileStream fs = new FileStream(csvFileName, FileMode.Open, FileAccess.Read);
+            StreamReader sr = new StreamReader(fs);
+
+            string line = "";
+            bool headFlag = true;
+            while ((line = sr.ReadLine()) != null)  /* Read one line each time from the csv file */
+            {
+                string[] columnFields = line.Split(',');
+                if (headFlag == true)       /* Focus on dealing with the table title */
+                {
+                    for (int colIndex = 0; colIndex < 8; colIndex++)
+                    {
+                        DataColumn dcol = new DataColumn(columnFields[colIndex]);
+                        dt.Columns.Add(dcol);
+                    }
+                    headFlag = false;
+                }
+                else        /* Focus on dealing with the table content */
+                {
+                    DataRow drow = dt.NewRow();
+                    for (int colIndex = 0; colIndex < 8 /* columnFields.Length */; colIndex++)
+                    {
+                        drow[colIndex] = columnFields[colIndex];
+                    }
+                    dt.Rows.Add(drow);
+                }
+            }
+
+            sr.Close();
+            fs.Close();
+            return dt;
+        }
+
+        private void FillTestPointsSettingTable(DataTable table)
+        {
+            int rowCount = table.Rows.Count;
+            int colCount = table.Columns.Count;
+
+            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+            {
+                int existedRowIndex = dataGridViewPointSettings.Rows.Add();
+                for (int colIndex = 0; colIndex < colCount; colIndex++)
+                {
+                    dataGridViewPointSettings.Rows[existedRowIndex].Cells[colIndex + 1].Value = table.Rows[rowIndex][colIndex];
+                }
+            }
+        }
+
+        private void CreateCheckBoxesInBatch(DataTable testPointsSettingTable)
+        {
+            int rowCount = testPointsSettingTable.Rows.Count;
+            Point origin = getOriginPointOfCoordinateSystem();
+
+            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+            {
+                string pointNo = Convert.ToString(testPointsSettingTable.Rows[rowIndex][0]);
+                int radius = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][1]);
+                int angle = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][2]);
+                int height = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][3]);
+                int freq = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][4]);
+                int bandwidth = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][5]);
+                int channel = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][6]);
+                double power = Convert.ToDouble(testPointsSettingTable.Rows[rowIndex][7]);
+
+                int x = origin.X + (int)((radius / scaleDownRatio) * Math.Cos(2 * Math.PI * angle / 360.00));
+                int y = origin.Y - (int)((radius / scaleDownRatio) * Math.Sin(2 * Math.PI * angle / 360.00));
+                DrawCircle(radius);
+                radiusList.Add(radius);
+                string info = "Radius = " + radius + "\n" +
+                              "Angle = " + angle + "\n" +
+                              "Height = " + height + "\n" +
+                              "Frequency = " + freq + "\n" +
+                              "Bandwidth = " + bandwidth + "\n" +
+                              "Channel = " + channel + "\n" +
+                              "Tx Power = " + power;
+
+                CheckBox newCheckBox = new CheckBox();
+                newCheckBox.AutoSize = true;
+                newCheckBox.Location = new Point(x, y);
+                newCheckBox.Size = new Size(113, 24);
+                newCheckBox.Text = pointNo;
+                toolTipToDisplayInfo.SetToolTip(newCheckBox, info);
+                newCheckBox.UseVisualStyleBackColor = true;
+                newCheckBox.CheckStateChanged += new EventHandler(newCheckBox_CheckStateChanged);
+                testPoints.Add(newCheckBox);
+
+                tabControlTesting.SuspendLayout();
+                tabPageField.SuspendLayout();
+                SuspendLayout();
+                tabPageField.Controls.Add(newCheckBox);
+                tabControlTesting.ResumeLayout(false);
+                tabPageField.ResumeLayout(false);
+                tabPageField.PerformLayout();
+                this.ResumeLayout(false);
+                this.PerformLayout();
+            }
+        } 
+
+        private void RemoveOldTestPoints()
+        {
+            if ((testPoints.Count == 0) || (radiusList.Count == 0))
+            {
+                return;
+            }
+
+            foreach (CheckBox cbox in testPoints)
+            {
+                tabPageField.Controls.Remove(cbox);
+            }
+            radiusList.Clear();
+            return;
         }
     }
 }
