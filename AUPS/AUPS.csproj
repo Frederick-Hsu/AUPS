@@ -92,6 +92,18 @@
     <Compile Include="TestPanel\TestPanel_ToolbarEvent.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Tools\ChangeConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\ChangeConfigurationForm.Designer.cs">
+      <DependentUpon>ChangeConfigurationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\CustomizedResizableRectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tools\CustomizedResizableRectControl.Designer.cs">
+      <DependentUpon>CustomizedResizableRectControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\GMVehicleAntennaTesting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TestPanel\TestPanel.resx">
       <DependentUpon>TestPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\ChangeConfigurationForm.resx">
+      <DependentUpon>ChangeConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\GMVehicleAntennaTesting.resx">
       <DependentUpon>GMVehicleAntennaTesting.cs</DependentUpon>
