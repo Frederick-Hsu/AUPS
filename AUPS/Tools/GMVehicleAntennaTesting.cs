@@ -176,7 +176,7 @@ namespace AUPS.Tools
                 height = Convert.ToInt32(textBoxHeight.Text);
                 freq = Convert.ToInt32(textBoxFreqBand.Text);
                 bandWidth = Convert.ToInt32(comboBoxBandWidth.Text);
-                channel = Convert.ToInt32(textBoxChannel.Text);
+                channel = Convert.ToInt32(comboBoxChannel.Text);
                 power = Convert.ToDouble(textBoxTxPower.Text);
             }
             catch (FormatException formatEx)
@@ -213,7 +213,7 @@ namespace AUPS.Tools
             textBoxHeight.Text = string.Empty;
             textBoxFreqBand.Text = string.Empty;
             comboBoxBandWidth.Text = string.Empty;
-            textBoxChannel.Text = string.Empty;
+            comboBoxChannel.Text = string.Empty;
             textBoxTxPower.Text = string.Empty;
         }
 
@@ -244,7 +244,7 @@ namespace AUPS.Tools
                 MessageBox.Show("Bandwidth has not yet been selected.", "Warning");
                 return false;
             }
-            if (textBoxChannel.Text == string.Empty)
+            if (comboBoxChannel.Text == string.Empty)
             {
                 MessageBox.Show("Channel has not yet been set.", "Warning");
                 return false;
@@ -851,5 +851,7 @@ namespace AUPS.Tools
             radiusList.Clear();
             return;
         }
+
+
     }
 }
