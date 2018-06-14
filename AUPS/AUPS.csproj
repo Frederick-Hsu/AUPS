@@ -155,6 +155,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Amphenol.Instruments\Amphenol.Instruments.csproj">
+      <Project>{3589c3eb-f46a-42e6-b7de-9c4471302719}</Project>
+      <Name>Amphenol.Instruments</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Amphenol.Project.X577\Amphenol.Project.X577.csproj">
       <Project>{ead45f69-6789-4ff5-a44e-6db3e69b96a6}</Project>
       <Name>Amphenol.Project.X577</Name>
