@@ -141,6 +141,19 @@ namespace Amphenol.Project.X577
                                                  out errorCode,
                                                  out errorDesc);
                     break;
+                case "InitializePowerSupply":
+                    success = InitializePowerSupply(stepParameters, 
+                                                    out result, 
+                                                    out status, 
+                                                    out errorCode, 
+                                                    out errorDesc);
+                    break;
+                case "ClosePowerSupply":
+                    success = ClosePowerSupply(out result,
+                                               out status,
+                                               out errorCode,
+                                               out errorDesc);
+                    break;
                 #endregion
 
                 default:
@@ -193,6 +206,8 @@ namespace Amphenol.Project.X577
             #region Power Supply Test Functions
             functionsList.Add("InitializeDCPowerSupply");
             functionsList.Add("CloseDCPowerSupply");
+            functionsList.Add("InitializePowerSupply");
+            functionsList.Add("ClosePowerSupply");
             #endregion
             return functionsList;
         }

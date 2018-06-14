@@ -15,6 +15,7 @@
 *.jpg
 *.jpeg
 *.csv
+*.xlsx
 
 XML/
 Sequence/

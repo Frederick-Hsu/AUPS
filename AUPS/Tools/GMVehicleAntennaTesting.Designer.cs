@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GMVehicleAntennaTesting));
             this.toolTipToDisplayInfo = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxTestPointsSetting = new System.Windows.Forms.GroupBox();
+            this.comboBoxChannel = new System.Windows.Forms.ComboBox();
             this.textBoxTxPower = new System.Windows.Forms.TextBox();
             this.labelTxPower = new System.Windows.Forms.Label();
             this.labelElapsedTime = new System.Windows.Forms.Label();
@@ -46,7 +47,6 @@
             this.labelBandWidth = new System.Windows.Forms.Label();
             this.textBoxServerIP = new System.Windows.Forms.TextBox();
             this.labelServerIP = new System.Windows.Forms.Label();
-            this.textBoxChannel = new System.Windows.Forms.TextBox();
             this.btnRefreshDrawing = new System.Windows.Forms.Button();
             this.labelChannel = new System.Windows.Forms.Label();
             this.textBoxFreqBand = new System.Windows.Forms.TextBox();
@@ -60,6 +60,8 @@
             this.labelRadius = new System.Windows.Forms.Label();
             this.tabControlTesting = new System.Windows.Forms.TabControl();
             this.tabPageField = new System.Windows.Forms.TabPage();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.dataGridViewPointSettings = new System.Windows.Forms.DataGridView();
             this.colSelectedFlag = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colPointNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -101,8 +103,6 @@
             this.contextMenuStripModify = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeCurrentTestPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnLoad = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.groupBoxTestPointsSetting.SuspendLayout();
             this.tabControlTesting.SuspendLayout();
             this.tabPageField.SuspendLayout();
@@ -117,6 +117,7 @@
             // groupBoxTestPointsSetting
             // 
             this.groupBoxTestPointsSetting.AutoSize = true;
+            this.groupBoxTestPointsSetting.Controls.Add(this.comboBoxChannel);
             this.groupBoxTestPointsSetting.Controls.Add(this.textBoxTxPower);
             this.groupBoxTestPointsSetting.Controls.Add(this.labelTxPower);
             this.groupBoxTestPointsSetting.Controls.Add(this.labelElapsedTime);
@@ -131,7 +132,6 @@
             this.groupBoxTestPointsSetting.Controls.Add(this.labelBandWidth);
             this.groupBoxTestPointsSetting.Controls.Add(this.textBoxServerIP);
             this.groupBoxTestPointsSetting.Controls.Add(this.labelServerIP);
-            this.groupBoxTestPointsSetting.Controls.Add(this.textBoxChannel);
             this.groupBoxTestPointsSetting.Controls.Add(this.btnRefreshDrawing);
             this.groupBoxTestPointsSetting.Controls.Add(this.labelChannel);
             this.groupBoxTestPointsSetting.Controls.Add(this.textBoxFreqBand);
@@ -151,6 +151,15 @@
             this.groupBoxTestPointsSetting.TabIndex = 1;
             this.groupBoxTestPointsSetting.TabStop = false;
             this.groupBoxTestPointsSetting.Text = "Testing points setting";
+            // 
+            // comboBoxChannel
+            // 
+            this.comboBoxChannel.FormattingEnabled = true;
+            this.comboBoxChannel.Location = new System.Drawing.Point(203, 187);
+            this.comboBoxChannel.Name = "comboBoxChannel";
+            this.comboBoxChannel.Size = new System.Drawing.Size(188, 28);
+            this.comboBoxChannel.TabIndex = 24;
+            this.comboBoxChannel.SelectedIndexChanged += new System.EventHandler(this.comboBoxChannel_SelectedIndexChanged);
             // 
             // textBoxTxPower
             // 
@@ -241,10 +250,13 @@
             // 
             this.comboBoxBandWidth.FormattingEnabled = true;
             this.comboBoxBandWidth.Items.AddRange(new object[] {
+            "10",
             "20",
+            "22",
             "40",
-            "80"});
-            this.comboBoxBandWidth.Location = new System.Drawing.Point(203, 245);
+            "80",
+            "160"});
+            this.comboBoxBandWidth.Location = new System.Drawing.Point(203, 287);
             this.comboBoxBandWidth.Name = "comboBoxBandWidth";
             this.comboBoxBandWidth.Size = new System.Drawing.Size(188, 28);
             this.comboBoxBandWidth.TabIndex = 14;
@@ -252,7 +264,7 @@
             // labelBandWidth
             // 
             this.labelBandWidth.AutoSize = true;
-            this.labelBandWidth.Location = new System.Drawing.Point(19, 245);
+            this.labelBandWidth.Location = new System.Drawing.Point(19, 287);
             this.labelBandWidth.Name = "labelBandWidth";
             this.labelBandWidth.Size = new System.Drawing.Size(173, 20);
             this.labelBandWidth.TabIndex = 13;
@@ -274,13 +286,6 @@
             this.labelServerIP.TabIndex = 11;
             this.labelServerIP.Text = "Server IP address";
             // 
-            // textBoxChannel
-            // 
-            this.textBoxChannel.Location = new System.Drawing.Point(203, 291);
-            this.textBoxChannel.Name = "textBoxChannel";
-            this.textBoxChannel.Size = new System.Drawing.Size(188, 26);
-            this.textBoxChannel.TabIndex = 10;
-            // 
             // btnRefreshDrawing
             // 
             this.btnRefreshDrawing.Location = new System.Drawing.Point(19, 505);
@@ -294,7 +299,7 @@
             // labelChannel
             // 
             this.labelChannel.AutoSize = true;
-            this.labelChannel.Location = new System.Drawing.Point(15, 291);
+            this.labelChannel.Location = new System.Drawing.Point(15, 187);
             this.labelChannel.Name = "labelChannel";
             this.labelChannel.Size = new System.Drawing.Size(108, 20);
             this.labelChannel.TabIndex = 9;
@@ -302,7 +307,7 @@
             // 
             // textBoxFreqBand
             // 
-            this.textBoxFreqBand.Location = new System.Drawing.Point(203, 191);
+            this.textBoxFreqBand.Location = new System.Drawing.Point(203, 233);
             this.textBoxFreqBand.Name = "textBoxFreqBand";
             this.textBoxFreqBand.Size = new System.Drawing.Size(188, 26);
             this.textBoxFreqBand.TabIndex = 8;
@@ -310,7 +315,7 @@
             // labelFreqBand
             // 
             this.labelFreqBand.AutoSize = true;
-            this.labelFreqBand.Location = new System.Drawing.Point(15, 191);
+            this.labelFreqBand.Location = new System.Drawing.Point(15, 233);
             this.labelFreqBand.Name = "labelFreqBand";
             this.labelFreqBand.Size = new System.Drawing.Size(169, 20);
             this.labelFreqBand.TabIndex = 7;
@@ -402,6 +407,26 @@
             this.tabPageField.TabIndex = 0;
             this.tabPageField.Text = "Test field";
             this.tabPageField.UseVisualStyleBackColor = true;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(350, 312);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(283, 40);
+            this.btnSave.TabIndex = 3;
+            this.btnSave.Text = "Save test points setting table";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Location = new System.Drawing.Point(7, 312);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(283, 33);
+            this.btnLoad.TabIndex = 2;
+            this.btnLoad.Text = "Load test points setting table";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // dataGridViewPointSettings
             // 
@@ -727,26 +752,6 @@
             this.modifySettingsToolStripMenuItem.Text = "Modify settings";
             this.modifySettingsToolStripMenuItem.Click += new System.EventHandler(this.modifySettingsToolStripMenuItem_Click);
             // 
-            // btnLoad
-            // 
-            this.btnLoad.Location = new System.Drawing.Point(7, 312);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(283, 33);
-            this.btnLoad.TabIndex = 2;
-            this.btnLoad.Text = "Load test points setting table";
-            this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(350, 312);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(283, 40);
-            this.btnSave.TabIndex = 3;
-            this.btnSave.Text = "Save test points setting table";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // GMVehicleAntennaTesting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -759,6 +764,7 @@
             this.MaximizeBox = false;
             this.Name = "GMVehicleAntennaTesting";
             this.Text = "GM vehicle Wi-Fi antenna testing";
+            this.Load += new System.EventHandler(this.GMVehicleAntennaTesting_Load);
             this.groupBoxTestPointsSetting.ResumeLayout(false);
             this.groupBoxTestPointsSetting.PerformLayout();
             this.tabControlTesting.ResumeLayout(false);
@@ -788,7 +794,6 @@
         private System.Windows.Forms.Label labelFreqBand;
         private System.Windows.Forms.Button btnNewPoint;
         private System.Windows.Forms.TextBox textBoxFreqBand;
-        private System.Windows.Forms.TextBox textBoxChannel;
         private System.Windows.Forms.Label labelChannel;
         private System.Windows.Forms.Button btnRefreshDrawing;
         private System.Windows.Forms.TabControl tabControlTesting;
@@ -850,5 +855,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPower;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.ComboBox comboBoxChannel;
     }
 }

@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Windows.Forms;
+using Amphenol.Instruments.Keysight;
 
 using Utilities;
 
 namespace AUPS.Tools
 {
+    public struct WLAN_Channel_Freq
+    {
+        public int channelNo;
+        public int centerFreq;      /* unit : MHz */
+        public int bandwidth;       /* unit : MHz */
+    }
+
     partial class GMVehicleAntennaTesting
     {
 #if false
@@ -90,9 +98,112 @@ namespace AUPS.Tools
 #endif
 
         /******************************************************************************************/
+        #region WiFi Channel List, Center Frequency and Bandwidth : Table
+                                                    /* 2.4GHz channel list, including 802.11b (DSSS), 802.11g/n (OFDM) */
+        private WLAN_Channel_Freq[] channelList = { new WLAN_Channel_Freq { channelNo =   1, centerFreq = 2412, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =   2, centerFreq = 2417, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =   3, centerFreq = 2422, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo =   4, centerFreq = 2427, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =   5, centerFreq = 2432, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =   6, centerFreq = 2437, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =   7, centerFreq = 2442, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =   8, centerFreq = 2447, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =   9, centerFreq = 2452, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  10, centerFreq = 2457, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  11, centerFreq = 2462, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  12, centerFreq = 2467, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  13, centerFreq = 2472, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  14, centerFreq = 2484, bandwidth = 22 },
+                                                    /* 5.0GHz channel list, including 802.11a/ac */
+                                                    new WLAN_Channel_Freq { channelNo =  16, centerFreq = 5080, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  36, centerFreq = 5180, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  38, centerFreq = 5190, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo =  40, centerFreq = 5200, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  42, centerFreq = 5210, bandwidth = 80 },
+                                                    new WLAN_Channel_Freq { channelNo =  44, centerFreq = 5220, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  46, centerFreq = 5230, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo =  48, centerFreq = 5240, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  50, centerFreq = 5250, bandwidth = 160},
+                                                    new WLAN_Channel_Freq { channelNo =  52, centerFreq = 5260, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  54, centerFreq = 5270, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo =  56, centerFreq = 5280, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  58, centerFreq = 5290, bandwidth = 80 },
+                                                    new WLAN_Channel_Freq { channelNo =  60, centerFreq = 5300, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  62, centerFreq = 5310, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo =  64, centerFreq = 5320, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 100, centerFreq = 5500, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 102, centerFreq = 5510, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo = 104, centerFreq = 5520, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 106, centerFreq = 5530, bandwidth = 80 },
+                                                    new WLAN_Channel_Freq { channelNo = 108, centerFreq = 5540, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 110, centerFreq = 5550, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo = 112, centerFreq = 5560, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 114, centerFreq = 5570, bandwidth = 160},
+                                                    new WLAN_Channel_Freq { channelNo = 116, centerFreq = 5580, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 118, centerFreq = 5590, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo = 120, centerFreq = 5600, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 122, centerFreq = 5610, bandwidth = 80 },
+                                                    new WLAN_Channel_Freq { channelNo = 124, centerFreq = 5620, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 126, centerFreq = 5630, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo = 128, centerFreq = 5640, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 132, centerFreq = 5660, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 134, centerFreq = 5670, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo = 136, centerFreq = 5680, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 138, centerFreq = 5690, bandwidth = 80 },
+                                                    new WLAN_Channel_Freq { channelNo = 140, centerFreq = 5700, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 142, centerFreq = 5710, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo = 144, centerFreq = 5720, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 149, centerFreq = 5745, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 151, centerFreq = 5755, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo = 153, centerFreq = 5765, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 155, centerFreq = 5775, bandwidth = 80 },
+                                                    new WLAN_Channel_Freq { channelNo = 157, centerFreq = 5785, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 159, centerFreq = 5795, bandwidth = 40 },
+                                                    new WLAN_Channel_Freq { channelNo = 161, centerFreq = 5805, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 165, centerFreq = 5825, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 169, centerFreq = 5845, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 173, centerFreq = 5865, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 183, centerFreq = 4915, bandwidth = 10 },
+                                                    new WLAN_Channel_Freq { channelNo = 184, centerFreq = 4920, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 185, centerFreq = 4925, bandwidth = 10 },
+                                                    new WLAN_Channel_Freq { channelNo = 187, centerFreq = 4935, bandwidth = 10 },
+                                                    new WLAN_Channel_Freq { channelNo = 188, centerFreq = 4940, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 189, centerFreq = 4945, bandwidth = 10 },
+                                                    new WLAN_Channel_Freq { channelNo = 192, centerFreq = 4960, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo = 196, centerFreq = 4980, bandwidth = 20 } };
+        #endregion
 
         #region Antenna physical layer test items
+        private void MeasureRSSI()
+        {
+            SignalAnalyzer_N9020A sa = new SignalAnalyzer_N9020A();
+            sa.Open("");
+        }
         #endregion
+
+        private void GMVehicleAntennaTesting_Load(object sender, EventArgs e)
+        {
+            for (int index = 0; index < channelList.Length; index++)
+            {
+                comboBoxChannel.Items.Add(channelList[index].channelNo);
+            }
+        }
+
+        private void comboBoxChannel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = 0;
+            for (index = 0; index < channelList.Length; index++)
+            {
+                if (Convert.ToInt32(comboBoxChannel.Text) == channelList[index].channelNo)
+                {
+                    break;
+                }
+            }
+            string freq = Convert.ToString(channelList[index].centerFreq);
+            string bandwidth = Convert.ToString(channelList[index].bandwidth);
+            textBoxFreqBand.Text = freq;
+            comboBoxBandWidth.Text = bandwidth;
+        }
 
         /******************************************************************************************/
 
