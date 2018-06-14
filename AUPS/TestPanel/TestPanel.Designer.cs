@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestPanel));
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Open COM port");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Coomunicate with DMM");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Configure network");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Initialization", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode9,
-            treeNode10});
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Measure VDD");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Measure Vref");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Voltage measurement", new System.Windows.Forms.TreeNode[] {
-            treeNode12,
-            treeNode13});
+            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Open COM port");
+            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("Coomunicate with DMM");
+            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("Configure network");
+            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("Initialization", new System.Windows.Forms.TreeNode[] {
+            treeNode36,
+            treeNode37,
+            treeNode38});
+            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("Measure VDD");
+            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("Measure Vref");
+            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("Voltage measurement", new System.Windows.Forms.TreeNode[] {
+            treeNode40,
+            treeNode41});
             this.cellToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripBtnOpenSequence = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnSettings = new System.Windows.Forms.ToolStripButton();
@@ -52,7 +52,6 @@
             this.cellStatusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelBasic = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelItemInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelElapsedTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlTestStation = new System.Windows.Forms.TabControl();
             this.tabPageHome = new System.Windows.Forms.TabPage();
             this.listViewTestItems = new System.Windows.Forms.ListView();
@@ -97,6 +96,7 @@
             this.labelStepDescription = new System.Windows.Forms.Label();
             this.labelStepName = new System.Windows.Forms.Label();
             this.labelStepNo = new System.Windows.Forms.Label();
+            this.labelElapsedTime = new System.Windows.Forms.Label();
             this.cellToolStrip.SuspendLayout();
             this.cellStatusStrip.SuspendLayout();
             this.tabControlTestStation.SuspendLayout();
@@ -196,12 +196,11 @@
             this.cellStatusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cellStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelBasic,
-            this.toolStripStatusLabelItemInfo,
-            this.toolStripStatusLabelElapsedTime});
-            this.cellStatusStrip.Location = new System.Drawing.Point(0, 1028);
+            this.toolStripStatusLabelItemInfo});
+            this.cellStatusStrip.Location = new System.Drawing.Point(0, 1032);
             this.cellStatusStrip.Name = "cellStatusStrip";
             this.cellStatusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 15, 0);
-            this.cellStatusStrip.Size = new System.Drawing.Size(1374, 34);
+            this.cellStatusStrip.Size = new System.Drawing.Size(1374, 30);
             this.cellStatusStrip.TabIndex = 1;
             this.cellStatusStrip.Text = "statusStrip1";
             // 
@@ -224,19 +223,6 @@
             this.toolStripStatusLabelItemInfo.Text = "Item Info";
             this.toolStripStatusLabelItemInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // toolStripStatusLabelElapsedTime
-            // 
-            this.toolStripStatusLabelElapsedTime.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.toolStripStatusLabelElapsedTime.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
-            this.toolStripStatusLabelElapsedTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripStatusLabelElapsedTime.Name = "toolStripStatusLabelElapsedTime";
-            this.toolStripStatusLabelElapsedTime.Size = new System.Drawing.Size(452, 29);
-            this.toolStripStatusLabelElapsedTime.Spring = true;
-            this.toolStripStatusLabelElapsedTime.Text = "Elapsed time : ";
-            this.toolStripStatusLabelElapsedTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // tabControlTestStation
             // 
             this.tabControlTestStation.Controls.Add(this.tabPageHome);
@@ -246,11 +232,12 @@
             this.tabControlTestStation.Location = new System.Drawing.Point(0, 33);
             this.tabControlTestStation.Name = "tabControlTestStation";
             this.tabControlTestStation.SelectedIndex = 0;
-            this.tabControlTestStation.Size = new System.Drawing.Size(1374, 995);
+            this.tabControlTestStation.Size = new System.Drawing.Size(1374, 999);
             this.tabControlTestStation.TabIndex = 2;
             // 
             // tabPageHome
             // 
+            this.tabPageHome.Controls.Add(this.labelElapsedTime);
             this.tabPageHome.Controls.Add(this.listViewTestItems);
             this.tabPageHome.Controls.Add(this.groupBoxStartEnd);
             this.tabPageHome.Controls.Add(this.progressBarTestProgress);
@@ -259,8 +246,8 @@
             this.tabPageHome.Controls.Add(this.labelCellNumber);
             this.tabPageHome.Location = new System.Drawing.Point(4, 29);
             this.tabPageHome.Name = "tabPageHome";
-            this.tabPageHome.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPageHome.Size = new System.Drawing.Size(1366, 962);
+            this.tabPageHome.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageHome.Size = new System.Drawing.Size(1366, 966);
             this.tabPageHome.TabIndex = 0;
             this.tabPageHome.Text = "Home";
             this.tabPageHome.UseVisualStyleBackColor = true;
@@ -280,7 +267,7 @@
             this.listViewTestItems.Location = new System.Drawing.Point(10, 337);
             this.listViewTestItems.MultiSelect = false;
             this.listViewTestItems.Name = "listViewTestItems";
-            this.listViewTestItems.Size = new System.Drawing.Size(1346, 445);
+            this.listViewTestItems.Size = new System.Drawing.Size(1346, 449);
             this.listViewTestItems.TabIndex = 6;
             this.listViewTestItems.UseCompatibleStateImageBehavior = false;
             this.listViewTestItems.View = System.Windows.Forms.View.Details;
@@ -308,7 +295,7 @@
             this.groupBoxStartEnd.Controls.Add(this.btnStart);
             this.groupBoxStartEnd.Controls.Add(this.textBoxSerialNum);
             this.groupBoxStartEnd.Controls.Add(this.labelSerialNum);
-            this.groupBoxStartEnd.Location = new System.Drawing.Point(10, 790);
+            this.groupBoxStartEnd.Location = new System.Drawing.Point(10, 794);
             this.groupBoxStartEnd.Name = "groupBoxStartEnd";
             this.groupBoxStartEnd.Size = new System.Drawing.Size(1352, 125);
             this.groupBoxStartEnd.TabIndex = 5;
@@ -320,7 +307,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEnd.AutoSize = true;
             this.btnEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnEnd.Location = new System.Drawing.Point(1146, 38);
+            this.btnEnd.Location = new System.Drawing.Point(1135, 27);
             this.btnEnd.Name = "btnEnd";
             this.btnEnd.Size = new System.Drawing.Size(198, 86);
             this.btnEnd.TabIndex = 2;
@@ -334,7 +321,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.AutoSize = true;
             this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnStart.Location = new System.Drawing.Point(924, 38);
+            this.btnStart.Location = new System.Drawing.Point(924, 26);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(198, 86);
             this.btnStart.TabIndex = 1;
@@ -368,9 +355,9 @@
             // 
             this.progressBarTestProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBarTestProgress.Location = new System.Drawing.Point(6, 923);
+            this.progressBarTestProgress.Location = new System.Drawing.Point(6, 927);
             this.progressBarTestProgress.Name = "progressBarTestProgress";
-            this.progressBarTestProgress.Size = new System.Drawing.Size(1348, 29);
+            this.progressBarTestProgress.Size = new System.Drawing.Size(1065, 29);
             this.progressBarTestProgress.TabIndex = 100;
             // 
             // labelIndicator
@@ -415,8 +402,8 @@
             this.tabPageLog.Controls.Add(this.textBoxTestLog);
             this.tabPageLog.Location = new System.Drawing.Point(4, 29);
             this.tabPageLog.Name = "tabPageLog";
-            this.tabPageLog.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPageLog.Size = new System.Drawing.Size(1366, 950);
+            this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLog.Size = new System.Drawing.Size(1366, 962);
             this.tabPageLog.TabIndex = 1;
             this.tabPageLog.Text = "Log";
             this.tabPageLog.UseVisualStyleBackColor = true;
@@ -429,7 +416,7 @@
             this.textBoxTestLog.Multiline = true;
             this.textBoxTestLog.Name = "textBoxTestLog";
             this.textBoxTestLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxTestLog.Size = new System.Drawing.Size(1360, 944);
+            this.textBoxTestLog.Size = new System.Drawing.Size(1360, 956);
             this.textBoxTestLog.TabIndex = 0;
             this.textBoxTestLog.Text = "This text box will display the complete test log.\r\n\r\nIt can display many lines of" +
     " string.";
@@ -440,7 +427,7 @@
             this.tabPageViewSequence.Location = new System.Drawing.Point(4, 29);
             this.tabPageViewSequence.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPageViewSequence.Name = "tabPageViewSequence";
-            this.tabPageViewSequence.Size = new System.Drawing.Size(1366, 950);
+            this.tabPageViewSequence.Size = new System.Drawing.Size(1366, 962);
             this.tabPageViewSequence.TabIndex = 2;
             this.tabPageViewSequence.Text = "View sequence";
             this.tabPageViewSequence.UseVisualStyleBackColor = true;
@@ -460,8 +447,8 @@
             // splitContainerSequenceView.Panel2
             // 
             this.splitContainerSequenceView.Panel2.Controls.Add(this.tabControlTestResultView);
-            this.splitContainerSequenceView.Size = new System.Drawing.Size(1366, 950);
-            this.splitContainerSequenceView.SplitterDistance = 312;
+            this.splitContainerSequenceView.Size = new System.Drawing.Size(1366, 962);
+            this.splitContainerSequenceView.SplitterDistance = 311;
             this.splitContainerSequenceView.SplitterWidth = 6;
             this.splitContainerSequenceView.TabIndex = 0;
             // 
@@ -471,24 +458,24 @@
             this.treeViewSequenceItemList.Location = new System.Drawing.Point(0, 34);
             this.treeViewSequenceItemList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeViewSequenceItemList.Name = "treeViewSequenceItemList";
-            treeNode8.Name = "Block1_Item1";
-            treeNode8.Text = "Open COM port";
-            treeNode9.Name = "Blcok1_Item2";
-            treeNode9.Text = "Coomunicate with DMM";
-            treeNode10.Name = "Block1_Item3";
-            treeNode10.Text = "Configure network";
-            treeNode11.Name = "Block1";
-            treeNode11.Text = "Initialization";
-            treeNode12.Name = "Block2_Item1";
-            treeNode12.Text = "Measure VDD";
-            treeNode13.Name = "Block2_Item2";
-            treeNode13.Text = "Measure Vref";
-            treeNode14.Name = "Block2";
-            treeNode14.Text = "Voltage measurement";
+            treeNode36.Name = "Block1_Item1";
+            treeNode36.Text = "Open COM port";
+            treeNode37.Name = "Blcok1_Item2";
+            treeNode37.Text = "Coomunicate with DMM";
+            treeNode38.Name = "Block1_Item3";
+            treeNode38.Text = "Configure network";
+            treeNode39.Name = "Block1";
+            treeNode39.Text = "Initialization";
+            treeNode40.Name = "Block2_Item1";
+            treeNode40.Text = "Measure VDD";
+            treeNode41.Name = "Block2_Item2";
+            treeNode41.Text = "Measure Vref";
+            treeNode42.Name = "Block2";
+            treeNode42.Text = "Voltage measurement";
             this.treeViewSequenceItemList.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode11,
-            treeNode14});
-            this.treeViewSequenceItemList.Size = new System.Drawing.Size(312, 916);
+            treeNode39,
+            treeNode42});
+            this.treeViewSequenceItemList.Size = new System.Drawing.Size(311, 928);
             this.treeViewSequenceItemList.TabIndex = 1;
             this.treeViewSequenceItemList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSequenceItemList_AfterSelect);
             // 
@@ -500,7 +487,7 @@
             this.labelTestSequenceItemList.Location = new System.Drawing.Point(0, 0);
             this.labelTestSequenceItemList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTestSequenceItemList.Name = "labelTestSequenceItemList";
-            this.labelTestSequenceItemList.Size = new System.Drawing.Size(312, 34);
+            this.labelTestSequenceItemList.Size = new System.Drawing.Size(311, 34);
             this.labelTestSequenceItemList.TabIndex = 2;
             this.labelTestSequenceItemList.Text = "Test Sequence Item List";
             this.labelTestSequenceItemList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -513,7 +500,7 @@
             this.tabControlTestResultView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControlTestResultView.Name = "tabControlTestResultView";
             this.tabControlTestResultView.SelectedIndex = 0;
-            this.tabControlTestResultView.Size = new System.Drawing.Size(1048, 950);
+            this.tabControlTestResultView.Size = new System.Drawing.Size(1049, 962);
             this.tabControlTestResultView.TabIndex = 1;
             // 
             // tabPageTestResult
@@ -526,7 +513,7 @@
             this.tabPageTestResult.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPageTestResult.Name = "tabPageTestResult";
             this.tabPageTestResult.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPageTestResult.Size = new System.Drawing.Size(1040, 917);
+            this.tabPageTestResult.Size = new System.Drawing.Size(1041, 929);
             this.tabPageTestResult.TabIndex = 0;
             this.tabPageTestResult.Text = "Test Result";
             this.tabPageTestResult.UseVisualStyleBackColor = true;
@@ -540,7 +527,7 @@
             this.groupBoxTestConclusion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxTestConclusion.Name = "groupBoxTestConclusion";
             this.groupBoxTestConclusion.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxTestConclusion.Size = new System.Drawing.Size(1018, 160);
+            this.groupBoxTestConclusion.Size = new System.Drawing.Size(1019, 160);
             this.groupBoxTestConclusion.TabIndex = 4;
             this.groupBoxTestConclusion.TabStop = false;
             this.groupBoxTestConclusion.Text = "Test conclusion";
@@ -553,7 +540,7 @@
             this.dataGridViewTestConclusion.Location = new System.Drawing.Point(9, 29);
             this.dataGridViewTestConclusion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridViewTestConclusion.Name = "dataGridViewTestConclusion";
-            this.dataGridViewTestConclusion.Size = new System.Drawing.Size(1000, 122);
+            this.dataGridViewTestConclusion.Size = new System.Drawing.Size(1001, 122);
             this.dataGridViewTestConclusion.TabIndex = 5;
             // 
             // groupBoxResult
@@ -565,7 +552,7 @@
             this.groupBoxResult.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxResult.Name = "groupBoxResult";
             this.groupBoxResult.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxResult.Size = new System.Drawing.Size(1018, 211);
+            this.groupBoxResult.Size = new System.Drawing.Size(1019, 211);
             this.groupBoxResult.TabIndex = 3;
             this.groupBoxResult.TabStop = false;
             this.groupBoxResult.Text = "Real time test result";
@@ -578,7 +565,7 @@
             this.dataGridViewTestResult.Location = new System.Drawing.Point(10, 29);
             this.dataGridViewTestResult.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridViewTestResult.Name = "dataGridViewTestResult";
-            this.dataGridViewTestResult.Size = new System.Drawing.Size(998, 172);
+            this.dataGridViewTestResult.Size = new System.Drawing.Size(999, 172);
             this.dataGridViewTestResult.TabIndex = 5;
             // 
             // groupBoxTestFunctionParams
@@ -598,7 +585,7 @@
             this.groupBoxTestFunctionParams.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxTestFunctionParams.Name = "groupBoxTestFunctionParams";
             this.groupBoxTestFunctionParams.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxTestFunctionParams.Size = new System.Drawing.Size(1018, 208);
+            this.groupBoxTestFunctionParams.Size = new System.Drawing.Size(1019, 208);
             this.groupBoxTestFunctionParams.TabIndex = 2;
             this.groupBoxTestFunctionParams.TabStop = false;
             // 
@@ -610,7 +597,7 @@
             this.textBoxTestFunctionName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxTestFunctionName.Name = "textBoxTestFunctionName";
             this.textBoxTestFunctionName.ReadOnly = true;
-            this.textBoxTestFunctionName.Size = new System.Drawing.Size(833, 26);
+            this.textBoxTestFunctionName.Size = new System.Drawing.Size(834, 26);
             this.textBoxTestFunctionName.TabIndex = 9;
             this.textBoxTestFunctionName.Text = "ProjTestItem.OpenComPort";
             // 
@@ -623,7 +610,7 @@
             this.textBoxParameter6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxParameter6.Name = "textBoxParameter6";
             this.textBoxParameter6.ReadOnly = true;
-            this.textBoxParameter6.Size = new System.Drawing.Size(264, 26);
+            this.textBoxParameter6.Size = new System.Drawing.Size(265, 26);
             this.textBoxParameter6.TabIndex = 8;
             // 
             // textBoxParameter5
@@ -656,7 +643,7 @@
             this.textBoxParameter3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxParameter3.Name = "textBoxParameter3";
             this.textBoxParameter3.ReadOnly = true;
-            this.textBoxParameter3.Size = new System.Drawing.Size(264, 26);
+            this.textBoxParameter3.Size = new System.Drawing.Size(265, 26);
             this.textBoxParameter3.TabIndex = 5;
             this.textBoxParameter3.Text = "LEN:8";
             // 
@@ -716,7 +703,7 @@
             this.groupBoxBasicTestStepInfo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxBasicTestStepInfo.Name = "groupBoxBasicTestStepInfo";
             this.groupBoxBasicTestStepInfo.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxBasicTestStepInfo.Size = new System.Drawing.Size(856, 186);
+            this.groupBoxBasicTestStepInfo.Size = new System.Drawing.Size(857, 186);
             this.groupBoxBasicTestStepInfo.TabIndex = 1;
             this.groupBoxBasicTestStepInfo.TabStop = false;
             // 
@@ -729,7 +716,7 @@
             this.textBoxStepDescription.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxStepDescription.Name = "textBoxStepDescription";
             this.textBoxStepDescription.ReadOnly = true;
-            this.textBoxStepDescription.Size = new System.Drawing.Size(672, 26);
+            this.textBoxStepDescription.Size = new System.Drawing.Size(673, 26);
             this.textBoxStepDescription.TabIndex = 5;
             this.textBoxStepDescription.Text = "Open the COM port to intialize the network analyzer";
             // 
@@ -742,7 +729,7 @@
             this.textBoxStepName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxStepName.Name = "textBoxStepName";
             this.textBoxStepName.ReadOnly = true;
-            this.textBoxStepName.Size = new System.Drawing.Size(672, 26);
+            this.textBoxStepName.Size = new System.Drawing.Size(673, 26);
             this.textBoxStepName.TabIndex = 4;
             this.textBoxStepName.Text = "Open COM port";
             // 
@@ -755,7 +742,7 @@
             this.textBoxStepNo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxStepNo.Name = "textBoxStepNo";
             this.textBoxStepNo.ReadOnly = true;
-            this.textBoxStepNo.Size = new System.Drawing.Size(672, 26);
+            this.textBoxStepNo.Size = new System.Drawing.Size(673, 26);
             this.textBoxStepNo.TabIndex = 3;
             this.textBoxStepNo.Text = "1.1";
             // 
@@ -789,11 +776,22 @@
             this.labelStepNo.TabIndex = 0;
             this.labelStepNo.Text = "Step No. : ";
             // 
+            // labelElapsedTime
+            // 
+            this.labelElapsedTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelElapsedTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelElapsedTime.Location = new System.Drawing.Point(1078, 926);
+            this.labelElapsedTime.Name = "labelElapsedTime";
+            this.labelElapsedTime.Size = new System.Drawing.Size(282, 30);
+            this.labelElapsedTime.TabIndex = 101;
+            this.labelElapsedTime.Text = "Elapsed time : ";
+            // 
             // TestPanel
             // 
             this.AcceptButton = this.btnStart;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1374, 1062);
             this.Controls.Add(this.tabControlTestStation);
             this.Controls.Add(this.cellStatusStrip);
@@ -839,7 +837,6 @@
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxManualAuto;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelBasic;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelItemInfo;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelElapsedTime;
         private System.Windows.Forms.TabControl tabControlTestStation;
         private System.Windows.Forms.TabPage tabPageHome;
         private System.Windows.Forms.TabPage tabPageLog;
@@ -888,5 +885,6 @@
         private System.Windows.Forms.DataGridView dataGridViewTestResult;
         private System.Windows.Forms.DataGridView dataGridViewTestConclusion;
         private System.Windows.Forms.ToolStripButton toolStripBtnRefresh;
+        private System.Windows.Forms.Label labelElapsedTime;
     }
 }
