@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Amphenol.Instruments.Keysight;
 
 using Utilities;
 
@@ -173,6 +174,11 @@ namespace AUPS.Tools
         #endregion
 
         #region Antenna physical layer test items
+        private void MeasureRSSI()
+        {
+            SignalAnalyzer_N9020A sa = new SignalAnalyzer_N9020A();
+            sa.Open("");
+        }
         #endregion
 
         private void GMVehicleAntennaTesting_Load(object sender, EventArgs e)
