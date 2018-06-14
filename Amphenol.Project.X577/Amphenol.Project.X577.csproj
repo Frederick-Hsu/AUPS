@@ -43,6 +43,7 @@
     <Compile Include="TestItems.cs" />
     <Compile Include="TestItems_InstrumentsAccessing.cs" />
     <Compile Include="TestItems_Measurement.cs" />
+    <Compile Include="TestItems_PowerSupplyOutput.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Amphenol.Instruments\Amphenol.Instruments.csproj">
