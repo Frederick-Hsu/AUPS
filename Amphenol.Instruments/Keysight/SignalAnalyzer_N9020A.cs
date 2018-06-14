@@ -37,5 +37,88 @@ namespace Amphenol.Instruments.Keysight
             resourceMrg = 0;
             return viError;
         }
+
+        /* *IDN? */
+        public int GetInstrumentIdentifier(out string idn)
+        {
+            int error;
+            int count;
+            string command = "*IDN?", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (error != visa32.VI_SUCCESS)
+            {
+                idn = "";
+                return error;
+            }
+            error = visa32.viRead(session, out response, 256);
+            if (error != visa32.VI_SUCCESS)
+            {
+                idn = "";
+                return error;
+            }
+            idn = response;
+            return error;
+        }
+
+        /* :DISP:WIND:FORM:ZOOM */
+        public int SetWindowZoom()
+        {
+            int error;
+            string command = ":DISPlay:WINDow:FORMat:ZOOM", response;
+            int count;
+
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (error != visa32.VI_SUCCESS)
+                return error;
+            command = "SYSTem:ERRor?";
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, out response, 128);
+            if (error != visa32.VI_SUCCESS)
+                return error;
+
+            string[] array = response.Split(',');
+            return Convert.ToInt32(array[0]);
+        }
+
+        /* :DISP:WIND:FORM:TILE */
+        public int SetWindowTiled()
+        {
+            int error, count;
+            string command = ":DISPlay:WINDow:FORMat:TILE", response;
+
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            command = "SYSTem:ERRor?";
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, out response, 128);
+            string[] array = response.Split(',');
+            return Convert.ToInt32(array[0]);
+        }
+
+        /* :DISP:WIND:SEL 2 */
+        public int SelectActiveWindowAt(int windowNo)
+        {
+            int error, count;
+            string command = ":DISPlay:WINDow:SELect " + windowNo, response;
+
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            command = "SYSTem:ERRor?";
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, out response, 128);
+            string[] array = response.Split(',');
+            return Convert.ToInt32(array[0]);
+        }
+
+        /* SYSTem:ERRor? */
+        public int QuerySystemError(out string errorMesg)
+        {
+            int error, count;
+            string command = "SYSTem:ERRor?", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, out response, 256);
+
+            string[] array = response.Split(',');
+            errorMesg = array[1];
+            return Convert.ToInt32(array[0]);
+        }
     }
 }
