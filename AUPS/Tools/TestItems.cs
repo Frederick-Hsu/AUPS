@@ -174,10 +174,17 @@ namespace AUPS.Tools
         #endregion
 
         #region Antenna physical layer test items
-        private void MeasureRSSI()
+        private void MeasureRSSI(string signalAnalyzerVisaAddress)
         {
+            string identifier = "";
             SignalAnalyzer_N9020A sa = new SignalAnalyzer_N9020A();
-            sa.Open("");
+            sa.Open(signalAnalyzerVisaAddress);
+            sa.GetInstrumentIdentifier(out identifier);
+
+            sa.SelectActiveWindowAt(1);
+            sa.TurnOnOffFullDisplay(SignalAnalyzer_N9020A.State.ON);
+            sa.AlignEntireSystem();
+            sa.Close();
         }
         #endregion
 
