@@ -48,7 +48,8 @@ namespace Amphenol.Instruments.Keysight
         {
             int viError;
             int count = 0;
-            string command = "*IDN?", response;
+            string command = "*IDN?";
+            byte[] response = new byte[256];
 
             viError = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             if (viError != visa32.VI_SUCCESS)
@@ -56,14 +57,14 @@ namespace Amphenol.Instruments.Keysight
                 idn = string.Empty;
                 return viError;
             }
-            viError = visa32.viRead(analyzerSession, out response, 256);
+            viError = visa32.viRead(analyzerSession, response, 256, out count);
             if (viError != visa32.VI_SUCCESS)
             {
                 idn = string.Empty;
                 return viError;
             }
 
-            idn = response;
+            idn = Encoding.ASCII.GetString(response, 0, count);
             return viError;
         }
 
@@ -71,7 +72,8 @@ namespace Amphenol.Instruments.Keysight
         public int Preset()
         {
             int errorno;
-            string command = ":SYSTem:PRESet", response;
+            string command = ":SYSTem:PRESet";
+            byte[] response = new byte[128];
             int count = 0;
 
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
@@ -82,14 +84,14 @@ namespace Amphenol.Instruments.Keysight
 
             command = "SYSTem:ERRor?";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 128);
+            errorno = visa32.viRead(analyzerSession, response, 128, out count);
             if (errorno != visa32.VI_SUCCESS)
             {
                 return errorno;
             }
 
             string[] array = new string[2];
-            array = response.Split(',');
+            array = Encoding.ASCII.GetString(response, 0, count).Split(',');
             errorno = Convert.ToInt32(array[0]);
             return errorno;
         }
@@ -108,16 +110,16 @@ namespace Amphenol.Instruments.Keysight
             }
 
             command = "SYSTem:ERRor?";
-            string response;
+            byte[] response = new byte[128];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 128);
+            errorno = visa32.viRead(analyzerSession, response, 128, out count);
             if (errorno != visa32.VI_SUCCESS)
             {
                 return errorno;
             }
 
             string[] array = new string[2];
-            array = response.Split(',');
+            array = Encoding.ASCII.GetString(response, 0, count).Split(',');
             errorno = Convert.ToInt32(array[0]);
             return errorno;
         }
@@ -157,16 +159,17 @@ namespace Amphenol.Instruments.Keysight
         public int QueryTraceNumberInChannel(uint channelNum, out uint traceNum)
         {
             int errorno, count;
-            string command = ":CALCulate" + channelNum + ":PARameter:COUNt?", response;
+            string command = ":CALCulate" + channelNum + ":PARameter:COUNt?";
+            byte[] response = new byte[256];
 
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
             if (errorno != visa32.VI_SUCCESS)
             {
                 traceNum = 0;
                 return errorno;
             }
-            traceNum = Convert.ToUInt32(response);
+            traceNum = Convert.ToUInt32(Encoding.ASCII.GetString(response, 0, count));
             return errorno;
         }
 
@@ -174,10 +177,11 @@ namespace Amphenol.Instruments.Keysight
         public int QueryErrorStatus(out string errorMesg)
         {
             int errorno, count;
-            string command = "SYSTem:ERRor?", response;
+            string command = "SYSTem:ERRor?";
+            byte[] response = new byte[256];
 
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
             if (errorno != visa32.VI_SUCCESS)
             {
                 errorMesg = "VISA library error : " + errorno;
@@ -185,7 +189,7 @@ namespace Amphenol.Instruments.Keysight
             }
 
             string[] messages = new string[2];
-            messages = response.Split(',');
+            messages = Encoding.ASCII.GetString(response, 0, count).Split(',');
             errorno = Convert.ToInt32(messages[0]);
             errorMesg = messages[1];
             return errorno;
@@ -281,11 +285,11 @@ namespace Amphenol.Instruments.Keysight
         {
             int errorno, count;
             string command = ":CALCulate" + channelNum + ":PARameter" + traceNum + ":DEFine?";
-            string response;
+            byte[] response = new byte[256];
 
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            measurementParameter = response;
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            measurementParameter = Encoding.ASCII.GetString(response, 0 , count);
             return errorno;
         }
 
@@ -319,9 +323,9 @@ namespace Amphenol.Instruments.Keysight
             command = ":CALCulate" + channelNum + ":FORMat?";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
-            string response;
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            dataFormat = response;
+            byte[] response = new byte[256];
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            dataFormat = Encoding.ASCII.GetString(response, 0, count);
             return errorno;
         }
 
@@ -344,10 +348,11 @@ namespace Amphenol.Instruments.Keysight
         public int QuerySweepTypeForChannel(int channelNum, out string sweepType)
         {
             int errorno, count;
-            string command = ":SENSe" + channelNum + ":SWEep:TYPE?", response;
+            string command = ":SENSe" + channelNum + ":SWEep:TYPE?";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            sweepType = response;
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            sweepType = Encoding.ASCII.GetString(response, 0, count);
             return errorno;
         }
 
@@ -483,10 +488,11 @@ namespace Amphenol.Instruments.Keysight
         public int QueryPowerLevelForChannel(int channelNum, out double powerLevel)
         {
             int errorno, count;
-            string command = ":SOURce" + channelNum + ":POWer:LEVel?", response;
+            string command = ":SOURce" + channelNum + ":POWer:LEVel?";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            powerLevel = Convert.ToDouble(response);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            powerLevel = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count));
             return errorno;
         }
 
@@ -585,8 +591,10 @@ namespace Amphenol.Instruments.Keysight
         public int QueryCommand(string command, out string response)
         {
             int errorno, count;
+            byte[] result = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
+            errorno = visa32.viRead(analyzerSession, result, 256, out count);
+            response = Encoding.ASCII.GetString(result, 0, count);
             return errorno;
         }
 
@@ -747,10 +755,11 @@ namespace Amphenol.Instruments.Keysight
         public int QueryOperationRegisterStatus(out ushort registerValue)
         {
             int errorno, count;
-            string command = ":STATus:OPERation:ENABle?", response;
+            string command = ":STATus:OPERation:ENABle?";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            registerValue = Convert.ToUInt16(response);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            registerValue = Convert.ToUInt16(Encoding.ASCII.GetString(response, 0, count));
             return errorno;
         }
 
@@ -767,10 +776,11 @@ namespace Amphenol.Instruments.Keysight
         public int QueryPositiveTransitionFilterOperationStatus(out ushort operationStatusValue)
         {
             int errorno, count;
-            string command = ":STATus:OPERation:PTRansition?", response;
+            string command = ":STATus:OPERation:PTRansition?";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            operationStatusValue = Convert.ToUInt16(response);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            operationStatusValue = Convert.ToUInt16(Encoding.ASCII.GetString(response, 0, count));
             return errorno;
         }
 
@@ -787,10 +797,11 @@ namespace Amphenol.Instruments.Keysight
         public int QueryNegativeTransitionFilterOperationStatus(out ushort operationStatusValue)
         {
             int errorno, count;
-            string command = ":STATus:OPERation:NTRansition?", response;
+            string command = ":STATus:OPERation:NTRansition?";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            operationStatusValue = Convert.ToUInt16(response);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            operationStatusValue = Convert.ToUInt16(Encoding.ASCII.GetString(response, 0, count));
             return errorno;
         }
 
@@ -808,10 +819,11 @@ namespace Amphenol.Instruments.Keysight
         public int QueryEventsCompletionStatus(out int status)
         {
             int errorno, count;
-            string command = "*OPC?", response;
+            string command = "*OPC?";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            status = Convert.ToInt32(response);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            status = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count));
             return errorno;
         }
 
@@ -867,17 +879,18 @@ namespace Amphenol.Instruments.Keysight
         public int QueryGeneralMarkerDisplayStateForActiveTrace(int channelNum, int traceNum, int markerNo, out string on_off)
         {
             int errorno, count;
-            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
             command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":STATe?";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            if (1 == Convert.ToInt32(response))
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            if (1 == Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count)))
             {
                 on_off = "ON";
             }
-            else if (0 == Convert.ToInt32(response))
+            else if (0 == Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count)))
             {
                 on_off = "OFF";
             }
@@ -904,17 +917,18 @@ namespace Amphenol.Instruments.Keysight
         public int QueryReferenceMarkerDisplayStateForActiveTrace(int channelNum, int traceNum, out string on_off)
         {
             int errorno, count;
-            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
             command = ":CALCulate" + channelNum + ":SELected:MARKer:REFerence:STATe?";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            if (1 == Convert.ToInt32(response))
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            if (1 == Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count)))
             {
                 on_off = "ON";
             }
-            else if (0 == Convert.ToInt32(response))
+            else if (0 == Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count)))
             {
                 on_off = "OFF";
             }
@@ -941,13 +955,14 @@ namespace Amphenol.Instruments.Keysight
         public int RetrieveFrequencyValueAtGeneralMarker(int channelNum, int traceNum, int markerNo, out double frequencyValue /* unit : Hz */)
         {
             int errorno, count;
-            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
             command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":X?";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-            frequencyValue = Convert.ToDouble(response);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            frequencyValue = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count));
             return errorno;
         }
 
@@ -955,15 +970,16 @@ namespace Amphenol.Instruments.Keysight
         public int RetrieveMeasurementResultAtGeneralMarker(int channelNum, int traceNum, int markerNo, out double attenuationAmplitude /* unit : dB */)
         {
             int errorno, count;
-            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL", response;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
             command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":Y?";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
 
             string[] resultArray = new string[2];
-            resultArray = response.Split(',');
+            resultArray = Encoding.ASCII.GetString(response, 0, count).Split(',');
             attenuationAmplitude = Convert.ToDouble(resultArray[0]);
             return errorno;
         }
@@ -1075,19 +1091,19 @@ namespace Amphenol.Instruments.Keysight
         public int RetrieveSearchResults(int channelNum, out int pointNum, out double[] results)
         {
             int errorno, count;
-            string command = ":CALCulate" + channelNum + ":FUNCtion:POINts?", response;
+            string command = ":CALCulate" + channelNum + ":FUNCtion:POINts?";
+            byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
-
-            pointNum = Convert.ToInt32(response);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            pointNum = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count));
 
             command = ":CALCulate" + channelNum + ":FUNCtion:DATA?";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, out response, 256);
+            errorno = visa32.viRead(analyzerSession, response, 256, out count);
 
             results = new double[pointNum + 1];
             string[] array = new string[pointNum + 1];
-            array = response.Split(',');
+            array = Encoding.ASCII.GetString(response, 0, count).Split(',');
 
             for (int index = 0; index < (pointNum+1); index++)
             {
