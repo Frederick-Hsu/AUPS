@@ -54,7 +54,8 @@ namespace Amphenol.Instruments.Keysight
         {
             int count = 0;
             int error = 0;
-            string command = "*IDN?\n", response;
+            string command = "*IDN?\n";
+            byte[] response = new byte[256];
 
                 error = visa32.viWrite(powerSupplySession, Encoding.ASCII.GetBytes(command), command.Length, out count);
                 if (error != visa32.VI_SUCCESS)
@@ -62,13 +63,13 @@ namespace Amphenol.Instruments.Keysight
                     idn = string.Empty;
                     return error;
                 }
-                error = visa32.viRead(powerSupplySession, out response, 256);
+                error = visa32.viRead(powerSupplySession, response, 256, out count);
                 if (error != visa32.VI_SUCCESS)
                 {
                     idn = string.Empty;
                     return error;
                 }
-                idn = response;
+                idn = Encoding.ASCII.GetString(response, 0, count);
 
             return error;
         }
