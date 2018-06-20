@@ -50,7 +50,7 @@ namespace Amphenol.Instruments.Keysight
             int viError;
             int actualCount;
             string command = "*IDN?";
-            string response;
+            byte[] response = new byte[256];
 
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
             if (viError != visa32.VI_SUCCESS)
@@ -59,14 +59,14 @@ namespace Amphenol.Instruments.Keysight
                 return viError;
             }
 
-            viError = visa32.viRead(dmmSession, out response, 256);
+            viError = visa32.viRead(dmmSession, response, 256, out actualCount);
             if (viError != visa32.VI_SUCCESS)
             {
                 idn = string.Empty;
                 return viError;
             }
 
-            idn = response;
+            idn = Encoding.ASCII.GetString(response, 0, actualCount);
             return viError;
         }
 
@@ -74,7 +74,7 @@ namespace Amphenol.Instruments.Keysight
         {
             int viError;
             int actualCount;
-            string response;
+            byte[] response = new byte[256];
 
             string command = "CONFigure:RESistance";
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
@@ -86,14 +86,14 @@ namespace Amphenol.Instruments.Keysight
 
             command = "READ?";
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
-            viError = visa32.viRead(dmmSession, out response, 256);
+            viError = visa32.viRead(dmmSession, response, 256, out actualCount);
             if (viError != visa32.VI_SUCCESS)
             {
                 resistance = 0.00F;
                 return viError;
             }
 
-            resistance = Convert.ToSingle(response);
+            resistance = Convert.ToSingle(Encoding.ASCII.GetString(response, 0, actualCount));
             return viError;
         }
 
@@ -101,7 +101,7 @@ namespace Amphenol.Instruments.Keysight
         {
             int viError;
             int actualCount;
-            string response;
+            byte[] response = new byte[512];
             string[] valueArray = new string[3];
             float[] resistanceArray = new float[3];
 
@@ -117,14 +117,14 @@ namespace Amphenol.Instruments.Keysight
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
             command = "READ?";
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
-            viError = visa32.viRead(dmmSession, out response, 512);
+            viError = visa32.viRead(dmmSession, response, 512, out actualCount);
             if (viError != visa32.VI_SUCCESS)
             {
                 resistance = 0.00F;
                 return viError;
             }
 
-            valueArray = response.Split(',');
+            valueArray = Encoding.ASCII.GetString(response, 0, actualCount).Split(',');
             for (int index = 0; index < 3; index++)
             {
                 resistanceArray[index] = Convert.ToSingle(valueArray[index]);

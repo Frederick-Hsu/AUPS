@@ -46,11 +46,12 @@ namespace Amphenol.Instruments.Keysight
         public int GetInstrumentIdentifier(out string idn)
         {
             int error, count;
-            string command = "*IDN?\n", response;
+            string command = "*IDN?\n";
+            byte[] response = new byte[256];
 
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            error = visa32.viRead(session, out response, 256);
-            idn = response;
+            error = visa32.viRead(session, response, 256, out count);
+            idn = Encoding.ASCII.GetString(response, 0, count);
             return error;
         }
     }

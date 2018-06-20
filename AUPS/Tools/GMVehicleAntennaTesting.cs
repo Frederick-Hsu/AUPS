@@ -264,6 +264,16 @@ namespace AUPS.Tools
                 MessageBox.Show("iPerf3.exe path has not yet been browsed.", "Warning");
                 return false;
             }
+            if (textBoxSaVisaAddress.Text == string.Empty)
+            {
+                MessageBox.Show("The VISA address of signal analyzer has not yet been set.", "Warning");
+                return false;
+            }
+            if (textBoxSgVisaAddress.Text == string.Empty)
+            {
+                MessageBox.Show("The VISA address of signal generator has not yet been set.", "Warning");
+                return false;
+            }
             return true;
         }
 
@@ -362,6 +372,7 @@ namespace AUPS.Tools
                    udpDownlinkThroughput = "", udpDownlinkLatency = "", udpDownlinkPacketLoss = "";
 
             progressBarTesting.Value = 1;
+            MeasureRSSI(textBoxSaVisaAddress.Text);
 
             InitializeIperfProcess();
             MeasureTcpUplinkPerformance(out tcpUplinkThroughput);
