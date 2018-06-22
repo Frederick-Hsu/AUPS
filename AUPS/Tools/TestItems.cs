@@ -176,14 +176,45 @@ namespace AUPS.Tools
         #region Antenna physical layer test items
         private void MeasureRSSI(string signalAnalyzerVisaAddress)
         {
+            int error = 0;
             string identifier = "";
             SignalAnalyzer_N9020A sa = new SignalAnalyzer_N9020A();
-            sa.Open(signalAnalyzerVisaAddress);
-            sa.GetInstrumentIdentifier(out identifier);
+            error = sa.Open(signalAnalyzerVisaAddress);
+            error = sa.GetInstrumentIdentifier(out identifier);
+            error = sa.ClearStatusAndErrorQueue();
 
-            sa.SelectActiveWindowAt(1);
-            sa.TurnOnOffFullDisplay(SignalAnalyzer_N9020A.State.ON);
-            sa.AlignEntireSystem();
+            error = sa.SelectMeasurementMode("SA");
+            string application;
+            error = sa.QueryWhichModeToBeSelected(out application);
+
+            error = sa.SetWindowTiled();
+            error = sa.SelectActiveWindowAt(1);
+            error = sa.TurnOnOffFullDisplay(SignalAnalyzer_N9020A.State.OFF);
+            int windowNo = 0;
+            error = sa.QueryWhichWindowToBeSelected(out windowNo);
+            int result;
+            error = sa.SelfTestQuery(out result);
+            error = sa.SetRFInputImpedanceCorrection(SignalAnalyzer_N9020A.Impedance.IMPEDANCE_50Ohms);
+            SignalAnalyzer_N9020A.Impedance imp;
+            error = sa.GetRFInputImpedanceCorrection(out imp);
+            error = sa.SelectRFInputCoupling(SignalAnalyzer_N9020A.RFCoupling.AC);
+            string coupling = "";
+            error = sa.QueryRFInputCoupling(out coupling);
+            string calibrator;
+            error = sa.QueryRFCalibrator(out calibrator);
+            error = sa.SetExtPreampGainForSA(-5);
+            double gain;
+            error = sa.GetExtPreampGainForSA(out gain);
+            error = sa.SetAntennaFieldStrengthUnit(SignalAnalyzer_N9020A.PowerFieldStrenghUnit.PTESla);
+            string unit;
+            error = sa.GetAntennaFieldStrengthUnit(out unit);
+            string state;
+            error = sa.QueryAmplitudeCorrectionsState(out state);
+            error = sa.EraseAllAmplitudeCorrections();
+
+            string[] modes;
+            sa.QueryInstalledApplicationModeCatalog(out modes);
+
             sa.Close();
         }
         #endregion
