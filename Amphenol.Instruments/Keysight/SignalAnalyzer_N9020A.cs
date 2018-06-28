@@ -26,6 +26,11 @@ namespace Amphenol.Instruments.Keysight
             viError = visa32.viOpen(resourceMrg, visaAddress, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out session);
             if (viError != visa32.VI_SUCCESS)
                 return viError;
+
+            StringBuilder attrValue = new StringBuilder();
+            viError = visa32.viGetAttribute(session, visa32.VI_ATTR_RSRC_CLASS, attrValue);
+            viError = visa32.viSetAttribute(session, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
+            viError = visa32.viSetAttribute(session, visa32.VI_ATTR_TMO_VALUE, 20000);
             return viError;
         }
 
@@ -545,6 +550,72 @@ namespace Amphenol.Instruments.Keysight
 
             string catalog = Encoding.ASCII.GetString(response, 0, count);
             modes = catalog.Substring(1, catalog.Length - 3).Split(',');
+            return error;
+        }
+
+        /* :SYST:APPL? */
+        public int QueryCurrentApplicationModelName(out string modelName)
+        {
+            int error = 0, count = 0;
+            string command = ":SYSTem:APPLication:CURRent:NAME?\n";
+            byte[] respone = new byte[64];
+
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, respone, 64, out count);
+            modelName = Encoding.ASCII.GetString(respone, 0, count-1);
+            return error;
+        }
+
+        /* :SYST:APPL:REV? */
+        public int QueryCurrentApplicationRevision(out string revision)
+        {
+            int error = 0, count = 0;
+            string command = ":SYSTem:APPLication:CURRent:REVision?\n";
+            byte[] response = new byte[256];
+
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            revision = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
+
+        /* :SYST:APPL:OPT? */
+        public int QueryCurrentApplicationOptions(out string options)
+        {
+            int error = 0, count = 0;
+            string command = ":SYSTem:APPLication:CURRent:OPTion?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            options = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
+
+        /* :SENS:RAD:STAN:SEL NONE 
+         * 
+         * Only these standards can be selected : NONE,  JSTD,  IS95a,  IS97D, IS98D, 
+         * GSM,  W3GPP,  C2000MC1,  C20001X,  NADC,  PDC,  BLUEtooth, TETRa,  WL802DOT11A,
+         * WL802DOT11B, WL802DOT11G,  HIPERLAN2, DVBTLSN,  DVBTGPN,  DVBTIPN, FCC15, SDMBSE,
+         * UWBINDOOR, LTEB1M4, LTEB3M,  LTEB5M, LTEB10M, LTEB15M, LTEB20M,  WL11N20M, WL11N40M,
+         * WL11AC20M,  WL11AC40M,  WL11AC80M, WL11AC160M, WL11AD2G
+         */
+        public int SelectRadioStandardInSpectrumAnalyzerMode(string radioStandard)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:RADio:STANdard:SELect " + radioStandard.ToUpper() + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* SENS:RAD:STAN:SEL? */
+        public int QueryWhichRadioStandardToBeSelected(out string radioStandard)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:RADio:STANdard:SELect?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            radioStandard = Encoding.ASCII.GetString(response, 0, count - 1);
             return error;
         }
 #endregion
