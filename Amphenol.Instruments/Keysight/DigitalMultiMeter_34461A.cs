@@ -31,6 +31,10 @@ namespace Amphenol.Instruments.Keysight
             if (viError != visa32.VI_SUCCESS)
                 return viError;
 
+            StringBuilder attr = new StringBuilder();
+            viError = visa32.viGetAttribute(dmmSession, visa32.VI_ATTR_RSRC_CLASS, attr);
+            viError = visa32.viSetAttribute(dmmSession, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
+            viError = visa32.viSetAttribute(dmmSession, visa32.VI_ATTR_TMO_VALUE, 20000);
             return viError;
         }
 
