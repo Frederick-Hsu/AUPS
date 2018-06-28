@@ -211,6 +211,14 @@ namespace AUPS.Tools
             string state;
             error = sa.QueryAmplitudeCorrectionsState(out state);
             error = sa.EraseAllAmplitudeCorrections();
+            string model;
+            error = sa.QueryCurrentApplicationModelName(out model);
+            string revision, options;
+            error = sa.QueryCurrentApplicationRevision(out revision);
+            error = sa.QueryCurrentApplicationOptions(out options);
+            string radioStandard;
+            error = sa.SelectRadioStandardInSpectrumAnalyzerMode("NONE");
+            error = sa.QueryWhichRadioStandardToBeSelected(out radioStandard);
 
             string[] modes;
             sa.QueryInstalledApplicationModeCatalog(out modes);

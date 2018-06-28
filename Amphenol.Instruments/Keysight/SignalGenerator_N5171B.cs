@@ -28,6 +28,10 @@ namespace Amphenol.Instruments.Keysight
             {
                 return viError;
             }
+            StringBuilder attrValue = new StringBuilder();
+            viError = visa32.viGetAttribute(session, visa32.VI_ATTR_RSRC_CLASS, attrValue);
+            viError = visa32.viSetAttribute(session, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
+            viError = visa32.viSetAttribute(session, visa32.VI_ATTR_TMO_VALUE, 20000);
             return viError;
         }
 
