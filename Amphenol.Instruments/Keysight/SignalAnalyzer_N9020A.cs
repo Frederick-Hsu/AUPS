@@ -618,6 +618,197 @@ namespace Amphenol.Instruments.Keysight
             radioStandard = Encoding.ASCII.GetString(response, 0, count - 1);
             return error;
         }
+
+        /* :SENS:RAD:STAN:DEV BTS */
+        public int SpecifyRadioStandardDeviceType(string deviceType /* only "BTS"(Base Transceiver Station) and "MS"(Mobile Station) options */)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:RADio:STANdard:DEVice " + deviceType + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* SENSe:RADio:STANdard:DEVice? */
+        public int QueryRadioStandardDeviceType(out string deviceType)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:RADio:STANdard:DEVice?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            deviceType = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
+
+        /* :SENS:RAD:STAN:EAM NO */
+        public int EnableNonStandardMeasurements(string yes_no)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:RADio:STANdard:EAMeas " + yes_no.ToUpper() + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :INSTrument:DEFault */
+        public int RestoreModeDefaults()
+        {
+            int error = 0, count = 0;
+            string command = ":INSTrument:DEFault\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SYST:PRESet:TYPE FACTory */
+        public int SelectSystemPresetType(string presetType /* only "FACTORY", "MODE" and "USER" 3 options are available. */)
+        {
+            int error = 0, count = 0;
+            string command = ":SYSTem:PRESet:TYPE " + presetType.ToUpper() + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SYST:PRES:TYPE? */
+        public int QuerySystemPresetType(out string presetType)
+        {
+            int error = 0, count = 0;
+            string command = ":SYSTem:PRESet:TYPE?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            presetType = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
+
+        /* :CALibration:ALL? */
+        public int QueryAllCalibrationDone(out int done)
+        {
+            int error = 0, count = 0;
+            string command = ":CALibration:ALL?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            done = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :DISP:WIND1:TRAC:Y:SCAL:RLEV 20 dBm */
+        public int SetAmplitudeYScaleReferenceLevel(int windowNo = 1, 
+                                                    double refLevel = 0.00, 
+                                                    string unit = "dBm" /* unit options : dBm, mV, uV, uA are available */)
+        {
+            int error = 0, count = 0;
+            string command = ":DISPlay:WINDow" + windowNo + ":TRACe:Y:SCALe:RLEVel " + refLevel + " " + unit + "\n";
+            string response;
+
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :DISP:WIND1:TRAC:Y:SCAL:RLEV? */
+        public int QueryAmplitudeYScaleReferenceLevel(int windowNo, out double refLevel /*unit : dBm */)
+        {
+            int error = 0, count = 0;
+            string command = ":DISPlay:WINDow" + windowNo + ":TRACe:Y:SCALe:RLEVel?\n";
+            byte[] response = new byte[256];
+
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            refLevel = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :SENS:POW:RF:ATT 20 */
+        public int SetAmplitudeYScaleAttenuation(uint attenuatorValue)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:POWer:RF:ATTenuation " + attenuatorValue + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:POW:RF:ATT? */
+        public int QueryAmplitudeYScaleAttenuation(out uint attenuatorValue)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:POWer:RF:ATTenuation?\n";
+            byte[] response = new byte[64];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 64, out count);
+            attenuatorValue = Convert.ToUInt32(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :SENS:POW:RF:ATT:AUTO ON */
+        public int EnableAmplitudeYScaleAttenuationAuto(State on_off)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:POWer:RF:ATTenuation:AUTO " + on_off + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:POW:RF:ATT:STEP:INCR 2 dB */
+        public int ControlMechanicAttenuationStepSize(string stepSize = "2 dB" /* only "2 dB" and "10 dB" can be selected. */)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:POWer:RF:ATTenuation:STEP:INCRement " + stepSize + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:POW:RF:ATT:STEP:INCR? */
+        public int QueryMechanicAttenuationStepSize(out int stepSize /* unit : dB */)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:POWer:RF:ATTenuation:STEP:INCRement?\n";
+            byte[] response = new byte[64];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 64, out count);
+            stepSize = (int)Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :SENS:POW:RF:MIX:RANG:UPP -15 dBm */
+        public int SetAmplitudeYAttenuationMaxMixerLevel(string maxMixerLevel = "-10 dBm")
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:POWer:RF:MIXer:RANGe:UPPer " + maxMixerLevel + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:POW:RF:MIX:RANG:UPP? */
+        public int QueryAmplitudeYAttenuationMaxMixerLevel(out double maxMixerLevel /* unit : dBm */)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:POWer:RF:MIXer:RANGe:UPPer?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            maxMixerLevel = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :DISP:WIND1:TRAC:Y:SCAL:SPAC LOG */
+        public int ChooseAmplitudeYScaleType(string scaleType = "LOG" /* Only "LOG" and "LIN" can be chosen. */)
+        {
+            int error = 0, count = 0;
+            string command = ":DISPlay:WINDow:TRACe:Y:SCALe:SPACing " + scaleType + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :DISP:WIND:TRAC:Y:SCAL:SPAC? */
+        public int QueryAmplitudeYScaleType(out string scaleType)
+        {
+            int error = 0, count = 0;
+            string command = ":DISPlay:WINDow:TRACe:Y:SCALe:SPACing?\n";
+            byte[] response = new byte[64];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 64, out count);
+            scaleType = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
 #endregion
     }
 }
