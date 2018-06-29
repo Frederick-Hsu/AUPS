@@ -219,9 +219,22 @@ namespace AUPS.Tools
             string radioStandard;
             error = sa.SelectRadioStandardInSpectrumAnalyzerMode("NONE");
             error = sa.QueryWhichRadioStandardToBeSelected(out radioStandard);
+            string device;
+            error = sa.SpecifyRadioStandardDeviceType("BTS");
+            error = sa.QueryRadioStandardDeviceType(out device);
 
-            string[] modes;
-            sa.QueryInstalledApplicationModeCatalog(out modes);
+            int calibrationDone;
+            error = sa.QueryAllCalibrationDone(out calibrationDone);
+
+            // string[] modes;
+            // error = sa.QueryInstalledApplicationModeCatalog(out modes);
+            double refLevel = 12.25;
+            error = sa.SetAmplitudeYScaleReferenceLevel(1, refLevel);
+            error = sa.QueryAmplitudeYScaleReferenceLevel(1, out refLevel);
+            uint attenuator = 25;
+            error = sa.SetAmplitudeYScaleAttenuation(attenuator);
+            error = sa.QueryAmplitudeYScaleAttenuation(out attenuator);
+            error = sa.EnableAmplitudeYScaleAttenuationAuto(SignalAnalyzer_N9020A.State.ON);
 
             sa.Close();
         }
