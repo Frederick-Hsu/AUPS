@@ -1121,6 +1121,111 @@ namespace Amphenol.Instruments.Keysight
             frequency = (long)Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
             return error;
         }
+
+        /* :SENS:FREQ:CENT 2.4 GHZ */
+        public int SetCenterFrequency(string frequency)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:FREQuency:CENTer " + frequency.ToUpper() + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:FREQ:CENT? */
+        public int RetrieveCenterFrequency(out long frequency /* unit : Hz */)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:FREQuency:CENTer?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            frequency = (long)Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :SENS:FREQ:RF:CENT 2.4GHZ */
+        public int SetRFCenterFrequency(string frequency)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:FREQuency:RF:CENTer " + frequency.ToUpper() + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:FREQ:RF:CENT? */
+        public int RetrieveRFCenterFrequency(out long frequency)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:FREQuency:RF:CENTer?\n";
+            byte[] response = new byte[64];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 64, out count);
+            frequency = (long)Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :SENS:FREQ:STAR 200 MHZ 
+         * :SENS:FREQ:STOP 400 MHZ
+         */
+        public int SetStartStopFrequency(string startFreq, string stopFreq)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:FREQuency:STARt " + startFreq + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":SENSe:FREQuency:STOP " + stopFreq + "\n";
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:FREQ:STAR?
+         * :SENS:FREQ:STOP?
+         */
+        public int QueryStartStopFrequency(out long startFreq, out long stopFreq)
+        {
+            int error = 0, count = 0;
+            string command = "::SENSe:FREQuency:STARt?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            startFreq = (long)Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+
+            command = ":SENSe:FREQuency:STOP?\n";
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            stopFreq = (long)Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :SENS:FREQ:CENT:STEP:AUTO ON */
+        public int EnableStepSizeForCenterFrequency(State on_off)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:FREQuency:CENTer:STEP:AUTO " + on_off + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:FREQ:OFFS 10MHZ */
+        public int SetFrequencyOffset(string offset)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:FREQuency:OFFSet " + offset.ToUpper() + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:FREQ:OFFS? */
+        public int QueryFrequencyOffset(out long offset /* unit : Hz */)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:FREQuency:OFFSet?\n";
+            byte[] response = new byte[64];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 64, out count);
+            offset = (long)Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
         #endregion
     }
 }
