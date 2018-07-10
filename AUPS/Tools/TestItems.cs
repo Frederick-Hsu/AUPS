@@ -236,6 +236,27 @@ namespace AUPS.Tools
             error = sa.QueryAmplitudeYScaleAttenuation(out attenuator);
             error = sa.EnableAmplitudeYScaleAttenuationAuto(SignalAnalyzer_N9020A.State.ON);
 
+            error = sa.ChooseAmplitudeYScaleType("LOG");
+            error = sa.SetAmplitudeYAxisUnit("dBm");
+            error = sa.SetAmplitudeYScaleDivision(1);
+            error = sa.SetAmplitudeYScaleReferenceLevel(1, 10, "dBm");
+
+            /*
+            error = sa.ChooseAmplitudeYScaleType("LIN");
+            error = sa.SetAmplitudeYAxisUnit("V");
+            error = sa.SetAmplitudeYScaleDivision(10);
+            error = sa.SetAmplitudeYScaleReferenceLevel(1, 100, "mV");
+             */
+            uint resBW = 240000, videoBW = 150000;
+            error = sa.SetAutoCoupleFeature("ALL");
+            error = sa.ToggleResolutionBandwidthAutoManualMode(SignalAnalyzer_N9020A.State.OFF);
+            error = sa.SetResolutionBandwidthValue(resBW);
+            error = sa.QueryResolutionBandwidth(out resBW);
+
+            error = sa.ToggleVideoBandwidthAutoManualMode(SignalAnalyzer_N9020A.State.OFF);
+            error = sa.SetVideoBandwidthValue(videoBW);
+            error = sa.QueryVideoBandwidth(out videoBW);
+
             sa.Close();
         }
         #endregion
