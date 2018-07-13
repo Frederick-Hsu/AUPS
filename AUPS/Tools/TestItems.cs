@@ -219,9 +219,43 @@ namespace AUPS.Tools
             string radioStandard;
             error = sa.SelectRadioStandardInSpectrumAnalyzerMode("NONE");
             error = sa.QueryWhichRadioStandardToBeSelected(out radioStandard);
+            string device;
+            error = sa.SpecifyRadioStandardDeviceType("BTS");
+            error = sa.QueryRadioStandardDeviceType(out device);
 
-            string[] modes;
-            sa.QueryInstalledApplicationModeCatalog(out modes);
+            int calibrationDone;
+            error = sa.QueryAllCalibrationDone(out calibrationDone);
+
+            // string[] modes;
+            // error = sa.QueryInstalledApplicationModeCatalog(out modes);
+            double refLevel = 12.25;
+            error = sa.SetAmplitudeYScaleReferenceLevel(1, refLevel);
+            error = sa.QueryAmplitudeYScaleReferenceLevel(1, out refLevel);
+            uint attenuator = 25;
+            error = sa.SetAmplitudeYScaleAttenuation(attenuator);
+            error = sa.QueryAmplitudeYScaleAttenuation(out attenuator);
+            error = sa.EnableAmplitudeYScaleAttenuationAuto(SignalAnalyzer_N9020A.State.ON);
+
+            error = sa.ChooseAmplitudeYScaleType("LOG");
+            error = sa.SetAmplitudeYAxisUnit("dBm");
+            error = sa.SetAmplitudeYScaleDivision(1);
+            error = sa.SetAmplitudeYScaleReferenceLevel(1, 10, "dBm");
+
+            /*
+            error = sa.ChooseAmplitudeYScaleType("LIN");
+            error = sa.SetAmplitudeYAxisUnit("V");
+            error = sa.SetAmplitudeYScaleDivision(10);
+            error = sa.SetAmplitudeYScaleReferenceLevel(1, 100, "mV");
+             */
+            uint resBW = 240000, videoBW = 150000;
+            error = sa.SetAutoCoupleFeature("ALL");
+            error = sa.ToggleResolutionBandwidthAutoManualMode(SignalAnalyzer_N9020A.State.OFF);
+            error = sa.SetResolutionBandwidthValue(resBW);
+            error = sa.QueryResolutionBandwidth(out resBW);
+
+            error = sa.ToggleVideoBandwidthAutoManualMode(SignalAnalyzer_N9020A.State.OFF);
+            error = sa.SetVideoBandwidthValue(videoBW);
+            error = sa.QueryVideoBandwidth(out videoBW);
 
             sa.Close();
         }
