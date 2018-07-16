@@ -187,6 +187,8 @@ namespace AUPS.Tools
             string application;
             error = sa.QueryWhichModeToBeSelected(out application);
 
+            sa.SelectMeasurementItemInSignalAnalyzerMode();
+
             error = sa.SetWindowTiled();
             error = sa.SelectActiveWindowAt(1);
             error = sa.TurnOnOffFullDisplay(SignalAnalyzer_N9020A.State.OFF);
