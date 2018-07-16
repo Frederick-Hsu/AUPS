@@ -49,6 +49,7 @@
     <Compile Include="Keysight\SignalAnalyzer_N9020A.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A_ChannelPowerMeasurement.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A_InputOutputFunctions.cs" />
+    <Compile Include="Keysight\SignalAnalyzer_N9020A_ModeFunctions.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A_SweptSAMeasurement.cs" />
     <Compile Include="Keysight\SignalGenerator_N5171B.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
