@@ -259,6 +259,17 @@ namespace AUPS.Tools
             error = sa.SetVideoBandwidthValue(videoBW);
             error = sa.QueryVideoBandwidth(out videoBW);
 
+            error = sa.SetStartStopFrequency((2400000000 - 10000000).ToString(), (2400000000 + 10000000).ToString());
+            long centerFreq;
+            error = sa.RetrieveRFCenterFrequency(out centerFreq);
+            error = sa.SetMarkerControlMode(SignalAnalyzer_N9020A.MarkerNo.Marker1, SignalAnalyzer_N9020A.MarkerControlMode[0]);
+            error = sa.SetMarkerXAxisFrequencyValue(SignalAnalyzer_N9020A.MarkerNo.Marker1, "2.4GHz");
+
+            double freq, power;
+            error = sa.QuerySpecificMarkerXAxisFrequency(SignalAnalyzer_N9020A.MarkerNo.Marker1, out freq);
+            error = sa.QueryMarkerYAxisValue(SignalAnalyzer_N9020A.MarkerNo.Marker1, out power);
+
+            error = sa.SearchMaxPeakPoint(SignalAnalyzer_N9020A.MarkerNo.Marker1, out freq, out power);
             sa.Close();
         }
         #endregion
