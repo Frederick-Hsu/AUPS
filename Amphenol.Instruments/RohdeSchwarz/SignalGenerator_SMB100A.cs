@@ -5,32 +5,24 @@ using System.Text;
 
 namespace Amphenol.Instruments.RohdeSchwarz
 {
-    public class DigitalOscilloscope_RTB2004
+    public class SignalGenerator_SMB100A
     {
-        private int resourceMgr;
+        private int rsrcMgr;
         private int session;
 
-        public DigitalOscilloscope_RTB2004()
+        public SignalGenerator_SMB100A()
         {
-            resourceMgr = 0;
+            rsrcMgr = 0;
             session = 0;
         }
 
         public int Open(string visaAddress)
         {
-            int error = visa32.viOpenDefaultRM(out resourceMgr);
-            if (error != visa32.VI_SUCCESS)
-            {
-                return error;
-            }
-            error = visa32.viOpen(resourceMgr, visaAddress, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out session);
-            if (error != visa32.VI_SUCCESS)
-            {
-                return error;
-            }
+            int error = visa32.viOpenDefaultRM(out rsrcMgr);
+            error = visa32.viOpen(rsrcMgr, visaAddress, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out session);
 
-            byte resourceClass, type, ioport;
-            error = visa32.viGetAttribute(session, visa32.VI_ATTR_RSRC_CLASS, out resourceClass);
+            byte rsrcClass, type, ioport;
+            error = visa32.viGetAttribute(session, visa32.VI_ATTR_RSRC_CLASS, out rsrcClass);
             error = visa32.viGetAttribute(session, visa32.VI_ATTR_INTF_TYPE, out type);
             error = visa32.viGetAttribute(session, visa32.VI_ATTR_IO_PROT, out ioport);
             error = visa32.viSetAttribute(session, visa32.VI_ATTR_TERMCHAR_EN, 1);
@@ -42,14 +34,14 @@ namespace Amphenol.Instruments.RohdeSchwarz
         {
             int error = visa32.viClose(session);
             session = 0;
-            error = visa32.viClose(resourceMgr);
-            resourceMgr = 0;
+            error = visa32.viClose(rsrcMgr);
+            rsrcMgr = 0;
             return error;
         }
 
         public int GetInstrumentIdentifier(out string idn)
         {
-            int error, count;
+            int error = 0, count = 0;
             string command = "*IDN?\n";
             byte[] response = new byte[256];
 

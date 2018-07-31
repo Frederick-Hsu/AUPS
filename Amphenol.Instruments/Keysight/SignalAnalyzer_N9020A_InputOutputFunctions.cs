@@ -280,6 +280,90 @@ namespace Amphenol.Instruments.Keysight
             state = ((Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count - 1)) == 1) ? "ON" : "OFF");
             return error;
         }
+
+        /* :SENS:CORR:CSET1:ANT:UNIT GAUS */
+        public enum PowerFieldStrenghUnit
+        {
+            NOConversion = 0,       /* dBm    - RF signal power unit */
+            GAUSs = 1,       /* Gausss - Electromagnetic field strength unit, dBG */
+            PTESla = 2,       /* pTesla - Electromagnetic field strength unit, dBpT */
+            UVM = 3,       /* dBuV/m - the unit of signal power or field strength */
+            UAM = 4,       /* dBuA/m - the unit of signal power or field strength */
+            UA = 5        /* dBuA   - signal power unit */
+        }
+        public int SetAntennaFieldStrengthUnit(PowerFieldStrenghUnit unit)
+        {
+            string conversionUnit = "";
+            switch (unit)
+            {
+                case PowerFieldStrenghUnit.NOConversion:
+                    conversionUnit = "NOConversion";
+                    break;
+                case PowerFieldStrenghUnit.GAUSs:
+                    conversionUnit = "GAUSs";
+                    break;
+                case PowerFieldStrenghUnit.PTESla:
+                    conversionUnit = "PTESla";
+                    break;
+                case PowerFieldStrenghUnit.UVM:
+                    conversionUnit = "UVM";
+                    break;
+                case PowerFieldStrenghUnit.UAM:
+                    conversionUnit = "UAM";
+                    break;
+                case PowerFieldStrenghUnit.UA:
+                    conversionUnit = "UA";
+                    break;
+            }
+            string command = ":SENSe:CORRection:CSET:ANTenna:UNIT " + conversionUnit + "\n", response;
+            int error = 0, count = 0;
+
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:CORR:CSET:ANT:UNIT? */
+        public int GetAntennaFieldStrengthUnit(out string unit)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:CORRection:CSET:ANTenna:UNIT?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            unit = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
+
+        /* :SENSe:CORRection:CSET:ALL:STATe ON */
+        public int ApplyAmplitudeCorrectionsOnOff(State state)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:CORRection:CSET:ALL:STATe " + state + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:CORR:CSET:ALL:STAT? */
+        public int QueryAmplitudeCorrectionsState(out string state)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:CORRection:CSET:ALL:STATe?\n";
+            byte[] response = new byte[64];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 64, out count);
+
+            state = ((Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count - 1)) == 1) ? "ON" : "OFF");
+            return error;
+        }
+
+        /* :SENS:CORR:CSET:ALL:DEL */
+        public int EraseAllAmplitudeCorrections()
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:CORRection:CSET:ALL:DELete\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
         #endregion
     }
 }
