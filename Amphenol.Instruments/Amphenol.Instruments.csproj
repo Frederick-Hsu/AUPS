@@ -51,6 +51,7 @@
     <Compile Include="Keysight\SignalAnalyzer_N9020A_InputOutputFunctions.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A_ModeFunctions.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A_SweptSAMeasurement.cs" />
+    <Compile Include="Keysight\SignalAnalyzer_N9020A_SweptSAMeasurement_Marker.cs" />
     <Compile Include="Keysight\SignalGenerator_N5171B.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RohdeSchwarz\DigitalOscilloscope_RTB2004.cs" />
