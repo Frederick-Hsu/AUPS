@@ -39,7 +39,7 @@ Drawing/
 AsyncExecuteDOSProcess/
 ManipulateProgressBar/
 UserChangeControlLocationSizeInRunTime/
-RsScopeMeasuring/
+# RsScopeMeasuring/
 RS_Scope/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
