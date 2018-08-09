@@ -39,6 +39,14 @@ namespace Amphenol.Instruments.RohdeSchwarz
             return error;
         }
 
+        public enum State
+        {
+            UNDEFINED = -100,
+            ON = 1,
+            OFF = 0
+        }
+
+        #region General Instrument Settings
         /* *IDN? */
         public int GetInstrumentIdentifier(out string idn)
         {
@@ -100,6 +108,15 @@ namespace Amphenol.Instruments.RohdeSchwarz
             return errorno;
         }
 
+        /* *CLS */
+        public int CleanAllErrorQueue()
+        {
+            int state = 0, count = 0;
+            string command = "*CLS\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
         /* *RST */
         public int PresetInstrument()
         {
@@ -140,5 +157,68 @@ namespace Amphenol.Instruments.RohdeSchwarz
             assemblies = Encoding.ASCII.GetString(response, 0, count - 1).Split(',');
             return state;
         }
+
+        /* :SYST:COMM:NETW:HOST? */
+        public int QueryHostName(out string hostname)
+        {
+            int state = 0, count = 0;
+            string command = ":SYSTem:COMMunicate:NETWork:HOSTname?\n";
+            byte[] response = new byte[256];
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            state = visa32.viRead(session, response, 256, out count);
+            hostname = Encoding.ASCII.GetString(response, 0, count - 1);
+            return state;
+        }
+        #endregion
+
+        #region RF Block
+        /* :OUTP:IMP? */
+        public int QueryRFOutputImpedance(out int impedanceInOhm)
+        {
+            int state = 0, count = 0;
+            string command = ":OUTPut:IMPedance?\n";
+            byte[] response = new byte[64];
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            state = visa32.viRead(session, response, 64, out count);
+
+            string result = Encoding.ASCII.GetString(response, 0, count - 1);
+            impedanceInOhm = Convert.ToInt32(result.Substring(1, result.Length - 1));
+            return state;
+        }
+
+        /* :OUTP:STAT ON */
+        public int RFSignalOutputOnOff(State on_off)
+        {
+            int state = 0, count = 0;
+            string command = ":OUTPut:STATe " + on_off + "\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :OUTP:STAT? */
+        public int QueryRFSignalOutputState(out State state)
+        {
+            int error = 0, count = 0;
+            string command = ":OUTPut:STATe?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+
+            string result = Encoding.ASCII.GetString(response, 0, count - 1);
+            if (result == "1")
+            {
+                state = State.ON;
+            }
+            else if (result == "0")
+            {
+                state = State.OFF;
+            }
+            else
+            {
+                state = State.UNDEFINED;
+            }
+            return error;
+        }
+        #endregion
     }
 }
