@@ -28,6 +28,10 @@ namespace Amphenol.Instruments.Keysight
             {
                 return viError;
             }
+            StringBuilder attrValue = new StringBuilder();
+            viError = visa32.viGetAttribute(session, visa32.VI_ATTR_RSRC_CLASS, attrValue);
+            viError = visa32.viSetAttribute(session, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
+            viError = visa32.viSetAttribute(session, visa32.VI_ATTR_TMO_VALUE, 20000);
             return viError;
         }
 
@@ -43,7 +47,7 @@ namespace Amphenol.Instruments.Keysight
         public int GetInstrumentIdentifier(out string idn)
         {
             int error, count;
-            string command = "*IDN?";
+            string command = "*IDN?\n";
             byte[] response = new byte[256];
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = visa32.viRead(session, response, 256, out count);

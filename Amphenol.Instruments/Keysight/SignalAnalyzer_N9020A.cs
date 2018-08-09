@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Amphenol.Instruments.Keysight
 {
-    public class SignalAnalyzer_N9020A
+    public partial class SignalAnalyzer_N9020A
     {
         private int resourceMrg;
         private int session;
@@ -26,6 +26,11 @@ namespace Amphenol.Instruments.Keysight
             viError = visa32.viOpen(resourceMrg, visaAddress, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out session);
             if (viError != visa32.VI_SUCCESS)
                 return viError;
+
+            StringBuilder attrValue = new StringBuilder();
+            viError = visa32.viGetAttribute(session, visa32.VI_ATTR_RSRC_CLASS, attrValue);
+            viError = visa32.viSetAttribute(session, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
+            viError = visa32.viSetAttribute(session, visa32.VI_ATTR_TMO_VALUE, 20000);
             return viError;
         }
 
@@ -80,7 +85,13 @@ namespace Amphenol.Instruments.Keysight
             return error;
 #else
             int error, count;
-            string command = "*IDN?";
+            string command = "*IDN?\n";     /* [NOTICE]!!!!!! [TOP CRITICAL AND IMPORTANT]
+                                             * every command MUST contain the "\n" at the end of line.
+                                             * otherwise it won't work in the condition of socket VISA address like 
+                                             * "TCPIP0::192.168.1.142::5025::SOCKET"
+                                             * 
+                                             * NEVER FORGET!
+                                             */
             byte[] response = new byte[256];
 
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
@@ -95,14 +106,14 @@ namespace Amphenol.Instruments.Keysight
         public int SetWindowZoom()
         {
             int error;
-            string command = ":DISPlay:WINDow:FORMat:ZOOM";
+            string command = ":DISPlay:WINDow:FORMat:ZOOM\n";
             byte[] result = new byte[128];
             int count;
 
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             if (error != visa32.VI_SUCCESS)
                 return error;
-            command = "SYSTem:ERRor?";
+            command = "SYSTem:ERRor?\n";
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = visa32.viRead(session, result, 128, out count);
             string response = new string(Encoding.ASCII.GetChars(result), 0, count);
@@ -118,11 +129,11 @@ namespace Amphenol.Instruments.Keysight
         public int SetWindowTiled()
         {
             int error, count;
-            string command = ":DISPlay:WINDow:FORMat:TILE";
+            string command = ":DISPlay:WINDow:FORMat:TILE\n";
             byte[] result = new byte[128];
 
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            command = "SYSTem:ERRor?";
+            command = "SYSTem:ERRor?\n";
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = visa32.viRead(session, result, 128, out count);
 
@@ -135,11 +146,11 @@ namespace Amphenol.Instruments.Keysight
         public int SelectActiveWindowAt(int windowNo)
         {
             int error, count;
-            string command = ":DISPlay:WINDow:SELect " + windowNo;
+            string command = ":DISPlay:WINDow:SELect " + windowNo + "\n";
             byte[] result = new byte[128];
 
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            command = "SYSTem:ERRor?";
+            command = "SYSTem:ERRor?\n";
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = visa32.viRead(session, result, 128, out count);
 
@@ -152,7 +163,7 @@ namespace Amphenol.Instruments.Keysight
         public int QuerySystemError(out string errorMesg)
         {
             int error, count;
-            string command = "SYSTem:ERRor?";
+            string command = "SYSTem:ERRor?\n";
             byte[] result = new byte[256];
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = visa32.viRead(session, result, 256, out count);
@@ -167,7 +178,7 @@ namespace Amphenol.Instruments.Keysight
         public int QueryWhichWindowToBeSelected(out int windowNo)
         {
             int error, count;
-            string command = ":DISPlay:WINDow:SELect?";
+            string command = ":DISPlay:WINDow:SELect?\n";
             byte[] result = new byte[64];
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = visa32.viRead(session, result, 64, out count);
@@ -181,7 +192,7 @@ namespace Amphenol.Instruments.Keysight
         public int TurnOnOffFullDisplay(State state)
         {
             int error, count;
-            string command = ":DISPlay:FSCReen:STATe " + state, response;
+            string command = ":DISPlay:FSCReen:STATe " + state + "\n", response;
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = QuerySystemError(out response);
             return error;
@@ -191,7 +202,7 @@ namespace Amphenol.Instruments.Keysight
         public int ClearStatusAndErrorQueue()
         {
             int error, count;
-            string command = "*CLS", response;
+            string command = "*CLS\n", response;
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = QuerySystemError(out response);
             return error;
@@ -201,11 +212,11 @@ namespace Amphenol.Instruments.Keysight
         public int AlignEntireSystem()
         {
             int error, count;
-            string command = ":CALibration:ALL";
+            string command = ":CALibration:ALL\n";
             byte[] result = new byte[64];
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
-            command = "*OPC?";
+            command = "*OPC?\n";
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = visa32.viRead(session, result, 64, out count);
 
@@ -230,51 +241,6 @@ namespace Amphenol.Instruments.Keysight
             result = Convert.ToInt32(response);
             return error;
         }
-
-        /* :SENSe:CORRection:IMPedance:INPut:MAGNitude 50 */
-        public int SetRFInputImpedanceCorrection(Impedance imp)
-        {
-            int error, count;
-            string command = ":SENSe:CORRection:IMPedance:INPut:MAGNitude " + imp, response;
-            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            return QuerySystemError(out response);
-        }
-
-        /* :SENSe:CORRection:IMPedance:INPut:MAGNitude? */
-        public int GetRFInputImpedanceCorrection(out Impedance imp)
-        {
-            int error, count;
-            string command = ":SENSe:CORRection:IMPedance:MAGNitude?";
-            byte[] response = new byte[256];
-            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            error = visa32.viRead(session, response, 256, out count);
-            imp = (Impedance)Convert.ToInt32(new string(Encoding.ASCII.GetChars(response), 0, count));
-            return error;
-        }
-
-        /* :INP:COUP AC */
-        public int SelectRFInputCoupling(RFCoupling coupling)
-        {
-            int error, count;
-            string coup = (coupling == RFCoupling.AC) ? "AC" : "DC";
-            string command = ":INPut:COUPling " + coup, response;
-
-            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            return QuerySystemError(out response);
-        }
-
-        /* :INP:COUP? */
-        public int QueryRFInputCoupling(out string coupling)
-        {
-            int error, count;
-            string command = ":INPut:COUPling?";
-            byte[] response = new byte[64];
-
-            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            error = visa32.viRead(session, response, 64, out count);
-            coupling = Encoding.ASCII.GetString(response, 0, count);
-            return error;
-        }
-#endregion
+        #endregion
     }
 }

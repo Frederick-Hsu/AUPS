@@ -31,6 +31,10 @@ namespace Amphenol.Instruments.Keysight
             if (viError != visa32.VI_SUCCESS)
                 return viError;
 
+            StringBuilder attr = new StringBuilder();
+            viError = visa32.viGetAttribute(dmmSession, visa32.VI_ATTR_RSRC_CLASS, attr);
+            viError = visa32.viSetAttribute(dmmSession, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
+            viError = visa32.viSetAttribute(dmmSession, visa32.VI_ATTR_TMO_VALUE, 20000);
             return viError;
         }
 
@@ -49,7 +53,7 @@ namespace Amphenol.Instruments.Keysight
         {
             int viError;
             int actualCount;
-            string command = "*IDN?";
+            string command = "*IDN?\n";
             byte[] response = new byte[256];
 
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
@@ -76,7 +80,7 @@ namespace Amphenol.Instruments.Keysight
             int actualCount;
             byte[] response = new byte[256];
 
-            string command = "CONFigure:RESistance";
+            string command = "CONFigure:RESistance\n";
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
             if (viError != visa32.VI_SUCCESS)
             {
@@ -84,7 +88,7 @@ namespace Amphenol.Instruments.Keysight
                 return viError;
             }
 
-            command = "READ?";
+            command = "READ?\n";
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
             viError = visa32.viRead(dmmSession, response, 256, out actualCount);
             if (viError != visa32.VI_SUCCESS)
@@ -105,7 +109,7 @@ namespace Amphenol.Instruments.Keysight
             string[] valueArray = new string[3];
             float[] resistanceArray = new float[3];
 
-            string command = "CONFigure:FRESistance";
+            string command = "CONFigure:FRESistance\n";
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
             if (viError != visa32.VI_SUCCESS)
             {
@@ -113,9 +117,9 @@ namespace Amphenol.Instruments.Keysight
                 return viError;
             }
 
-            command = "SAMP:COUNt 3";
+            command = "SAMP:COUNt 3\n";
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
-            command = "READ?";
+            command = "READ?\n";
             viError = visa32.viWrite(dmmSession, Encoding.ASCII.GetBytes(command), command.Length, out actualCount);
             viError = visa32.viRead(dmmSession, response, 512, out actualCount);
             if (viError != visa32.VI_SUCCESS)

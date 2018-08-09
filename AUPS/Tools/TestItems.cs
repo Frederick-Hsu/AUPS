@@ -176,14 +176,100 @@ namespace AUPS.Tools
         #region Antenna physical layer test items
         private void MeasureRSSI(string signalAnalyzerVisaAddress)
         {
+            int error = 0;
             string identifier = "";
             SignalAnalyzer_N9020A sa = new SignalAnalyzer_N9020A();
-            sa.Open(signalAnalyzerVisaAddress);
-            sa.GetInstrumentIdentifier(out identifier);
+            error = sa.Open(signalAnalyzerVisaAddress);
+            error = sa.GetInstrumentIdentifier(out identifier);
+            error = sa.ClearStatusAndErrorQueue();
 
-            sa.SelectActiveWindowAt(1);
-            sa.TurnOnOffFullDisplay(SignalAnalyzer_N9020A.State.ON);
-            sa.AlignEntireSystem();
+            error = sa.SelectMeasurementMode("SA");
+            string application;
+            error = sa.QueryWhichModeToBeSelected(out application);
+
+            sa.SelectMeasurementItemInSignalAnalyzerMode();
+
+            error = sa.SetWindowTiled();
+            error = sa.SelectActiveWindowAt(1);
+            error = sa.TurnOnOffFullDisplay(SignalAnalyzer_N9020A.State.OFF);
+            int windowNo = 0;
+            error = sa.QueryWhichWindowToBeSelected(out windowNo);
+            int result;
+            error = sa.SelfTestQuery(out result);
+            error = sa.SetRFInputImpedanceCorrection(SignalAnalyzer_N9020A.Impedance.IMPEDANCE_50Ohms);
+            SignalAnalyzer_N9020A.Impedance imp;
+            error = sa.GetRFInputImpedanceCorrection(out imp);
+            error = sa.SelectRFInputCoupling(SignalAnalyzer_N9020A.RFCoupling.AC);
+            string coupling = "";
+            error = sa.QueryRFInputCoupling(out coupling);
+            string calibrator;
+            error = sa.QueryRFCalibrator(out calibrator);
+            error = sa.SetExtPreampGainForSA(-5);
+            double gain;
+            error = sa.GetExtPreampGainForSA(out gain);
+            error = sa.SetAntennaFieldStrengthUnit(SignalAnalyzer_N9020A.PowerFieldStrenghUnit.PTESla);
+            string unit;
+            error = sa.GetAntennaFieldStrengthUnit(out unit);
+            string state;
+            error = sa.QueryAmplitudeCorrectionsState(out state);
+            error = sa.EraseAllAmplitudeCorrections();
+            string model;
+            error = sa.QueryCurrentApplicationModelName(out model);
+            string revision, options;
+            error = sa.QueryCurrentApplicationRevision(out revision);
+            error = sa.QueryCurrentApplicationOptions(out options);
+            string radioStandard;
+            error = sa.SelectRadioStandardInSpectrumAnalyzerMode("NONE");
+            error = sa.QueryWhichRadioStandardToBeSelected(out radioStandard);
+            string device;
+            error = sa.SpecifyRadioStandardDeviceType("BTS");
+            error = sa.QueryRadioStandardDeviceType(out device);
+
+            int calibrationDone;
+            error = sa.QueryAllCalibrationDone(out calibrationDone);
+
+            // string[] modes;
+            // error = sa.QueryInstalledApplicationModeCatalog(out modes);
+            double refLevel = 12.25;
+            error = sa.SetAmplitudeYScaleReferenceLevel(1, refLevel);
+            error = sa.QueryAmplitudeYScaleReferenceLevel(1, out refLevel);
+            uint attenuator = 25;
+            error = sa.SetAmplitudeYScaleAttenuation(attenuator);
+            error = sa.QueryAmplitudeYScaleAttenuation(out attenuator);
+            error = sa.EnableAmplitudeYScaleAttenuationAuto(SignalAnalyzer_N9020A.State.ON);
+
+            error = sa.ChooseAmplitudeYScaleType("LOG");
+            error = sa.SetAmplitudeYAxisUnit("dBm");
+            error = sa.SetAmplitudeYScaleDivision(1);
+            error = sa.SetAmplitudeYScaleReferenceLevel(1, 10, "dBm");
+
+            /*
+            error = sa.ChooseAmplitudeYScaleType("LIN");
+            error = sa.SetAmplitudeYAxisUnit("V");
+            error = sa.SetAmplitudeYScaleDivision(10);
+            error = sa.SetAmplitudeYScaleReferenceLevel(1, 100, "mV");
+             */
+            uint resBW = 240000, videoBW = 150000;
+            error = sa.SetAutoCoupleFeature("ALL");
+            error = sa.ToggleResolutionBandwidthAutoManualMode(SignalAnalyzer_N9020A.State.OFF);
+            error = sa.SetResolutionBandwidthValue(resBW);
+            error = sa.QueryResolutionBandwidth(out resBW);
+
+            error = sa.ToggleVideoBandwidthAutoManualMode(SignalAnalyzer_N9020A.State.OFF);
+            error = sa.SetVideoBandwidthValue(videoBW);
+            error = sa.QueryVideoBandwidth(out videoBW);
+
+            error = sa.SetStartStopFrequency((2400000000 - 10000000).ToString(), (2400000000 + 10000000).ToString());
+            long centerFreq;
+            error = sa.RetrieveRFCenterFrequency(out centerFreq);
+            error = sa.SetMarkerControlMode(SignalAnalyzer_N9020A.MarkerNo.Marker1, SignalAnalyzer_N9020A.MarkerControlMode[0]);
+            error = sa.SetMarkerXAxisFrequencyValue(SignalAnalyzer_N9020A.MarkerNo.Marker1, "2.4GHz");
+
+            double freq, power;
+            error = sa.QuerySpecificMarkerXAxisFrequency(SignalAnalyzer_N9020A.MarkerNo.Marker1, out freq);
+            error = sa.QueryMarkerYAxisValue(SignalAnalyzer_N9020A.MarkerNo.Marker1, out power);
+
+            error = sa.SearchMaxPeakPoint(SignalAnalyzer_N9020A.MarkerNo.Marker1, out freq, out power);
             sa.Close();
         }
         #endregion

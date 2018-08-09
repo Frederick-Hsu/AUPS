@@ -39,6 +39,7 @@ Drawing/
 AsyncExecuteDOSProcess/
 ManipulateProgressBar/
 UserChangeControlLocationSizeInRunTime/
+RsScopeMeasuring/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
