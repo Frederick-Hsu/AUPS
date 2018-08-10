@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Amphenol.Instruments.RohdeSchwarz
 {
-    public class SignalGenerator_SMB100A
+    public partial class SignalGenerator_SMB100A
     {
         private int rsrcMgr;
         private int session;
@@ -168,56 +168,6 @@ namespace Amphenol.Instruments.RohdeSchwarz
             state = visa32.viRead(session, response, 256, out count);
             hostname = Encoding.ASCII.GetString(response, 0, count - 1);
             return state;
-        }
-        #endregion
-
-        #region RF Block
-        /* :OUTP:IMP? */
-        public int QueryRFOutputImpedance(out int impedanceInOhm)
-        {
-            int state = 0, count = 0;
-            string command = ":OUTPut:IMPedance?\n";
-            byte[] response = new byte[64];
-            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            state = visa32.viRead(session, response, 64, out count);
-
-            string result = Encoding.ASCII.GetString(response, 0, count - 1);
-            impedanceInOhm = Convert.ToInt32(result.Substring(1, result.Length - 1));
-            return state;
-        }
-
-        /* :OUTP:STAT ON */
-        public int RFSignalOutputOnOff(State on_off)
-        {
-            int state = 0, count = 0;
-            string command = ":OUTPut:STATe " + on_off + "\n", response;
-            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            return QuerySystemError(out response);
-        }
-
-        /* :OUTP:STAT? */
-        public int QueryRFSignalOutputState(out State state)
-        {
-            int error = 0, count = 0;
-            string command = ":OUTPut:STATe?\n";
-            byte[] response = new byte[256];
-            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            error = visa32.viRead(session, response, 256, out count);
-
-            string result = Encoding.ASCII.GetString(response, 0, count - 1);
-            if (result == "1")
-            {
-                state = State.ON;
-            }
-            else if (result == "0")
-            {
-                state = State.OFF;
-            }
-            else
-            {
-                state = State.UNDEFINED;
-            }
-            return error;
         }
         #endregion
     }
