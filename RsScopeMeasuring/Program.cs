@@ -51,6 +51,12 @@ namespace RsScopeMeasuring
             error = sg.RFSignalOutputOnOff(SignalGenerator_SMB100A.State.ON);
             SignalGenerator_SMB100A.State state;
             error = sg.QueryRFSignalOutputState(out state);
+
+            long freq, offset;
+            error = sg.SetRFOutputSignalFrequency("2.45GHz");
+            error = sg.RetrieveRFOutputSignalFrequency(out freq);
+            error = sg.SetFrequencyOffsetForDownstreamInstrument("520KHz");
+            error = sg.RetrieveFrequencyOffset(out offset);
             error = sg.Close();
 #endif
         }
