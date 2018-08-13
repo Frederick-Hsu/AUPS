@@ -12,7 +12,7 @@ namespace Amphenol.Instruments.RohdeSchwarz
             UNDEFINED = -100
         }
 
-        #region RF Block
+        #region RF Block, Frequency
         /* :OUTP:IMP? */
         public int QueryRFOutputImpedance(out int impedanceInOhm)
         {
@@ -111,8 +111,8 @@ namespace Amphenol.Instruments.RohdeSchwarz
             return state;
         }
 
-        /* :SOUR:FREQ:STEP MODE USER
-         * FREQ:STEP 50KHz
+        /* :SOUR:FREQ:STEP:MODE USER
+         * :SOUR:FREQ:STEP:INCR 50KHz
          */
         public int SetFrequencyVariationModeAndStepWidth(Freq_Step_Mode mode, string userDefinedStepWidth /* format as "50KHz" */)
         {
@@ -128,14 +128,14 @@ namespace Amphenol.Instruments.RohdeSchwarz
             }
             state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
-            command = ":FREQ:STEP " + userDefinedStepWidth.ToUpper() + "\n";
+            command = ":SOURce:FREQuency:STEP:INCRement " + userDefinedStepWidth.ToUpper() + "\n";
             state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             string response;
             return QuerySystemError(out response);
         }
 
         /* :SOUR:FREQ:STEP:MODE?
-         * :FREQ:STEP?
+         * :SOUR:FREQ:STEP:INCR?
          */
         public int QueryFrequencyVariationModeAndStepWidth(out Freq_Step_Mode mode, out long stepWidth)
         {
@@ -158,11 +158,224 @@ namespace Amphenol.Instruments.RohdeSchwarz
                 mode = Freq_Step_Mode.UNDEFINED;
             }
 
-            command = ":FREQuency:MODE?\n";
+            command = ":SOURce:FREQuency:STEP:INCRement?\n";
             state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             state = visa32.viRead(session, response, 256, out count);
             stepWidth = Convert.ToInt64(Encoding.ASCII.GetString(response, 0, count - 1));
             return state;
+        }
+
+        /* :SOURCE:PHASE 120 DEG */
+        public int SetPhaseVariationRelativeToCurrentPhase(double phaseVariation /* range : [-720, 720]deg */)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:PHAse " + phaseVariation + " DEG\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SOURCE:PHASE:REF */
+        public int ResetDeltaPhaseDisplay()
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:PHAse:REFerence\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SOURCE:RSOCillator:SOURce INTernal */
+        public int SelectReferenceFrequencySource(string source /* only 2 options can be chosen: INTernal, EXTernal */)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:ROSCillator:SOURce " + source + "\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SOUR:ROSC:EXT:FREQ 10MHZ */
+        public int SelectExternalReferenceFrequency(string freq /* format as "5MHz" */)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:ROSCillator:SOURce EXTernal\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":SOURce:ROSCillator:EXTernal:FREQuency " + freq + "\n";
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SOURCE:ROSCillator:EXT:SBANdwith WIDE */
+        public int SelectSyncBandwidthForExternalReferenceSignal(string bandwidthType /* only 2 options available: WIDE, NARRow */)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:ROSCillator:EXTernal:SBANdwidth " + bandwidthType + "\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SOURce:ROSCillator:INTernal:ADJust:STATe ON 
+         * :SOURce:ROSCillator:INTernal:ADJust:VALUE 500
+         */
+        public int EnableAdjustmentModeAndSpecifyFreqCorrectionValue(State adjustmentMode, int freqCorrectionValue)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:ROSCillator:INTernal:ADJust:STATe " + adjustmentMode + "\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            if (adjustmentMode == State.OFF)
+            {
+                return QuerySystemError(out response);
+            }
+            else    /* Corresponding to ADJUST:STATE ON scenario */
+            {
+                command = ":SOURce:ROSCillator:INTernal:ADJust:VALue " + freqCorrectionValue + "\n";
+                state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+                return QuerySystemError(out response);
+            }
+        }
+        #endregion
+
+        #region RF Block, Level
+        /* :SOUR:POW:LEV:IMM:AMPL -10 */
+        public int SetRFLevelAppliedOntoDUT(double level /* unit : dBm */)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:POWer:LEVel:IMMediate:AMPLitude " + level + "\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SOUR:POW:LEV:IMM:AMPL? */
+        public int RetrieveRFLevelAppliedOntoDUT(out double level)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:POWer:LEVel:IMMediate:AMPLitude?\n";
+            byte[] response = new byte[64];
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            state = visa32.viRead(session, response, 64, out count);
+            level = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return state;
+        }
+
+        public enum RFLevelMode
+        {
+            NORMal = 0,
+            LOWNoise = 1,
+            LOWDistortion = 2
+        }
+        /* :SOUR:POW:LMOD NORMal */
+        public int SetRFLevelMode(RFLevelMode mode)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:POWer:LMODe ", response;
+            if (mode == RFLevelMode.NORMal)
+            {
+                command += "NORMal\n";
+            }
+            else if (mode == RFLevelMode.LOWNoise)
+            {
+                command += "LOWNoise\n";
+            }
+            else
+            {
+                command += "LOWDistortion\n";
+            }
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SOUR:POW:LEV:IMM:OFFS -10 */
+        public int SpecifyLevelOffsetForDownstreamAttenuatorAmplifier(double levelOffset /* range = [-100, 100]dB */)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:POWer:LEVel:IMMediate:OFFSet " + levelOffset + "\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SOUR:POW:LEV:IMM:OFFS? */
+        public int QueryLevelOffsetForDownstreamAttenuatorAmplifier(out double levelOffset /* unit : dB */)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:POWer:LEVel:IMMediate:OFFSet?\n";
+            byte[] response = new byte[256];
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            state = visa32.viRead(session, response, 256, out count);
+            levelOffset = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return state;
+        }
+        
+        /* :SOUR:POW:LIM:AMPL 30 */
+        public int LimitMaxRFOutputLevel(double upperLimit /* unit : dBm */)
+        {
+            int state = 0, count = 0;
+            string command = ":SOURce:POWer:LIMit:AMPLitude " + upperLimit + "\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :OUTP:AMODe AUTO */
+        public int SelectAttenuatorModeAtRFOutput(string attenuatorMode = "AUTO" /* only 2 options available : "AUTO" and "FIXed" */)
+        {
+            int state = 0, count = 0;
+            string command = ":OUTPut:AMODe " + attenuatorMode.ToUpper() + "\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :OUTP:AFIX:RANG:UPPER?
+         * :OUTP:AFIX:RANG:LOWER?
+         */
+        public int QueryLevelRangeInFixedAttenuatorMode(out double lower, out double upper /* unit : dBm */)
+        {
+            int state = 0, count = 0;
+            string command = ":OUTPut:AMODe FIXed\n";
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":OUTPut:AFIXed:RANGe:LOWer?\n";
+            byte[] response = new byte[256];
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            state = visa32.viRead(session, response, 256, out count);
+            lower = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+
+            command = ":OUTPut:AFIXed:RANGe:UPPer?\n";
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            state = visa32.viRead(session, response, 256, out count);
+            upper = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+            return state;
+        }
+
+        /* :SOUR:PWE:ALC:STAT AUTO */
+        public int ActivateAutomaticLevelControl(string state = "AUTO" /* only 3 options available : "AUTO", "ON", "OFF" */)
+        {
+            int error = 0, count = 0;
+            string command = ":SOURce:POWer:ALC:STATe " + state + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SOUR:POW:ALC:STAT? */
+        public int QueryAutomaticLevelControlState(out string state)
+        {
+            int error = 0, count = 0;
+            string command = ":SOURce:POWer:ALC:STATe?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            string result = Encoding.ASCII.GetString(response, 0, count - 1);
+            if (result.ToUpper() == "AUTO")
+            {
+                state = "AUTO";
+            }
+            else if (result == "1")
+            {
+                state = "ON";
+            }
+            else
+            {
+                state = "OFF";
+            }
+            return error;
         }
         #endregion
     }
