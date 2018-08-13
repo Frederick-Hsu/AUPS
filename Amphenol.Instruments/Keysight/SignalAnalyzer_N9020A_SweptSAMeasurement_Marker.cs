@@ -25,7 +25,7 @@ namespace Amphenol.Instruments.Keysight
         public int SetMarkerXAxisFrequencyValue(MarkerNo markerNo, string frequency /* you can write the freq. like this "2.4GHZ" */)
         {
             int error = 0, count = 0;
-            string command = ":CALCulate:MARKer" + markerNo + ":X " + frequency.ToUpper() + "\n", response;
+            string command = ":CALCulate:" + markerNo + ":X " + frequency.ToUpper() + "\n", response;
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QuerySystemError(out response);
         }
@@ -34,7 +34,7 @@ namespace Amphenol.Instruments.Keysight
         public int QuerySpecificMarkerXAxisFrequency(MarkerNo markerNo, out double frequency)
         {
             int error = 0, count = 0;
-            string command = ":CALCulate:MARKer" + markerNo + ":X?\n";
+            string command = ":CALCulate:" + markerNo + ":X?\n";
             byte[] response = new byte[64];
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = visa32.viRead(session, response, 64, out count);
@@ -46,7 +46,7 @@ namespace Amphenol.Instruments.Keysight
         public int QueryMarkerYAxisValue(MarkerNo markerNo, out double powerValue)
         {
             int error = 0, count = 0;
-            string command = ":CALCulate:MARKer" + markerNo + ":Y?\n";
+            string command = ":CALCulate:" + markerNo + ":Y?\n";
             byte[] response = new byte[64];
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             error = visa32.viRead(session, response, 64, out count);
@@ -58,7 +58,7 @@ namespace Amphenol.Instruments.Keysight
         public int SetMarkerControlMode(MarkerNo markerNo, string controlMode)
         {
             int error = 0, count = 0;
-            string command = ":CALCulate:MARKer" + markerNo + ":MODE " + controlMode + "\n", response;
+            string command = ":CALCulate:" + markerNo + ":MODE " + controlMode + "\n", response;
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QuerySystemError(out response);
         }
@@ -67,7 +67,7 @@ namespace Amphenol.Instruments.Keysight
         public int TurnOnOffCrossLinesAtMarker(MarkerNo markerNo, State on_ff)
         {
             int error = 0, count = 0;
-            string command = ":CALCulate:MARKer" + markerNo + ":LINes:STATe " + on_ff + "\n", response;
+            string command = ":CALCulate:" + markerNo + ":LINes:STATe " + on_ff + "\n", response;
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QuerySystemError(out response);
         }
@@ -111,16 +111,16 @@ namespace Amphenol.Instruments.Keysight
         public int SearchMaxPeakPoint(MarkerNo markerNo, out double peakFrequency /* unit : Hz */, out double peakAmplitude /* unit : dBm */)
         {
             int error = 0, cnt = 0;
-            string command = ":CALCulate:MARKer" + markerNo + ":MAXimum\n";
+            string command = ":CALCulate:" + markerNo + ":MAXimum\n";
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out cnt);
 
-            command = ":CALCulate:MARKer" + markerNo + ":X?\n";
+            command = ":CALCulate:" + markerNo + ":X?\n";
             byte[] response = new byte[256];
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out cnt);
             error = visa32.viRead(session, response, 256, out cnt);
             peakFrequency = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, cnt - 1));
 
-            command = ":CALCulate:MARKer" + markerNo + ":Y?\n";
+            command = ":CALCulate:" + markerNo + ":Y?\n";
             error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out cnt);
             error = visa32.viRead(session, response, 256, out cnt);
             peakAmplitude = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, cnt - 1));
