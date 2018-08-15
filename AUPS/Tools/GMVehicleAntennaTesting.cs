@@ -45,7 +45,7 @@ namespace AUPS.Tools
         /* In the real test field, you should change the scale down ratio accordingly to have the 
          * tab page window accommodated the max radius circle. 
          */
-        private static int scaleDownRatio = 2;
+        private static int scaleDownRatio = 20;
 
         private void btnNewPoint_Click(object sender, EventArgs e)
         {
@@ -371,30 +371,31 @@ namespace AUPS.Tools
             string udpUplinkThroughput = "", udpUplinkLatency = "", udpUplinkPacketLoss = "",
                    udpDownlinkThroughput = "", udpDownlinkLatency = "", udpDownlinkPacketLoss = "";
 
-            progressBarTesting.Value = 1;
-            MeasureRSSI(textBoxSaVisaAddress.Text);
+            if (radioBtnAppLayerTesting.Checked == true)
+            {
+                progressBarTesting.Value = 1;
 
-            InitializeIperfProcess();
-            MeasureTcpUplinkPerformance(out tcpUplinkThroughput);
-            CloseIperfProcess();
-            progressBarTesting.Value = 20;
+                InitializeIperfProcess();
+                MeasureTcpUplinkPerformance(out tcpUplinkThroughput);
+                CloseIperfProcess();
+                progressBarTesting.Value = 20;
 
-            InitializeIperfProcess();
-            MeasureTcpDownlinkPerformance(out tcpDownlinkThroughput);
-            CloseIperfProcess();
-            progressBarTesting.Value = 40;
+                InitializeIperfProcess();
+                MeasureTcpDownlinkPerformance(out tcpDownlinkThroughput);
+                CloseIperfProcess();
+                progressBarTesting.Value = 40;
 
-            InitializeIperfProcess();
-            MeasureUdpUplinkPerformance(out udpUplinkThroughput, out udpUplinkLatency, out udpUplinkPacketLoss);
-            CloseIperfProcess();
-            progressBarTesting.Value = 60;
+                InitializeIperfProcess();
+                MeasureUdpUplinkPerformance(out udpUplinkThroughput, out udpUplinkLatency, out udpUplinkPacketLoss);
+                CloseIperfProcess();
+                progressBarTesting.Value = 60;
 
-            InitializeIperfProcess();
-            MeasureUdpDownlinkPerformance(out udpDownlinkThroughput, out udpDownlinkLatency, out udpDownlinkPacketLoss);
-            CloseIperfProcess();
-            progressBarTesting.Value = 80;
+                InitializeIperfProcess();
+                MeasureUdpDownlinkPerformance(out udpDownlinkThroughput, out udpDownlinkLatency, out udpDownlinkPacketLoss);
+                CloseIperfProcess();
+                progressBarTesting.Value = 80;
 
-            FillTestResultsTable(pointNo,
+                FillTestResultsTable(pointNo,
                                  radius.ToString(),
                                  angle.ToString(),
                                  height.ToString(),
@@ -412,7 +413,35 @@ namespace AUPS.Tools
                                  udpDownlinkPacketLoss,
                                  "",
                                  "");
-            progressBarTesting.Value = 100;
+                progressBarTesting.Value = 100;
+            }
+            else if (radioBtnPhyLayerTesting.Checked == true)
+            {
+                progressBarTesting.Value = 20;
+                double rssiValue = 0.00;
+                int error = MeasureRSSI(freq, bandWidth, power, out rssiValue);
+                progressBarTesting.Value = 95;
+
+                FillTestResultsTable(pointNo,
+                                     radius.ToString(),
+                                     angle.ToString(),
+                                     height.ToString(),
+                                     freq.ToString(),
+                                     bandWidth.ToString(),
+                                     channel.ToString(),
+                                     power.ToString(),
+                                     "", // tcpUplinkThroughput,
+                                     "", // tcpDownlinkThroughput,
+                                     "", // udpUplinkThroughput,
+                                     "", // udpUplinkLatency,
+                                     "", // udpUplinkPacketLoss,
+                                     "", // udpDownlinkThroughput,
+                                     "", // udpDownlinkLatency,
+                                     "", // udpDownlinkPacketLoss,
+                                     rssiValue.ToString(),
+                                     "");
+                progressBarTesting.Value = 100;
+            }
         }
 
         private void btnRefreshDrawing_Click(object sender, EventArgs e)
