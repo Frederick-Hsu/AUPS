@@ -103,6 +103,9 @@
             this.contextMenuStripModify = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeCurrentTestPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBoxOption = new System.Windows.Forms.GroupBox();
+            this.radioBtnAppLayerTesting = new System.Windows.Forms.RadioButton();
+            this.radioBtnPhyLayerTesting = new System.Windows.Forms.RadioButton();
             this.groupBoxTestPointsSetting.SuspendLayout();
             this.tabControlTesting.SuspendLayout();
             this.tabPageField.SuspendLayout();
@@ -112,6 +115,7 @@
             this.tabPageResults.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestResults)).BeginInit();
             this.contextMenuStripModify.SuspendLayout();
+            this.groupBoxOption.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxTestPointsSetting
@@ -344,9 +348,9 @@
             this.labelHeight.AutoSize = true;
             this.labelHeight.Location = new System.Drawing.Point(15, 139);
             this.labelHeight.Name = "labelHeight";
-            this.labelHeight.Size = new System.Drawing.Size(129, 20);
+            this.labelHeight.Size = new System.Drawing.Size(134, 20);
             this.labelHeight.TabIndex = 4;
-            this.labelHeight.Text = "Height (unit : cm)";
+            this.labelHeight.Text = "Height (unit : mm)";
             // 
             // textBoxAngle
             // 
@@ -376,9 +380,9 @@
             this.labelRadius.AutoSize = true;
             this.labelRadius.Location = new System.Drawing.Point(15, 38);
             this.labelRadius.Name = "labelRadius";
-            this.labelRadius.Size = new System.Drawing.Size(132, 20);
+            this.labelRadius.Size = new System.Drawing.Size(137, 20);
             this.labelRadius.TabIndex = 0;
-            this.labelRadius.Text = "Radius (unit : cm)";
+            this.labelRadius.Text = "Radius (unit : mm)";
             // 
             // tabControlTesting
             // 
@@ -396,6 +400,7 @@
             // tabPageField
             // 
             this.tabPageField.AutoScroll = true;
+            this.tabPageField.Controls.Add(this.groupBoxOption);
             this.tabPageField.Controls.Add(this.btnSave);
             this.tabPageField.Controls.Add(this.btnLoad);
             this.tabPageField.Controls.Add(this.dataGridViewPointSettings);
@@ -752,6 +757,39 @@
             this.modifySettingsToolStripMenuItem.Text = "Modify settings";
             this.modifySettingsToolStripMenuItem.Click += new System.EventHandler(this.modifySettingsToolStripMenuItem_Click);
             // 
+            // groupBoxOption
+            // 
+            this.groupBoxOption.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxOption.Controls.Add(this.radioBtnPhyLayerTesting);
+            this.groupBoxOption.Controls.Add(this.radioBtnAppLayerTesting);
+            this.groupBoxOption.Location = new System.Drawing.Point(1273, 9);
+            this.groupBoxOption.Name = "groupBoxOption";
+            this.groupBoxOption.Size = new System.Drawing.Size(293, 129);
+            this.groupBoxOption.TabIndex = 4;
+            this.groupBoxOption.TabStop = false;
+            this.groupBoxOption.Text = "Select test section";
+            // 
+            // radioBtnAppLayerTesting
+            // 
+            this.radioBtnAppLayerTesting.AutoSize = true;
+            this.radioBtnAppLayerTesting.Checked = true;
+            this.radioBtnAppLayerTesting.Location = new System.Drawing.Point(6, 40);
+            this.radioBtnAppLayerTesting.Name = "radioBtnAppLayerTesting";
+            this.radioBtnAppLayerTesting.Size = new System.Drawing.Size(266, 24);
+            this.radioBtnAppLayerTesting.TabIndex = 0;
+            this.radioBtnAppLayerTesting.Text = "Application Layer Testing section";
+            this.radioBtnAppLayerTesting.UseVisualStyleBackColor = true;
+            // 
+            // radioBtnPhyLayerTesting
+            // 
+            this.radioBtnPhyLayerTesting.AutoSize = true;
+            this.radioBtnPhyLayerTesting.Location = new System.Drawing.Point(6, 86);
+            this.radioBtnPhyLayerTesting.Name = "radioBtnPhyLayerTesting";
+            this.radioBtnPhyLayerTesting.Size = new System.Drawing.Size(245, 24);
+            this.radioBtnPhyLayerTesting.TabIndex = 1;
+            this.radioBtnPhyLayerTesting.Text = "Physical Layer Testing section";
+            this.radioBtnPhyLayerTesting.UseVisualStyleBackColor = true;
+            // 
             // GMVehicleAntennaTesting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -777,6 +815,8 @@
             this.tabPageResults.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestResults)).EndInit();
             this.contextMenuStripModify.ResumeLayout(false);
+            this.groupBoxOption.ResumeLayout(false);
+            this.groupBoxOption.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -856,5 +896,8 @@
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ComboBox comboBoxChannel;
+        private System.Windows.Forms.GroupBox groupBoxOption;
+        private System.Windows.Forms.RadioButton radioBtnAppLayerTesting;
+        private System.Windows.Forms.RadioButton radioBtnPhyLayerTesting;
     }
 }
