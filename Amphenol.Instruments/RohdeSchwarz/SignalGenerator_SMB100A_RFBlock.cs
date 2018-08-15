@@ -378,5 +378,27 @@ namespace Amphenol.Instruments.RohdeSchwarz
             return error;
         }
         #endregion
+
+        #region Power sensor : NRP-Z22
+        /* :SENS:POW:TYPE? */
+        public int QueryPowerSensorType(out string type)
+        {
+            int state = 0, count = 0;
+            string command = ":SENS:POW:TYPE?\n";
+            byte[] response = new byte[256];
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            state = visa32.viRead(session, response, 256, out count);
+            type = Encoding.ASCII.GetString(response, 0, count - 1);
+            return state;
+        }
+
+        /*
+        public int ActivatePowerSensorControlState(State state)
+        {
+            int error = 0, count = 0;
+            string command = ":SOURce:POWer:SPC:STATe " + state + "\n";
+        }
+         */
+        #endregion
     }
 }
