@@ -60,6 +60,10 @@
             this.labelRadius = new System.Windows.Forms.Label();
             this.tabControlTesting = new System.Windows.Forms.TabControl();
             this.tabPageField = new System.Windows.Forms.TabPage();
+            this.pictureBoxCar = new System.Windows.Forms.PictureBox();
+            this.groupBoxOption = new System.Windows.Forms.GroupBox();
+            this.radioBtnPhyLayerTesting = new System.Windows.Forms.RadioButton();
+            this.radioBtnAppLayerTesting = new System.Windows.Forms.RadioButton();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.dataGridViewPointSettings = new System.Windows.Forms.DataGridView();
@@ -72,13 +76,24 @@
             this.colBandwidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPower = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pictureBoxCar = new System.Windows.Forms.PictureBox();
             this.tabPageIperfLog = new System.Windows.Forms.TabPage();
             this.textBoxIperfTestLog = new System.Windows.Forms.TextBox();
             this.tabPageResults = new System.Windows.Forms.TabPage();
-            this.labelFilePathToSave = new System.Windows.Forms.Label();
-            this.btnClearTestResults = new System.Windows.Forms.Button();
-            this.btnSaveTestResults = new System.Windows.Forms.Button();
+            this.groupBoxRFTesting = new System.Windows.Forms.GroupBox();
+            this.btnClearPhysicalTestResultsTable = new System.Windows.Forms.Button();
+            this.btnSaveRFTestResults = new System.Windows.Forms.Button();
+            this.dataGridViewRFTestResults = new System.Windows.Forms.DataGridView();
+            this.colmPointNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colmRadius = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colmAngle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colmHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colmFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colmBandwidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colmChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colmTxPower = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colmRssi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colmTimeStamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBoxApplicationLayerTesting = new System.Windows.Forms.GroupBox();
             this.dataGridViewTestResults = new System.Windows.Forms.DataGridView();
             this.columnPointNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnRadius = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -96,26 +111,27 @@
             this.columnUdpDownlinkThroughput = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnUdpDownlinkLatency = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnUdpDownlinkPacketLoss = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.columnRssi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.columnSnr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnTimeStamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnSaveTestResults = new System.Windows.Forms.Button();
+            this.btnClearTestResults = new System.Windows.Forms.Button();
+            this.labelFilePathToSave = new System.Windows.Forms.Label();
             this.progressBarTesting = new System.Windows.Forms.ProgressBar();
             this.contextMenuStripModify = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeCurrentTestPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBoxOption = new System.Windows.Forms.GroupBox();
-            this.radioBtnAppLayerTesting = new System.Windows.Forms.RadioButton();
-            this.radioBtnPhyLayerTesting = new System.Windows.Forms.RadioButton();
             this.groupBoxTestPointsSetting.SuspendLayout();
             this.tabControlTesting.SuspendLayout();
             this.tabPageField.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPointSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCar)).BeginInit();
+            this.groupBoxOption.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPointSettings)).BeginInit();
             this.tabPageIperfLog.SuspendLayout();
             this.tabPageResults.SuspendLayout();
+            this.groupBoxRFTesting.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRFTestResults)).BeginInit();
+            this.groupBoxApplicationLayerTesting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestResults)).BeginInit();
             this.contextMenuStripModify.SuspendLayout();
-            this.groupBoxOption.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxTestPointsSetting
@@ -400,11 +416,11 @@
             // tabPageField
             // 
             this.tabPageField.AutoScroll = true;
+            this.tabPageField.Controls.Add(this.pictureBoxCar);
             this.tabPageField.Controls.Add(this.groupBoxOption);
             this.tabPageField.Controls.Add(this.btnSave);
             this.tabPageField.Controls.Add(this.btnLoad);
             this.tabPageField.Controls.Add(this.dataGridViewPointSettings);
-            this.tabPageField.Controls.Add(this.pictureBoxCar);
             this.tabPageField.Location = new System.Drawing.Point(4, 29);
             this.tabPageField.Name = "tabPageField";
             this.tabPageField.Padding = new System.Windows.Forms.Padding(3);
@@ -412,6 +428,49 @@
             this.tabPageField.TabIndex = 0;
             this.tabPageField.Text = "Test field";
             this.tabPageField.UseVisualStyleBackColor = true;
+            // 
+            // pictureBoxCar
+            // 
+            this.pictureBoxCar.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxCar.Image")));
+            this.pictureBoxCar.Location = new System.Drawing.Point(575, 513);
+            this.pictureBoxCar.Name = "pictureBoxCar";
+            this.pictureBoxCar.Size = new System.Drawing.Size(44, 98);
+            this.pictureBoxCar.TabIndex = 5;
+            this.pictureBoxCar.TabStop = false;
+            // 
+            // groupBoxOption
+            // 
+            this.groupBoxOption.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxOption.Controls.Add(this.radioBtnPhyLayerTesting);
+            this.groupBoxOption.Controls.Add(this.radioBtnAppLayerTesting);
+            this.groupBoxOption.Location = new System.Drawing.Point(1273, 9);
+            this.groupBoxOption.Name = "groupBoxOption";
+            this.groupBoxOption.Size = new System.Drawing.Size(293, 129);
+            this.groupBoxOption.TabIndex = 4;
+            this.groupBoxOption.TabStop = false;
+            this.groupBoxOption.Text = "Select test section";
+            // 
+            // radioBtnPhyLayerTesting
+            // 
+            this.radioBtnPhyLayerTesting.AutoSize = true;
+            this.radioBtnPhyLayerTesting.Location = new System.Drawing.Point(6, 86);
+            this.radioBtnPhyLayerTesting.Name = "radioBtnPhyLayerTesting";
+            this.radioBtnPhyLayerTesting.Size = new System.Drawing.Size(279, 24);
+            this.radioBtnPhyLayerTesting.TabIndex = 1;
+            this.radioBtnPhyLayerTesting.Text = "RF / Physical Layer Testing section";
+            this.radioBtnPhyLayerTesting.UseVisualStyleBackColor = true;
+            // 
+            // radioBtnAppLayerTesting
+            // 
+            this.radioBtnAppLayerTesting.AutoSize = true;
+            this.radioBtnAppLayerTesting.Checked = true;
+            this.radioBtnAppLayerTesting.Location = new System.Drawing.Point(6, 40);
+            this.radioBtnAppLayerTesting.Name = "radioBtnAppLayerTesting";
+            this.radioBtnAppLayerTesting.Size = new System.Drawing.Size(266, 24);
+            this.radioBtnAppLayerTesting.TabIndex = 0;
+            this.radioBtnAppLayerTesting.TabStop = true;
+            this.radioBtnAppLayerTesting.Text = "Application Layer Testing section";
+            this.radioBtnAppLayerTesting.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
@@ -504,16 +563,6 @@
             this.colPower.HeaderText = "Power";
             this.colPower.Name = "colPower";
             // 
-            // pictureBoxCar
-            // 
-            this.pictureBoxCar.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxCar.Image")));
-            this.pictureBoxCar.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBoxCar.InitialImage")));
-            this.pictureBoxCar.Location = new System.Drawing.Point(704, 516);
-            this.pictureBoxCar.Name = "pictureBoxCar";
-            this.pictureBoxCar.Size = new System.Drawing.Size(155, 125);
-            this.pictureBoxCar.TabIndex = 0;
-            this.pictureBoxCar.TabStop = false;
-            // 
             // tabPageIperfLog
             // 
             this.tabPageIperfLog.Controls.Add(this.textBoxIperfTestLog);
@@ -540,10 +589,9 @@
             // 
             // tabPageResults
             // 
+            this.tabPageResults.Controls.Add(this.groupBoxRFTesting);
+            this.tabPageResults.Controls.Add(this.groupBoxApplicationLayerTesting);
             this.tabPageResults.Controls.Add(this.labelFilePathToSave);
-            this.tabPageResults.Controls.Add(this.btnClearTestResults);
-            this.tabPageResults.Controls.Add(this.btnSaveTestResults);
-            this.tabPageResults.Controls.Add(this.dataGridViewTestResults);
             this.tabPageResults.Location = new System.Drawing.Point(4, 29);
             this.tabPageResults.Name = "tabPageResults";
             this.tabPageResults.Size = new System.Drawing.Size(1574, 1286);
@@ -551,35 +599,124 @@
             this.tabPageResults.Text = "Test results";
             this.tabPageResults.UseVisualStyleBackColor = true;
             // 
-            // labelFilePathToSave
+            // groupBoxRFTesting
             // 
-            this.labelFilePathToSave.AutoSize = true;
-            this.labelFilePathToSave.Location = new System.Drawing.Point(1173, 751);
-            this.labelFilePathToSave.Name = "labelFilePathToSave";
-            this.labelFilePathToSave.Size = new System.Drawing.Size(0, 20);
-            this.labelFilePathToSave.TabIndex = 3;
+            this.groupBoxRFTesting.Controls.Add(this.btnClearPhysicalTestResultsTable);
+            this.groupBoxRFTesting.Controls.Add(this.btnSaveRFTestResults);
+            this.groupBoxRFTesting.Controls.Add(this.dataGridViewRFTestResults);
+            this.groupBoxRFTesting.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBoxRFTesting.Location = new System.Drawing.Point(0, 638);
+            this.groupBoxRFTesting.Name = "groupBoxRFTesting";
+            this.groupBoxRFTesting.Size = new System.Drawing.Size(1574, 648);
+            this.groupBoxRFTesting.TabIndex = 8;
+            this.groupBoxRFTesting.TabStop = false;
+            this.groupBoxRFTesting.Text = "Test results for RF / Physical Layer Testing";
             // 
-            // btnClearTestResults
+            // btnClearPhysicalTestResultsTable
             // 
-            this.btnClearTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearTestResults.Location = new System.Drawing.Point(1173, 798);
-            this.btnClearTestResults.Name = "btnClearTestResults";
-            this.btnClearTestResults.Size = new System.Drawing.Size(95, 40);
-            this.btnClearTestResults.TabIndex = 2;
-            this.btnClearTestResults.Text = "Clear";
-            this.btnClearTestResults.UseVisualStyleBackColor = true;
-            this.btnClearTestResults.Click += new System.EventHandler(this.btnClearTestResults_Click);
+            this.btnClearPhysicalTestResultsTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearPhysicalTestResultsTable.Location = new System.Drawing.Point(1164, 580);
+            this.btnClearPhysicalTestResultsTable.Name = "btnClearPhysicalTestResultsTable";
+            this.btnClearPhysicalTestResultsTable.Size = new System.Drawing.Size(95, 40);
+            this.btnClearPhysicalTestResultsTable.TabIndex = 5;
+            this.btnClearPhysicalTestResultsTable.Text = "Clear";
+            this.btnClearPhysicalTestResultsTable.UseVisualStyleBackColor = true;
+            this.btnClearPhysicalTestResultsTable.Click += new System.EventHandler(this.btnClearPhysicalTestResultsTable_Click);
             // 
-            // btnSaveTestResults
+            // btnSaveRFTestResults
             // 
-            this.btnSaveTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveTestResults.Location = new System.Drawing.Point(1343, 798);
-            this.btnSaveTestResults.Name = "btnSaveTestResults";
-            this.btnSaveTestResults.Size = new System.Drawing.Size(175, 40);
-            this.btnSaveTestResults.TabIndex = 1;
-            this.btnSaveTestResults.Text = "Save test results";
-            this.btnSaveTestResults.UseVisualStyleBackColor = true;
-            this.btnSaveTestResults.Click += new System.EventHandler(this.btnSaveTestResults_Click);
+            this.btnSaveRFTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveRFTestResults.Location = new System.Drawing.Point(1296, 580);
+            this.btnSaveRFTestResults.Name = "btnSaveRFTestResults";
+            this.btnSaveRFTestResults.Size = new System.Drawing.Size(272, 40);
+            this.btnSaveRFTestResults.TabIndex = 6;
+            this.btnSaveRFTestResults.Text = "Save RF/Physical layer test results";
+            this.btnSaveRFTestResults.UseVisualStyleBackColor = true;
+            this.btnSaveRFTestResults.Click += new System.EventHandler(this.btnSaveRFTestResults_Click);
+            // 
+            // dataGridViewRFTestResults
+            // 
+            this.dataGridViewRFTestResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewRFTestResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colmPointNo,
+            this.colmRadius,
+            this.colmAngle,
+            this.colmHeight,
+            this.colmFrequency,
+            this.colmBandwidth,
+            this.colmChannel,
+            this.colmTxPower,
+            this.colmRssi,
+            this.colmTimeStamp});
+            this.dataGridViewRFTestResults.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dataGridViewRFTestResults.Location = new System.Drawing.Point(3, 22);
+            this.dataGridViewRFTestResults.Name = "dataGridViewRFTestResults";
+            this.dataGridViewRFTestResults.RowTemplate.Height = 28;
+            this.dataGridViewRFTestResults.Size = new System.Drawing.Size(1568, 552);
+            this.dataGridViewRFTestResults.TabIndex = 4;
+            // 
+            // colmPointNo
+            // 
+            this.colmPointNo.HeaderText = "Point #";
+            this.colmPointNo.Name = "colmPointNo";
+            // 
+            // colmRadius
+            // 
+            this.colmRadius.HeaderText = "Radius (unit : mm)";
+            this.colmRadius.Name = "colmRadius";
+            // 
+            // colmAngle
+            // 
+            this.colmAngle.HeaderText = "Angle (unit : degree)";
+            this.colmAngle.Name = "colmAngle";
+            // 
+            // colmHeight
+            // 
+            this.colmHeight.HeaderText = "Height (unit : mm)";
+            this.colmHeight.Name = "colmHeight";
+            // 
+            // colmFrequency
+            // 
+            this.colmFrequency.HeaderText = "Frequency (unit : MHz)";
+            this.colmFrequency.Name = "colmFrequency";
+            // 
+            // colmBandwidth
+            // 
+            this.colmBandwidth.HeaderText = "Bandwidth (unit : MHz)";
+            this.colmBandwidth.Name = "colmBandwidth";
+            // 
+            // colmChannel
+            // 
+            this.colmChannel.HeaderText = "Channel";
+            this.colmChannel.Name = "colmChannel";
+            // 
+            // colmTxPower
+            // 
+            this.colmTxPower.HeaderText = "Tx Power (unit : dBm)";
+            this.colmTxPower.Name = "colmTxPower";
+            // 
+            // colmRssi
+            // 
+            this.colmRssi.HeaderText = "RSSI (unit : dBm)";
+            this.colmRssi.Name = "colmRssi";
+            // 
+            // colmTimeStamp
+            // 
+            this.colmTimeStamp.HeaderText = "Time stamp";
+            this.colmTimeStamp.Name = "colmTimeStamp";
+            // 
+            // groupBoxApplicationLayerTesting
+            // 
+            this.groupBoxApplicationLayerTesting.Controls.Add(this.dataGridViewTestResults);
+            this.groupBoxApplicationLayerTesting.Controls.Add(this.btnSaveTestResults);
+            this.groupBoxApplicationLayerTesting.Controls.Add(this.btnClearTestResults);
+            this.groupBoxApplicationLayerTesting.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBoxApplicationLayerTesting.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxApplicationLayerTesting.Name = "groupBoxApplicationLayerTesting";
+            this.groupBoxApplicationLayerTesting.Size = new System.Drawing.Size(1574, 600);
+            this.groupBoxApplicationLayerTesting.TabIndex = 7;
+            this.groupBoxApplicationLayerTesting.TabStop = false;
+            this.groupBoxApplicationLayerTesting.Text = "Test results for Application Layer Testing";
             // 
             // dataGridViewTestResults
             // 
@@ -601,15 +738,13 @@
             this.columnUdpDownlinkThroughput,
             this.columnUdpDownlinkLatency,
             this.columnUdpDownlinkPacketLoss,
-            this.columnRssi,
-            this.columnSnr,
             this.columnTimeStamp});
             this.dataGridViewTestResults.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridViewTestResults.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewTestResults.Location = new System.Drawing.Point(3, 22);
             this.dataGridViewTestResults.Name = "dataGridViewTestResults";
             this.dataGridViewTestResults.ReadOnly = true;
             this.dataGridViewTestResults.RowTemplate.Height = 28;
-            this.dataGridViewTestResults.Size = new System.Drawing.Size(1574, 710);
+            this.dataGridViewTestResults.Size = new System.Drawing.Size(1568, 525);
             this.dataGridViewTestResults.TabIndex = 0;
             // 
             // columnPointNo
@@ -644,7 +779,7 @@
             // 
             // columnBand
             // 
-            this.columnBand.HeaderText = "Band (unit : MHz)";
+            this.columnBand.HeaderText = "Bandwidth (unit : MHz)";
             this.columnBand.Name = "columnBand";
             this.columnBand.ReadOnly = true;
             // 
@@ -662,25 +797,25 @@
             // 
             // columnTcpUplinkThroughput
             // 
-            this.columnTcpUplinkThroughput.HeaderText = "TCP uplink throughput";
+            this.columnTcpUplinkThroughput.HeaderText = "TCP uplink throughput (unit : Mbits/sec)";
             this.columnTcpUplinkThroughput.Name = "columnTcpUplinkThroughput";
             this.columnTcpUplinkThroughput.ReadOnly = true;
             // 
             // columnTcpDownlinkThroughput
             // 
-            this.columnTcpDownlinkThroughput.HeaderText = "TCP downlink throughput";
+            this.columnTcpDownlinkThroughput.HeaderText = "TCP downlink throughput (unit : Mbits/sec)";
             this.columnTcpDownlinkThroughput.Name = "columnTcpDownlinkThroughput";
             this.columnTcpDownlinkThroughput.ReadOnly = true;
             // 
             // columnUdpUplinkThroughput
             // 
-            this.columnUdpUplinkThroughput.HeaderText = "UDP uplink throughput";
+            this.columnUdpUplinkThroughput.HeaderText = "UDP uplink throughput (unit : Mbits/sec)";
             this.columnUdpUplinkThroughput.Name = "columnUdpUplinkThroughput";
             this.columnUdpUplinkThroughput.ReadOnly = true;
             // 
             // columnUdpUplinkLatency
             // 
-            this.columnUdpUplinkLatency.HeaderText = "UDP uplink latency";
+            this.columnUdpUplinkLatency.HeaderText = "UDP uplink latency (unit : ms)";
             this.columnUdpUplinkLatency.Name = "columnUdpUplinkLatency";
             this.columnUdpUplinkLatency.ReadOnly = true;
             // 
@@ -692,13 +827,13 @@
             // 
             // columnUdpDownlinkThroughput
             // 
-            this.columnUdpDownlinkThroughput.HeaderText = "UDP downlink throughput";
+            this.columnUdpDownlinkThroughput.HeaderText = "UDP downlink throughput (unit : Mbits/sec)";
             this.columnUdpDownlinkThroughput.Name = "columnUdpDownlinkThroughput";
             this.columnUdpDownlinkThroughput.ReadOnly = true;
             // 
             // columnUdpDownlinkLatency
             // 
-            this.columnUdpDownlinkLatency.HeaderText = "UDP downlink latency";
+            this.columnUdpDownlinkLatency.HeaderText = "UDP downlink latency (unit : ms)";
             this.columnUdpDownlinkLatency.Name = "columnUdpDownlinkLatency";
             this.columnUdpDownlinkLatency.ReadOnly = true;
             // 
@@ -708,23 +843,41 @@
             this.columnUdpDownlinkPacketLoss.Name = "columnUdpDownlinkPacketLoss";
             this.columnUdpDownlinkPacketLoss.ReadOnly = true;
             // 
-            // columnRssi
-            // 
-            this.columnRssi.HeaderText = "RSSI (unit : dBm)";
-            this.columnRssi.Name = "columnRssi";
-            this.columnRssi.ReadOnly = true;
-            // 
-            // columnSnr
-            // 
-            this.columnSnr.HeaderText = "SNR (unit : dB)";
-            this.columnSnr.Name = "columnSnr";
-            this.columnSnr.ReadOnly = true;
-            // 
             // columnTimeStamp
             // 
             this.columnTimeStamp.HeaderText = "Time stamp";
             this.columnTimeStamp.Name = "columnTimeStamp";
             this.columnTimeStamp.ReadOnly = true;
+            // 
+            // btnSaveTestResults
+            // 
+            this.btnSaveTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveTestResults.Location = new System.Drawing.Point(1296, 553);
+            this.btnSaveTestResults.Name = "btnSaveTestResults";
+            this.btnSaveTestResults.Size = new System.Drawing.Size(272, 40);
+            this.btnSaveTestResults.TabIndex = 1;
+            this.btnSaveTestResults.Text = "Save application layer test results";
+            this.btnSaveTestResults.UseVisualStyleBackColor = true;
+            this.btnSaveTestResults.Click += new System.EventHandler(this.btnSaveTestResults_Click);
+            // 
+            // btnClearTestResults
+            // 
+            this.btnClearTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearTestResults.Location = new System.Drawing.Point(1164, 553);
+            this.btnClearTestResults.Name = "btnClearTestResults";
+            this.btnClearTestResults.Size = new System.Drawing.Size(95, 40);
+            this.btnClearTestResults.TabIndex = 2;
+            this.btnClearTestResults.Text = "Clear";
+            this.btnClearTestResults.UseVisualStyleBackColor = true;
+            this.btnClearTestResults.Click += new System.EventHandler(this.btnClearTestResults_Click);
+            // 
+            // labelFilePathToSave
+            // 
+            this.labelFilePathToSave.AutoSize = true;
+            this.labelFilePathToSave.Location = new System.Drawing.Point(1173, 573);
+            this.labelFilePathToSave.Name = "labelFilePathToSave";
+            this.labelFilePathToSave.Size = new System.Drawing.Size(0, 20);
+            this.labelFilePathToSave.TabIndex = 3;
             // 
             // progressBarTesting
             // 
@@ -757,39 +910,6 @@
             this.modifySettingsToolStripMenuItem.Text = "Modify settings";
             this.modifySettingsToolStripMenuItem.Click += new System.EventHandler(this.modifySettingsToolStripMenuItem_Click);
             // 
-            // groupBoxOption
-            // 
-            this.groupBoxOption.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxOption.Controls.Add(this.radioBtnPhyLayerTesting);
-            this.groupBoxOption.Controls.Add(this.radioBtnAppLayerTesting);
-            this.groupBoxOption.Location = new System.Drawing.Point(1273, 9);
-            this.groupBoxOption.Name = "groupBoxOption";
-            this.groupBoxOption.Size = new System.Drawing.Size(293, 129);
-            this.groupBoxOption.TabIndex = 4;
-            this.groupBoxOption.TabStop = false;
-            this.groupBoxOption.Text = "Select test section";
-            // 
-            // radioBtnAppLayerTesting
-            // 
-            this.radioBtnAppLayerTesting.AutoSize = true;
-            this.radioBtnAppLayerTesting.Checked = true;
-            this.radioBtnAppLayerTesting.Location = new System.Drawing.Point(6, 40);
-            this.radioBtnAppLayerTesting.Name = "radioBtnAppLayerTesting";
-            this.radioBtnAppLayerTesting.Size = new System.Drawing.Size(266, 24);
-            this.radioBtnAppLayerTesting.TabIndex = 0;
-            this.radioBtnAppLayerTesting.Text = "Application Layer Testing section";
-            this.radioBtnAppLayerTesting.UseVisualStyleBackColor = true;
-            // 
-            // radioBtnPhyLayerTesting
-            // 
-            this.radioBtnPhyLayerTesting.AutoSize = true;
-            this.radioBtnPhyLayerTesting.Location = new System.Drawing.Point(6, 86);
-            this.radioBtnPhyLayerTesting.Name = "radioBtnPhyLayerTesting";
-            this.radioBtnPhyLayerTesting.Size = new System.Drawing.Size(245, 24);
-            this.radioBtnPhyLayerTesting.TabIndex = 1;
-            this.radioBtnPhyLayerTesting.Text = "Physical Layer Testing section";
-            this.radioBtnPhyLayerTesting.UseVisualStyleBackColor = true;
-            // 
             // GMVehicleAntennaTesting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -807,16 +927,19 @@
             this.groupBoxTestPointsSetting.PerformLayout();
             this.tabControlTesting.ResumeLayout(false);
             this.tabPageField.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPointSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCar)).EndInit();
+            this.groupBoxOption.ResumeLayout(false);
+            this.groupBoxOption.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPointSettings)).EndInit();
             this.tabPageIperfLog.ResumeLayout(false);
             this.tabPageIperfLog.PerformLayout();
             this.tabPageResults.ResumeLayout(false);
             this.tabPageResults.PerformLayout();
+            this.groupBoxRFTesting.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRFTestResults)).EndInit();
+            this.groupBoxApplicationLayerTesting.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestResults)).EndInit();
             this.contextMenuStripModify.ResumeLayout(false);
-            this.groupBoxOption.ResumeLayout(false);
-            this.groupBoxOption.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -839,7 +962,6 @@
         private System.Windows.Forms.TabControl tabControlTesting;
         private System.Windows.Forms.TabPage tabPageField;
         private System.Windows.Forms.TabPage tabPageIperfLog;
-        private System.Windows.Forms.PictureBox pictureBoxCar;
         private System.Windows.Forms.TabPage tabPageResults;
         private System.Windows.Forms.TextBox textBoxIperfTestLog;
         private System.Windows.Forms.Label labelServerIP;
@@ -865,6 +987,24 @@
         private System.Windows.Forms.DataGridView dataGridViewPointSettings;
         private System.Windows.Forms.Label labelTxPower;
         private System.Windows.Forms.TextBox textBoxTxPower;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colSelectedFlag;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPointNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRadius;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAngle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHeight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFreq;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBandwidth;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colChannel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPower;
+        private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.ComboBox comboBoxChannel;
+        private System.Windows.Forms.GroupBox groupBoxOption;
+        private System.Windows.Forms.RadioButton radioBtnAppLayerTesting;
+        private System.Windows.Forms.RadioButton radioBtnPhyLayerTesting;
+        private System.Windows.Forms.DataGridView dataGridViewRFTestResults;
+        private System.Windows.Forms.Button btnSaveRFTestResults;
+        private System.Windows.Forms.Button btnClearPhysicalTestResultsTable;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnPointNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnRadius;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnAngle;
@@ -881,23 +1021,19 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn columnUdpDownlinkThroughput;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnUdpDownlinkLatency;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnUdpDownlinkPacketLoss;
-        private System.Windows.Forms.DataGridViewTextBoxColumn columnRssi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn columnSnr;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnTimeStamp;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colSelectedFlag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPointNo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colRadius;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAngle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHeight;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFreq;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBandwidth;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colChannel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPower;
-        private System.Windows.Forms.Button btnLoad;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.ComboBox comboBoxChannel;
-        private System.Windows.Forms.GroupBox groupBoxOption;
-        private System.Windows.Forms.RadioButton radioBtnAppLayerTesting;
-        private System.Windows.Forms.RadioButton radioBtnPhyLayerTesting;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmPointNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmRadius;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmAngle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmHeight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmFrequency;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmBandwidth;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmChannel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmTxPower;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmRssi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colmTimeStamp;
+        private System.Windows.Forms.GroupBox groupBoxApplicationLayerTesting;
+        private System.Windows.Forms.GroupBox groupBoxRFTesting;
+        private System.Windows.Forms.PictureBox pictureBoxCar;
     }
 }
