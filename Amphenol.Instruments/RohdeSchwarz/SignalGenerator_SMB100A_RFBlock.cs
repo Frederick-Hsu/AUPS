@@ -392,13 +392,92 @@ namespace Amphenol.Instruments.RohdeSchwarz
             return state;
         }
 
-        /*
-        public int ActivatePowerSensorControlState(State state)
+        /* :SENS:POW:STATus:DEV? */
+        public int QueryPowerSensorConnectionStatus(out string status)
         {
             int error = 0, count = 0;
-            string command = ":SOURce:POWer:SPC:STATe " + state + "\n";
+            string command = ":SENSe:POWer:STATus:DEVice?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            status = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
         }
-         */
+
+        /* SENS:POW:SNUM? */
+        public int QueryConnectedPowerSensorSerialNumber(out string serialNumber)
+        {
+            int state = 0, count = 0;
+            string command = ":SENSe:POWer:SNUMer?\n";
+            byte[] response = new byte[256];
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            state = visa32.viRead(session, response, 256, out count);
+            serialNumber = Encoding.ASCII.GetString(response, 0, count - 1);
+            return state;
+        }
+
+        /* :INIT:POW:CONT ON */
+        public int SwitchOnOffLocalStateOfContinuousPowerMeasurement(State state)
+        {
+            int error = 0, count = 0;
+            string command = ":INITiate:POWer:CONTinuous " + state + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :INIT:POW:CONT? */
+        public int QueryLocalStateOfContinuousPowerMeasurement(out string state)
+        {
+            int error = 0, count = 0;
+            string command = ":INITiate:POWer:CONTinuous?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+            state = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
+
+        /* SENS:UNIT:POW DNM */
+        public int SelectUnitForPowerSensorMeasurement(string unit /* only 3 options available : dBm, dBuV, Watt */)
+        {
+            int state = 0, count = 0;
+            string command = ":SENSe:UNIT:POWer " + unit.ToUpper() + "\n", response;
+            state = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :READ:POW? */
+        public int RetrievePowerSensorMeasurementValues(out double peakLevel, out double averageLevel)
+        {
+            int error = 0, count = 0;
+            string command = ":READ:POWer?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(session, response, 256, out count);
+
+            string[] values = Encoding.ASCII.GetString(response, 0, count - 1).Split(',');
+            averageLevel = Convert.ToDouble(values[0]);
+            peakLevel = Convert.ToDouble(values[1]);
+            return error;
+        }
+
+        /* :SENS:POW:DISP:PERM:STAT ON */
+        public int ActivatePermanentIndicationForPowerSensorMeasurement(State state)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:POWer:DISPlay:PERManent:STATe " + state + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
+
+        /* :SENS:POW:DISP:PERM:PRI AVER */
+        public int SelectPowerSensorMeasurementDisplayPriority(string priority /* only 2 priorities available : PEAK, AVERage */)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe:POWer:DISPlay:PERManent:PRIority " + priority.ToUpper() + "\n", response;
+            error = visa32.viWrite(session, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QuerySystemError(out response);
+        }
         #endregion
     }
 }
