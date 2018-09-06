@@ -395,24 +395,22 @@ namespace AUPS.Tools
                 CloseIperfProcess();
                 progressBarTesting.Value = 80;
 
-                FillTestResultsTable(pointNo,
-                                 radius.ToString(),
-                                 angle.ToString(),
-                                 height.ToString(),
-                                 freq.ToString(),
-                                 bandWidth.ToString(),
-                                 channel.ToString(),
-                                 power.ToString(),
-                                 tcpUplinkThroughput,
-                                 tcpDownlinkThroughput,
-                                 udpUplinkThroughput,
-                                 udpUplinkLatency,
-                                 udpUplinkPacketLoss,
-                                 udpDownlinkThroughput,
-                                 udpDownlinkLatency,
-                                 udpDownlinkPacketLoss,
-                                 "",
-                                 "");
+                FillApplicationLayerTestResultsTable(pointNo,
+                                                     radius.ToString(),
+                                                     angle.ToString(),
+                                                     height.ToString(),
+                                                     freq.ToString(),
+                                                     bandWidth.ToString(),
+                                                     channel.ToString(),
+                                                     power.ToString(),
+                                                     tcpUplinkThroughput,
+                                                     tcpDownlinkThroughput,
+                                                     udpUplinkThroughput,
+                                                     udpUplinkLatency,
+                                                     udpUplinkPacketLoss,
+                                                     udpDownlinkThroughput,
+                                                     udpDownlinkLatency,
+                                                     udpDownlinkPacketLoss);
                 progressBarTesting.Value = 100;
             }
             else if (radioBtnPhyLayerTesting.Checked == true)
@@ -422,24 +420,15 @@ namespace AUPS.Tools
                 int error = MeasureRSSI(freq, bandWidth, power, out rssiValue);
                 progressBarTesting.Value = 95;
 
-                FillTestResultsTable(pointNo,
-                                     radius.ToString(),
-                                     angle.ToString(),
-                                     height.ToString(),
-                                     freq.ToString(),
-                                     bandWidth.ToString(),
-                                     channel.ToString(),
-                                     power.ToString(),
-                                     "", // tcpUplinkThroughput,
-                                     "", // tcpDownlinkThroughput,
-                                     "", // udpUplinkThroughput,
-                                     "", // udpUplinkLatency,
-                                     "", // udpUplinkPacketLoss,
-                                     "", // udpDownlinkThroughput,
-                                     "", // udpDownlinkLatency,
-                                     "", // udpDownlinkPacketLoss,
-                                     rssiValue.ToString(),
-                                     "");
+                FillRFTestResultsTable(pointNo,
+                                        radius.ToString(),
+                                        angle.ToString(),
+                                        height.ToString(),
+                                        freq.ToString(),
+                                        bandWidth.ToString(),
+                                        channel.ToString(),
+                                        power.ToString(),
+                                        rssiValue.ToString());
                 progressBarTesting.Value = 100;
             }
         }
@@ -523,24 +512,22 @@ namespace AUPS.Tools
         }
 #endregion
 
-        private void FillTestResultsTable(string pointNo,
-                                          string radius,
-                                          string angle,
-                                          string height,
-                                          string frequecy,
-                                          string band,
-                                          string channel,
-                                          string power,
-                                          string tcpUplinkThroughput,
-                                          string tcpDownlinkThroughput,
-                                          string udpUplinkThroughput,
-                                          string udpUplinkLatency,
-                                          string udpUplinkPacketLoss,
-                                          string udpDownlinkThroughput,
-                                          string udpDownlinkLatency,
-                                          string udpDownlinkPacketLoss,
-                                          string rssi,
-                                          string snr)
+        private void FillApplicationLayerTestResultsTable(string pointNo,
+                                                          string radius,
+                                                          string angle,
+                                                          string height,
+                                                          string frequecy,
+                                                          string band,
+                                                          string channel,
+                                                          string power,
+                                                          string tcpUplinkThroughput,
+                                                          string tcpDownlinkThroughput,
+                                                          string udpUplinkThroughput,
+                                                          string udpUplinkLatency,
+                                                          string udpUplinkPacketLoss,
+                                                          string udpDownlinkThroughput,
+                                                          string udpDownlinkLatency,
+                                                          string udpDownlinkPacketLoss)
         {
             int existedRows = dataGridViewTestResults.Rows.Add();
 
@@ -560,9 +547,31 @@ namespace AUPS.Tools
             dataGridViewTestResults.Rows[existedRows].Cells[13].Value = udpDownlinkThroughput;
             dataGridViewTestResults.Rows[existedRows].Cells[14].Value = udpDownlinkLatency;
             dataGridViewTestResults.Rows[existedRows].Cells[15].Value = udpDownlinkPacketLoss;
-            dataGridViewTestResults.Rows[existedRows].Cells[16].Value = rssi;
-            dataGridViewTestResults.Rows[existedRows].Cells[17].Value = snr;
-            dataGridViewTestResults.Rows[existedRows].Cells[18].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            dataGridViewTestResults.Rows[existedRows].Cells[16].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        private void FillRFTestResultsTable(string pointNo,
+                                            string radius,
+                                            string angle,
+                                            string height,
+                                            string frequency,
+                                            string band,
+                                            string channel,
+                                            string power,
+                                            string rssi)
+        {
+            int existedRows = dataGridViewRFTestResults.Rows.Add();
+
+            dataGridViewRFTestResults.Rows[existedRows].Cells[0].Value = pointNo;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[1].Value = radius;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[2].Value = angle;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[3].Value = height;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[4].Value = frequency;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[5].Value = band;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[6].Value = channel;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[7].Value = power;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[8].Value = rssi;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
 #if false
@@ -603,7 +612,7 @@ namespace AUPS.Tools
         {
             labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
         }
-#endregion
+        #endregion
 #endif
 
         private void btnClearTestResults_Click(object sender, EventArgs e)
@@ -611,11 +620,16 @@ namespace AUPS.Tools
             dataGridViewTestResults.Rows.Clear();
         }
 
+        private void btnClearPhysicalTestResultsTable_Click(object sender, EventArgs e)
+        {
+            dataGridViewRFTestResults.Rows.Clear();
+        }
+
         private void btnSaveTestResults_Click(object sender, EventArgs e)
         {
             if (labelFilePathToSave.Text != string.Empty)
             {
-                SaveTestResultsToCsv(labelFilePathToSave.Text);
+                SaveTestResultsToCsv(labelFilePathToSave.Text, dataGridViewTestResults);
                 return;
             }
 
@@ -629,14 +643,28 @@ namespace AUPS.Tools
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 labelFilePathToSave.Text = dlg.FileName;
-                SaveTestResultsToCsv(dlg.FileName);
+                SaveTestResultsToCsv(dlg.FileName, dataGridViewTestResults);
             }
         }
 
-        private void SaveTestResultsToCsv(string csvFileName)
+        private void btnSaveRFTestResults_Click(object sender, EventArgs e)
         {
-            int cols = dataGridViewTestResults.Columns.Count;
-            int rows = dataGridViewTestResults.Rows.Count;
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save the test results into .csv file you specified";
+            dlg.InitialDirectory = "";
+            dlg.DefaultExt = "csv";
+            dlg.Filter = "CSV file | *.csv";
+            dlg.AddExtension = true;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                SaveTestResultsToCsv(dlg.FileName, dataGridViewRFTestResults);
+            }
+        }
+
+        private void SaveTestResultsToCsv(string csvFileName, DataGridView dgv)
+        {
+            int cols = dgv.Columns.Count;
+            int rows = dgv.Rows.Count;
             int colIndex = 0, rowIndex = 0;
 
             System.IO.FileStream fs = new System.IO.FileStream(csvFileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
@@ -645,7 +673,7 @@ namespace AUPS.Tools
             string title = "";
             for (colIndex = 0; colIndex < cols; colIndex++)
             {
-                title += dataGridViewTestResults.Columns[colIndex].HeaderText;
+                title += dgv.Columns[colIndex].HeaderText;
                 if (colIndex < (cols -1))   /* Caution : the last column cannot append the comma(",") */
                 {
                     title += ",";
@@ -659,7 +687,7 @@ namespace AUPS.Tools
             {
                 for (colIndex = 0; colIndex < cols; colIndex++)
                 {
-                    line += (dataGridViewTestResults.Rows[rowIndex].Cells[colIndex].Value as string);
+                    line += (dgv.Rows[rowIndex].Cells[colIndex].Value as string);
                     if (colIndex < (cols-1))
                     {
                         line += ",";
@@ -891,7 +919,5 @@ namespace AUPS.Tools
             radiusList.Clear();
             return;
         }
-
-
     }
 }
