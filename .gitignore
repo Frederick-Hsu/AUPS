@@ -16,6 +16,8 @@
 *.jpeg
 *.csv
 *.xlsx
+*.exe
+*.application
 
 XML/
 Sequence/
@@ -41,6 +43,7 @@ ManipulateProgressBar/
 UserChangeControlLocationSizeInRunTime/
 # RsScopeMeasuring/
 RS_Scope/
+Application Files/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
