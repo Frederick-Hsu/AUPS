@@ -339,7 +339,7 @@ namespace AUPS.Tools
             {
                 if (measurements[index].Contains("bits/sec") == true)
                 {
-                    bandWidth = measurements[index - 1] + measurements[index];
+                    bandWidth = measurements[index - 1] /*+ measurements[index] */;
                     break;
                 }
             }
@@ -368,12 +368,12 @@ namespace AUPS.Tools
             {
                 if (measurements[index].Contains("bits/sec") == true)
                 {
-                    throughput = measurements[index - 1] + measurements[index];
+                    throughput = measurements[index - 1] /* + measurements[index] */;
                     continue;
                 }
                 if (measurements[index].Contains("ms") == true)
                 {
-                    latency = measurements[index - 1] + measurements[index];
+                    latency = measurements[index - 1] /* + measurements[index] */;
                     continue;
                 }
                 if (measurements[index].Contains("%)") == true)
