@@ -1,0 +1,92 @@
+# RTB Oscilloscope example
+# Before you start this script, you must define the "RTB" Resource ID in Menu Settings -> Instruments
+# with the fitting VISA connection. Don't forget to check the column "Enabled"
+# For more details refer to 1MA196 Using R&S®Forum Application for Instrument Remote Control
+
+# The file VisaDeviceExtended.py must be in the same folder as this file
+# It contains extension function for R&S Forum VisaDevice class and new instrument-related exceptions
+
+import VisaDeviceExtended
+reload (VisaDeviceExtended)
+
+
+# try block to catch any InstrumentErrorException()
+try:
+    # -----------------------------------------------------------
+    # Initialization: In R&S Forum opening a connection is performed automaticaly
+    # -----------------------------------------------------------
+    RTB.instrument.write_termination = '\n' # Every write string will be sent with LF added to the end
+    RTB.ext_clear_status() # Clear instrument io buffers and status
+    print RTB.query('*IDN?') # Query the Identification string
+    RTB.write('*RST;*CLS') # Reset the instrument, clear the Error queue
+    RTB.ext_error_checking() # Error Checking after Initialization block
+    # -----------------------------------------------------------
+    # Basic Settings:
+    # -----------------------------------------------------------
+    RTB.write('TIM:ACQT 0.01') # 10ms Acquisition time
+    RTB.write('CHAN1:RANG 5.0') # Horizontal range 5V (0.5V/div)
+    RTB.write('CHAN1:OFFS 0.0') # Offset 0
+    RTB.write('CHAN1:COUP ACL') # Coupling AC 1MOhm
+    RTB.write('CHAN1:STAT ON') # Switch Channel 1 ON
+    RTB.ext_error_checking() # Error Checking after Basic Settings block
+    # -----------------------------------------------------------
+    # Trigger Settings:
+    # -----------------------------------------------------------
+    RTB.write('TRIG:A:MODE AUTO') # Trigger Auto mode in case of no signal is applied
+    RTB.write('TRIG:A:TYPE EDGE;:TRIG:A:EDGE:SLOP POS') # Trigger type Edge Positive
+    RTB.write('TRIG:A:SOUR CH1') # Trigger source CH1
+    RTB.write('TRIG:A:LEV1 0.05') # Trigger level 0.05V
+    RTB.query('*OPC?') # Using *OPC? query waits until all the instrument settings are finished
+    RTB.ext_error_checking() # Error Checking after Trigger Settings block
+    
+    # -----------------------------------------------------------
+    # SyncPoint 'SettingsApplied' - all the settings were applied
+    # -----------------------------------------------------------
+    # Arming the RTB
+    # -----------------------------------------------------------
+    RTB.instrument.timeout = 2.0 # Acquisition timeout in seconds - set it higher than the acquisition time
+    RTB.write('SING')
+    # -----------------------------------------------------------
+    # DUT_Generate_Signal() - in our case we use Probe compensation signal
+    # where the trigger event (positive edge) is reoccuring
+    # -----------------------------------------------------------
+    print('Waiting for the acquisition to finish... ')
+    RTB.query('*OPC?') # Using *OPC? query waits until the instrument finished the acquisition
+    RTB.ext_error_checking() # Error Checking after the acquisition is finished
+    # -----------------------------------------------------------
+    # SyncPoint 'AcquisitionFinished' - the results are ready
+    # -----------------------------------------------------------
+    # Fetching the waveform in ASCII format
+    # -----------------------------------------------------------
+    print('Fetching waveform in ASCII format... ')
+    waveformASCII = RTB.instrument.query_ascii_values('FORM ASC;:CHAN1:DATA?')
+    print 'ASCII data samples read: {}'.format(len(waveformASCII))
+    RTB.ext_error_checking() # Error Checking after the data transfer
+    # -----------------------------------------------------------
+    # Fetching the trace in Binary format
+    # Transfer of traces in binary format is faster.
+    # The waveformBIN data and waveformASC data are however the same.
+    # -----------------------------------------------------------
+    print('Fetching waveform in binary format... ')
+    waveformBIN = RTB.instrument.query_binary_values('FORM:BORD LSBF;:FORM REAL;:CHAN1:DATA?')
+    print 'Binary data samples read: {}'.format(len(waveformBIN))
+    RTB.ext_error_checking() # Error Checking after the data transfer
+    # -----------------------------------------------------------
+    # Making an instrument screenshot and transferring the file to the PC
+    # -----------------------------------------------------------
+    print('Taking instrument screenshot and saving it to the PC... ')
+    fileCatalog  = RTB.query('MMEM:CAT? \'*.PNG\'') # Retrieve the file catalog to see if the screenshot file already exists
+    if 'dev_screenshot.png' in fileCatalog.lower():
+        RTB.write(':MMEM:DEL \'Dev_Screenshot.png\'') # Delete the file if it already exists, otherwise you get 'Execution error'
+    RTB.write('HCOP:LANG PNG;:MMEM:NAME \'Dev_Screenshot\'') # Hardcopy settings for taking a screenshot - notice no file extention here
+    RTB.write('HCOP:IMM') # Make the screenshot now
+    RTB.query('*OPC?') # Wait for the screenshot to be saved
+    RTB.ext_error_checking() # Error Checking after the screenshot creation
+    RTB.ext_query_bin_data_to_file('MMEM:DATA? \'Dev_Screenshot.png\'', r'c:\Temp\PC_Screenshot.png')
+    print('saved to PC c:\\Temp\\PC_Screenshot.png\n')
+    RTB.ext_error_checking() # Error Checking at the end of the program
+
+except VisaDeviceExtended.InstrumentErrorException, e:
+    # Catching instrument error exception and showing its content
+    print 'Instrument error(s) occured:\n' + e.message
+

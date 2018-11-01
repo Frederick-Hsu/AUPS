@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RS_Scope")]
+[assembly: AssemblyTitle("RsScopeMeasuring")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RS_Scope")]
+[assembly: AssemblyProduct("RsScopeMeasuring")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3ecce526-582d-43a9-bac8-2f4e424b4e57")]
+[assembly: Guid("6bd827ed-1eae-4dc4-befe-5177fa70ff2f")]
 
 // Version information for an assembly consists of the following four values:
 //

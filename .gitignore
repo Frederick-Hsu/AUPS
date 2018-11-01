@@ -16,6 +16,9 @@
 *.jpeg
 *.csv
 *.xlsx
+*.exe
+*.application
+*.pyc
 
 XML/
 Sequence/
@@ -39,7 +42,9 @@ Drawing/
 AsyncExecuteDOSProcess/
 ManipulateProgressBar/
 UserChangeControlLocationSizeInRunTime/
-RsScopeMeasuring/
+# RsScopeMeasuring/
+RS_Scope/
+Application Files/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
