@@ -117,6 +117,8 @@ namespace AUPS.Tools
                                                     new WLAN_Channel_Freq { channelNo =  14, centerFreq = 2484, bandwidth = 22 },
                                                     /* 5.0GHz channel list, including 802.11a/ac */
                                                     new WLAN_Channel_Freq { channelNo =  16, centerFreq = 5080, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  32, centerFreq = 5160, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  34, centerFreq = 5170, bandwidth = 40 },
                                                     new WLAN_Channel_Freq { channelNo =  36, centerFreq = 5180, bandwidth = 20 },
                                                     new WLAN_Channel_Freq { channelNo =  38, centerFreq = 5190, bandwidth = 40 },
                                                     new WLAN_Channel_Freq { channelNo =  40, centerFreq = 5200, bandwidth = 20 },
@@ -132,6 +134,8 @@ namespace AUPS.Tools
                                                     new WLAN_Channel_Freq { channelNo =  60, centerFreq = 5300, bandwidth = 20 },
                                                     new WLAN_Channel_Freq { channelNo =  62, centerFreq = 5310, bandwidth = 40 },
                                                     new WLAN_Channel_Freq { channelNo =  64, centerFreq = 5320, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  68, centerFreq = 5340, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  96, centerFreq = 5480, bandwidth = 20 },
                                                     new WLAN_Channel_Freq { channelNo = 100, centerFreq = 5500, bandwidth = 20 },
                                                     new WLAN_Channel_Freq { channelNo = 102, centerFreq = 5510, bandwidth = 40 },
                                                     new WLAN_Channel_Freq { channelNo = 104, centerFreq = 5520, bandwidth = 20 },
@@ -248,7 +252,7 @@ namespace AUPS.Tools
 
         private void MeasureUdpUplinkPerformance(out string throughput, out string latency, out string packetLoss)
         {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 1G\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 300M\r";
 
             iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
             iPerfCmdProc.StandardInput.AutoFlush = true;
@@ -264,7 +268,7 @@ namespace AUPS.Tools
 
         private void MeasureUdpDownlinkPerformance(out string throughput, out string latency, out string packetLoass)
         {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 1G --reverse\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 300M --reverse\r";
 
             iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
             iPerfCmdProc.StandardInput.AutoFlush = true;
@@ -280,7 +284,7 @@ namespace AUPS.Tools
 
         private void MeasureTcpUplinkPerformance(out string throughput)
         {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 1G\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 300M\r";
 
             iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
             iPerfCmdProc.StandardInput.AutoFlush = true;
@@ -296,7 +300,7 @@ namespace AUPS.Tools
 
         private void MeasureTcpDownlinkPerformance(out string throughput)
         {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 1G --reverse\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 300M --reverse\r";
 
             iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
             iPerfCmdProc.StandardInput.AutoFlush = true;
