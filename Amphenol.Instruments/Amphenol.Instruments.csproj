@@ -57,6 +57,7 @@
     <Compile Include="RohdeSchwarz\DigitalOscilloscope_RTB2004.cs" />
     <Compile Include="RohdeSchwarz\SignalGenerator_SMB100A.cs" />
     <Compile Include="RohdeSchwarz\SignalGenerator_SMB100A_RFBlock.cs" />
+    <Compile Include="RohdeSchwarz\VectorNetworkAnalyzer_ZVB8.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
