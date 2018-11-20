@@ -71,6 +71,16 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.dataGridViewPointSettings = new System.Windows.Forms.DataGridView();
+            this.colSelectedFlag = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colPointNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRadius = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAngle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPolarization = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFreq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBandwidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPower = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageIperfLog = new System.Windows.Forms.TabPage();
             this.textBoxIperfTestLog = new System.Windows.Forms.TextBox();
             this.tabPageResults = new System.Windows.Forms.TabPage();
@@ -116,16 +126,8 @@
             this.contextMenuStripModify = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeCurrentTestPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.colSelectedFlag = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colPointNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRadius = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAngle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPolarization = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFreq = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBandwidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPower = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.labelPacketSize = new System.Windows.Forms.Label();
+            this.numericUpDownPacketSize = new System.Windows.Forms.NumericUpDown();
             this.groupBoxTestPointsSetting.SuspendLayout();
             this.tabControlTesting.SuspendLayout();
             this.tabPageField.SuspendLayout();
@@ -139,11 +141,14 @@
             this.groupBoxApplicationLayerTesting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestResults)).BeginInit();
             this.contextMenuStripModify.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPacketSize)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxTestPointsSetting
             // 
             this.groupBoxTestPointsSetting.AutoSize = true;
+            this.groupBoxTestPointsSetting.Controls.Add(this.numericUpDownPacketSize);
+            this.groupBoxTestPointsSetting.Controls.Add(this.labelPacketSize);
             this.groupBoxTestPointsSetting.Controls.Add(this.labelScaleDownRatio);
             this.groupBoxTestPointsSetting.Controls.Add(this.comboBoxScaleDownRatio);
             this.groupBoxTestPointsSetting.Controls.Add(this.comboBoxAntennaPolarization);
@@ -596,6 +601,63 @@
             this.dataGridViewPointSettings.Size = new System.Drawing.Size(556, 238);
             this.dataGridViewPointSettings.TabIndex = 1;
             // 
+            // colSelectedFlag
+            // 
+            this.colSelectedFlag.HeaderText = "Selected";
+            this.colSelectedFlag.Name = "colSelectedFlag";
+            this.colSelectedFlag.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSelectedFlag.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colPointNo
+            // 
+            this.colPointNo.HeaderText = "Point No.";
+            this.colPointNo.Name = "colPointNo";
+            this.colPointNo.ReadOnly = true;
+            // 
+            // colRadius
+            // 
+            this.colRadius.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colRadius.HeaderText = "Radius";
+            this.colRadius.Name = "colRadius";
+            this.colRadius.ReadOnly = true;
+            this.colRadius.Width = 81;
+            // 
+            // colAngle
+            // 
+            this.colAngle.HeaderText = "Angle";
+            this.colAngle.Name = "colAngle";
+            this.colAngle.ReadOnly = true;
+            // 
+            // colHeight
+            // 
+            this.colHeight.HeaderText = "Height";
+            this.colHeight.Name = "colHeight";
+            // 
+            // colPolarization
+            // 
+            this.colPolarization.HeaderText = "Antenna Polarization";
+            this.colPolarization.Name = "colPolarization";
+            // 
+            // colFreq
+            // 
+            this.colFreq.HeaderText = "Freq.";
+            this.colFreq.Name = "colFreq";
+            // 
+            // colBandwidth
+            // 
+            this.colBandwidth.HeaderText = "Bandwidth";
+            this.colBandwidth.Name = "colBandwidth";
+            // 
+            // colChannel
+            // 
+            this.colChannel.HeaderText = "Channel";
+            this.colChannel.Name = "colChannel";
+            // 
+            // colPower
+            // 
+            this.colPower.HeaderText = "Power";
+            this.colPower.Name = "colPower";
+            // 
             // tabPageIperfLog
             // 
             this.tabPageIperfLog.Controls.Add(this.textBoxIperfTestLog);
@@ -970,62 +1032,36 @@
             this.modifySettingsToolStripMenuItem.Text = "Modify settings";
             this.modifySettingsToolStripMenuItem.Click += new System.EventHandler(this.modifySettingsToolStripMenuItem_Click);
             // 
-            // colSelectedFlag
+            // labelPacketSize
             // 
-            this.colSelectedFlag.HeaderText = "Selected";
-            this.colSelectedFlag.Name = "colSelectedFlag";
-            this.colSelectedFlag.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colSelectedFlag.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.labelPacketSize.AutoSize = true;
+            this.labelPacketSize.Location = new System.Drawing.Point(16, 858);
+            this.labelPacketSize.Name = "labelPacketSize";
+            this.labelPacketSize.Size = new System.Drawing.Size(215, 17);
+            this.labelPacketSize.TabIndex = 29;
+            this.labelPacketSize.Text = "iPerf3 packet size (unit : MBytes)";
             // 
-            // colPointNo
+            // numericUpDownPacketSize
             // 
-            this.colPointNo.HeaderText = "Point No.";
-            this.colPointNo.Name = "colPointNo";
-            this.colPointNo.ReadOnly = true;
-            // 
-            // colRadius
-            // 
-            this.colRadius.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.colRadius.HeaderText = "Radius";
-            this.colRadius.Name = "colRadius";
-            this.colRadius.ReadOnly = true;
-            this.colRadius.Width = 81;
-            // 
-            // colAngle
-            // 
-            this.colAngle.HeaderText = "Angle";
-            this.colAngle.Name = "colAngle";
-            this.colAngle.ReadOnly = true;
-            // 
-            // colHeight
-            // 
-            this.colHeight.HeaderText = "Height";
-            this.colHeight.Name = "colHeight";
-            // 
-            // colPolarization
-            // 
-            this.colPolarization.HeaderText = "Antenna Polarization";
-            this.colPolarization.Name = "colPolarization";
-            // 
-            // colFreq
-            // 
-            this.colFreq.HeaderText = "Freq.";
-            this.colFreq.Name = "colFreq";
-            // 
-            // colBandwidth
-            // 
-            this.colBandwidth.HeaderText = "Bandwidth";
-            this.colBandwidth.Name = "colBandwidth";
-            // 
-            // colChannel
-            // 
-            this.colChannel.HeaderText = "Channel";
-            this.colChannel.Name = "colChannel";
-            // 
-            // colPower
-            // 
-            this.colPower.HeaderText = "Power";
-            this.colPower.Name = "colPower";
+            this.numericUpDownPacketSize.Location = new System.Drawing.Point(238, 858);
+            this.numericUpDownPacketSize.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.numericUpDownPacketSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownPacketSize.Name = "numericUpDownPacketSize";
+            this.numericUpDownPacketSize.Size = new System.Drawing.Size(109, 22);
+            this.numericUpDownPacketSize.TabIndex = 30;
+            this.numericUpDownPacketSize.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
             // 
             // GMVehicleAntennaTesting
             // 
@@ -1058,6 +1094,7 @@
             this.groupBoxApplicationLayerTesting.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTestResults)).EndInit();
             this.contextMenuStripModify.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPacketSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1160,5 +1197,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colBandwidth;
         private System.Windows.Forms.DataGridViewTextBoxColumn colChannel;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPower;
+        private System.Windows.Forms.NumericUpDown numericUpDownPacketSize;
+        private System.Windows.Forms.Label labelPacketSize;
     }
 }
