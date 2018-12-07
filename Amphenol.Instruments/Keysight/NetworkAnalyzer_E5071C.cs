@@ -254,6 +254,56 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
+        /* :DISPlay:TABLe ON */
+        public int ShowHideEditTableWindow(string on_off)
+        {
+            int error = 0, count = 0;
+            string command = ":DISPlay:TABLe " + on_off.ToUpper() + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (error != visa32.VI_SUCCESS)
+                return error;
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :DISP:TABL:TYPE MARKer */
+        public int SelectTableType(string type = "MARKer")
+        {
+            /* For the table type, you can select from : MARKer     - marker table winddow
+             *                                           LIMit      - limit test table window
+             *                                           SEGMent    - segment table window
+             *                                           ECHO       - echo window
+             *                                           PLOSs      - loss compensation table window
+             *                                           SCFactor   - power sensor's calibration factor table window
+             *                                           RLIMit     - ripple test table window
+             */
+            int error = 0, count = 0;
+            string command = ":DISPlay:TABLe:TYPE " + type.ToUpper() + "\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :DISP:TABL:TYPE? */
+        public int QueryTableType(out string type)
+        {
+            int error = 0, count = 0;
+            string command = ":DISPlay:TABLe:TYPE?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(analyzerSession, response, 256, out count);
+            type = Encoding.ASCII.GetString(response, 0, count);
+            return error;
+        }
+
+        /* :DISP:SKEY ON */
+        public int ShowHideSoftkeyLabels(string on_off)
+        {
+            int error = 0, count = 0;
+            string command = ":DISPlay:SKEY:STATe " + on_off.ToUpper() + "\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
         /* :CALC1:PAR3:SEL */
         public int ActivateTraceAt(int channelNum, int traceNum)
         {
@@ -436,6 +486,18 @@ namespace Amphenol.Instruments.Keysight
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             string response;
             return QueryErrorStatus(out response);
+        }
+
+        /* :SENS1:SWE:POIN? */
+        public int QueryNumberOfMeasurementPointsForChannel(int channelNum, out int pointNum)
+        {
+            int error, count;
+            string command = ":SENSe" + channelNum + ":SWEep:POINts?\n";
+            byte[] response = new byte[256];
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(analyzerSession, response, 256, out count);
+            pointNum = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count));
+            return error;
         }
 
         /* :SENS1:SWE:TIME 1.5 */
