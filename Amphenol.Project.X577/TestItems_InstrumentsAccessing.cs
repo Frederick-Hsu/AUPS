@@ -744,6 +744,7 @@ namespace Amphenol.Project.X577
         }
     }
 
+#if false
     partial class TestItems
     {
         private static Amphenol.Instruments.Keysight.DCPowerSupply_E3646A powerSupply;
@@ -799,4 +800,5 @@ namespace Amphenol.Project.X577
             return (successFlag == 0);
         }
     }
+#endif
 }                     
