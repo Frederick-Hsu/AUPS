@@ -22,6 +22,7 @@ namespace Amphenol.Project.X577
 
             switch (stepFuncname)
             {
+#if false
                 #region DMM Test Items section
                 case "InitializeDigitalMultimeter":
                     success = InitializeDigitalMultimeter(stepParameters, 
@@ -51,6 +52,7 @@ namespace Amphenol.Project.X577
                                                         out errorDesc);
                     break;
                 #endregion
+#endif
 
                 #region Network Analyzer Test Items section
                 case "InitializeNetworkAnalyzer":
@@ -125,8 +127,11 @@ namespace Amphenol.Project.X577
                 case "SaveInstrumentState":
                     success = SaveInstrumentState(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "SelectNetworkAnalyzerCalibrationKit":
+                    success = SelectNetworkAnalyzerCalibrationKit(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
                 #endregion
-
+#if false
                 #region Power Supply Test Items section
                 case "InitializeDCPowerSupply":
                     success = InitializeDCPowerSupply(stepParameters,
@@ -155,7 +160,7 @@ namespace Amphenol.Project.X577
                                                out errorDesc);
                     break;
                 #endregion
-
+#endif
                 default:
                     DummyStep();
                     break;
@@ -177,6 +182,7 @@ namespace Amphenol.Project.X577
             functionsList.Add("MeasureResistorOver2Wires");
             functionsList.Add("MeasureResistorOver4Wires");
             #endregion
+
             #region Network Analyzer Test Functions
             functionsList.Add("InitializeNetworkAnalyzer");
             functionsList.Add("CloseNetworkAnalyzer");
@@ -202,7 +208,9 @@ namespace Amphenol.Project.X577
             functionsList.Add("SetIFBandwidth");
             functionsList.Add("SetPowerLevel");
             functionsList.Add("SaveInstrumentState");
+            functionsList.Add("SelectNetworkAnalyzerCalibrationKit");
             #endregion
+
             #region Power Supply Test Functions
             functionsList.Add("InitializeDCPowerSupply");
             functionsList.Add("CloseDCPowerSupply");
