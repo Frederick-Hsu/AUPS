@@ -47,6 +47,7 @@
     <Compile Include="Keysight\NetworkAnalyzer_E5071C_ConfigureMeasurementConditions.cs" />
     <Compile Include="Keysight\NetworkAnalyzer_E5071C_MakeMeasurement.cs" />
     <Compile Include="Keysight\NetworkAnalyzer_E5071C_MeasurementData.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C_PerformCalibration.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A_ChannelPowerMeasurement.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A_InputOutputFunctions.cs" />
