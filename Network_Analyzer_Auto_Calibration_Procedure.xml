@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sequence>
+  <block>
+    <blocknum>B1</blocknum>
+    <blockname>Setup network analyzer</blockname>
+    <step>
+      <stepnum>1.1</stepnum>
+      <stepname>Initialize the network analyzer Keysight E5071C</stepname>
+      <stepdescription>Connect with network analyzer through ethernet cable.</stepdescription>
+      <functionname>InitializeNetworkAnalyzer</functionname>
+      <parameterlist>
+        <parameter>TCPIP0::192.168.30.49::inst0::INSTR</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.2</stepnum>
+      <stepname>Reset and clear error queue</stepname>
+      <stepdescription>Reset network analyzer to prepare for testing.</stepdescription>
+      <functionname>PresetNetworkAnalyzer</functionname>
+      <parameterlist />
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.3</stepnum>
+      <stepname>Select the calibration kit</stepname>
+      <stepdescription>calibration kit : 3</stepdescription>
+      <functionname>SelectNetworkAnalyzerCalibrationKit</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.4</stepnum>
+      <stepname>Query the calibration kit number</stepname>
+      <stepdescription>Confirm whether testing engineer has selected the correct calibration kit number.</stepdescription>
+      <functionname>QueryNetworkAnalyzerCalibrationKitNumber</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>3</limit>
+        <limit>3</limit>
+        <limit>3</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>
+      </stepnum>
+      <stepname>Close the network analyzer.</stepname>
+      <stepdescription>Testing finished and exit</stepdescription>
+      <functionname>CloseNetworkAnalyzer</functionname>
+      <parameterlist />
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+</sequence>
