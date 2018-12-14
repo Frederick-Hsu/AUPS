@@ -17,9 +17,7 @@ namespace Amphenol.Project.X577
                                    out string stepErrorDesc)                /* Argument OUT */
         {
             bool success = false;
-
             string result = "", status = "", errorCode = "", errorDesc = "";
-
             switch (stepFuncname)
             {
 #if false
@@ -53,7 +51,6 @@ namespace Amphenol.Project.X577
                     break;
                 #endregion
 #endif
-
                 #region Network Analyzer Test Items section
                 case "InitializeNetworkAnalyzer":
                     success = InitializeNetworkAnalyzer(stepParameters, out result, out status, out errorCode, out errorDesc);
@@ -130,6 +127,12 @@ namespace Amphenol.Project.X577
                 case "SelectNetworkAnalyzerCalibrationKit":
                     success = SelectNetworkAnalyzerCalibrationKit(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "QueryNetworkAnalyzerCalibrationKitNumber":
+                    success = QueryNetworkAnalyzerCalibrationKitNumber(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "PerformOpenCalibration":
+                    success = PerformOpenCalibration(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
                 #endregion
 #if false
                 #region Power Supply Test Items section
@@ -165,7 +168,6 @@ namespace Amphenol.Project.X577
                     DummyStep();
                     break;
             }
-
             stepResult = result;
             stepStatus = status;
             stepErrorCode = errorCode;
@@ -209,6 +211,8 @@ namespace Amphenol.Project.X577
             functionsList.Add("SetPowerLevel");
             functionsList.Add("SaveInstrumentState");
             functionsList.Add("SelectNetworkAnalyzerCalibrationKit");
+            functionsList.Add("QueryNetworkAnalyzerCalibrationKitNumber");
+            functionsList.Add("PerformOpenCalibration");
             #endregion
 
             #region Power Supply Test Functions
