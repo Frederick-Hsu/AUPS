@@ -83,6 +83,48 @@ namespace Amphenol.Instruments.Keysight
             calibrationType = Encoding.ASCII.GetString(response, 0, count);
             return error;
         }
+
+        /* :SENSe1:CORRection:COLLect:ACQuire:OPEN 1 */
+        public int MeasureOpenCalibrationData(uint channelNumber, uint portNumber)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe" + channelNumber + ":CORRection:COLLect:ACQuire:OPEN " + portNumber + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = "*OPC?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            if (1 == Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1)))
+            {
+                return 0;
+            }
+            else
+            {
+                return (-1);
+            }
+        }
+
+        /* :SENSe1:CORRection:COLLect:ACQuire:SHORt 1 */
+        public int MeasureShortCalibrationData(uint channelNumber, uint portNumber)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe" + channelNumber + ":CORRection:COLLect:ACQuire:SHORt " + portNumber + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            command = "*OPC?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+
+            if (Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1)) == 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return (-2);
+            }
+        }
         #endregion
     }
 }
