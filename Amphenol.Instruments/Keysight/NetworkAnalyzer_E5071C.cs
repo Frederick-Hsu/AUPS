@@ -105,6 +105,9 @@ namespace Amphenol.Instruments.Keysight
                 return errorno;
             }
 
+            command = "*CLS\n";
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
             command = "SYSTem:ERRor?\n";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             errorno = visa32.viRead(analyzerSession, response, 128, out count);
