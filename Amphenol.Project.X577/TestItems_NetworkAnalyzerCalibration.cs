@@ -94,6 +94,7 @@ namespace Amphenol.Project.X577
             string channelNum = stepParameters[0], portNumber = stepParameters[1];
             int successFlag = networkAnalyzer.SetCalibrationTypeOpen(Convert.ToUInt32(channelNum), Convert.ToUInt32(portNumber));
             successFlag = networkAnalyzer.MeasureOpenCalibrationData(Convert.ToUInt32(channelNum), Convert.ToUInt32(portNumber));
+            successFlag = networkAnalyzer.CalculateCalibrationCoefficientsForResponseType(Convert.ToUInt32(channelNum));
             if (successFlag == 0)
             {
                 stepResult = "OK";
@@ -107,6 +108,54 @@ namespace Amphenol.Project.X577
                 stepStatus = "Fail";
                 stepErrorCode = "OPENCALI";
                 stepErrorDesc = "Failed to perform the open calibration.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SaveCalibrationCoefficientsAndTakeEffect(List<string> stepParameters,
+                                                                     out string stepResult,
+                                                                     out string stepStatus,
+                                                                     out string stepErrorCode,
+                                                                     out string stepErrorDesc)
+        {
+            string channelNum = stepParameters[0], 
+                calibrationCoefficientDataFile = stepParameters[1],
+                calibrationCoefficientType = stepParameters[2],
+                responsePortNum = stepParameters[3],
+                stimulusPortNum = stepParameters[4];
+
+            int successFlag = networkAnalyzer.SaveCalibrationCoefficientsToFile(calibrationCoefficientDataFile);
+            Amphenol.Instruments.Keysight.NetworkAnalyzer_E5071C.CalibrationCoefficientDataType type;
+            switch (calibrationCoefficientType)
+            {
+                case "ES":      type = Instruments.Keysight.NetworkAnalyzer_E5071C.CalibrationCoefficientDataType.ES;   break;
+                case "ER":      type = Instruments.Keysight.NetworkAnalyzer_E5071C.CalibrationCoefficientDataType.ER;   break;
+                case "ED":      type = Instruments.Keysight.NetworkAnalyzer_E5071C.CalibrationCoefficientDataType.ED;   break;
+                case "EL":      type = Instruments.Keysight.NetworkAnalyzer_E5071C.CalibrationCoefficientDataType.EL;   break;
+                case "ET":      type = Instruments.Keysight.NetworkAnalyzer_E5071C.CalibrationCoefficientDataType.ET;   break;
+                case "EX":      type = Instruments.Keysight.NetworkAnalyzer_E5071C.CalibrationCoefficientDataType.EX;   break;
+                default:        type = Instruments.Keysight.NetworkAnalyzer_E5071C.CalibrationCoefficientDataType.ER;   break;
+            }
+            double[] coefficientRealPart, coefficientImagPart;
+            successFlag = networkAnalyzer.ReadOutCalibrationCoefficientData(Convert.ToUInt32(channelNum), 
+                                                                            type, 
+                                                                            Convert.ToUInt32(responsePortNum), 
+                                                                            Convert.ToUInt32(stimulusPortNum), 
+                                                                            out coefficientRealPart,
+                                                                            out coefficientImagPart);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = string.Empty;
+                stepErrorDesc = string.Empty;
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "CALICOEF";
+                stepErrorDesc = "Failed to read out the calibration coefficient.";
             }
             return (successFlag == 0);
         }
