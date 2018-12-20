@@ -363,6 +363,110 @@ namespace Amphenol.Instruments.Keysight
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
         }
+
+        /* :MMEMory:STORe:STATe "Calibration_Coefficients.sta" */
+        public int SaveCalibrationCoefficientsToFile(string calibrationCoefficientsDataFileName /* NOTE : file extension must be .sta */)
+        {
+            int error = 0, count = 0;
+            string command = ":MMEMory:STORe:STATe \"" + calibrationCoefficientsDataFileName + "\"\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response); 
+        }
+
+        /* :MMEMory:LOAD:STATe "Calibration_Coefficients.sta" */
+        public int LoadCalibrationCoefficientsFromFile(string calibrationCoefficientsDataFileName /* NOTE : file name can include path, but must contain .sta extension */ )
+        {
+            int error = 0, count = 0;
+            string command = ":MMEMory:LOAD:STATe \"" + calibrationCoefficientsDataFileName + "\"\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENSe1:CORRection:COEFficient:DATA? ER, 1, 1 */
+        public enum CalibrationCoefficientDataType
+        {
+            ES = 1,     /* Source match */
+            ER = 2,     /* Reflection tracking */
+            ED = 3,     /* Directivity */
+            EL = 4,     /* Load match */
+            ET = 5,     /* Transmission tracking */
+            EX = 6      /* Isolation */
+        }
+        public int ReadOutCalibrationCoefficientData(uint channelNumber, 
+                                                     CalibrationCoefficientDataType caliType,
+                                                     uint responsePortNumber,
+                                                     uint stimulusPortNumber,
+                                                     out double[] dataRealPart,
+                                                     out double[] dataImagPart)
+        {
+            int error = 0, count = 0;
+            string type, errorMesg;
+            switch (caliType)
+            {
+                case CalibrationCoefficientDataType.ES:     type = "ES";    break;
+                case CalibrationCoefficientDataType.ER:     type = "ER";    break;
+                case CalibrationCoefficientDataType.ED:     type = "ED";    break;
+                case CalibrationCoefficientDataType.EL:     type = "EL";    break;
+                case CalibrationCoefficientDataType.ET:     type = "ET";    break;
+                case CalibrationCoefficientDataType.EX:     type = "EX";    break;
+                default:                                    type = "ER";    break;
+            }
+
+            switch (caliType)
+            {
+                case CalibrationCoefficientDataType.ES:
+                case CalibrationCoefficientDataType.ER:
+                case CalibrationCoefficientDataType.ED:
+                    if (responsePortNumber != stimulusPortNumber)
+                        error = (-1);
+                    break;
+                case CalibrationCoefficientDataType.EL:
+                case CalibrationCoefficientDataType.ET:
+                case CalibrationCoefficientDataType.EX:
+                    if (responsePortNumber == stimulusPortNumber)
+                        error = (-2);
+                    break;
+                default:
+                    error = 0;
+                    break;
+            }
+            if (error == 0)
+            {
+                string command = ":SENSe" + channelNumber + ":CORRection:COEFficient:DATA? " + type + ", " + responsePortNumber + ", " + stimulusPortNumber + "\n";
+                error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+                // error = QueryErrorStatus(out errorMesg);
+                if (error == 0)
+                {
+                    byte[] response = new byte[100 * 1024];
+                    error = visa32.viRead(analyzerSession, response, (100 * 1024), out count);
+                    string[] dataArray = Encoding.ASCII.GetString(response, 0, count).Split(new char[] { ',', '\n', ' '});
+                    int length = dataArray.Length;
+                    dataRealPart = new double[length / 2];
+                    dataImagPart = new double[length / 2];
+                    for (int index = 0; index < length - 2; index += 2)
+                    {
+                        dataRealPart[index / 2] = Convert.ToDouble(dataArray[index]);
+                        dataImagPart[index / 2] = Convert.ToDouble(dataArray[index + 1]);
+                    }
+                    return QueryErrorStatus(out errorMesg);
+                }
+                else
+                {
+                    dataRealPart = new double[0];
+                    dataImagPart = new double[0];
+                    return error;
+                }
+            }
+            else
+            {
+                dataRealPart = new double[0];
+                dataImagPart = new double[0];
+                return error;
+            }
+        }
+        #endregion
+
+        #region ECal auto calibration
         #endregion
     }
 }
