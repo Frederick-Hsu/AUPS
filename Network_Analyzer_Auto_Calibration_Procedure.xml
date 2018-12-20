@@ -51,9 +51,9 @@
       </parameterlist>
       <limittype>Numerical</limittype>
       <spec>
-        <limit>3</limit>
-        <limit>3</limit>
-        <limit>3</limit>
+        <limit>1</limit>
+        <limit>1</limit>
+        <limit>1</limit>
       </spec>
     </step>
     <step>
@@ -63,6 +63,23 @@
       </stepdescription>
       <functionname>PerformOpenCalibration</functionname>
       <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.6</stepnum>
+      <stepname>Calibration coefficients take effect.</stepname>
+      <stepdescription>Apply the calibration coefficients and read them out. </stepdescription>
+      <functionname>SaveCalibrationCoefficientsAndTakeEffect</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>Calibration_Coefficient.sta</parameter>
+        <parameter>ER</parameter>
         <parameter>1</parameter>
         <parameter>1</parameter>
       </parameterlist>
