@@ -1,0 +1,76 @@
+# RTB Oscilloscope example
+# Before you start this script, you must define the "RTB" Resource ID in Menu Settings -> Instruments
+# with the fitting VISA connection. Don't forget to check the column "Enabled"
+# For more details refer to 1MA196 Using R&SÄšËForum Application for Instrument Remote Control
+
+# The file VisaDeviceExtended.py must be in the same folder as this file
+# It contains extension function for R&S Forum VisaDevice class and new instrument-related exceptions
+
+import VisaDeviceExtended
+reload (VisaDeviceExtended)
+
+# try block to catch any InstrumentErrorException()
+try:
+    # -----------------------------------------------------------
+    # Initialization: In R&S Forum opening a connection is performed automaticaly
+    # -----------------------------------------------------------
+    RTB.instrument.write_termination = '\n' # Every write string will be sent with LF added to the end
+    RTB.ext_clear_status() # Clear instrument io buffers and status
+    RTB.report_mode = ReportMode.Off # Switch the Reporting OFF
+    print RTB.query('*IDN?') # Query the Identification string
+    RTB.write('*RST;*CLS') # Reset the instrument, clear the Error queue
+    RTB.write('CHAN1:STAT ON') # Channe1 ON
+    RTB.query('SING;*OPC?')
+    RTB.ext_error_checking() # Error Checking after Initialization block
+   
+    # -----------------------------------------------------------
+    # if - elif - else clauses
+    # -----------------------------------------------------------
+    channel_coupling = 'DC'
+    
+    if channel_coupling == 'DC':
+        RTB.write('CHAN1:COUP DCL')
+    elif channel_coupling == 'AC':
+        RTB.write('CHAN1:COUP ACL')
+    else:
+        RTB.write('CHAN1:COUP GND')
+
+
+    # -----------------------------------------------------------
+    # Loops - Setting of Vertical Range in a loop
+    # -----------------------------------------------------------
+    
+    vertical_ranges = [0.5, 0.75, 1, 2.2, 3.0, 4.0, 5.0, 6.6, 10.0]
+    for vertical_range in vertical_ranges:
+        print 'Setting Vertical Range ' + str(vertical_range) + ' V'
+        RTB.write('CHAN1:RANG ' + str(vertical_range))
+        RTB.ext_error_checking() # Error Checking
+        
+
+    # -----------------------------------------------------------
+    # Conversions to integer and float from string
+    # -----------------------------------------------------------
+    samples_count = int(RTB.query('CHAN1:DATA:POIN?'))
+    print 'RTB samples count: ' + str(samples_count)
+    
+    horizontal_range = float(RTB.query('TIM:ACQT?'))
+    print 'RTB horizontal range: ' + str(horizontal_range) + ' secs'
+    
+
+    # -----------------------------------------------------------
+    # Difference between the methods query() and ask()
+    # -----------------------------------------------------------
+    responseA = RTB.query('CHAN1:DATA:HEAD?')
+    print '----'
+    print 'Variable responseA type is ' + str(type(responseA))
+    print responseA
+    print '----'
+    responseB = RTB.ask('CHAN1:DATA:HEAD?')
+    print 'Variable responseB type is ' + str(type(responseB))
+    print responseB
+    print '----'
+    
+except VisaDeviceExtended.InstrumentErrorException, e:
+    # Catching instrument error exception and showing its content
+    print 'Instrument error(s) occured:\n' + e.message
+

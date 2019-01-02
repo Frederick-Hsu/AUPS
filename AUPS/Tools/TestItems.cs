@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Amphenol.Instruments.Keysight;
+using Amphenol.Instruments.RohdeSchwarz;
 
 using Utilities;
 
@@ -116,6 +117,8 @@ namespace AUPS.Tools
                                                     new WLAN_Channel_Freq { channelNo =  14, centerFreq = 2484, bandwidth = 22 },
                                                     /* 5.0GHz channel list, including 802.11a/ac */
                                                     new WLAN_Channel_Freq { channelNo =  16, centerFreq = 5080, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  32, centerFreq = 5160, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  34, centerFreq = 5170, bandwidth = 40 },
                                                     new WLAN_Channel_Freq { channelNo =  36, centerFreq = 5180, bandwidth = 20 },
                                                     new WLAN_Channel_Freq { channelNo =  38, centerFreq = 5190, bandwidth = 40 },
                                                     new WLAN_Channel_Freq { channelNo =  40, centerFreq = 5200, bandwidth = 20 },
@@ -131,6 +134,8 @@ namespace AUPS.Tools
                                                     new WLAN_Channel_Freq { channelNo =  60, centerFreq = 5300, bandwidth = 20 },
                                                     new WLAN_Channel_Freq { channelNo =  62, centerFreq = 5310, bandwidth = 40 },
                                                     new WLAN_Channel_Freq { channelNo =  64, centerFreq = 5320, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  68, centerFreq = 5340, bandwidth = 20 },
+                                                    new WLAN_Channel_Freq { channelNo =  96, centerFreq = 5480, bandwidth = 20 },
                                                     new WLAN_Channel_Freq { channelNo = 100, centerFreq = 5500, bandwidth = 20 },
                                                     new WLAN_Channel_Freq { channelNo = 102, centerFreq = 5510, bandwidth = 40 },
                                                     new WLAN_Channel_Freq { channelNo = 104, centerFreq = 5520, bandwidth = 20 },
@@ -173,7 +178,231 @@ namespace AUPS.Tools
                                                     new WLAN_Channel_Freq { channelNo = 196, centerFreq = 4980, bandwidth = 20 } };
         #endregion
 
+        private void GMVehicleAntennaTesting_Load(object sender, EventArgs e)
+        {
+            for (int index = 0; index < channelList.Length; index++)
+            {
+                comboBoxChannel.Items.Add(channelList[index].channelNo);
+            }
+        }
+
+        private void comboBoxChannel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = 0;
+            for (index = 0; index < channelList.Length; index++)
+            {
+                if (Convert.ToInt32(comboBoxChannel.Text) == channelList[index].channelNo)
+                {
+                    break;
+                }
+            }
+            string freq = Convert.ToString(channelList[index].centerFreq);
+            string bandwidth = Convert.ToString(channelList[index].bandwidth);
+            textBoxFreqBand.Text = freq;
+            comboBoxBandWidth.Text = bandwidth;
+        }
+
+        /******************************************************************************************/
+
+        #region Antenna application layer test items
+        private System.Diagnostics.Process iPerfCmdProc;
+        private string iPerfCmd;
+        private string serverIP;
+
+        private void InitializeIperfProcess()
+        {
+            iPerfCmd = textBoxIperf3Path.Text.Trim();   /* retrieve the iperf3.exe path */
+            serverIP = textBoxServerIP.Text.Trim();     /* retrieve the server IP address */
+
+            // iPerfCmdProc.OutputDataReceived -= new System.Diagnostics.DataReceivedEventHandler(IPerfCmdProc_OutputDataReceived);
+            iPerfCmdProc = new System.Diagnostics.Process();
+            iPerfCmdProc.StartInfo.FileName = "cmd.exe";
+
+            iPerfCmdProc.StartInfo.CreateNoWindow = true;
+            iPerfCmdProc.StartInfo.UseShellExecute = false;
+            iPerfCmdProc.StartInfo.RedirectStandardInput = true;
+            iPerfCmdProc.StartInfo.RedirectStandardOutput = true;
+            iPerfCmdProc.StartInfo.RedirectStandardError = true;
+
+            iPerfCmdProc.Start();
+            // iPerfCmdProc.BeginOutputReadLine();
+            // iPerfCmdProc.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(IPerfCmdProc_OutputDataReceived);
+        }
+
+        private void IPerfCmdProc_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
+        {
+            if (textBoxIperfTestLog.InvokeRequired)
+            {
+                textBoxIperfTestLog.Invoke(new Action(()=>
+                {
+                    textBoxIperfTestLog.AppendText(e.Data + Environment.NewLine);
+                }));
+            }
+            else
+            {
+                textBoxIperfTestLog.AppendText(e.Data + Environment.NewLine);
+            }
+        }
+
+        private void CloseIperfProcess()
+        {
+            iPerfCmdProc.Close();
+            iPerfCmdProc = null;
+        }
+
+        private int GetPacketSize()
+        {
+            int packetSize = 300;
+
+            packetSize = Convert.ToInt32(numericUpDownPacketSize.Value);
+            return packetSize;
+        }
+
+        private void MeasureUdpUplinkPerformance(out string throughput, out string latency, out string packetLoss)
+        {
+            // string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 300M\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth " + GetPacketSize() + "M\r";
+
+            iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
+            iPerfCmdProc.StandardInput.AutoFlush = true;
+            
+            while (iPerfCmdProc.HasExited == false)
+            {
+                Application.DoEvents();
+            }
+            string executionResult = iPerfCmdProc.StandardOutput.ReadToEnd();
+            DisplayIperfTestLog(executionResult);
+            ParseOutIperfUdpLog(executionResult, out throughput, out latency, out packetLoss);
+        }
+
+        private void MeasureUdpDownlinkPerformance(out string throughput, out string latency, out string packetLoass)
+        {
+            // string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 300M --reverse\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth " + GetPacketSize() + "M --reverse\r";
+
+            iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
+            iPerfCmdProc.StandardInput.AutoFlush = true;
+            
+            while (iPerfCmdProc.HasExited == false)
+            {
+                Application.DoEvents();
+            }
+            string executionResult = iPerfCmdProc.StandardOutput.ReadToEnd();
+            DisplayIperfTestLog(executionResult);
+            ParseOutIperfUdpLog(executionResult, out throughput, out latency, out packetLoass);
+        }
+
+        private void MeasureTcpUplinkPerformance(out string throughput)
+        {
+            // string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 300M\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth " + GetPacketSize() + "M\r";
+
+            iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
+            iPerfCmdProc.StandardInput.AutoFlush = true;
+
+            while (iPerfCmdProc.HasExited == false)
+            {
+                Application.DoEvents();
+            }
+            string executionResult = iPerfCmdProc.StandardOutput.ReadToEnd();
+            DisplayIperfTestLog(executionResult);
+            ParseOutIperfTCPLog(executionResult, out throughput);
+        }
+
+        private void MeasureTcpDownlinkPerformance(out string throughput)
+        {
+            // string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 300M --reverse\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth " + GetPacketSize() + "M --reverse\r";
+
+            iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
+            iPerfCmdProc.StandardInput.AutoFlush = true;
+
+            while (iPerfCmdProc.HasExited == false)
+            {
+                Application.DoEvents();
+            }
+            string executionResult = iPerfCmdProc.StandardOutput.ReadToEnd();
+            DisplayIperfTestLog(executionResult);
+            ParseOutIperfTCPLog(executionResult, out throughput);
+        }
+
+        private void DisplayIperfTestLog(string testLog)
+        {
+            string[] array = testLog.Split(new char[] { '\n' });
+            for (int index = 0; index < array.Length; index++)
+            {
+                textBoxIperfTestLog.AppendText(array[index] + Environment.NewLine);
+            }
+            textBoxIperfTestLog.AppendText("============================================================================" + System.Environment.NewLine);
+        }
+
+        private void ParseOutIperfTCPLog(string iperfLog, out string bandWidth)
+        {
+            if (iperfLog.Contains("iperf Done.") != true)
+            {
+                MessageBox.Show("Failed to connect with server.\nCheck your network connectivity, and try again.", "Error");
+                bandWidth = string.Empty;
+                return;
+            }
+
+            string summaryResults = iperfLog.Substring(iperfLog.IndexOf("Test Complete."));
+            string[] lines = summaryResults.Split(new char[] { '\n' });
+            /* lines[2] stores the measurement values */
+            string[] measurements = lines[2].Split(new char[] { ' ' });
+
+            bandWidth = string.Empty;
+            for (int index = 0; index < measurements.Length; index++)
+            {
+                if (measurements[index].Contains("bits/sec") == true)
+                {
+                    bandWidth = measurements[index - 1] /*+ measurements[index] */;
+                    break;
+                }
+            }
+        }
+
+        private void ParseOutIperfUdpLog(string iperfLog, out string throughput, out string latency, out string packetLoss)
+        {
+            if (iperfLog.Contains("iperf Done.") != true)
+            {
+                MessageBox.Show("Failed to connect with server.\nCheck your network connectivity, and try again.", "Error");
+                throughput = string.Empty;
+                latency = string.Empty;
+                packetLoss = string.Empty;
+                return;
+            }
+
+            string summaryResults = iperfLog.Substring(iperfLog.IndexOf("Test Complete."));
+            string[] lines = summaryResults.Split(new char[] { '\n' });
+            string[] measurements = lines[2].Split(new char[] { ' ' });
+
+            throughput = string.Empty;
+            latency = string.Empty;
+            packetLoss = string.Empty;
+
+            for (int index = 0; index < measurements.Length; index++)
+            {
+                if (measurements[index].Contains("bits/sec") == true)
+                {
+                    throughput = measurements[index - 1] /* + measurements[index] */;
+                    continue;
+                }
+                if (measurements[index].Contains("ms") == true)
+                {
+                    latency = measurements[index - 1] /* + measurements[index] */;
+                    continue;
+                }
+                if (measurements[index].Contains("%)") == true)
+                {
+                    packetLoss = measurements[index - 1] + measurements[index];
+                    continue;
+                }
+            }
+        }
+        #endregion
+
         #region Antenna physical layer test items
+#if false
         private void MeasureRSSI(string signalAnalyzerVisaAddress)
         {
             int error = 0;
@@ -272,216 +501,53 @@ namespace AUPS.Tools
             error = sa.SearchMaxPeakPoint(SignalAnalyzer_N9020A.MarkerNo.Marker1, out freq, out power);
             sa.Close();
         }
-        #endregion
-
-        private void GMVehicleAntennaTesting_Load(object sender, EventArgs e)
+#endif
+        private int MeasureRSSI(int freq, int bandWidth, double power, out double rssiValue)
         {
-            for (int index = 0; index < channelList.Length; index++)
-            {
-                comboBoxChannel.Items.Add(channelList[index].channelNo);
-            }
-        }
+            int state = 0;
+            /* Initialize signal analyzer : Keysight N9020A */
+            SignalAnalyzer_N9020A sa = new SignalAnalyzer_N9020A();
+            state = sa.Open(textBoxSaVisaAddress.Text);
+            string sa_idn;
+            state = sa.GetInstrumentIdentifier(out sa_idn);
 
-        private void comboBoxChannel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int index = 0;
-            for (index = 0; index < channelList.Length; index++)
-            {
-                if (Convert.ToInt32(comboBoxChannel.Text) == channelList[index].channelNo)
-                {
-                    break;
-                }
-            }
-            string freq = Convert.ToString(channelList[index].centerFreq);
-            string bandwidth = Convert.ToString(channelList[index].bandwidth);
-            textBoxFreqBand.Text = freq;
-            comboBoxBandWidth.Text = bandwidth;
-        }
+            /* Initialize signal generator : Rohde & Schwarz SMB 100A */
+            SignalGenerator_SMB100A sg = new SignalGenerator_SMB100A();
+            state = sg.Open(textBoxSgVisaAddress.Text);
+            string sg_idn;
+            state = sg.GetInstrumentIdentifier(out sg_idn);
 
-        /******************************************************************************************/
+            /* Setup signal generator */
+            state = sg.CleanAllErrorQueue();
+            state = sg.PresetInstrument();
+            state = sg.SetRFOutputSignalFrequency(freq.ToString() + "MHz");    /* RF center frequency */
+            state = sg.SetRFLevelAppliedOntoDUT(power);     /* Tx RF level */
+            state = sg.RFSignalOutputOnOff(SignalGenerator_SMB100A.State.ON);       /* RF output ON */
 
-        #region Antenna application layer test items
-        private System.Diagnostics.Process iPerfCmdProc;
-        private string iPerfCmd;
-        private string serverIP;
+            /* Setup signal analyzer */
+            state = sa.ClearStatusAndErrorQueue();
+            state = sa.RestoreAllModesGlobalSettingsToDefault();
+            state = sa.SelectMeasurementMode("SA");
+            state = sa.SelectMeasurementItemInSignalAnalyzerMode("SANalyzer");
+            state = sa.SetRFCenterFrequency(freq.ToString() + "MHz");      /* set central frequency */
+            state = sa.SetStartStopFrequency(Convert.ToString(freq - bandWidth/2) + "MHz",
+                                             Convert.ToString(freq + bandWidth/2) + "MHz");    /* Set frequency span : start freq. and end freq. */
+            state = sa.SetMarkerControlMode(SignalAnalyzer_N9020A.MarkerNo.Marker1, "POSition");    /* Trigger on Marker */
+            System.Threading.Thread.Sleep(2000);
+            state = sa.SetMarkerXAxisFrequencyValue(SignalAnalyzer_N9020A.MarkerNo.Marker1, freq.ToString() + "MHz");
+            state = sa.TurnOnOffCrossLinesAtMarker(SignalAnalyzer_N9020A.MarkerNo.Marker1, SignalAnalyzer_N9020A.State.ON);     /* Display the cross lines at marker */
+            System.Threading.Thread.Sleep(2000);
 
-        private void InitializeIperfProcess()
-        {
-            iPerfCmd = textBoxIperf3Path.Text.Trim();   /* retrieve the iperf3.exe path */
-            serverIP = textBoxServerIP.Text.Trim();     /* retrieve the server IP address */
+            double peakFreq = 0.00, peakAmpl = 0.00;
+            /* Peak marker search, output peak freq. and amplitude. */
+            state = sa.SearchMaxPeakPoint(SignalAnalyzer_N9020A.MarkerNo.Marker1, out peakFreq, out peakAmpl);
 
-            // iPerfCmdProc.OutputDataReceived -= new System.Diagnostics.DataReceivedEventHandler(IPerfCmdProc_OutputDataReceived);
-            iPerfCmdProc = new System.Diagnostics.Process();
-            iPerfCmdProc.StartInfo.FileName = "cmd.exe";
+            /* Close SG and SA */
+            state = sg.Close();
+            state = sa.Close();
 
-            iPerfCmdProc.StartInfo.CreateNoWindow = true;
-            iPerfCmdProc.StartInfo.UseShellExecute = false;
-            iPerfCmdProc.StartInfo.RedirectStandardInput = true;
-            iPerfCmdProc.StartInfo.RedirectStandardOutput = true;
-            iPerfCmdProc.StartInfo.RedirectStandardError = true;
-
-            iPerfCmdProc.Start();
-            // iPerfCmdProc.BeginOutputReadLine();
-            // iPerfCmdProc.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(IPerfCmdProc_OutputDataReceived);
-        }
-
-        private void IPerfCmdProc_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
-        {
-            if (textBoxIperfTestLog.InvokeRequired)
-            {
-                textBoxIperfTestLog.Invoke(new Action(()=>
-                {
-                    textBoxIperfTestLog.AppendText(e.Data + Environment.NewLine);
-                }));
-            }
-            else
-            {
-                textBoxIperfTestLog.AppendText(e.Data + Environment.NewLine);
-            }
-        }
-
-        private void CloseIperfProcess()
-        {
-            iPerfCmdProc.Close();
-            iPerfCmdProc = null;
-        }
-
-        private void MeasureUdpUplinkPerformance(out string throughput, out string latency, out string packetLoss)
-        {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 1G\r";
-
-            iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
-            iPerfCmdProc.StandardInput.AutoFlush = true;
-            
-            while (iPerfCmdProc.HasExited == false)
-            {
-                Application.DoEvents();
-            }
-            string executionResult = iPerfCmdProc.StandardOutput.ReadToEnd();
-            DisplayIperfTestLog(executionResult);
-            ParseOutIperfUdpLog(executionResult, out throughput, out latency, out packetLoss);
-        }
-
-        private void MeasureUdpDownlinkPerformance(out string throughput, out string latency, out string packetLoass)
-        {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 1G --reverse\r";
-
-            iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
-            iPerfCmdProc.StandardInput.AutoFlush = true;
-            
-            while (iPerfCmdProc.HasExited == false)
-            {
-                Application.DoEvents();
-            }
-            string executionResult = iPerfCmdProc.StandardOutput.ReadToEnd();
-            DisplayIperfTestLog(executionResult);
-            ParseOutIperfUdpLog(executionResult, out throughput, out latency, out packetLoass);
-        }
-
-        private void MeasureTcpUplinkPerformance(out string throughput)
-        {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 1G\r";
-
-            iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
-            iPerfCmdProc.StandardInput.AutoFlush = true;
-
-            while (iPerfCmdProc.HasExited == false)
-            {
-                Application.DoEvents();
-            }
-            string executionResult = iPerfCmdProc.StandardOutput.ReadToEnd();
-            DisplayIperfTestLog(executionResult);
-            ParseOutIperfTCPLog(executionResult, out throughput);
-        }
-
-        private void MeasureTcpDownlinkPerformance(out string throughput)
-        {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 1G --reverse\r";
-
-            iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
-            iPerfCmdProc.StandardInput.AutoFlush = true;
-
-            while (iPerfCmdProc.HasExited == false)
-            {
-                Application.DoEvents();
-            }
-            string executionResult = iPerfCmdProc.StandardOutput.ReadToEnd();
-            DisplayIperfTestLog(executionResult);
-            ParseOutIperfTCPLog(executionResult, out throughput);
-        }
-
-        private void DisplayIperfTestLog(string testLog)
-        {
-            string[] array = testLog.Split(new char[] { '\n' });
-            for (int index = 0; index < array.Length; index++)
-            {
-                textBoxIperfTestLog.AppendText(array[index] + Environment.NewLine);
-            }
-            textBoxIperfTestLog.AppendText("============================================================================" + System.Environment.NewLine);
-        }
-
-        private void ParseOutIperfTCPLog(string iperfLog, out string bandWidth)
-        {
-            if (iperfLog.Contains("iperf Done.") != true)
-            {
-                MessageBox.Show("Failed to connect with server.\nCheck your network connectivity, and try again.", "Error");
-                bandWidth = string.Empty;
-                return;
-            }
-
-            string summaryResults = iperfLog.Substring(iperfLog.IndexOf("Test Complete."));
-            string[] lines = summaryResults.Split(new char[] { '\n' });
-            /* lines[2] stores the measurement values */
-            string[] measurements = lines[2].Split(new char[] { ' ' });
-
-            bandWidth = string.Empty;
-            for (int index = 0; index < measurements.Length; index++)
-            {
-                if (measurements[index].Contains("bits/sec") == true)
-                {
-                    bandWidth = measurements[index - 1] + measurements[index];
-                    break;
-                }
-            }
-        }
-
-        private void ParseOutIperfUdpLog(string iperfLog, out string throughput, out string latency, out string packetLoss)
-        {
-            if (iperfLog.Contains("iperf Done.") != true)
-            {
-                MessageBox.Show("Failed to connect with server.\nCheck your network connectivity, and try again.", "Error");
-                throughput = string.Empty;
-                latency = string.Empty;
-                packetLoss = string.Empty;
-                return;
-            }
-
-            string summaryResults = iperfLog.Substring(iperfLog.IndexOf("Test Complete."));
-            string[] lines = summaryResults.Split(new char[] { '\n' });
-            string[] measurements = lines[2].Split(new char[] { ' ' });
-
-            throughput = string.Empty;
-            latency = string.Empty;
-            packetLoss = string.Empty;
-
-            for (int index = 0; index < measurements.Length; index++)
-            {
-                if (measurements[index].Contains("bits/sec") == true)
-                {
-                    throughput = measurements[index - 1] + measurements[index];
-                    continue;
-                }
-                if (measurements[index].Contains("ms") == true)
-                {
-                    latency = measurements[index - 1] + measurements[index];
-                    continue;
-                }
-                if (measurements[index].Contains("%)") == true)
-                {
-                    packetLoss = measurements[index - 1] + measurements[index];
-                    continue;
-                }
-            }
+            rssiValue = peakAmpl;
+            return state;
         }
         #endregion
     }

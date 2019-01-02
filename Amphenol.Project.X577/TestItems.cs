@@ -17,11 +17,10 @@ namespace Amphenol.Project.X577
                                    out string stepErrorDesc)                /* Argument OUT */
         {
             bool success = false;
-
             string result = "", status = "", errorCode = "", errorDesc = "";
-
             switch (stepFuncname)
             {
+#if false
                 #region DMM Test Items section
                 case "InitializeDigitalMultimeter":
                     success = InitializeDigitalMultimeter(stepParameters, 
@@ -51,7 +50,7 @@ namespace Amphenol.Project.X577
                                                         out errorDesc);
                     break;
                 #endregion
-
+#endif
                 #region Network Analyzer Test Items section
                 case "InitializeNetworkAnalyzer":
                     success = InitializeNetworkAnalyzer(stepParameters, out result, out status, out errorCode, out errorDesc);
@@ -125,8 +124,20 @@ namespace Amphenol.Project.X577
                 case "SaveInstrumentState":
                     success = SaveInstrumentState(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "SelectNetworkAnalyzerCalibrationKit":
+                    success = SelectNetworkAnalyzerCalibrationKit(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "QueryNetworkAnalyzerCalibrationKitNumber":
+                    success = QueryNetworkAnalyzerCalibrationKitNumber(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "PerformOpenCalibration":
+                    success = PerformOpenCalibration(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SaveCalibrationCoefficientsAndTakeEffect":
+                    success = SaveCalibrationCoefficientsAndTakeEffect(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
                 #endregion
-
+#if false
                 #region Power Supply Test Items section
                 case "InitializeDCPowerSupply":
                     success = InitializeDCPowerSupply(stepParameters,
@@ -155,12 +166,11 @@ namespace Amphenol.Project.X577
                                                out errorDesc);
                     break;
                 #endregion
-
+#endif
                 default:
                     DummyStep();
                     break;
             }
-
             stepResult = result;
             stepStatus = status;
             stepErrorCode = errorCode;
@@ -177,6 +187,7 @@ namespace Amphenol.Project.X577
             functionsList.Add("MeasureResistorOver2Wires");
             functionsList.Add("MeasureResistorOver4Wires");
             #endregion
+
             #region Network Analyzer Test Functions
             functionsList.Add("InitializeNetworkAnalyzer");
             functionsList.Add("CloseNetworkAnalyzer");
@@ -202,7 +213,12 @@ namespace Amphenol.Project.X577
             functionsList.Add("SetIFBandwidth");
             functionsList.Add("SetPowerLevel");
             functionsList.Add("SaveInstrumentState");
+            functionsList.Add("SelectNetworkAnalyzerCalibrationKit");
+            functionsList.Add("QueryNetworkAnalyzerCalibrationKitNumber");
+            functionsList.Add("PerformOpenCalibration");
+            functionsList.Add("SaveCalibrationCoefficientsAndTakeEffect");
             #endregion
+
             #region Power Supply Test Functions
             functionsList.Add("InitializeDCPowerSupply");
             functionsList.Add("CloseDCPowerSupply");

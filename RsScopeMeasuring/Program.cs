@@ -78,7 +78,7 @@ namespace RsScopeMeasuring
             */
 
             SignalGenerator_SMB100A sg = new SignalGenerator_SMB100A();
-            int error = sg.Open("TCPIP0::192.168.1.159::inst0::INSTR");
+            int error = sg.Open("TCPIP0::192.168.1.158::inst0::INSTR");
             string sgIDN;
             error = sg.GetInstrumentIdentifier(out sgIDN);
 

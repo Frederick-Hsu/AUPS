@@ -45,7 +45,32 @@ namespace AUPS.Tools
         /* In the real test field, you should change the scale down ratio accordingly to have the 
          * tab page window accommodated the max radius circle. 
          */
-        private static int scaleDownRatio = 2;
+        private int scaleDownRatio = 20  /*Convert.ToInt32(comboBoxScaleDownRatio.Text) */;
+
+        private int RetrieveScaleDownRatio()
+        {
+            int scaledownRatio = 20;
+            string text = comboBoxScaleDownRatio.Text;
+            if (text == "")
+            {
+                scaledownRatio = 20;
+            }
+            else
+            {
+                /*
+                for (int index = 0; index < comboBoxScaleDownRatio.Items.Count; index++)
+                {
+                    if (Convert.ToString(comboBoxScaleDownRatio.Items[index]) != text)
+                    {
+                        scaledownRatio = 20;
+                        return scaledownRatio;
+                    }
+                }
+                 */
+                scaledownRatio = Convert.ToInt32(text);
+            }
+            return scaledownRatio;
+        }
 
         private void btnNewPoint_Click(object sender, EventArgs e)
         {
@@ -56,9 +81,10 @@ namespace AUPS.Tools
                 return;
             }
             int radius, angle, height, freq, bandWidth, channel;
+            string polarization;
             double power;
-            RetrieveTestingPointsSettings(out radius, out angle, out height, out freq, out bandWidth, out channel, out power);
-            CheckBox newTestPoint = CreateNewCheckBoxBy(radius, angle, height, freq, bandWidth, channel, power);
+            RetrieveTestingPointsSettings(out radius, out angle, out height, out polarization, out freq, out bandWidth, out channel, out power);
+            CheckBox newTestPoint = CreateNewCheckBoxBy(radius, angle, height, polarization, freq, bandWidth, channel, power);
 
             tabControlTesting.SuspendLayout();
             tabPageField.SuspendLayout();
@@ -109,19 +135,35 @@ namespace AUPS.Tools
             Point topArrowX = new Point(),
                   bottomArrowX = new Point(),
                   leftArrowY = new Point(),
-                  rightArrowY = new Point();
+                  rightArrowY = new Point(),
+                  topArrowMinusX = new Point(),
+                  bottomArrowMinusX = new Point(),
+                  leftArrowMinusY = new Point(),
+                  rightArrowMinusY = new Point();
 
             topArrowX.X = positiveXaxis.X - 10;
             topArrowX.Y = positiveXaxis.Y - (int)(10 * Math.Tan(Math.PI/6));
 
+            topArrowMinusX.X = negativeXaxis.X + 10;
+            topArrowMinusX.Y = negativeXaxis.Y - (int)(10 * Math.Tan(Math.PI / 6));
+
             bottomArrowX.X = positiveXaxis.X - 10;
-            bottomArrowX.Y = positiveXaxis.Y + (int)(10 * Math.Tan(Math.PI/6));
+            bottomArrowX.Y = positiveXaxis.Y + (int)(10 * Math.Tan(Math.PI / 6));
+
+            bottomArrowMinusX.X = negativeXaxis.X + 10;
+            bottomArrowMinusX.Y = negativeXaxis.Y + (int)(10 * Math.Tan(Math.PI / 6));
 
             leftArrowY.Y = positiveYaxis.Y + 10;
             leftArrowY.X = positiveYaxis.X - (int)(10 * Math.Tan(Math.PI/6));
 
+            leftArrowMinusY.Y = negativeYaxis.Y - 10;
+            leftArrowMinusY.X = negativeYaxis.X - (int)(10 * Math.Tan(Math.PI / 6));
+
             rightArrowY.Y = positiveYaxis.Y + 10;
-            rightArrowY.X = positiveYaxis.X + (int)(10 * Math.Tan(Math.PI/6));
+            rightArrowY.X = positiveYaxis.X + (int)(10 * Math.Tan(Math.PI / 6));
+
+            rightArrowMinusY.Y = negativeYaxis.Y - 10;
+            rightArrowMinusY.X = negativeYaxis.X + (int)(10 * Math.Tan(Math.PI / 6));
 
             /* draw the 2 arrows */
             graph.DrawLine(blackPen, positiveXaxis, topArrowX);
@@ -139,9 +181,19 @@ namespace AUPS.Tools
             pointY.X = rightArrowY.X + 5;
             pointY.Y = rightArrowY.Y - 5;
 
+            PointF pointMinusX = new PointF();
+            pointMinusX.X = bottomArrowMinusX.X;
+            pointMinusX.Y = bottomArrowMinusX.Y - 5;
+
+            PointF pointMinusY = new PointF();
+            pointMinusY.X = rightArrowMinusY.X;
+            pointMinusY.Y = rightArrowMinusY.Y - 30;                 
+
             System.Drawing.Font font = new Font("Microsoft Sans Serif", 8);     
-            graph.DrawString("X", font, Brushes.Black, pointX);
-            graph.DrawString("Y", font, Brushes.Black, pointY);
+            graph.DrawString("0", font, Brushes.Black, pointY);
+            graph.DrawString("90", font, Brushes.Black, pointX);
+            graph.DrawString("180", font, Brushes.Black, pointMinusY);
+            graph.DrawString("270", font, Brushes.Black, pointMinusX);
         }
 
         private Point getOriginPointOfCoordinateSystem()
@@ -158,7 +210,7 @@ namespace AUPS.Tools
 
         private void DrawCircle(int radius)
         {
-            radius = radius / scaleDownRatio;
+            radius = radius / RetrieveScaleDownRatio();
             Point origin = getOriginPointOfCoordinateSystem();
 
             Graphics graph = tabPageField.CreateGraphics();
@@ -167,13 +219,14 @@ namespace AUPS.Tools
             graph.DrawEllipse(bluePen, origin.X - radius, origin.Y - radius, 2 * radius, 2 * radius);
         }
 
-        private bool RetrieveTestingPointsSettings(out int radius, out int angle, out int height, out int freq, out int bandWidth, out int channel, out double power)
+        private bool RetrieveTestingPointsSettings(out int radius, out int angle, out int height, out string polarization, out int freq, out int bandWidth, out int channel, out double power)
         {
             try
             {
                 radius = Convert.ToInt32(textBoxRadius.Text);
                 angle = Convert.ToInt32(textBoxAngle.Text);
                 height = Convert.ToInt32(textBoxHeight.Text);
+                polarization = comboBoxAntennaPolarization.Text;
                 freq = Convert.ToInt32(textBoxFreqBand.Text);
                 bandWidth = Convert.ToInt32(comboBoxBandWidth.Text);
                 channel = Convert.ToInt32(comboBoxChannel.Text);
@@ -185,6 +238,7 @@ namespace AUPS.Tools
                 radius = 0;
                 angle = 0;
                 height = 0;
+                polarization = "";
                 freq = 0;
                 bandWidth = 0;
                 channel = 0;
@@ -197,6 +251,7 @@ namespace AUPS.Tools
                 radius = 0;
                 angle = 0;
                 height = 0;
+                polarization = "";
                 freq = 0;
                 bandWidth = 0;
                 channel = 0;
@@ -211,6 +266,7 @@ namespace AUPS.Tools
             textBoxRadius.Text = string.Empty;
             textBoxAngle.Text = string.Empty;
             textBoxHeight.Text = string.Empty;
+            comboBoxAntennaPolarization.Text = string.Empty;
             textBoxFreqBand.Text = string.Empty;
             comboBoxBandWidth.Text = string.Empty;
             comboBoxChannel.Text = string.Empty;
@@ -280,17 +336,18 @@ namespace AUPS.Tools
         private List<CheckBox> testPoints = new List<CheckBox>();
         private List<int> radiusList = new List<int>();
 
-        private CheckBox CreateNewCheckBoxBy(int radius, int angle, int height, int freq, int bandWidth, int channel, double power)
+        private CheckBox CreateNewCheckBoxBy(int radius, int angle, int height, string polarization, int freq, int bandWidth, int channel, double power)
         {
             Point origin = getOriginPointOfCoordinateSystem();
-            int x = origin.X + (int)((radius/scaleDownRatio) * Math.Cos(2 * Math.PI * angle / 360.00));
-            int y = origin.Y - (int)((radius/scaleDownRatio) * Math.Sin(2 * Math.PI * angle / 360.00));
+            int x = origin.X + (int)((radius/RetrieveScaleDownRatio()) * Math.Sin(2 * Math.PI * angle / 360.00));
+            int y = origin.Y - (int)((radius/RetrieveScaleDownRatio()) * Math.Cos(2 * Math.PI * angle / 360.00));
             DrawCircle(radius);
             radiusList.Add(radius);
 
             string info = "Radius = " + radius + "\n" +
                           "Angle = " + angle + "\n" +
                           "Height = " + height + "\n" +
+                          "Antenna polarization = " + polarization + "\n" + 
                           "Frequency = " + freq + "\n" +
                           "Bandwidth = " + bandWidth + "\n" +
                           "Channel = " + channel + "\n" +
@@ -316,10 +373,11 @@ namespace AUPS.Tools
                 dataGridViewPointSettings.Rows[newRowIndex].Cells[2].Value = radius;
                 dataGridViewPointSettings.Rows[newRowIndex].Cells[3].Value = angle;
                 dataGridViewPointSettings.Rows[newRowIndex].Cells[4].Value = height;
-                dataGridViewPointSettings.Rows[newRowIndex].Cells[5].Value = freq;
-                dataGridViewPointSettings.Rows[newRowIndex].Cells[6].Value = bandWidth;
-                dataGridViewPointSettings.Rows[newRowIndex].Cells[7].Value = channel;
-                dataGridViewPointSettings.Rows[newRowIndex].Cells[8].Value = power;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[5].Value = polarization;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[6].Value = freq;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[7].Value = bandWidth;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[8].Value = channel;
+                dataGridViewPointSettings.Rows[newRowIndex].Cells[9].Value = power;
 
             return newCheckBox;
         }
@@ -343,8 +401,9 @@ namespace AUPS.Tools
             string toolTip = toolTipToDisplayInfo.GetToolTip(currentTestPoint);
 
             int radius, angle, height, freq, bandWidth, channel;
+            string polarization;
             double power;
-            ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel, out power);
+            ParseOutToolTip(toolTip, out radius, out angle, out height, out polarization, out freq, out bandWidth, out channel, out power);
 
             for (int row = 0; row < (dataGridViewPointSettings.Rows.Count-1); row++)
             {
@@ -355,64 +414,85 @@ namespace AUPS.Tools
                                             Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[2].Value),       /* Radius */
                                             Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[3].Value),       /* Angle */
                                             Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[4].Value),       /* Height */
-                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[5].Value),       /* Freq. */
-                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[6].Value),       /* Bandwidth */
-                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[7].Value),       /* Channel */
-                                            Convert.ToDouble(dataGridViewPointSettings.Rows[row].Cells[8].Value));     /* Power */
+                                            Convert.ToString(dataGridViewPointSettings.Rows[row].Cells[5].Value),      /* Antenna polarization */
+                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[6].Value),       /* Freq. */
+                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[7].Value),       /* Bandwidth */
+                                            Convert.ToInt32(dataGridViewPointSettings.Rows[row].Cells[8].Value),       /* Channel */
+                                            Convert.ToDouble(dataGridViewPointSettings.Rows[row].Cells[9].Value));     /* Power */
                 }
             }               
             doneFlag = true;
         }
 
-        private void PerformTestingProcedure(string pointNo, int radius, int angle, int height, int freq, int bandWidth, int channel, double power)
+        private void PerformTestingProcedure(string pointNo, int radius, int angle, int height, string polarization, int freq, int bandWidth, int channel, double power)
         {
             /* Perform the network connectivity test items */
             string tcpUplinkThroughput = "", tcpDownlinkThroughput = "";
             string udpUplinkThroughput = "", udpUplinkLatency = "", udpUplinkPacketLoss = "",
                    udpDownlinkThroughput = "", udpDownlinkLatency = "", udpDownlinkPacketLoss = "";
 
-            progressBarTesting.Value = 1;
-            MeasureRSSI(textBoxSaVisaAddress.Text);
+            if (radioBtnAppLayerTesting.Checked == true)
+            {
+                progressBarTesting.Value = 1;
 
-            InitializeIperfProcess();
-            MeasureTcpUplinkPerformance(out tcpUplinkThroughput);
-            CloseIperfProcess();
-            progressBarTesting.Value = 20;
+                InitializeIperfProcess();
+                MeasureTcpUplinkPerformance(out tcpUplinkThroughput);
+                CloseIperfProcess();
+                progressBarTesting.Value = 20;
 
-            InitializeIperfProcess();
-            MeasureTcpDownlinkPerformance(out tcpDownlinkThroughput);
-            CloseIperfProcess();
-            progressBarTesting.Value = 40;
+                InitializeIperfProcess();
+                MeasureTcpDownlinkPerformance(out tcpDownlinkThroughput);
+                CloseIperfProcess();
+                progressBarTesting.Value = 40;
 
-            InitializeIperfProcess();
-            MeasureUdpUplinkPerformance(out udpUplinkThroughput, out udpUplinkLatency, out udpUplinkPacketLoss);
-            CloseIperfProcess();
-            progressBarTesting.Value = 60;
+                InitializeIperfProcess();
+                MeasureUdpUplinkPerformance(out udpUplinkThroughput, out udpUplinkLatency, out udpUplinkPacketLoss);
+                CloseIperfProcess();
+                progressBarTesting.Value = 60;
 
-            InitializeIperfProcess();
-            MeasureUdpDownlinkPerformance(out udpDownlinkThroughput, out udpDownlinkLatency, out udpDownlinkPacketLoss);
-            CloseIperfProcess();
-            progressBarTesting.Value = 80;
+                InitializeIperfProcess();
+                MeasureUdpDownlinkPerformance(out udpDownlinkThroughput, out udpDownlinkLatency, out udpDownlinkPacketLoss);
+                CloseIperfProcess();
+                progressBarTesting.Value = 80;
 
-            FillTestResultsTable(pointNo,
-                                 radius.ToString(),
-                                 angle.ToString(),
-                                 height.ToString(),
-                                 freq.ToString(),
-                                 bandWidth.ToString(),
-                                 channel.ToString(),
-                                 power.ToString(),
-                                 tcpUplinkThroughput,
-                                 tcpDownlinkThroughput,
-                                 udpUplinkThroughput,
-                                 udpUplinkLatency,
-                                 udpUplinkPacketLoss,
-                                 udpDownlinkThroughput,
-                                 udpDownlinkLatency,
-                                 udpDownlinkPacketLoss,
-                                 "",
-                                 "");
-            progressBarTesting.Value = 100;
+                FillApplicationLayerTestResultsTable(pointNo,
+                                                     radius.ToString(),
+                                                     angle.ToString(),
+                                                     height.ToString(),
+                                                     polarization,
+                                                     freq.ToString(),
+                                                     bandWidth.ToString(),
+                                                     channel.ToString(),
+                                                     power.ToString(),
+                                                     tcpUplinkThroughput,
+                                                     tcpDownlinkThroughput,
+                                                     udpUplinkThroughput,
+                                                     udpUplinkLatency,
+                                                     udpUplinkPacketLoss,
+                                                     udpDownlinkThroughput,
+                                                     udpDownlinkLatency,
+                                                     udpDownlinkPacketLoss);
+                progressBarTesting.Value = 100;
+            }
+            else if (radioBtnPhyLayerTesting.Checked == true)
+            {
+                progressBarTesting.Value = 20;
+                double rssiValue = 0.00;
+                int error = MeasureRSSI(freq, bandWidth, power, out rssiValue);
+                progressBarTesting.Value = 95;
+
+                FillRFTestResultsTable(pointNo,
+                                        radius.ToString(),
+                                        angle.ToString(),
+                                        height.ToString(),
+                                        polarization,
+                                        freq.ToString(),
+                                        bandWidth.ToString(),
+                                        channel.ToString(),
+                                        power.ToString(),
+                                        rssiValue.ToString());
+                progressBarTesting.Value = 100;
+            }
         }
 
         private void btnRefreshDrawing_Click(object sender, EventArgs e)
@@ -429,16 +509,17 @@ namespace AUPS.Tools
             {
                 string toolTip = toolTipToDisplayInfo.GetToolTip(testPoint);
                 int radius, angle, height, freq, bandWidth, channel;
+                string polarization;
                 double power;
-                ParseOutToolTip(toolTip, out radius, out angle, out height, out freq, out bandWidth, out channel, out power);
+                ParseOutToolTip(toolTip, out radius, out angle, out height, out polarization, out freq, out bandWidth, out channel, out power);
 
-                int x = origin.X + (int)((radius / scaleDownRatio) * Math.Cos(2 * Math.PI * angle / 360.00));
-                int y = origin.Y - (int)((radius / scaleDownRatio) * Math.Sin(2 * Math.PI * angle / 360.00));
+                int x = origin.X + (int)((radius / RetrieveScaleDownRatio()) * Math.Sin(2 * Math.PI * angle / 360.00));
+                int y = origin.Y - (int)((radius / RetrieveScaleDownRatio()) * Math.Cos(2 * Math.PI * angle / 360.00));
                 testPoint.Location = new Point(x, y);
             }
         }
 
-        private void ParseOutToolTip(string toolTip, out int radius, out int angle, out int height, out int freq, out int bandWidth, out int channel, out double power)
+        private void ParseOutToolTip(string toolTip, out int radius, out int angle, out int height, out string polarization, out int freq, out int bandWidth, out int channel, out double power)
         {
             string[] fields = toolTip.Split(new char[] { '\n' });
             int count = fields.Length;
@@ -451,10 +532,11 @@ namespace AUPS.Tools
             radius = Convert.ToInt32(field_values[0]);
             angle = Convert.ToInt32(field_values[1]);
             height = Convert.ToInt32(field_values[2]);
-            freq = Convert.ToInt32(field_values[3]);
-            bandWidth = Convert.ToInt32(field_values[4]);
-            channel = Convert.ToInt32(field_values[5]);
-            power = Convert.ToDouble(field_values[6]);
+            polarization = field_values[3];
+            freq = Convert.ToInt32(field_values[4]);
+            bandWidth = Convert.ToInt32(field_values[5]);
+            channel = Convert.ToInt32(field_values[6]);
+            power = Convert.ToDouble(field_values[7]);
         }
 
         private void tabControlTesting_Resize(object sender, EventArgs e)
@@ -494,24 +576,23 @@ namespace AUPS.Tools
         }
 #endregion
 
-        private void FillTestResultsTable(string pointNo,
-                                          string radius,
-                                          string angle,
-                                          string height,
-                                          string frequecy,
-                                          string band,
-                                          string channel,
-                                          string power,
-                                          string tcpUplinkThroughput,
-                                          string tcpDownlinkThroughput,
-                                          string udpUplinkThroughput,
-                                          string udpUplinkLatency,
-                                          string udpUplinkPacketLoss,
-                                          string udpDownlinkThroughput,
-                                          string udpDownlinkLatency,
-                                          string udpDownlinkPacketLoss,
-                                          string rssi,
-                                          string snr)
+        private void FillApplicationLayerTestResultsTable(string pointNo,
+                                                          string radius,
+                                                          string angle,
+                                                          string height,
+                                                          string polarization,
+                                                          string frequecy,
+                                                          string band,
+                                                          string channel,
+                                                          string power,
+                                                          string tcpUplinkThroughput,
+                                                          string tcpDownlinkThroughput,
+                                                          string udpUplinkThroughput,
+                                                          string udpUplinkLatency,
+                                                          string udpUplinkPacketLoss,
+                                                          string udpDownlinkThroughput,
+                                                          string udpDownlinkLatency,
+                                                          string udpDownlinkPacketLoss)
         {
             int existedRows = dataGridViewTestResults.Rows.Add();
 
@@ -519,21 +600,46 @@ namespace AUPS.Tools
             dataGridViewTestResults.Rows[existedRows].Cells[1].Value = radius;
             dataGridViewTestResults.Rows[existedRows].Cells[2].Value = angle;
             dataGridViewTestResults.Rows[existedRows].Cells[3].Value = height;
-            dataGridViewTestResults.Rows[existedRows].Cells[4].Value = frequecy;
-            dataGridViewTestResults.Rows[existedRows].Cells[5].Value = band;
-            dataGridViewTestResults.Rows[existedRows].Cells[6].Value = channel;
-            dataGridViewTestResults.Rows[existedRows].Cells[7].Value = power;
-            dataGridViewTestResults.Rows[existedRows].Cells[8].Value = tcpUplinkThroughput;
-            dataGridViewTestResults.Rows[existedRows].Cells[9].Value = tcpDownlinkThroughput;
-            dataGridViewTestResults.Rows[existedRows].Cells[10].Value = udpUplinkThroughput;
-            dataGridViewTestResults.Rows[existedRows].Cells[11].Value = udpUplinkLatency;
-            dataGridViewTestResults.Rows[existedRows].Cells[12].Value = udpUplinkPacketLoss;
-            dataGridViewTestResults.Rows[existedRows].Cells[13].Value = udpDownlinkThroughput;
-            dataGridViewTestResults.Rows[existedRows].Cells[14].Value = udpDownlinkLatency;
-            dataGridViewTestResults.Rows[existedRows].Cells[15].Value = udpDownlinkPacketLoss;
-            dataGridViewTestResults.Rows[existedRows].Cells[16].Value = rssi;
-            dataGridViewTestResults.Rows[existedRows].Cells[17].Value = snr;
-            dataGridViewTestResults.Rows[existedRows].Cells[18].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            dataGridViewTestResults.Rows[existedRows].Cells[4].Value = polarization;
+            dataGridViewTestResults.Rows[existedRows].Cells[5].Value = frequecy;
+            dataGridViewTestResults.Rows[existedRows].Cells[6].Value = band;
+            dataGridViewTestResults.Rows[existedRows].Cells[7].Value = channel;
+            dataGridViewTestResults.Rows[existedRows].Cells[8].Value = power;
+            dataGridViewTestResults.Rows[existedRows].Cells[9].Value = tcpUplinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[10].Value = tcpDownlinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[11].Value = udpUplinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[12].Value = udpUplinkLatency;
+            dataGridViewTestResults.Rows[existedRows].Cells[13].Value = udpUplinkPacketLoss;
+            dataGridViewTestResults.Rows[existedRows].Cells[14].Value = udpDownlinkThroughput;
+            dataGridViewTestResults.Rows[existedRows].Cells[15].Value = udpDownlinkLatency;
+            dataGridViewTestResults.Rows[existedRows].Cells[16].Value = udpDownlinkPacketLoss;
+            dataGridViewTestResults.Rows[existedRows].Cells[17].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        private void FillRFTestResultsTable(string pointNo,
+                                            string radius,
+                                            string angle,
+                                            string height,
+                                            string polarization,
+                                            string frequency,
+                                            string band,
+                                            string channel,
+                                            string power,
+                                            string rssi)
+        {
+            int existedRows = dataGridViewRFTestResults.Rows.Add();
+
+            dataGridViewRFTestResults.Rows[existedRows].Cells[0].Value = pointNo;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[1].Value = radius;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[2].Value = angle;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[3].Value = height;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[4].Value = polarization;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[5].Value = frequency;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[6].Value = band;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[7].Value = channel;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[8].Value = power;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[9].Value = rssi;
+            dataGridViewRFTestResults.Rows[existedRows].Cells[10].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
 #if false
@@ -574,7 +680,7 @@ namespace AUPS.Tools
         {
             labelElapsedTime.Text = "Elapsed time : " + DateTime.Now.Subtract(timer).ToString();
         }
-#endregion
+        #endregion
 #endif
 
         private void btnClearTestResults_Click(object sender, EventArgs e)
@@ -582,11 +688,16 @@ namespace AUPS.Tools
             dataGridViewTestResults.Rows.Clear();
         }
 
+        private void btnClearPhysicalTestResultsTable_Click(object sender, EventArgs e)
+        {
+            dataGridViewRFTestResults.Rows.Clear();
+        }
+
         private void btnSaveTestResults_Click(object sender, EventArgs e)
         {
             if (labelFilePathToSave.Text != string.Empty)
             {
-                SaveTestResultsToCsv(labelFilePathToSave.Text);
+                SaveTestResultsToCsv(labelFilePathToSave.Text, dataGridViewTestResults);
                 return;
             }
 
@@ -600,14 +711,28 @@ namespace AUPS.Tools
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 labelFilePathToSave.Text = dlg.FileName;
-                SaveTestResultsToCsv(dlg.FileName);
+                SaveTestResultsToCsv(dlg.FileName, dataGridViewTestResults);
             }
         }
 
-        private void SaveTestResultsToCsv(string csvFileName)
+        private void btnSaveRFTestResults_Click(object sender, EventArgs e)
         {
-            int cols = dataGridViewTestResults.Columns.Count;
-            int rows = dataGridViewTestResults.Rows.Count;
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save the test results into .csv file you specified";
+            dlg.InitialDirectory = "";
+            dlg.DefaultExt = "csv";
+            dlg.Filter = "CSV file | *.csv";
+            dlg.AddExtension = true;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                SaveTestResultsToCsv(dlg.FileName, dataGridViewRFTestResults);
+            }
+        }
+
+        private void SaveTestResultsToCsv(string csvFileName, DataGridView dgv)
+        {
+            int cols = dgv.Columns.Count;
+            int rows = dgv.Rows.Count;
             int colIndex = 0, rowIndex = 0;
 
             System.IO.FileStream fs = new System.IO.FileStream(csvFileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
@@ -616,7 +741,7 @@ namespace AUPS.Tools
             string title = "";
             for (colIndex = 0; colIndex < cols; colIndex++)
             {
-                title += dataGridViewTestResults.Columns[colIndex].HeaderText;
+                title += dgv.Columns[colIndex].HeaderText;
                 if (colIndex < (cols -1))   /* Caution : the last column cannot append the comma(",") */
                 {
                     title += ",";
@@ -630,7 +755,7 @@ namespace AUPS.Tools
             {
                 for (colIndex = 0; colIndex < cols; colIndex++)
                 {
-                    line += (dataGridViewTestResults.Rows[rowIndex].Cells[colIndex].Value as string);
+                    line += (dgv.Rows[rowIndex].Cells[colIndex].Value as string);
                     if (colIndex < (cols-1))
                     {
                         line += ",";
@@ -760,7 +885,7 @@ namespace AUPS.Tools
                 string[] columnFields = line.Split(',');
                 if (headFlag == true)       /* Focus on dealing with the table title */
                 {
-                    for (int colIndex = 0; colIndex < 8; colIndex++)
+                    for (int colIndex = 0; colIndex < 9; colIndex++)
                     {
                         DataColumn dcol = new DataColumn(columnFields[colIndex]);
                         dt.Columns.Add(dcol);
@@ -770,7 +895,7 @@ namespace AUPS.Tools
                 else        /* Focus on dealing with the table content */
                 {
                     DataRow drow = dt.NewRow();
-                    for (int colIndex = 0; colIndex < 8 /* columnFields.Length */; colIndex++)
+                    for (int colIndex = 0; colIndex < 9 /* columnFields.Length */; colIndex++)
                     {
                         drow[colIndex] = columnFields[colIndex];
                     }
@@ -809,18 +934,20 @@ namespace AUPS.Tools
                 int radius = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][1]);
                 int angle = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][2]);
                 int height = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][3]);
-                int freq = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][4]);
-                int bandwidth = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][5]);
-                int channel = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][6]);
-                double power = Convert.ToDouble(testPointsSettingTable.Rows[rowIndex][7]);
+                string polarization = Convert.ToString(testPointsSettingTable.Rows[rowIndex][4]);
+                int freq = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][5]);
+                int bandwidth = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][6]);
+                int channel = Convert.ToInt32(testPointsSettingTable.Rows[rowIndex][7]);
+                double power = Convert.ToDouble(testPointsSettingTable.Rows[rowIndex][8]);
 
-                int x = origin.X + (int)((radius / scaleDownRatio) * Math.Cos(2 * Math.PI * angle / 360.00));
-                int y = origin.Y - (int)((radius / scaleDownRatio) * Math.Sin(2 * Math.PI * angle / 360.00));
+                int x = origin.X + (int)((radius / RetrieveScaleDownRatio()) * Math.Sin(2 * Math.PI * angle / 360.00));
+                int y = origin.Y - (int)((radius / RetrieveScaleDownRatio()) * Math.Cos(2 * Math.PI * angle / 360.00));
                 DrawCircle(radius);
                 radiusList.Add(radius);
                 string info = "Radius = " + radius + "\n" +
                               "Angle = " + angle + "\n" +
                               "Height = " + height + "\n" +
+                              "Antenna polarization = " + polarization + "\n" + 
                               "Frequency = " + freq + "\n" +
                               "Bandwidth = " + bandwidth + "\n" +
                               "Channel = " + channel + "\n" +
@@ -862,7 +989,5 @@ namespace AUPS.Tools
             radiusList.Clear();
             return;
         }
-
-
     }
 }
