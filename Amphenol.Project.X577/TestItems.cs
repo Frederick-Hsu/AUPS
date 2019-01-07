@@ -136,6 +136,12 @@ namespace Amphenol.Project.X577
                 case "SaveCalibrationCoefficientsAndTakeEffect":
                     success = SaveCalibrationCoefficientsAndTakeEffect(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "PerformECalFull4PortAutoCalibration":
+                    success = PerformECalFull4PortAutoCalibration(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "VerifyECalAppliedCalibration":
+                    success = VerifyECalAppliedCalibration(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
+                    break;
                 #endregion
 #if false
                 #region Power Supply Test Items section
@@ -217,6 +223,8 @@ namespace Amphenol.Project.X577
             functionsList.Add("QueryNetworkAnalyzerCalibrationKitNumber");
             functionsList.Add("PerformOpenCalibration");
             functionsList.Add("SaveCalibrationCoefficientsAndTakeEffect");
+            functionsList.Add("PerformECalFull4PortAutoCalibration");
+            functionsList.Add("VerifyECalAppliedCalibration");
             #endregion
 
             #region Power Supply Test Functions

@@ -159,6 +159,58 @@ namespace Amphenol.Project.X577
             }
             return (successFlag == 0);
         }
+
+        private static bool PerformECalFull4PortAutoCalibration(List<string> stepParameters,
+                                                                out string stepResult,
+                                                                out string stepStatus,
+                                                                out string stepErrorCode,
+                                                                out string stepErrorDesc)
+        {
+            uint channelnum = Convert.ToUInt32(stepParameters[0]);
+            int successFlag = networkAnalyzer.ECalExecuteFull4PortAutoCalibration(channelnum);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = string.Empty;
+                stepErrorDesc = string.Empty;
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "ECAL4PORT";
+                stepErrorDesc = "Failed to perform the ECal Full 4-port auto calibration.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool VerifyECalAppliedCalibration(List<string> stepParameters,
+                                                         List<string> stepLimits,
+                                                         out string stepResult,
+                                                         out string stepStatus,
+                                                         out string stepErrorCode,
+                                                         out string stepErrorDesc)
+        {
+            uint channelnum = Convert.ToUInt32(stepParameters[0]), tracenum = Convert.ToUInt32(stepParameters[1]);
+            string[] calibrationType;
+            int successFlag = networkAnalyzer.CheckAppliedCalibrationType(channelnum, tracenum, out calibrationType);
+            stepResult = calibrationType[0];
+
+            if ((successFlag == 0) && (stepResult == stepLimits[0].ToUpper()))
+            {
+                stepStatus = "Pass";
+                stepErrorCode = string.Empty;
+                stepErrorDesc = string.Empty;
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "CALITYPE";
+                stepErrorDesc = "Failed to verify the calibration type.";
+            }
+            return (successFlag == 0);
+        }
         #endregion
     }
 }
