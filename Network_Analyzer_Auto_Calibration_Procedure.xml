@@ -58,7 +58,7 @@
     </step>
     <step>
       <stepnum>1.5</stepnum>
-      <stepname>Select Open calibration at port 1 fro channel 1.</stepname>
+      <stepname>Select Open calibration at port 1 for channel 1.</stepname>
       <stepdescription>
       </stepdescription>
       <functionname>PerformOpenCalibration</functionname>
@@ -86,6 +86,34 @@
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.7</stepnum>
+      <stepname>Execute the ECal Full 4-port calibration.</stepname>
+      <stepdescription>For channel 1</stepdescription>
+      <functionname>PerformECalFull4PortAutoCalibration</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.8</stepnum>
+      <stepname>Verify the ECal auto calibration.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <functionname>VerifyECalAppliedCalibration</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>SOLT4</limit>
       </spec>
     </step>
     <step>
