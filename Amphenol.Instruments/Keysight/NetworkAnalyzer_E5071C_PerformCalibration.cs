@@ -336,7 +336,7 @@ namespace Amphenol.Instruments.Keysight
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             byte[] response = new byte[64];
             error = visa32.viRead(analyzerSession, response, 64, out count);
-            if (Convert.ToUInt32(Encoding.ASCII.GetString(response, 0, count-1)) == 0)
+            if (Convert.ToUInt32(Encoding.ASCII.GetString(response, 0, count-1)) == 1)
             {
                 return 0;
             }
@@ -467,6 +467,160 @@ namespace Amphenol.Instruments.Keysight
         #endregion
 
         #region ECal auto calibration
+        /* :SENSe1:CORRection:COLLect:ECAL:SOLT1 1 */
+        public int ECalExecute1PortAutoCalibration(uint channelNumber, uint portNumber)
+        {
+            int error = 0, count;
+            string command = ":SENSe" + channelNumber + ":CORRection:COLLect:ECAL:SOLT1 " + portNumber + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = "*OPC?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            if (Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1)) == 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return (-9);
+            }
+        }
+
+        /* :SENSe1:CORRection:COLLect:ECAL:SOLT2 1, 2 */
+        public int ECalExecuteFull2PortAutoCalibration(uint channelNumber, uint portNumber1, uint portNumber2)
+        {
+            int error = 0, count = 0;
+            if (portNumber1 == portNumber2)
+            {
+                return (-1);
+            }
+            string command = ":SENSe" + channelNumber + ":CORRection:COLLect:ECAL:SOLT2 " + portNumber1 + ", " + portNumber2 + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = "*OPC?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            if (Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1)) == 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return (-10);
+            }
+        }
+
+        /* :SENSe1:CORRection:COLLect:ECAL:SOLT3 1, 2, 3 */
+        public int ECalExecuteFull3PortAutoCalibration(uint channelNumber, uint portNumber1, uint portNumber2, uint portNumber3)
+        {
+            int error = 0, count = 0;
+            if ((portNumber1 == portNumber2) || (portNumber2 == portNumber3) || (portNumber1 == portNumber3))
+            {
+                return (-1);
+            }
+            string command = ":SENSe" + channelNumber + ":CORRection:COLLect:ECAL:SOLT3 " + portNumber1 + ", " + portNumber2 + ", " + portNumber3 + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = "*OPC?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            if (Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1)) == 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return (-11);
+            }
+        }
+
+        /* :SENSe1:CORRection:COLLect:ECAL:SOLT4 1, 2, 3, 4 */
+        public int ECalExecuteFull4PortAutoCalibration(uint channelNumber)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe" + channelNumber + ":CORRection:COLLect:ECAL:SOLT4 1, 2, 3, 4\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = "*OPC?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            // string result = Encoding.ASCII.GetString(response, 0, count - 1);
+            if (Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1)) == 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return (-12);
+            }
+        }
+
+        /* :SENSe1:CORRection:COLL:ecal:ERESponse 1, 2 */
+        public int ECalExecuteEnhancedResponseAutoCalibration(uint channelNumber, uint portNumber1, uint portNumber2)
+        {
+            int error = 0, count = 0;
+            if (portNumber1 == portNumber2)
+            {
+                return (-1);
+            }
+            string command = ":SENSe" + channelNumber + ":CORRection:COLLect:ECAL:ERESponse " + portNumber1 + ", " + portNumber2 + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = "*OPC?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            if (Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1)) == 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return (-13);
+            }
+        }
+
+        /* :SENSe1:CORRection:COLLect:ECAL:THRU 1, 2 */
+        public int ECalExecuteResponseThruAutoCalibration(uint channelNumber, uint responsePortNumber, uint stimulusPortNumber)
+        {
+            int error = 0, count = 0;
+            if (responsePortNumber == stimulusPortNumber)
+            {
+                return (-1);
+            }
+            string command = ":SENSe" + channelNumber + ":CORRection:COLLect:ECAL:THRU " + responsePortNumber + ", " + stimulusPortNumber + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = "*OPC?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            if (Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1)) == 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return (-14);
+            }
+        }
+
+        /* :SENSe1:CORRection:TYPE1? */
+        public int CheckAppliedCalibrationType(uint channelNumber, uint traceNumber, out string[] type)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe" + channelNumber + ":CORRection:TYPE" + traceNumber + "?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[512];
+            error = visa32.viRead(analyzerSession, response, 512, out count);
+            type = Encoding.ASCII.GetString(response, 0, count - 1).Split(new char[] { ',', ' ', '\n' });
+            return error;
+        }
         #endregion
     }
 }
