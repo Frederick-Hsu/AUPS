@@ -464,6 +464,46 @@ namespace Amphenol.Instruments.Keysight
                 return error;
             }
         }
+
+        /* :SENSe1:CORRection:OFFSet:COLLect:CLEar */
+        public int ClearMechanicalCalKitMeasurementValues(uint channelNumber)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe" + channelNumber + ":CORRection:OFFSet:COLLect:CLEar\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENSe1:OFFSet:STATe ON */
+        public int TurnOnOffFrequencyOffsetMode(uint channelNumber, int status /* 1: ON, 0: OFF */)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe" + channelNumber + ":OFFSet:STATe " + status + "\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :SENSe1:OFFSet:STATe? */
+        public int QueryFrequencyOffsetModeStatus(uint channelNumber, out int status)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe" + channelNumber + ":OFFSet:STATe?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            status = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1));
+            return error;
+        }
+
+        /* :SENSe1:CORRection:OFFSet:CLEar */
+        public int ClearCalibrationErrorCoefficients(uint channelNumber)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe" + channelNumber + ":CORRection:OFFSet:CLEar\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
         #endregion
 
         #region ECal auto calibration
