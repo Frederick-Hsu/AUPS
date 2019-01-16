@@ -490,7 +490,7 @@ namespace Amphenol.Instruments.Keysight
             int error = 0, count = 0;
             string command = ":SENSe" + channelNumber + ":OFFSet:STATe?\n";
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            byte response = new byte[64];
+            byte[] response = new byte[64];
             error = visa32.viRead(analyzerSession, response, 64, out count);
             status = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1));
             return error;
