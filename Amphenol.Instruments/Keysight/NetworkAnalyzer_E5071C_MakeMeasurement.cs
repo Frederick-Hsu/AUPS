@@ -60,6 +60,39 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
+        /* :INITiate1:CONTinuous? */
+        public int QueryContinuousInitiationMode(int channelNum, out int mode)
+        {
+            int error = 0, count = 0;
+            string command = ":INITiate" + channelNum + ":CONTinuous?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            mode = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :TRIGger:SEQuence:SCOPe ALL|ACTive */
+        public int TriggerOnlySpecifiedChannel(string scope = "ALL"  /* only "ALL" and "ACTive" are allowed */)
+        {
+            int error = 0, count = 0;
+            string command = ":TRIGger:SEQuence:SCOPe " + scope + "\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :TRIGger:SEQuence:SCOPe? */
+        public int QueryWhichSpecifiedChannelTriggered(out string scope)
+        {
+            int error = 0, count = 0;
+            string command = ":TRIGger:SEQuence:SCOPe?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            scope = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
+
         /* *SRE 128 */
         public int SetServiceRequestEnableRegister(byte registerValue = 0x80 /* range : [0x00, 0xFF] */)
         {
