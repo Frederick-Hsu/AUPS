@@ -130,6 +130,9 @@ namespace Amphenol.Project.X577
                 case "QueryNetworkAnalyzerCalibrationKitNumber":
                     success = QueryNetworkAnalyzerCalibrationKitNumber(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "GetNetworkAnalyzerCalibrationKitName":
+                    success = GetNetworkAnalyzerCalibrationKitName(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
                 case "PerformOpenCalibration":
                     success = PerformOpenCalibration(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
@@ -221,6 +224,7 @@ namespace Amphenol.Project.X577
             functionsList.Add("SaveInstrumentState");
             functionsList.Add("SelectNetworkAnalyzerCalibrationKit");
             functionsList.Add("QueryNetworkAnalyzerCalibrationKitNumber");
+            functionsList.Add("GetNetworkAnalyzerCalibrationKitName");
             functionsList.Add("PerformOpenCalibration");
             functionsList.Add("SaveCalibrationCoefficientsAndTakeEffect");
             functionsList.Add("PerformECalFull4PortAutoCalibration");
