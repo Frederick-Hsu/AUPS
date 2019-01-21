@@ -24,21 +24,33 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
-        /* TRIG */
-        public int TriggerMeasurement()
+        /* :TRIGger:SEQuence:IMMediate */
+        public int TriggerAndExecuteMeasurement()
         {
             int errorno, count;
-            string command = ":TRIGger:IMMediate\n", response;
+            string command = ":TRIGger:SEQuence:IMMediate\n", response;
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
         }
 
-        /* :TRIG:SING */
+        /* :TRIGger:SEQuence:SINGle */
         public int SingleTriggerMeasurement()
         {
             int errorno, count;
-            string command = ":TRIGger:SINGle\n", response;
+            string command = ":TRIGger:SEQuence:SINGle\n", response;
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* *TRG */
+        public int AutomateTriggerToMeasure()
+        {
+            int error = 0, count = 0;
+            string command = ":TRIGger:SOURce BUS\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = "*TRG\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
         }
 
