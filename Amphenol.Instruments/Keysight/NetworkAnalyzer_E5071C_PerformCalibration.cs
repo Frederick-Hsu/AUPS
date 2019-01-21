@@ -77,6 +77,18 @@ namespace Amphenol.Instruments.Keysight
             return error;
         }
 
+        /* SENSe1:CORRection:COLLect:CKIT:LABel? */
+        public int QueryCalibrationKitName(uint chnum, out string calibrationKitName)
+        {
+            int error = 0, count = 0;
+            string command = ":SENSe" + chnum + ":CORRection:COLLect:CKIT:LABel?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            calibrationKitName = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
+
         /* :SENSe1:CORRection:COLLect:METHod:RESPonse:OPEN 1 */
         public int SetCalibrationTypeOpen(uint chnum, uint responsePortNumber)
         {
