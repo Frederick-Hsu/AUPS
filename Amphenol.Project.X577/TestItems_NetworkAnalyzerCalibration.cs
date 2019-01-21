@@ -58,6 +58,29 @@ namespace Amphenol.Project.X577
             return (successFlag == 0);
         }
 
+        private static bool GetNetworkAnalyzerCalibrationKitName(List<string> stepParameters,
+                                                                 out string stepResult,
+                                                                 out string stepStatus,
+                                                                 out string stepErrorCode,
+                                                                 out string stepErrorDesc)
+        {
+            uint channelnum = Convert.ToUInt32(stepParameters[0]);
+            int successFlag = networkAnalyzer.QueryCalibrationKitName(channelnum, out stepResult);
+            if (successFlag == 0)
+            {
+                stepStatus = "Pass";
+                stepErrorCode = string.Empty;
+                stepErrorDesc = string.Empty;
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "CKITNAME";
+                stepErrorDesc = "Failed to retrieve the calibration kit name";
+            }
+            return (successFlag == 0);
+        }
+
         private static bool QueryNetworkAnalyzerCalibrationKitNumber(List<string> stepParameters,
                                                                      List<string> stepLimits,
                                                                      out string stepResult,
