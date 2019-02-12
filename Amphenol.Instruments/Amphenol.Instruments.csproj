@@ -63,6 +63,12 @@
     <Compile Include="RohdeSchwarz\VectorNetworkAnalyzer_ZVB8.cs" />
     <Compile Include="visa32.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{e55e51a6-8757-4e7c-90a0-571de68345a0}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
