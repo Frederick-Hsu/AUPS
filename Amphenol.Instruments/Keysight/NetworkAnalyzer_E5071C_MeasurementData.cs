@@ -174,7 +174,7 @@ namespace Amphenol.Instruments.Keysight
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
         }
-
+#if false
         /* :CALC1:MARK1:FUNC:PEXC 0.2 */
         public int SetLowerLimitForPeakExcursionSearchAtMarker(int channelNum, int traceNum, int markerNo, string peakExcursionValue = "3.0")
         {
@@ -201,24 +201,95 @@ namespace Amphenol.Instruments.Keysight
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
         }
-
-        /* :CALC1:MARK1:FUNC:TARG -12.5
-         * :CALC1:MARK1:FUNC:TTR  NEG
+#endif
+        /* :CALC1:FUNC:PEXC 0.2
+         * :CALC1:FUNC:PPOL NEG
          */
-        public int SetMarkerTargetSearch(int channelNum, int traceNum, int markerNo, string targetValue, string transitionalDirection)
+        public int SetMarkerPeakSearch(int channelNum, 
+                                       int traceNum, 
+                                       string peakExcursionLowerLimit = "3", 
+                                       string polarity = "POSitive" /* 3 polarities can be selected "POSitive", "NEGative", "BOTH". */)
+        {
+            int error = 0, count = 0;
+            string command = ":DISP:WIND" + channelNum + ":ACT\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + "SELected:FUNCtion:PEXCursion " + peakExcursionLowerLimit + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:PPOLarity " + polarity + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALC1:FUNC:PEXC? 
+         * :CALC1:FUNC:PPOL?
+         */
+        public int QueryMarkerPeakSearch(int channelNum,
+                                         int traceNum,
+                                         out string peakExcursionLowerLimit,
+                                         out string polarity)
+        {
+            int error = 0, count = 0;
+            string command = ":DISP:WIND" + channelNum + ":ACT\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:PEXCursion?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            peakExcursionLowerLimit = Encoding.ASCII.GetString(response, 0, count - 1);
+
+            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:PPOLarity?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            polarity = Encoding.ASCII.GetString(response, 0, count - 1);
+            return error;
+        }
+        /* :CALC1:FUNC:TARG -12.5
+         * :CALC1:FUNC:TTR  NEG
+         */
+        public int SetMarkerTargetSearch(int channelNum, int traceNum, string targetValue, string transitionalDirection)
         {
             int errorno, count;
             string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n", response;
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
-            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":FUNCtion:TARGet " + targetValue + "\n";
+            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:TARGet " + targetValue + "\n";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
-            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNo + ":FUNCtion:TTRansition " + transitionalDirection + "\n";
+            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:TTRansition " + transitionalDirection + "\n";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
         }
 
+        /* :CALC1:FUNC:TARG?
+         * :CALC1:FUNC:TTR?
+         */
+        public int QueryMarkerTargetSearch(int channelNum, int traceNum, out string targetValue, out string transitionDirection)
+        {
+            int error = 0, cout = 0;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out cout);
+
+            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:TARGet?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out cout);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out cout);
+            targetValue = Encoding.ASCII.GetString(response, 0, cout - 1);
+
+            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:TTRansition?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out cout);
+            error = visa32.viRead(analyzerSession, response, 64, out cout);
+            transitionDirection = Encoding.ASCII.GetString(response, 0, cout - 1);
+            return error;
+        }
         /* :CALC1:FUNC:EXEC */
         public int PerformMarkerSearch(int channelNum = 1)
         {
@@ -234,21 +305,21 @@ namespace Amphenol.Instruments.Keysight
         public int RetrieveSearchResults(int channelNum, out int pointNum, out double[] results)
         {
             int errorno, count;
-            string command = ":CALCulate" + channelNum + ":FUNCtion:POINts?\n";
+            string command = ":CALCulate" + channelNum + ":SELected:FUNCtion:POINts?\n";
             byte[] response = new byte[256];
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             errorno = visa32.viRead(analyzerSession, response, 256, out count);
-            pointNum = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count));
+            pointNum = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1));
 
-            command = ":CALCulate" + channelNum + ":FUNCtion:DATA?\n";
+            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:DATA?\n";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             errorno = visa32.viRead(analyzerSession, response, 256, out count);
 
-            results = new double[pointNum + 1];
-            string[] array = new string[pointNum + 1];
-            array = Encoding.ASCII.GetString(response, 0, count).Split(',');
+            string[] array = Encoding.ASCII.GetString(response, 0, count-1).Split(new char[] { ',', ' ', '\n' });
+            int itemNumber = array.Length;
+            results = new double[itemNumber];
 
-            for (int index = 0; index < (pointNum + 1); index++)
+            for (int index = 0; index < itemNumber; index++)
             {
                 results[index] = Convert.ToDouble(array[index]);
             }

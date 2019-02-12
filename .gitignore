@@ -21,6 +21,7 @@
 *.pyc
 *.7z
 *.zip
+*.iseqx
 .DS_Store
 
 XML/

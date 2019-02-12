@@ -238,6 +238,10 @@ namespace Amphenol.Instruments.Keysight
         public int SetSweepMeasurementPoints(int channelNum = 1, int pointNum = 201)
         {
             int errorno, count;
+            if ((pointNum < 2) || (pointNum > 1601))
+            {
+                return (-1);
+            }
             string command = ":SENSe" + channelNum + ":SWEep:POINts " + pointNum + "\n";
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             string response;
