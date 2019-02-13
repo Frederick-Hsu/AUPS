@@ -7,7 +7,7 @@ namespace Amphenol.Instruments.Keysight
     {
         #region Analyzing Data
         /* :CALC1:MARK2 ON */
-        public int ShowHideGeneralMarkerForActiveTrace(int channelNum, int traceNum, int markerNo, string on_off = "OFF")
+        public int ShowHideRegularMarkerForActiveTrace(int channelNum, int traceNum, int markerNo, string on_off = "OFF")
         {
             int errorno, count;
             string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n", response;
@@ -19,7 +19,7 @@ namespace Amphenol.Instruments.Keysight
         }
 
         /* :CALC1:MARK2? */
-        public int QueryGeneralMarkerDisplayStateForActiveTrace(int channelNum, int traceNum, int markerNo, out string on_off)
+        public int QueryRegularMarkerDisplayStateForActiveTrace(int channelNum, int traceNum, int markerNo, out string on_off)
         {
             int errorno, count;
             string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
@@ -95,7 +95,7 @@ namespace Amphenol.Instruments.Keysight
         }
 
         /* :CALC1:MARK1:X? */
-        public int RetrieveFrequencyValueAtGeneralMarker(int channelNum, int traceNum, int markerNo, out double frequencyValue /* unit : Hz */)
+        public int RetrieveFrequencyValueAtRegularMarker(int channelNum, int traceNum, int markerNo, out double frequencyValue /* unit : Hz */)
         {
             int errorno, count;
             string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
@@ -110,7 +110,7 @@ namespace Amphenol.Instruments.Keysight
         }
 
         /* CALC1:MARK2:Y? */
-        public int RetrieveMeasurementResultAtGeneralMarker(int channelNum, int traceNum, int markerNo, out double attenuationAmplitude /* unit : dB */)
+        public int RetrieveMeasurementResultAtRegularMarker(int channelNum, int traceNum, int markerNo, out double attenuationAmplitude /* unit : dB */)
         {
             int errorno, count;
             string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
