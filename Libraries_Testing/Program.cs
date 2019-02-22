@@ -8,7 +8,7 @@ namespace Libraries_Testing
 {
     class Program
     {
-#if true
+#if false
         static void Main(string[] args)
         {
             Console.WriteLine("This console project was just used to test and verify user-defined libraries.");
@@ -16,7 +16,7 @@ namespace Libraries_Testing
             Console.WriteLine("The size of float is : " + sizeof(float) + " bytes.");
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
             // int error = analyzer.Open("TCPIP0::192.168.30.66::inst0::INSTR");
-            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46108142::0::INSTR");
+            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
             // error = analyzer.Preset();
@@ -48,7 +48,86 @@ namespace Libraries_Testing
             }
             error = analyzer.Close();
         }
-#else
+#endif
+
+#if true
+        static void Main(string[] args)
+        {
+            NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
+            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            string idn;
+            error = analyzer.GetInstrumentIdentifier(out idn);
+            error = analyzer.ClearAllErrorQueue();
+            error = analyzer.Preset();
+            string errorMesg;
+            error = analyzer.QueryErrorStatus(out errorMesg);
+            error = analyzer.SelectChannelDisplayMode();
+            error = analyzer.SelectTraceDisplayMode(1, "D1");
+            error = analyzer.ConfigTraceNumInChannel(1, 1);
+            error = analyzer.ActivateTraceAt(1, 1);
+            error = analyzer.SelectMeasurementParameterFor(1, 1, "S11");
+            error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
+            error = analyzer.AutoScaleTraceDisplay(1, 1);
+            error = analyzer.SetSweepMeasurementPoints(1, 500);
+            error = analyzer.SetSweepStartFreqValueForChannel(1, "1.0E9");
+            error = analyzer.SetSweepStopFreqValueForChannel(1, "3.5E9");
+            error = analyzer.SelectTriggerSource("BUS");
+            error = analyzer.SingleTriggerMeasurement();
+            double markerPointFreq = 0.00;
+            List<double> markerPointResp;
+            error = analyzer.SegmentedMarkerSearch(1, 1, 1, 1, "1.5e9", "1.8e9", "MINimum", out markerPointFreq, out markerPointResp);
+            Console.WriteLine("Marker 1: ");
+            Console.WriteLine("{0}, \t\t {1}", markerPointFreq, markerPointResp[0]);
+
+            error = analyzer.SegmentedMarkerSearch(1, 1, 2, 2, "2.0e9", "2.3e9", "MIN", out markerPointFreq, out markerPointResp);
+            Console.WriteLine("Marker 2: ");
+            Console.WriteLine("{0}, \t\t {1}", markerPointFreq, markerPointResp[0]);
+
+            error = analyzer.SegmentedMarkerSearch(1, 1, 3, 3, "2.3e9", "2.6e9", "MAX", out markerPointFreq, out markerPointResp);
+            Console.WriteLine("Marker 3: ");
+            Console.WriteLine("{0}, \t\t {1}", markerPointFreq, markerPointResp[0]);
+
+            error = analyzer.SegmentedMarkerSearch(1, 1, 4, 4, "2.7e9", "3.0e9", "MIN", out markerPointFreq, out markerPointResp);
+            Console.WriteLine("Marker 4: ");
+            Console.WriteLine("{0}, \t\t {1}", markerPointFreq, markerPointResp[0]);
+
+            error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "SMITH");
+            error = analyzer.AutoScaleTraceDisplay(1, 1);
+            List<double> realData, imagData, frequencies;
+            error = analyzer.ReadOutFormattedDataArray(1, 1, out realData, out imagData);
+            error = analyzer.ReadOutFrequenciesOfAllMeasurementPoints(1, out frequencies);
+            Console.WriteLine("Smith R + jX chart: ");
+            Console.WriteLine("Real \t\t\t Image \t\t\t\t Freq");
+            for (int index = 0; index < realData.Count; ++index)
+            {
+                Console.WriteLine("{0}, \t\t {1}, \t\t {2}", realData[index], imagData[index], frequencies[index]);
+            }
+
+            Console.WriteLine("Marker search in Smith chart");
+            Console.WriteLine("Marker 1: ");
+            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 1, out markerPointFreq);
+            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 1, out markerPointResp);
+            Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
+
+            Console.WriteLine("Marker 2: ");
+            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 2, out markerPointFreq);
+            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 2, out markerPointResp);
+            Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
+
+            Console.WriteLine("Marker 3: ");
+            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 3, out markerPointFreq);
+            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 3, out markerPointResp);
+            Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
+
+            Console.WriteLine("Marker 4: ");
+            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 4, out markerPointFreq);
+            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 4, out markerPointResp);
+            Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
+            error = analyzer.Close();
+        }
+#endif
+
+#if false
         static void Main(string[] args)
         {
             Console.WriteLine("sizeof(byte) = " + sizeof(byte));
