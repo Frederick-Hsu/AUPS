@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Amphenol.Instruments.Keysight
@@ -7,7 +9,7 @@ namespace Amphenol.Instruments.Keysight
     {
         #region Analyzing Data
         /* :CALC1:MARK2 ON */
-        public int ShowHideGeneralMarkerForActiveTrace(int channelNum, int traceNum, int markerNo, string on_off = "OFF")
+        public int ShowHideRegularMarkerForActiveTrace(int channelNum, int traceNum, int markerNo, string on_off = "OFF")
         {
             int errorno, count;
             string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n", response;
@@ -18,8 +20,17 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
+        /* :CALCulate:TRACe1:MARKer1:ACTivate */
+        public int ActivateRegularMarkerNo(uint channelNo, uint traceNo, uint markerNo)
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNo + ":TRACe" + traceNo + ":MARKer" + markerNo + ":ACTivate\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return error;
+        }
+
         /* :CALC1:MARK2? */
-        public int QueryGeneralMarkerDisplayStateForActiveTrace(int channelNum, int traceNum, int markerNo, out string on_off)
+        public int QueryRegularMarkerDisplayStateForActiveTrace(int channelNum, int traceNum, int markerNo, out string on_off)
         {
             int errorno, count;
             string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
@@ -95,7 +106,7 @@ namespace Amphenol.Instruments.Keysight
         }
 
         /* :CALC1:MARK1:X? */
-        public int RetrieveFrequencyValueAtGeneralMarker(int channelNum, int traceNum, int markerNo, out double frequencyValue /* unit : Hz */)
+        public int RetrieveFrequencyValueAtRegularMarker(int channelNum, int traceNum, int markerNo, out double frequencyValue /* unit : Hz */)
         {
             int errorno, count;
             string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
@@ -110,7 +121,7 @@ namespace Amphenol.Instruments.Keysight
         }
 
         /* CALC1:MARK2:Y? */
-        public int RetrieveMeasurementResultAtGeneralMarker(int channelNum, int traceNum, int markerNo, out double attenuationAmplitude /* unit : dB */)
+        public int RetrieveMeasurementResultAtRegularMarker(int channelNum, int traceNum, int markerNo, out List<double> responseValues /* unit : dB */)
         {
             int errorno, count;
             string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
@@ -121,9 +132,12 @@ namespace Amphenol.Instruments.Keysight
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             errorno = visa32.viRead(analyzerSession, response, 256, out count);
 
-            string[] resultArray = new string[2];
-            resultArray = Encoding.ASCII.GetString(response, 0, count).Split(',');
-            attenuationAmplitude = Convert.ToDouble(resultArray[0]);
+            string[] resultArray = Encoding.ASCII.GetString(response, 0, count).Split(',');
+            responseValues = new List<double>();
+            foreach (string result in resultArray)
+            {
+                responseValues.Add(Convert.ToDouble(result));
+            }
             return errorno;
         }
 
@@ -290,6 +304,7 @@ namespace Amphenol.Instruments.Keysight
             transitionDirection = Encoding.ASCII.GetString(response, 0, cout - 1);
             return error;
         }
+        
         /* :CALC1:FUNC:EXEC */
         public int PerformMarkerSearch(int channelNum = 1)
         {
@@ -297,6 +312,46 @@ namespace Amphenol.Instruments.Keysight
             string command = ":CALCulate" + channelNum + ":SELected:FUNCtion:EXECute\n", response;
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
+        }
+
+        /* :CALCulate1:SELected:MARKer2:FUNCtion:TRACking ON */
+        public int TurnOnOffSearchTrackingFeature(uint channelNum, uint traceNum, uint markerNum, string on_off = "OFF")
+        {
+            int error = 0, count = 0;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNum + ":FUNCtion:TRACking " + on_off + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALCulate1:SELected:MARKer1:FUNCtion:DOMain:MULTiple:STATe ON */
+        public int SetMultipleSearchRangeState(uint channelNum, uint markerNum, string on_off = "ON")
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:MULTiple:STATe " + on_off + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return error;
+        }
+
+        /* :CALCulate1:SELected:MARKer1:FUNCtion:DOMain:MULTiple:RANGe 3
+         * :CALCulate1:SELected:MARKer1:FUNCtion:DOMain:MULTiple:STARt 3, 1.5e9
+         * :CALCulate1:SELected:MARKer1:FUNCtion:DOMain:MULTiple:STOP  3, 1.8E9
+         */
+        public int SetMultipleSearchTargetRange(uint channleNum, uint markerNum, uint rangeNum, string rangeStartFreq, string rangeStopFreq)
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channleNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:MULTiple:RANGe " + rangeNum + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channleNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:MULTiple:STARt " + rangeNum + ", " + rangeStartFreq + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channleNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:MULTiple:STARt " + rangeNum + ", " + rangeStopFreq + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return error;
         }
 
         /* :CALC1:FUNC:DATA? 
@@ -324,6 +379,87 @@ namespace Amphenol.Instruments.Keysight
                 results[index] = Convert.ToDouble(array[index]);
             }
             return errorno;
+        }
+
+        /* :CALC1:SEL:MARK1:STATE 1
+         * :CALC1:SEL:MARK1:ACTIVATE
+         * :CALC1:SEL:MARK1:FUNC:DOM:STATE ON
+         * :CALC1:SEL:MARK1:FUNC:DOM:MULT:STATE 1
+         * :CALC1:SEL:MARK1:FUNC:DOM:MULT:RANG 1
+         * :CALC1:SEL:MARK1:FUNC:DOM:MULT:START 1, 1.5e9
+         * :CALC1:SEL:MARK1:FUNC:DOM:MULT:STOP 1, 1.8e9
+         * :CALC1:TRACE1:MARK1:FUNC:TRACKING 1
+         * :CALC1:TRACE1:MARK1:FUNC:TYPE MINIMUM
+         * :CALC1:TRACE1:MARK1:FUNC:EXECUTE
+         * :CALC1:TRACE1:MARK1:X?
+         * :CALC1:TACE1:MARK1:Y?
+         */
+        public int SegmentedMarkerSearch(uint channelNum, 
+                                         uint traceNum,
+                                         uint markerNum,
+                                         uint rangeNum,
+                                         string rangeStartFreq,     /* Please use scientific notation, such as : 1.5e9 */
+                                         string rangeStopFreq,      /* Scientific notation, e.g. 1.8e9 */
+                                         string searchType,
+                                         out double markerPointFreq,
+                                         out List<double> markerPointResponses)
+        {
+            int error = 0, count = 0;
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";   /* Select and activate the channel/trace on user-demod. */
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:FORMat MLOGarithmic\n";    /* Select the format : Log Mag */
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":DISPlay:WINDow" + channelNum + ":TRACe" + traceNum + ":Y:SCALe:AUTO\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNum + ":STATe ON\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":TRACe" + traceNum + ":MARKer" + markerNum + ":ACTivate\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:STATe ON\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:MULTiple:STATe ON\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:MULTiple:RANGe " + rangeNum + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:MULTiple:STARt " + rangeNum + ", " + rangeStartFreq + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:MULTiple:STOP " + rangeNum + ", " + rangeStopFreq + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":TRACe" + traceNum + ":MARKer" + markerNum + ":FUNCtion:TRACking ON\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":TRACe" + traceNum + ":MARKer" + markerNum + ":FUNCtion:TYPE " + searchType + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":TRACe" + traceNum + ":MARKer" + markerNum + ":FUNCtion:EXEcute\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":TRACe" + traceNum + ":MARKer" + markerNum + ":X?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[256];
+            error = visa32.viRead(analyzerSession, response, 256, out count);
+            markerPointFreq = Convert.ToDouble(Encoding.ASCII.GetString(response, 0, count - 1));
+
+            command = ":CALCulate" + channelNum + ":TRACe" + traceNum + ":MARKer" + markerNum + ":Y?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            error = visa32.viRead(analyzerSession, response, 256, out count);
+            markerPointResponses = new List<double>();
+            string[] array = Encoding.ASCII.GetString(response, 0, count - 1).Split(new char[] { ',', ' ', '\n' });
+            for (int index = 0; index < array.Length - 1; ++index)
+            {
+                markerPointResponses.Add(Convert.ToDouble(array[index]));
+            }
+            return error;
         }
         #endregion
     }
