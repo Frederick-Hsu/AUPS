@@ -9,6 +9,7 @@
 *.stackdump
 *.pdf
 *.xml
+*.chw
 *.zip
 *.ico
 *.png
@@ -22,6 +23,7 @@
 *.7z
 *.zip
 *.chm
+*.iseqx
 .DS_Store
 
 XML/
