@@ -461,6 +461,35 @@ namespace Amphenol.Instruments.Keysight
             }
             return error;
         }
+
+        /* :CALCULATE1:SELected:MSTatistics:DATA? */
+        public int RetrieveTraceStatisticsAnalysisValues(uint channelNum, out double meanValue, out double standardDeviation, out double peak2PeakValue)
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNum + ":SELected:MSTatistics:DATA?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[256];
+            error = visa32.viRead(analyzerSession, response, 256, out count);
+
+            string[] values = Encoding.ASCII.GetString(response, 0, count - 1).Split(new char[] { ',', '\n', ' ', '\r' });
+            meanValue = Convert.ToDouble(values[0]);
+            standardDeviation = Convert.ToDouble(values[1]);
+            peak2PeakValue = Convert.ToDouble(values[2]);
+            return error;
+        }
+
+        /* :CALCulate1:SELected:MSTatistics:STATe ON */
+        public int TurnOnOffStatisticsValueDisplay(uint channelNum, string on_off = "OFF")
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNum + ":SELected:MSTatistics:STATe " + on_off + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+        #endregion
+
+        #region Analysis Using the Fixture Simulator
         #endregion
     }
 }
