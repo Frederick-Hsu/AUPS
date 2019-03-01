@@ -45,6 +45,7 @@
     <Compile Include="Keysight\NetworkAnalyzer_E5071C.cs" />
     <Compile Include="Keysight\NetworkAnalyzer_E5071C_ConfigureDisplaySettings.cs" />
     <Compile Include="Keysight\NetworkAnalyzer_E5071C_ConfigureMeasurementConditions.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C_LimitTest.cs" />
     <Compile Include="Keysight\NetworkAnalyzer_E5071C_MakeMeasurement.cs" />
     <Compile Include="Keysight\NetworkAnalyzer_E5071C_MeasurementData.cs" />
     <Compile Include="Keysight\NetworkAnalyzer_E5071C_PerformCalibration.cs" />
