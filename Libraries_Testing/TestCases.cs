@@ -31,7 +31,7 @@ namespace Libraries_Testing
             error = analyzer.SelectMeasurementParameterFor(2, 1, "S22");
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(2, 1, "MLOG");
 
-            error = analyzer.SetSweepStartFreqValueForChannel(1, "4e9");
+            error = analyzer.SetSweepStartFreqValueForChannel(1, "4.8e9");
             error = analyzer.SetSweepStopFreqValueForChannel(1, "6.8e9");
             error = analyzer.SetSweepStartFreqValueForChannel(2, "7.5e9");
             error = analyzer.SetSweepStopFreqValueForChannel(2, "8e9");
@@ -58,7 +58,7 @@ namespace Libraries_Testing
             {
                 Console.WriteLine("{0} \t\t {1} \t\t {2}", frequencies2[index], primaryAmplitudes2[index], secondaryAmplitudes2[index]);
             }
-
+#if false
             NetworkAnalyzer_E5071C.LimitLineSegment segment;
             List<NetworkAnalyzer_E5071C.LimitLineSegment> upperLimitLine = new List<NetworkAnalyzer_E5071C.LimitLineSegment>();
             for (int index = 0; index < frequencies1.Count - 2; index = index+2)
@@ -85,7 +85,108 @@ namespace Libraries_Testing
             }
             error = analyzer.SetLimitTable(1, (uint)lowerLimitLine.Count, lowerLimitLine);
             error = analyzer.TurnOnOffLimitLineDisplay(1, "ON");
+#endif
+            NetworkAnalyzer_E5071C.LimitLineSegment segment;
+            List<NetworkAnalyzer_E5071C.LimitLineSegment> limitLines = new List<NetworkAnalyzer_E5071C.LimitLineSegment>();
+            for (int index = 0; index < frequencies1.Count - 4; index = index+4)
+            {
+                /* channel 1 : upper limit line */
+                segment.type = 1;
+                segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] + 1.50);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] + 1.50);
+                limitLines.Add(segment);
+                /* channel 1: lower limit line */
+                segment.type = 2;
+                segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] - 1.50);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] - 1.50);
+                limitLines.Add(segment);
+            }
+            error = analyzer.SetLimitTable(1, (uint)limitLines.Count, limitLines);
+            error = analyzer.TurnOnOffLimitLineDisplay(1, "ON");
+            error = analyzer.TurnOnOffLimitTestFunction(1, "ON");
+            error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
+            /*==========================================================================================================================================*/
+#if false
+            List<NetworkAnalyzer_E5071C.LimitLineSegment> channel2LimitLines = new List<NetworkAnalyzer_E5071C.LimitLineSegment>();
+            for (int n = 0; n < frequencies2.Count/2 - 1; n = n + 2)
+            {
+                /* channel 2 : upper limit line, left half freq. range */
+                segment.type = 1;
+                segment.startPointHAxisValue = Convert.ToString(frequencies2[n]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies2[n + 1]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[n] + 1.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[n + 1] + 1.00);
+                channel2LimitLines.Add(segment);
+                /* channel 2 : lower limit line, left half freq. range */
+                segment.type = 2;
+                segment.startPointHAxisValue = Convert.ToString(frequencies2[n]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies2[n + 1]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[n] - 1.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[n + 1] - 1.00);
+                channel2LimitLines.Add(segment);
+            }
+            error = analyzer.SetLimitTable(2, (uint)channel2LimitLines.Count, channel2LimitLines);
+            error = analyzer.TurnOnOffLimitLineDisplay(2, "ON");
+            error = analyzer.TurnOnOffLimitTestFunction(2, "ON");
+            error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
 
+            List<NetworkAnalyzer_E5071C.LimitLineSegment> channel2RightHalfLimitLines = new List<NetworkAnalyzer_E5071C.LimitLineSegment>();
+            for (int n = frequencies2.Count/2; n < frequencies2.Count-1; n = n+2)
+            {
+                segment.type = 1;
+                segment.startPointHAxisValue = Convert.ToString(frequencies2[n]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies2[n + 1]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[n] + 1.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[n + 1] + 1.00);
+                channel2RightHalfLimitLines.Add(segment);
+
+                segment.type = 2;
+                segment.startPointHAxisValue = Convert.ToString(frequencies2[n]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies2[n + 1]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[n] - 1.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[n + 1] - 1.00);
+                channel2RightHalfLimitLines.Add(segment);
+            }
+            error = analyzer.SetLimitTable(2, (uint)channel2RightHalfLimitLines.Count, channel2RightHalfLimitLines);
+            error = analyzer.TurnOnOffLimitLineDisplay(2, "ON");
+            error = analyzer.TurnOnOffLimitTestFunction(2, "ON");
+            error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
+#else
+            List<NetworkAnalyzer_E5071C.LimitLineSegment> ch2LimitLines = new List<NetworkAnalyzer_E5071C.LimitLineSegment>();
+            for (int index = 0; index < frequencies2.Count - 4; index = index + 4)
+            {
+                /* channel 2 : uppert limit line */
+                segment.type = 1;
+                segment.startPointHAxisValue = Convert.ToString(frequencies2[index]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies2[index + 2]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[index] + 0.50);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[index + 2] + 0.50);
+                ch2LimitLines.Add(segment);
+                /* channel 2 : lower limit line */
+                segment.type = 2;
+                segment.startPointHAxisValue = Convert.ToString(frequencies2[index]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies2[index + 2]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[index] - 0.50);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[index + 2] - 0.50);
+                ch2LimitLines.Add(segment);
+            }
+            error = analyzer.SetLimitTable(2, (uint)ch2LimitLines.Count, ch2LimitLines);
+            error = analyzer.TurnOnOffLimitLineDisplay(2, "ON");
+            error = analyzer.TurnOnOffLimitTestFunction(2, "ON");
+            error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
+#endif
+            /* Save channel 1 limit table */
+            error = analyzer.ActivateChannelAt(1);
+            error = analyzer.ActivateTraceAt(1, 1);
+            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\Test\\CH1_Limit_Table.csv");
+
+            error = analyzer.ActivateChannelAt(2);
+            error = analyzer.ActivateTraceAt(2, 1);
+            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\Test\\CH2_Limit_Table.csv");
             error = analyzer.Close();
         }
 
