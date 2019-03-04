@@ -190,6 +190,78 @@ namespace Libraries_Testing
             error = analyzer.Close();
         }
 
+        public static void TestCases_LoadLimitTable()
+        {
+            NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
+            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            string idn;
+            error = analyzer.GetInstrumentIdentifier(out idn);
+            error = analyzer.ClearAllErrorQueue();
+            error = analyzer.Preset();
+            string errorMesg;
+            error = analyzer.QueryErrorStatus(out errorMesg);
+            error = analyzer.SelectChannelDisplayMode("D1_2");
+            error = analyzer.SelectTraceDisplayMode(1, "D1");
+            error = analyzer.SelectTraceDisplayMode(2, "D1");
+            error = analyzer.ConfigTraceNumInChannel(1, 1);
+            error = analyzer.ConfigTraceNumInChannel(2, 1);
+
+            error = analyzer.ActivateTraceAt(1, 1);
+            error = analyzer.SelectMeasurementParameterFor(1, 1, "S22");
+            error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
+
+            error = analyzer.ActivateTraceAt(2, 1);
+            error = analyzer.SelectMeasurementParameterFor(2, 1, "S22");
+            error = analyzer.SelectDataFormatForActiveTraceOfChannel(2, 1, "MLOG");
+
+            error = analyzer.SetSweepStartFreqValueForChannel(1, "4.8e9");
+            error = analyzer.SetSweepStopFreqValueForChannel(1, "6.8e9");
+            error = analyzer.SetSweepStartFreqValueForChannel(2, "7.5e9");
+            error = analyzer.SetSweepStopFreqValueForChannel(2, "8e9");
+
+            error = analyzer.TurnOnOffContinuousInitiationModeForChannel(1, "ON");
+            error = analyzer.TurnOnOffContinuousInitiationModeForChannel(2, "ON");
+            error = analyzer.AutoScaleTraceDisplay(1, 1);
+            error = analyzer.AutoScaleTraceDisplay(2, 1);
+
+            /* Load limit table */
+            error = analyzer.ActivateChannelAt(1);
+            error = analyzer.ActivateTraceAt(1, 1);
+            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\Test\\CH1_Limit_Table.csv");
+            error = analyzer.TurnOnOffLimitLineDisplay(1, "ON");
+            error = analyzer.TurnOnOffLimitTestFunction(1, "ON");
+            error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
+
+            error = analyzer.ActivateChannelAt(2);
+            error = analyzer.ActivateTraceAt(2, 1);
+            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\Test\\CH2_Limit_Table.csv");
+            error = analyzer.TurnOnOffLimitLineDisplay(2, "ON");
+            error = analyzer.TurnOnOffLimitTestFunction(2, "ON");
+            error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
+
+            /* Retrieve the limit test result */
+            int ch1FailedPoints, ch2FailedPoints;
+            error = analyzer.ReportLimitTestFailedPointCounts(1, out ch1FailedPoints);
+            error = analyzer.ReportLimitTestFailedPointCounts(2, out ch2FailedPoints);
+            List<double> ch1FailedPointsList, ch2FailedPointsList;
+            error = analyzer.ReportLimitTestFailedPointsStimulusValues(1, out ch1FailedPointsList);
+            error = analyzer.ReportLimitTestFailedPointsStimulusValues(2, out ch2FailedPointsList);
+
+            Console.WriteLine("There are total {0} failed points in channel 1", ch1FailedPoints);
+            int num = 0;
+            foreach (double failedPointFreq in ch1FailedPointsList)
+            {
+                Console.WriteLine("Failed point #{0}, freq.: {1}", ++num, failedPointFreq);
+            }
+            string passFail;
+            error = analyzer.RetrieveLimitTestResult(1, out passFail);
+            Console.WriteLine("The final result of limit test in channel 1 is : " + passFail);
+
+            error = analyzer.RetrieveLimitTestResult(2, out passFail);
+            Console.WriteLine("The final result of limit test in channel 2 is : " + passFail);
+            error = analyzer.Close();
+        }
+
         public static void TestCases_MarkerSearch()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
