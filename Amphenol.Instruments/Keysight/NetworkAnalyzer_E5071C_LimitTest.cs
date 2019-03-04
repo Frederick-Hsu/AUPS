@@ -107,6 +107,62 @@ namespace Amphenol.Instruments.Keysight
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return error;
         }
+
+        /* :CALC1:SELected:LIMit:REPort:POINts? */
+        public int ReportLimitTestFailedPointCounts(uint channelNum, out int countOfFailedPoints)
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNum + ":SELected:LIMit:REPort:POINts?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+            countOfFailedPoints = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count - 1));
+            return error;
+        }
+
+        /* :CALCulate1:SELected:LIMit:REPort:DATA? */
+        public int ReportLimitTestFailedPointsStimulusValues(uint channelNum, out List<double> failedPointsStimulusValues)
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNum + ":SELected:LIMit:REPort:DATA?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[1024 * 1024];
+            error = visa32.viRead(analyzerSession, response, 1024 * 1024, out count);
+
+            string[] values = Encoding.ASCII.GetString(response, 0, count - 1).Split(new char[] { ',', ' ', '\n' });
+            int len = values.Length;
+            failedPointsStimulusValues = new List<double>();
+            for (int index = 0; index < len; ++index)
+            {
+                failedPointsStimulusValues.Add(Convert.ToDouble(values[index]));
+            }
+            return error;
+        }
+
+        /* :CALCulate1:SELected:LIMit:FAIL? */
+        public int RetrieveLimitTestResult(uint channelNum, out string passFail)
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNum + ":SELected:LIMit:FAIL?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            byte[] response = new byte[64];
+            error = visa32.viRead(analyzerSession, response, 64, out count);
+
+            string result = Encoding.ASCII.GetString(response, 0, count - 1);
+            if (result == "1")
+            {
+                passFail = "FAIL";
+            }
+            else if (result == "0")
+            {
+                passFail = "PASS";
+            }
+            else
+            {
+                passFail = "UNKNOWN";
+            }
+            return error;
+        }
         #endregion
     }
 }
