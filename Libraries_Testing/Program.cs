@@ -15,6 +15,7 @@ namespace Libraries_Testing
             // TestCases.TestCases_RetrieveFormattedFullTraceData();
 
             TestCases.TestCase_PerformingLimitTest();
+            TestCases.TestCases_LoadLimitTable();
         }
     }
 }
