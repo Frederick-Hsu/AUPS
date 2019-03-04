@@ -9,7 +9,84 @@ namespace Libraries_Testing
     {
         public static void TestCase_PerformingLimitTest()
         {
+            NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
+            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            string idn;
+            error = analyzer.GetInstrumentIdentifier(out idn);
+            error = analyzer.ClearAllErrorQueue();
+            error = analyzer.Preset();
+            string errorMesg;
+            error = analyzer.QueryErrorStatus(out errorMesg);
+            error = analyzer.SelectChannelDisplayMode("D1_2");
+            error = analyzer.SelectTraceDisplayMode(1, "D1");
+            error = analyzer.SelectTraceDisplayMode(2, "D1");
+            error = analyzer.ConfigTraceNumInChannel(1, 1);
+            error = analyzer.ConfigTraceNumInChannel(2, 1);
 
+            error = analyzer.ActivateTraceAt(1, 1);
+            error = analyzer.SelectMeasurementParameterFor(1, 1, "S22");
+            error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
+            
+            error = analyzer.ActivateTraceAt(2, 1);
+            error = analyzer.SelectMeasurementParameterFor(2, 1, "S22");
+            error = analyzer.SelectDataFormatForActiveTraceOfChannel(2, 1, "MLOG");
+
+            error = analyzer.SetSweepStartFreqValueForChannel(1, "4e9");
+            error = analyzer.SetSweepStopFreqValueForChannel(1, "6.8e9");
+            error = analyzer.SetSweepStartFreqValueForChannel(2, "7.5e9");
+            error = analyzer.SetSweepStopFreqValueForChannel(2, "8e9");
+
+            error = analyzer.TurnOnOffContinuousInitiationModeForChannel(1, "ON");
+            error = analyzer.TurnOnOffContinuousInitiationModeForChannel(2, "ON");
+            error = analyzer.AutoScaleTraceDisplay(1, 1);
+            error = analyzer.AutoScaleTraceDisplay(2, 1);
+
+            List<double> frequencies1, primaryAmplitudes1, secondaryAmplitudes1;
+            error = analyzer.ReadOutFormattedDataArray(1, 1, out primaryAmplitudes1, out secondaryAmplitudes1);
+            error = analyzer.ReadOutFrequenciesOfAllMeasurementPoints(1, out frequencies1);
+            Console.WriteLine("Channel 1 Freq. \t Amplitude");
+            for (int index = 0; index < frequencies1.Count; ++index)
+            {
+                Console.WriteLine("{0} \t\t {1} \t\t {2}", frequencies1[index], primaryAmplitudes1[index], secondaryAmplitudes1[index]);
+            }
+
+            List<double> frequencies2, primaryAmplitudes2, secondaryAmplitudes2;
+            error = analyzer.ReadOutFormattedDataArray(2, 1, out primaryAmplitudes2, out secondaryAmplitudes2);
+            error = analyzer.ReadOutFrequenciesOfAllMeasurementPoints(2, out frequencies2);
+            Console.WriteLine("Channel 2 Freq. \t Amplitude");
+            for (int index = 0; index < frequencies2.Count; ++index)
+            {
+                Console.WriteLine("{0} \t\t {1} \t\t {2}", frequencies2[index], primaryAmplitudes2[index], secondaryAmplitudes2[index]);
+            }
+
+            NetworkAnalyzer_E5071C.LimitLineSegment segment;
+            List<NetworkAnalyzer_E5071C.LimitLineSegment> upperLimitLine = new List<NetworkAnalyzer_E5071C.LimitLineSegment>();
+            for (int index = 0; index < frequencies1.Count - 2; index = index+2)
+            {
+                segment.type = 1;       /* upper limit line */
+                segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 2]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] + 2.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 2] + 2.00);
+                upperLimitLine.Add(segment);
+            }
+            error = analyzer.SetLimitTable(1, (uint)upperLimitLine.Count, upperLimitLine);
+            error = analyzer.TurnOnOffLimitLineDisplay(1, "ON");
+
+            List<NetworkAnalyzer_E5071C.LimitLineSegment> lowerLimitLine = new List<NetworkAnalyzer_E5071C.LimitLineSegment>();
+            for (int index = 0; index < frequencies1.Count-2; index = index + 2)
+            {
+                segment.type = 2;
+                segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
+                segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 2]);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] - 2.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 2] - 2.00);
+                lowerLimitLine.Add(segment);
+            }
+            error = analyzer.SetLimitTable(1, (uint)lowerLimitLine.Count, lowerLimitLine);
+            error = analyzer.TurnOnOffLimitLineDisplay(1, "ON");
+
+            error = analyzer.Close();
         }
 
         public static void TestCases_MarkerSearch()
