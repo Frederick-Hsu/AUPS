@@ -65,6 +65,15 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
+        /* :CALCulate1:SELected:LIMit:DATA 0 */
+        public int ClearLimitTable(uint channelNum)
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNum + ":SELected:LIMit:DATA 0\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
         /* :MMEMory:LOAD:LIMit "D:\Test\Limit_Table.csv" */
         public int ConfigureLimitLineSegmentsCsvFile(string segmentsCsvFilePath /* must contain the .csv extension */)
         {
