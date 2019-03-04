@@ -10,9 +10,11 @@ namespace Libraries_Testing
     {
         static void Main(string[] args)
         {
-            TestCases.TestCases_MarkerSearch();
+            // TestCases.TestCases_MarkerSearch();
 
-            TestCases.TestCases_RetrieveFormattedFullTraceData();
+            // TestCases.TestCases_RetrieveFormattedFullTraceData();
+
+            TestCases.TestCase_PerformingLimitTest();
         }
     }
 }
