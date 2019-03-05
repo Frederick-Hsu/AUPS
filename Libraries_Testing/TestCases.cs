@@ -223,13 +223,17 @@ namespace Libraries_Testing
 
             error = analyzer.ActivateChannelAt(1);
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.DisplayOnOffDataTrace(1, 1, "ON");
-            error = analyzer.DisplayOnOffMemoryTrace(1, 1, "ON");
-            error = analyzer.PerformMathOperationBetweenDataAndMemoryTraces(1, "ADD");
-            error = analyzer.CopyMeasurementDateToMemoryTrace(1);
 
+            error = analyzer.CopyMeasurementDateToMemoryTrace(1);       /* Step 1 : Data --> Mem */
+            error = analyzer.DisplayOnOffDataTrace(1, 1, "ON");         /* Step 2 : Display Data trace */
+            error = analyzer.DisplayOnOffMemoryTrace(1, 1, "ON");       /* Step 3 : Display Mem trace */
+            error = analyzer.PerformMathOperationBetweenDataAndMemoryTraces(1, "NORMAL");
+            error = analyzer.CopyMeasurementDateToMemoryTrace(1);       /* Step 4 : Data --> Mem, to refresh the memory trace */
+
+            error = analyzer.TurnOnOffDisplayUpdate("OFF");
             error = analyzer.Close();
         }
+
         public static void TestCases_LoadLimitTable()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
