@@ -190,6 +190,46 @@ namespace Libraries_Testing
             error = analyzer.Close();
         }
 
+        public static void TestCases_ConfigureTraces()
+        {
+            NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
+            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            string idn;
+            error = analyzer.GetInstrumentIdentifier(out idn);
+            error = analyzer.ClearAllErrorQueue();
+            error = analyzer.Preset();
+            string errorMesg;
+            error = analyzer.QueryErrorStatus(out errorMesg);
+
+            error = analyzer.SelectChannelDisplayMode("D1_2");
+            error = analyzer.SelectTraceDisplayMode(1, "D1");
+            error = analyzer.SelectTraceDisplayMode(2, "D1");
+            error = analyzer.ConfigTraceNumInChannel(1, 1);
+            error = analyzer.ConfigTraceNumInChannel(2, 1);
+            error = analyzer.ActivateTraceAt(1, 1);
+            error = analyzer.SelectMeasurementParameterFor(1, 1, "S22");
+            error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
+            error = analyzer.ActivateTraceAt(1, 1);
+            error = analyzer.SelectMeasurementParameterFor(1, 1, "S22");
+            error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
+            error = analyzer.SetSweepStartFreqValueForChannel(1, "4.8e9");
+            error = analyzer.SetSweepStopFreqValueForChannel(1, "6.8e9");
+            error = analyzer.SetSweepStartFreqValueForChannel(2, "7.5e9");
+            error = analyzer.SetSweepStopFreqValueForChannel(2, "8e9");
+            error = analyzer.TurnOnOffContinuousInitiationModeForChannel(1, "ON");
+            error = analyzer.TurnOnOffContinuousInitiationModeForChannel(2, "ON");
+            error = analyzer.AutoScaleTraceDisplay(1, 1);
+            error = analyzer.AutoScaleTraceDisplay(2, 1);
+
+            error = analyzer.ActivateChannelAt(1);
+            error = analyzer.ActivateTraceAt(1, 1);
+            error = analyzer.DisplayOnOffDataTrace(1, 1, "ON");
+            error = analyzer.DisplayOnOffMemoryTrace(1, 1, "ON");
+            error = analyzer.PerformMathOperationBetweenDataAndMemoryTraces(1, "ADD");
+            error = analyzer.CopyMeasurementDateToMemoryTrace(1);
+
+            error = analyzer.Close();
+        }
         public static void TestCases_LoadLimitTable()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
