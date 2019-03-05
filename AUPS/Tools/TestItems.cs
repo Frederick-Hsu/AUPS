@@ -250,9 +250,18 @@ namespace AUPS.Tools
             iPerfCmdProc = null;
         }
 
+        private int GetPacketSize()
+        {
+            int packetSize = 300;
+
+            packetSize = Convert.ToInt32(numericUpDownPacketSize.Value);
+            return packetSize;
+        }
+
         private void MeasureUdpUplinkPerformance(out string throughput, out string latency, out string packetLoss)
         {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 300M\r";
+            // string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 300M\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth " + GetPacketSize() + "M\r";
 
             iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
             iPerfCmdProc.StandardInput.AutoFlush = true;
@@ -268,7 +277,8 @@ namespace AUPS.Tools
 
         private void MeasureUdpDownlinkPerformance(out string throughput, out string latency, out string packetLoass)
         {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 300M --reverse\r";
+            // string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth 300M --reverse\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --udp --bandwidth " + GetPacketSize() + "M --reverse\r";
 
             iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
             iPerfCmdProc.StandardInput.AutoFlush = true;
@@ -284,7 +294,8 @@ namespace AUPS.Tools
 
         private void MeasureTcpUplinkPerformance(out string throughput)
         {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 300M\r";
+            // string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 300M\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth " + GetPacketSize() + "M\r";
 
             iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
             iPerfCmdProc.StandardInput.AutoFlush = true;
@@ -300,7 +311,8 @@ namespace AUPS.Tools
 
         private void MeasureTcpDownlinkPerformance(out string throughput)
         {
-            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 300M --reverse\r";
+            // string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth 300M --reverse\r";
+            string commandStr = iPerfCmd + " --client " + serverIP + " --verbose --bandwidth " + GetPacketSize() + "M --reverse\r";
 
             iPerfCmdProc.StandardInput.WriteLine(commandStr + "&exit");
             iPerfCmdProc.StandardInput.AutoFlush = true;

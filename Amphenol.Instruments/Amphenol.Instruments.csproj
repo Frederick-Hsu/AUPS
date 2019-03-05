@@ -39,13 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\..\Program Files\IVI Foundation\VISA\Win64\ktvisa\include\visa32.cs">
-      <Link>visa32.cs</Link>
-    </Compile>
     <Compile Include="Keysight\DCPowerSupply_E3631A.cs" />
     <Compile Include="Keysight\DCPowerSupply_E3646A.cs" />
     <Compile Include="Keysight\DigitalMultiMeter_34461A.cs" />
     <Compile Include="Keysight\NetworkAnalyzer_E5071C.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C_ConfigureDisplaySettings.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C_ConfigureMeasurementConditions.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C_LimitTest.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C_MakeMeasurement.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C_MeasurementData.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C_PerformCalibration.cs" />
+    <Compile Include="Keysight\NetworkAnalyzer_E5071C_ReadWriteMeasurementDataSet.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A_ChannelPowerMeasurement.cs" />
     <Compile Include="Keysight\SignalAnalyzer_N9020A_InputOutputFunctions.cs" />
@@ -58,6 +62,13 @@
     <Compile Include="RohdeSchwarz\SignalGenerator_SMB100A.cs" />
     <Compile Include="RohdeSchwarz\SignalGenerator_SMB100A_RFBlock.cs" />
     <Compile Include="RohdeSchwarz\VectorNetworkAnalyzer_ZVB8.cs" />
+    <Compile Include="visa32.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{e55e51a6-8757-4e7c-90a0-571de68345a0}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

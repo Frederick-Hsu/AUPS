@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\frederick.xu\Desktop\</PublishUrl>
+    <PublishUrl>C:\Users\frederick.xu\Desktop\AUPS\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>10</ApplicationRevision>
     <ApplicationVersion>1.1.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -58,7 +58,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -74,8 +74,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drawing\Circle.cs" />
-    <Compile Include="Drawing\Shape.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,7 +167,6 @@
     <EmbeddedResource Include="Tools\GMVehicleAntennaTesting.resx">
       <DependentUpon>GMVehicleAntennaTesting.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="AUPS_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -202,13 +199,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Tools\red_car_icon.png" />
-    <None Include="Tools\compressed_car.png" />
-    <None Include="Tools\compressed_car.jpg" />
-    <None Include="Tools\car.PNG" />
-    <None Include="Tools\if_lada_niva_128x128.png" />
-    <None Include="Tools\if_lada_niva_64x64.png" />
-    <None Include="Tools\if_lada_niva_2714752.png" />
+    <None Include="Resources\red_car_icon.png" />
     <None Include="Resources\settings.ico" />
     <None Include="Resources\load.ico" />
     <None Include="Resources\new.ico" />
@@ -226,6 +217,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Drawing\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

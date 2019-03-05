@@ -9,7 +9,7 @@
       <stepdescription>Access the Keysight network analyzer E5071A over USB, and initialize it.</stepdescription>
       <functionname>InitializeNetworkAnalyzer</functionname>
       <parameterlist>
-        <parameter>TCPIP0::192.168.30.95::inst0::INSTR</parameter>
+        <parameter>TCPIP0::192.168.30.64::inst0::INSTR</parameter>
         <parameter>TCPIP0::169.254.9.12::inst0::INSTR</parameter>
         <parameter>TCPIP0::192.168.30.89::inst0::INSTR</parameter>
         <parameter>USB0::0x0957::0x0D09::MY46527492::0::INSTR</parameter>
@@ -783,34 +783,6 @@
       <parameterlist>
         <parameter>MyConfig.sta</parameter>
       </parameterlist>
-      <limittype>String</limittype>
-      <spec>
-        <limit>OK</limit>
-      </spec>
-    </step>
-  </block>
-  <block>
-    <blocknum>B10</blocknum>
-    <blockname>Setup DC power supply</blockname>
-    <step>
-      <stepnum>10.1</stepnum>
-      <stepname>Initialize and open the Keysight DC power supply E3631A.</stepname>
-      <stepdescription>Through the COM port, access the DC power supply.</stepdescription>
-      <functionname>InitializePowerSupply</functionname>
-      <parameterlist>
-        <parameter>ASRL3::INSTR</parameter>
-      </parameterlist>
-      <limittype>String</limittype>
-      <spec>
-        <limit>HEWLETT-PACKARD,E3631A,0,3.2-6.0-2.0</limit>
-      </spec>
-    </step>
-    <step>
-      <stepnum>10.2</stepnum>
-      <stepname>Close the DC power supply E3631A.</stepname>
-      <stepdescription>Close the COM port to release the resource of power supply.</stepdescription>
-      <functionname>ClosePowerSupply</functionname>
-      <parameterlist />
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
