@@ -44,6 +44,10 @@ namespace Amphenol.Instruments.Keysight
             {
                 return (-1);        /* Check the limit line segments number */
             }
+            if ((segments.Count <= 0) || (segments.Count > 100))    /* the range of line segments count : [0, 100] */
+            {
+                return (-2);
+            }
             for (int n = 0; n < segments.Count; ++n)
             {
                 command += (segments[n].type + ", " + 
