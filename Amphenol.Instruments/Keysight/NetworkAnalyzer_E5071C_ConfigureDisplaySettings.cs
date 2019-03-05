@@ -258,5 +258,46 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
         #endregion
+
+        #region Configuring trace display settings
+        /* :DISPlay:WINDow1:TRACe2:STATe ON */
+        public int DisplayOnOffDataTrace(uint channelNum, uint traceNum, string onOff = "ON")
+        {
+            int error = 0, count = 0;
+            string command = ":DISPlay:WINDow" + channelNum + ":TRACe" + traceNum + ":STATe " + onOff + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :DISPlay:WINDow1:TRACe2:MEMory:STATe ON */
+        public int DisplayOnOffMemoryTrace(uint channelNum, uint traceNum, string onOff = "OFF")
+        {
+            int error = 0, count = 0;
+            string command = ":DISPlay:WINDow" + channelNum + ":TRACe" + traceNum + ":MEMory:STATe " + onOff + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALCulate1:SELected:MATH:MEMorize */
+        public int CopyMeasurementDateToMemoryTrace(uint channelNum)
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNum + ":SELected:MATH:MEMorize\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALCulate1:MATH:FUNC NORMal */
+        public int PerformMathOperationBetweenDataAndMemoryTraces(uint channelNum, 
+                                                                  string mathOperation = "NORMal" /* only 5 options : NORMal, DIVide, MULTiply, SUBTract, ADD */)
+        {
+            int error = 0, count = 0;
+            string command = ":CALCulate" + channelNum + ":SELected:MATH:FUNC " + mathOperation + "\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+        #endregion
     }
 }
