@@ -41,6 +41,9 @@ namespace Libraries_Testing
             error = analyzer.AutoScaleTraceDisplay(1, 1);
             error = analyzer.AutoScaleTraceDisplay(2, 1);
 
+            error = analyzer.SelectTriggerSource("BUS");
+            error = analyzer.SingleTriggerMeasurement();
+
             List<double> frequencies1, primaryAmplitudes1, secondaryAmplitudes1;
             error = analyzer.ReadOutFormattedDataArray(1, 1, out primaryAmplitudes1, out secondaryAmplitudes1);
             error = analyzer.ReadOutFrequenciesOfAllMeasurementPoints(1, out frequencies1);
@@ -94,15 +97,15 @@ namespace Libraries_Testing
                 segment.type = 1;
                 segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
                 segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] + 1.50);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] + 1.50);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] + 1.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] + 1.00);
                 limitLines.Add(segment);
                 /* channel 1: lower limit line */
                 segment.type = 2;
                 segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
                 segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] - 1.50);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] - 1.50);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] - 1.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] - 1.00);
                 limitLines.Add(segment);
             }
             error = analyzer.SetLimitTable(1, (uint)limitLines.Count, limitLines);
@@ -182,11 +185,11 @@ namespace Libraries_Testing
             /* Save channel 1 limit table */
             error = analyzer.ActivateChannelAt(1);
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\Test\\CH1_Limit_Table.csv");
+            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\CH1_Limit_Table.csv");
 
             error = analyzer.ActivateChannelAt(2);
             error = analyzer.ActivateTraceAt(2, 1);
-            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\Test\\CH2_Limit_Table.csv");
+            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\CH2_Limit_Table.csv");
             error = analyzer.Close();
         }
 
@@ -271,17 +274,20 @@ namespace Libraries_Testing
             /* Load limit table */
             error = analyzer.ActivateChannelAt(1);
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\Test\\CH1_Limit_Table.csv");
+            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\CH1_Limit_Table.csv");
             error = analyzer.TurnOnOffLimitLineDisplay(1, "ON");
             error = analyzer.TurnOnOffLimitTestFunction(1, "ON");
             error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
 
             error = analyzer.ActivateChannelAt(2);
             error = analyzer.ActivateTraceAt(2, 1);
-            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\Test\\CH2_Limit_Table.csv");
+            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\CH2_Limit_Table.csv");
             error = analyzer.TurnOnOffLimitLineDisplay(2, "ON");
             error = analyzer.TurnOnOffLimitTestFunction(2, "ON");
             error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
+
+            error = analyzer.SelectTriggerSource("BUS");
+            error = analyzer.SingleTriggerMeasurement();
 
             /* Retrieve the limit test result */
             int ch1FailedPoints, ch2FailedPoints;
