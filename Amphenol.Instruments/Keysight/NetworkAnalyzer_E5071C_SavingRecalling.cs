@@ -50,6 +50,66 @@ namespace Amphenol.Instruments.Keysight
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
         }
+
+        /* :MMEMory:STORe:FDATa "trace_measurement_all_data.csv" */
+        public int SaveActiveTraceMeasurementDataArrayIntoCsvFile(uint channelNum, 
+                                                                  uint traceNum, 
+                                                                  string traceMeasDataCsvFile /* file name MUST contain .csv file extension explicitly */)
+        {
+            int error = 0, count = 0;
+            string command = ":DISP:WIND" + channelNum + ":ACT\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":MMEMory:STORe:FDATa " + traceMeasDataCsvFile + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* MMEMory:STORe:IMAGe "D:\test_image.png" */
+        public int SaveScreenImage(string imageFile = "D:\test_image.png" /* only support 2 image formats : .png or .bmp */)
+        {
+            int error = 0, count = 0;
+            string command = ":MMEMory:STORe:IMAGe \"" + imageFile + "\"\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :MMEMory:MDIRectory "D:\TEST" */
+        public int CreateNewDirectoryOnInstrumentDisk(string directory = "D:\\TEST")
+        {
+            int error = 0, count = 0;
+            /* [NOTICE] : Because host computer communicates with instrument through SCPI command, 
+             *            each letter of the SCPI command will be converted to upper case. So, the directory name will be 
+             *            changed to UPPER CASE LETTERS, whereas the Windows system in instrument is case sensitive.
+             */
+            string command = ":MMEMory:MDIRectory \"" + directory + "\"\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :MMEMory:DELete "D:\TEST\test_result.csv" */
+        public int DeleteDirectoryFromInstrumentDisk(string directory = "D:\\TEST")
+        {
+            int error = 0, count = 0;
+            string command = ":MMEMory:DELete \"" + directory + "\"", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :MMEMory:COPY "D:\source.sta" "D:\Test\dest.sta" */
+        public int CopyFile(string sourceFile, string destinationFile)
+        {
+            int error = 0, count = 0;
+            string command = ":MMEMory:COPY \"" + sourceFile + "\" \"" + destinationFile + "\"\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
         #endregion
     }
 }

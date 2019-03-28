@@ -78,8 +78,8 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
-        /* :MMEMory:LOAD:LIMit "D:\Test\Limit_Table.csv" */
-        public int ConfigureLimitLineSegmentsCsvFile(string segmentsCsvFilePath /* must contain the .csv extension */)
+        /* :MMEMory:LOAD:LIMit "D:\Limit_Table.csv" */
+        public int ConfigureLimitLineSegmentsCsvFile(string segmentsCsvFilePath = "D:\\Limit_Table.csv" /* must contain the .csv extension */)
         {
             /* [NOTICE] the segments .csv file was stored in the hard disk of network analyzer computer,
              *          not stored in the test host computer.
@@ -91,8 +91,8 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
-        /* :MMEMory:STORe:LIMit "D:\Test\Limit_Table.csv" */
-        public int StoreLimitLineSegmentsIntoCsvFile(string limitTableCsvFile /* MUST contain the .csv extension */)
+        /* :MMEMory:STORe:LIMit "D:Limit_Table.csv" */
+        public int StoreLimitLineSegmentsIntoCsvFile(string limitTableCsvFile = "D:\\Limit_Table.csv" /* MUST contain the .csv extension */)
         {
             /* [NOTICE] the segments .csv file was stored in the hard disk of network analyzer computer,
              *          not stored in the test host computer.

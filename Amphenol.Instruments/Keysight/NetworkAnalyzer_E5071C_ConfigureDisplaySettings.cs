@@ -231,12 +231,27 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
-        /* :MMEM:LOAD:SEGM "Segm01.csv" */
-        public int ConfigureSegmentSweepSettings(string segmentSweepTableCsvFile)
+        /* :MMEM:LOAD:SEGM "D:\segm.csv" */
+        public int LoadSegmentSweepTableFromCsvFile(uint activeChannelNum, string segmentSweepTableCsvFile = "D:\\segm.csv")
         {
             int errorno, count;
-            string command = "MMEMory:LOAD:SEGMent \"" + segmentSweepTableCsvFile + "\"\n", response;
+            string command = ":DISP:WIND" + activeChannelNum + ":ACT\n", response;
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = "MMEMory:LOAD:SEGMent \"" + segmentSweepTableCsvFile + "\"\n";
+            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(out response);
+        }
+
+        /* :MMEMory:STORe:SEGMent "D:\segm.csv" */
+        public int SaveSegmentSweepTableIntoCsvFile(uint activeChannelNum, string segmentSweepTableCsvFile = "D:\\segm.csv")
+        {
+            int error = 0, count = 0;
+            string command = ":DISP:WIND" + activeChannelNum + ":ACT\n", response;
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":MMEMory:STORe:SEGMent \"" + segmentSweepTableCsvFile + "\"\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
         }
 
@@ -256,6 +271,12 @@ namespace Amphenol.Instruments.Keysight
             string command = ":MMEMory:LOAD \"" + instrumentStateFileName + "\"\n", response;
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return QueryErrorStatus(out response);
+        }
+
+        /* :MMEMory:STORe:STATe "autorec.sta" */
+        public int AutoRecallEntireInstrumentStatusWhenPowerON()
+        {
+            return SaveInstrumentStateIntoFile("autorec.sta");
         }
         #endregion
 
