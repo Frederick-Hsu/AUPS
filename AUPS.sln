@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Util
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libraries_Testing", "Libraries_Testing\Libraries_Testing.csproj", "{0A86F1A6-E431-41B1-8FAE-76372AA28418}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectManipulateDB", "ConnectManipulateDB\ConnectManipulateDB.csproj", "{BA1D2585-BF59-4409-99C7-BF8F5049B052}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,18 @@ Global
 		{0A86F1A6-E431-41B1-8FAE-76372AA28418}.Release|x64.Build.0 = Release|Any CPU
 		{0A86F1A6-E431-41B1-8FAE-76372AA28418}.Release|x86.ActiveCfg = Release|Any CPU
 		{0A86F1A6-E431-41B1-8FAE-76372AA28418}.Release|x86.Build.0 = Release|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Debug|x64.Build.0 = Debug|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Debug|x86.Build.0 = Debug|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Release|x64.ActiveCfg = Release|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Release|x64.Build.0 = Release|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Release|x86.ActiveCfg = Release|Any CPU
+		{BA1D2585-BF59-4409-99C7-BF8F5049B052}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
