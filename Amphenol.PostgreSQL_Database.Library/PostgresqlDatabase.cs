@@ -23,6 +23,16 @@ namespace Amphenol.PostgreSQL_Database.Library
                                           "5432");
         }
 
+        public PostgresqlDatabase(string dbServerIP, string dbName, string dbUserName, string dbUserPassword)
+        {
+            connectionStr = string.Format("Server = {0}; Database = {1}; User Id = {2}; Password = {3}; Port = {4};",
+                                          dbServerIP,
+                                          dbName,
+                                          dbUserName,
+                                          dbUserPassword,
+                                          "5432");
+        }
+
         public ConnectionState ConnectAndOpenDatabase()
         {
             try
