@@ -10,7 +10,8 @@ namespace Libraries_Testing
         public static void TestCase_PerformingLimitTest()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
             error = analyzer.ClearAllErrorQueue();
@@ -196,7 +197,8 @@ namespace Libraries_Testing
         public static void TestCases_ConfigureTraces()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
             error = analyzer.ClearAllErrorQueue();
@@ -240,7 +242,8 @@ namespace Libraries_Testing
         public static void TestCases_LoadLimitTable()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
             error = analyzer.ClearAllErrorQueue();
@@ -315,7 +318,8 @@ namespace Libraries_Testing
         public static void TestCases_MarkerSearch()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
             error = analyzer.ClearAllErrorQueue();
@@ -425,14 +429,15 @@ namespace Libraries_Testing
             Console.WriteLine("The size of float is : " + sizeof(float) + " bytes.");
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
             // int error = analyzer.Open("TCPIP0::192.168.30.66::inst0::INSTR");
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
-            // error = analyzer.Preset();
+            error = analyzer.Preset();
             error = analyzer.ClearAllErrorQueue();
             error = analyzer.SetSweepMeasurementPoints(1, 500);
-            error = analyzer.SetSweepStartFreqValueForChannel(1, "2E9");
-            error = analyzer.SetSweepStopFreqValueForChannel(1, "6.5E9");
+            error = analyzer.SetSweepStartFreqValueForChannel(1, "4.5E9");
+            error = analyzer.SetSweepStopFreqValueForChannel(1, "5E9");
 
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOGarithmic");
             double[] real, imag;
