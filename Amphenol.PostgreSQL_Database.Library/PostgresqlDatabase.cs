@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Common;
 using System.Data;
 using Npgsql;
 
@@ -47,10 +48,15 @@ namespace Amphenol.PostgreSQL_Database.Library
             return psqlConnection.State;
         }
 
+        public ConnectionState QueryConnectionState()
+        {
+            return psqlConnection.State;
+        }
+
         public ConnectionState CloseDatabase()
         {
-            // psqlConnection.Dispose();
             psqlConnection.Close();
+            psqlConnection.Dispose();
             return psqlConnection.State;
         }
 
@@ -62,7 +68,7 @@ namespace Amphenol.PostgreSQL_Database.Library
             dataAdapter.Fill(dtset);
             queriedTable = new DataTable();
             queriedTable = dtset.Tables[0];
-            return 0;
+            return queriedTable.Rows.Count;
         }
 
         public int ExecuteInsertSql(string insertSqlCmd)
@@ -84,6 +90,13 @@ namespace Amphenol.PostgreSQL_Database.Library
             NpgsqlCommand command = new NpgsqlCommand(deleteSqlCmd, psqlConnection);
             int affectedRowsNumber = command.ExecuteNonQuery();
             return affectedRowsNumber;
+        }
+
+        public int ExecuteCommonSQL(string sqlStatement)
+        {
+            NpgsqlCommand command = new NpgsqlCommand(sqlStatement, psqlConnection);
+            int affectedRowsNum = command.ExecuteNonQuery();
+            return affectedRowsNum;
         }
     }
 }
