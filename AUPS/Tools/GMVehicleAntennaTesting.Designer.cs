@@ -182,18 +182,15 @@
             this.groupBoxTestPointsSetting.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBoxTestPointsSetting.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.groupBoxTestPointsSetting.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxTestPointsSetting.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxTestPointsSetting.Name = "groupBoxTestPointsSetting";
-            this.groupBoxTestPointsSetting.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBoxTestPointsSetting.Size = new System.Drawing.Size(266, 857);
+            this.groupBoxTestPointsSetting.Size = new System.Drawing.Size(398, 1318);
             this.groupBoxTestPointsSetting.TabIndex = 1;
             this.groupBoxTestPointsSetting.TabStop = false;
             this.groupBoxTestPointsSetting.Text = "Testing points setting";
             // 
             // numericUpDownPacketSize
             // 
-            this.numericUpDownPacketSize.Location = new System.Drawing.Point(178, 697);
-            this.numericUpDownPacketSize.Margin = new System.Windows.Forms.Padding(2);
+            this.numericUpDownPacketSize.Location = new System.Drawing.Point(267, 1072);
             this.numericUpDownPacketSize.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -205,7 +202,7 @@
             0,
             0});
             this.numericUpDownPacketSize.Name = "numericUpDownPacketSize";
-            this.numericUpDownPacketSize.Size = new System.Drawing.Size(82, 20);
+            this.numericUpDownPacketSize.Size = new System.Drawing.Size(123, 26);
             this.numericUpDownPacketSize.TabIndex = 30;
             this.numericUpDownPacketSize.Value = new decimal(new int[] {
             300,
@@ -216,20 +213,18 @@
             // labelPacketSize
             // 
             this.labelPacketSize.AutoSize = true;
-            this.labelPacketSize.Location = new System.Drawing.Point(12, 697);
-            this.labelPacketSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelPacketSize.Location = new System.Drawing.Point(18, 1072);
             this.labelPacketSize.Name = "labelPacketSize";
-            this.labelPacketSize.Size = new System.Drawing.Size(161, 13);
+            this.labelPacketSize.Size = new System.Drawing.Size(239, 20);
             this.labelPacketSize.TabIndex = 29;
             this.labelPacketSize.Text = "iPerf3 packet size (unit : MBytes)";
             // 
             // labelScaleDownRatio
             // 
             this.labelScaleDownRatio.AutoSize = true;
-            this.labelScaleDownRatio.Location = new System.Drawing.Point(10, 661);
-            this.labelScaleDownRatio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelScaleDownRatio.Location = new System.Drawing.Point(15, 1017);
             this.labelScaleDownRatio.Name = "labelScaleDownRatio";
-            this.labelScaleDownRatio.Size = new System.Drawing.Size(86, 13);
+            this.labelScaleDownRatio.Size = new System.Drawing.Size(126, 20);
             this.labelScaleDownRatio.TabIndex = 28;
             this.labelScaleDownRatio.Text = "Scale down ratio";
             // 
@@ -246,10 +241,9 @@
             "100",
             "200",
             "500"});
-            this.comboBoxScaleDownRatio.Location = new System.Drawing.Point(106, 659);
-            this.comboBoxScaleDownRatio.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxScaleDownRatio.Location = new System.Drawing.Point(159, 1014);
             this.comboBoxScaleDownRatio.Name = "comboBoxScaleDownRatio";
-            this.comboBoxScaleDownRatio.Size = new System.Drawing.Size(155, 21);
+            this.comboBoxScaleDownRatio.Size = new System.Drawing.Size(230, 28);
             this.comboBoxScaleDownRatio.TabIndex = 27;
             // 
             // comboBoxAntennaPolarization
@@ -258,47 +252,42 @@
             this.comboBoxAntennaPolarization.Items.AddRange(new object[] {
             "Horizontal",
             "Vertical"});
-            this.comboBoxAntennaPolarization.Location = new System.Drawing.Point(135, 119);
-            this.comboBoxAntennaPolarization.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxAntennaPolarization.Location = new System.Drawing.Point(202, 183);
             this.comboBoxAntennaPolarization.Name = "comboBoxAntennaPolarization";
-            this.comboBoxAntennaPolarization.Size = new System.Drawing.Size(126, 21);
+            this.comboBoxAntennaPolarization.Size = new System.Drawing.Size(187, 28);
             this.comboBoxAntennaPolarization.TabIndex = 26;
             // 
             // labelAntennaPolorization
             // 
             this.labelAntennaPolorization.AutoSize = true;
-            this.labelAntennaPolorization.Location = new System.Drawing.Point(10, 119);
-            this.labelAntennaPolorization.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelAntennaPolorization.Location = new System.Drawing.Point(15, 183);
             this.labelAntennaPolorization.Name = "labelAntennaPolorization";
-            this.labelAntennaPolorization.Size = new System.Drawing.Size(103, 13);
+            this.labelAntennaPolorization.Size = new System.Drawing.Size(155, 20);
             this.labelAntennaPolorization.TabIndex = 25;
             this.labelAntennaPolorization.Text = "Antenna polarization";
             // 
             // comboBoxChannel
             // 
             this.comboBoxChannel.FormattingEnabled = true;
-            this.comboBoxChannel.Location = new System.Drawing.Point(135, 150);
-            this.comboBoxChannel.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxChannel.Location = new System.Drawing.Point(202, 231);
             this.comboBoxChannel.Name = "comboBoxChannel";
-            this.comboBoxChannel.Size = new System.Drawing.Size(127, 21);
+            this.comboBoxChannel.Size = new System.Drawing.Size(188, 28);
             this.comboBoxChannel.TabIndex = 24;
             this.comboBoxChannel.SelectedIndexChanged += new System.EventHandler(this.comboBoxChannel_SelectedIndexChanged);
             // 
             // textBoxTxPower
             // 
-            this.textBoxTxPower.Location = new System.Drawing.Point(135, 249);
-            this.textBoxTxPower.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxTxPower.Location = new System.Drawing.Point(202, 383);
             this.textBoxTxPower.Name = "textBoxTxPower";
-            this.textBoxTxPower.Size = new System.Drawing.Size(127, 20);
+            this.textBoxTxPower.Size = new System.Drawing.Size(188, 26);
             this.textBoxTxPower.TabIndex = 23;
             // 
             // labelTxPower
             // 
             this.labelTxPower.AutoSize = true;
-            this.labelTxPower.Location = new System.Drawing.Point(13, 249);
-            this.labelTxPower.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelTxPower.Location = new System.Drawing.Point(20, 383);
             this.labelTxPower.Name = "labelTxPower";
-            this.labelTxPower.Size = new System.Drawing.Size(107, 13);
+            this.labelTxPower.Size = new System.Drawing.Size(157, 20);
             this.labelTxPower.TabIndex = 22;
             this.labelTxPower.Text = "Tx power (unit : dBm)";
             // 
@@ -307,55 +296,49 @@
             this.labelElapsedTime.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelElapsedTime.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.labelElapsedTime.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.labelElapsedTime.Location = new System.Drawing.Point(2, 840);
-            this.labelElapsedTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelElapsedTime.Location = new System.Drawing.Point(3, 1292);
             this.labelElapsedTime.Name = "labelElapsedTime";
-            this.labelElapsedTime.Size = new System.Drawing.Size(262, 15);
+            this.labelElapsedTime.Size = new System.Drawing.Size(392, 23);
             this.labelElapsedTime.TabIndex = 7;
             this.labelElapsedTime.Text = "Elapsed time : 00:00:00.000";
             // 
             // textBoxSaVisaAddress
             // 
-            this.textBoxSaVisaAddress.Location = new System.Drawing.Point(13, 609);
-            this.textBoxSaVisaAddress.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxSaVisaAddress.Location = new System.Drawing.Point(20, 937);
             this.textBoxSaVisaAddress.Name = "textBoxSaVisaAddress";
-            this.textBoxSaVisaAddress.Size = new System.Drawing.Size(249, 20);
+            this.textBoxSaVisaAddress.Size = new System.Drawing.Size(372, 26);
             this.textBoxSaVisaAddress.TabIndex = 21;
             // 
             // labelSaVisaAddress
             // 
             this.labelSaVisaAddress.AutoSize = true;
-            this.labelSaVisaAddress.Location = new System.Drawing.Point(10, 581);
-            this.labelSaVisaAddress.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelSaVisaAddress.Location = new System.Drawing.Point(15, 894);
             this.labelSaVisaAddress.Name = "labelSaVisaAddress";
-            this.labelSaVisaAddress.Size = new System.Drawing.Size(154, 13);
+            this.labelSaVisaAddress.Size = new System.Drawing.Size(231, 20);
             this.labelSaVisaAddress.TabIndex = 20;
             this.labelSaVisaAddress.Text = "Signal analyzer VISA address : ";
             // 
             // textBoxSgVisaAddress
             // 
-            this.textBoxSgVisaAddress.Location = new System.Drawing.Point(13, 540);
-            this.textBoxSgVisaAddress.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxSgVisaAddress.Location = new System.Drawing.Point(20, 831);
             this.textBoxSgVisaAddress.Name = "textBoxSgVisaAddress";
-            this.textBoxSgVisaAddress.Size = new System.Drawing.Size(249, 20);
+            this.textBoxSgVisaAddress.Size = new System.Drawing.Size(372, 26);
             this.textBoxSgVisaAddress.TabIndex = 19;
             // 
             // labelSgVisaAddress
             // 
             this.labelSgVisaAddress.AutoSize = true;
-            this.labelSgVisaAddress.Location = new System.Drawing.Point(10, 518);
-            this.labelSgVisaAddress.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelSgVisaAddress.Location = new System.Drawing.Point(15, 797);
             this.labelSgVisaAddress.Name = "labelSgVisaAddress";
-            this.labelSgVisaAddress.Size = new System.Drawing.Size(160, 13);
+            this.labelSgVisaAddress.Size = new System.Drawing.Size(241, 20);
             this.labelSgVisaAddress.TabIndex = 18;
             this.labelSgVisaAddress.Text = "Signal generator VISA address : ";
             // 
             // btnBrowseIperf3
             // 
-            this.btnBrowseIperf3.Location = new System.Drawing.Point(135, 434);
-            this.btnBrowseIperf3.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBrowseIperf3.Location = new System.Drawing.Point(202, 668);
             this.btnBrowseIperf3.Name = "btnBrowseIperf3";
-            this.btnBrowseIperf3.Size = new System.Drawing.Size(125, 24);
+            this.btnBrowseIperf3.Size = new System.Drawing.Size(188, 37);
             this.btnBrowseIperf3.TabIndex = 17;
             this.btnBrowseIperf3.Text = "Browse iPerf3.exe";
             this.btnBrowseIperf3.UseVisualStyleBackColor = true;
@@ -363,19 +346,17 @@
             // 
             // textBoxIperf3Path
             // 
-            this.textBoxIperf3Path.Location = new System.Drawing.Point(13, 470);
-            this.textBoxIperf3Path.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxIperf3Path.Location = new System.Drawing.Point(20, 723);
             this.textBoxIperf3Path.Name = "textBoxIperf3Path";
-            this.textBoxIperf3Path.Size = new System.Drawing.Size(249, 20);
+            this.textBoxIperf3Path.Size = new System.Drawing.Size(372, 26);
             this.textBoxIperf3Path.TabIndex = 16;
             // 
             // labelIperf3Path
             // 
             this.labelIperf3Path.AutoSize = true;
-            this.labelIperf3Path.Location = new System.Drawing.Point(13, 437);
-            this.labelIperf3Path.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelIperf3Path.Location = new System.Drawing.Point(20, 672);
             this.labelIperf3Path.Name = "labelIperf3Path";
-            this.labelIperf3Path.Size = new System.Drawing.Size(58, 13);
+            this.labelIperf3Path.Size = new System.Drawing.Size(86, 20);
             this.labelIperf3Path.TabIndex = 15;
             this.labelIperf3Path.Text = "iPerf3 path";
             // 
@@ -389,46 +370,41 @@
             "40",
             "80",
             "160"});
-            this.comboBoxBandWidth.Location = new System.Drawing.Point(135, 214);
-            this.comboBoxBandWidth.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxBandWidth.Location = new System.Drawing.Point(202, 329);
             this.comboBoxBandWidth.Name = "comboBoxBandWidth";
-            this.comboBoxBandWidth.Size = new System.Drawing.Size(127, 21);
+            this.comboBoxBandWidth.Size = new System.Drawing.Size(188, 28);
             this.comboBoxBandWidth.TabIndex = 14;
             // 
             // labelBandWidth
             // 
             this.labelBandWidth.AutoSize = true;
-            this.labelBandWidth.Location = new System.Drawing.Point(13, 214);
-            this.labelBandWidth.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelBandWidth.Location = new System.Drawing.Point(20, 329);
             this.labelBandWidth.Name = "labelBandWidth";
-            this.labelBandWidth.Size = new System.Drawing.Size(117, 13);
+            this.labelBandWidth.Size = new System.Drawing.Size(173, 20);
             this.labelBandWidth.TabIndex = 13;
             this.labelBandWidth.Text = "Band width (unit : MHz)";
             // 
             // textBoxServerIP
             // 
-            this.textBoxServerIP.Location = new System.Drawing.Point(135, 392);
-            this.textBoxServerIP.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxServerIP.Location = new System.Drawing.Point(202, 603);
             this.textBoxServerIP.Name = "textBoxServerIP";
-            this.textBoxServerIP.Size = new System.Drawing.Size(127, 20);
+            this.textBoxServerIP.Size = new System.Drawing.Size(188, 26);
             this.textBoxServerIP.TabIndex = 12;
             // 
             // labelServerIP
             // 
             this.labelServerIP.AutoSize = true;
-            this.labelServerIP.Location = new System.Drawing.Point(10, 392);
-            this.labelServerIP.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelServerIP.Location = new System.Drawing.Point(15, 603);
             this.labelServerIP.Name = "labelServerIP";
-            this.labelServerIP.Size = new System.Drawing.Size(91, 13);
+            this.labelServerIP.Size = new System.Drawing.Size(135, 20);
             this.labelServerIP.TabIndex = 11;
             this.labelServerIP.Text = "Server IP address";
             // 
             // btnRefreshDrawing
             // 
-            this.btnRefreshDrawing.Location = new System.Drawing.Point(13, 328);
-            this.btnRefreshDrawing.Margin = new System.Windows.Forms.Padding(2);
+            this.btnRefreshDrawing.Location = new System.Drawing.Point(20, 505);
             this.btnRefreshDrawing.Name = "btnRefreshDrawing";
-            this.btnRefreshDrawing.Size = new System.Drawing.Size(248, 28);
+            this.btnRefreshDrawing.Size = new System.Drawing.Size(372, 43);
             this.btnRefreshDrawing.TabIndex = 4;
             this.btnRefreshDrawing.Text = "Refresh drawing";
             this.btnRefreshDrawing.UseVisualStyleBackColor = true;
@@ -437,38 +413,34 @@
             // labelChannel
             // 
             this.labelChannel.AutoSize = true;
-            this.labelChannel.Location = new System.Drawing.Point(10, 150);
-            this.labelChannel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelChannel.Location = new System.Drawing.Point(15, 231);
             this.labelChannel.Name = "labelChannel";
-            this.labelChannel.Size = new System.Drawing.Size(73, 13);
+            this.labelChannel.Size = new System.Drawing.Size(108, 20);
             this.labelChannel.TabIndex = 9;
             this.labelChannel.Text = "Wi-Fi Channel";
             // 
             // textBoxFreqBand
             // 
-            this.textBoxFreqBand.Location = new System.Drawing.Point(135, 182);
-            this.textBoxFreqBand.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxFreqBand.Location = new System.Drawing.Point(202, 280);
             this.textBoxFreqBand.Name = "textBoxFreqBand";
-            this.textBoxFreqBand.Size = new System.Drawing.Size(127, 20);
+            this.textBoxFreqBand.Size = new System.Drawing.Size(188, 26);
             this.textBoxFreqBand.TabIndex = 8;
             // 
             // labelFreqBand
             // 
             this.labelFreqBand.AutoSize = true;
-            this.labelFreqBand.Location = new System.Drawing.Point(10, 182);
-            this.labelFreqBand.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelFreqBand.Location = new System.Drawing.Point(15, 280);
             this.labelFreqBand.Name = "labelFreqBand";
-            this.labelFreqBand.Size = new System.Drawing.Size(114, 13);
+            this.labelFreqBand.Size = new System.Drawing.Size(169, 20);
             this.labelFreqBand.TabIndex = 7;
             this.labelFreqBand.Text = "Frequency (unit : MHz)";
             // 
             // btnNewPoint
             // 
             this.btnNewPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnNewPoint.Location = new System.Drawing.Point(13, 274);
-            this.btnNewPoint.Margin = new System.Windows.Forms.Padding(2);
+            this.btnNewPoint.Location = new System.Drawing.Point(20, 422);
             this.btnNewPoint.Name = "btnNewPoint";
-            this.btnNewPoint.Size = new System.Drawing.Size(248, 34);
+            this.btnNewPoint.Size = new System.Drawing.Size(372, 52);
             this.btnNewPoint.TabIndex = 6;
             this.btnNewPoint.Text = "New Testing Point";
             this.btnNewPoint.UseVisualStyleBackColor = true;
@@ -476,55 +448,49 @@
             // 
             // textBoxHeight
             // 
-            this.textBoxHeight.Location = new System.Drawing.Point(135, 90);
-            this.textBoxHeight.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxHeight.Location = new System.Drawing.Point(202, 138);
             this.textBoxHeight.Name = "textBoxHeight";
-            this.textBoxHeight.Size = new System.Drawing.Size(127, 20);
+            this.textBoxHeight.Size = new System.Drawing.Size(188, 26);
             this.textBoxHeight.TabIndex = 5;
             // 
             // labelHeight
             // 
             this.labelHeight.AutoSize = true;
-            this.labelHeight.Location = new System.Drawing.Point(10, 90);
-            this.labelHeight.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelHeight.Location = new System.Drawing.Point(15, 138);
             this.labelHeight.Name = "labelHeight";
-            this.labelHeight.Size = new System.Drawing.Size(89, 13);
+            this.labelHeight.Size = new System.Drawing.Size(134, 20);
             this.labelHeight.TabIndex = 4;
             this.labelHeight.Text = "Height (unit : mm)";
             // 
             // textBoxAngle
             // 
-            this.textBoxAngle.Location = new System.Drawing.Point(135, 58);
-            this.textBoxAngle.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxAngle.Location = new System.Drawing.Point(202, 89);
             this.textBoxAngle.Name = "textBoxAngle";
-            this.textBoxAngle.Size = new System.Drawing.Size(127, 20);
+            this.textBoxAngle.Size = new System.Drawing.Size(188, 26);
             this.textBoxAngle.TabIndex = 3;
             // 
             // labelAngle
             // 
             this.labelAngle.AutoSize = true;
-            this.labelAngle.Location = new System.Drawing.Point(10, 58);
-            this.labelAngle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelAngle.Location = new System.Drawing.Point(15, 89);
             this.labelAngle.Name = "labelAngle";
-            this.labelAngle.Size = new System.Drawing.Size(102, 13);
+            this.labelAngle.Size = new System.Drawing.Size(152, 20);
             this.labelAngle.TabIndex = 2;
             this.labelAngle.Text = "Angle (unit : degree)";
             // 
             // textBoxRadius
             // 
-            this.textBoxRadius.Location = new System.Drawing.Point(135, 24);
-            this.textBoxRadius.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxRadius.Location = new System.Drawing.Point(202, 37);
             this.textBoxRadius.Name = "textBoxRadius";
-            this.textBoxRadius.Size = new System.Drawing.Size(127, 20);
+            this.textBoxRadius.Size = new System.Drawing.Size(188, 26);
             this.textBoxRadius.TabIndex = 1;
             // 
             // labelRadius
             // 
             this.labelRadius.AutoSize = true;
-            this.labelRadius.Location = new System.Drawing.Point(10, 24);
-            this.labelRadius.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelRadius.Location = new System.Drawing.Point(18, 37);
             this.labelRadius.Name = "labelRadius";
-            this.labelRadius.Size = new System.Drawing.Size(91, 13);
+            this.labelRadius.Size = new System.Drawing.Size(137, 20);
             this.labelRadius.TabIndex = 0;
             this.labelRadius.Text = "Radius (unit : mm)";
             // 
@@ -534,11 +500,10 @@
             this.tabControlTesting.Controls.Add(this.tabPageIperfLog);
             this.tabControlTesting.Controls.Add(this.tabPageResults);
             this.tabControlTesting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlTesting.Location = new System.Drawing.Point(266, 0);
-            this.tabControlTesting.Margin = new System.Windows.Forms.Padding(2);
+            this.tabControlTesting.Location = new System.Drawing.Point(398, 0);
             this.tabControlTesting.Name = "tabControlTesting";
             this.tabControlTesting.SelectedIndex = 0;
-            this.tabControlTesting.Size = new System.Drawing.Size(1053, 857);
+            this.tabControlTesting.Size = new System.Drawing.Size(1580, 1318);
             this.tabControlTesting.TabIndex = 5;
             this.tabControlTesting.Resize += new System.EventHandler(this.tabControlTesting_Resize);
             // 
@@ -550,11 +515,10 @@
             this.tabPageField.Controls.Add(this.btnSave);
             this.tabPageField.Controls.Add(this.btnLoad);
             this.tabPageField.Controls.Add(this.dataGridViewPointSettings);
-            this.tabPageField.Location = new System.Drawing.Point(4, 22);
-            this.tabPageField.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPageField.Location = new System.Drawing.Point(4, 29);
             this.tabPageField.Name = "tabPageField";
-            this.tabPageField.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPageField.Size = new System.Drawing.Size(1045, 831);
+            this.tabPageField.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPageField.Size = new System.Drawing.Size(1572, 1285);
             this.tabPageField.TabIndex = 0;
             this.tabPageField.Text = "Test field";
             this.tabPageField.UseVisualStyleBackColor = true;
@@ -563,10 +527,9 @@
             // 
             this.pictureBoxCar.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxCar.Image")));
             this.pictureBoxCar.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBoxCar.InitialImage")));
-            this.pictureBoxCar.Location = new System.Drawing.Point(383, 333);
-            this.pictureBoxCar.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBoxCar.Location = new System.Drawing.Point(574, 512);
             this.pictureBoxCar.Name = "pictureBoxCar";
-            this.pictureBoxCar.Size = new System.Drawing.Size(29, 63);
+            this.pictureBoxCar.Size = new System.Drawing.Size(44, 97);
             this.pictureBoxCar.TabIndex = 5;
             this.pictureBoxCar.TabStop = false;
             // 
@@ -575,11 +538,9 @@
             this.groupBoxOption.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxOption.Controls.Add(this.radioBtnPhyLayerTesting);
             this.groupBoxOption.Controls.Add(this.radioBtnAppLayerTesting);
-            this.groupBoxOption.Location = new System.Drawing.Point(847, 6);
-            this.groupBoxOption.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBoxOption.Location = new System.Drawing.Point(1270, 9);
             this.groupBoxOption.Name = "groupBoxOption";
-            this.groupBoxOption.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBoxOption.Size = new System.Drawing.Size(195, 84);
+            this.groupBoxOption.Size = new System.Drawing.Size(292, 129);
             this.groupBoxOption.TabIndex = 4;
             this.groupBoxOption.TabStop = false;
             this.groupBoxOption.Text = "Select test section";
@@ -587,10 +548,9 @@
             // radioBtnPhyLayerTesting
             // 
             this.radioBtnPhyLayerTesting.AutoSize = true;
-            this.radioBtnPhyLayerTesting.Location = new System.Drawing.Point(4, 56);
-            this.radioBtnPhyLayerTesting.Margin = new System.Windows.Forms.Padding(2);
+            this.radioBtnPhyLayerTesting.Location = new System.Drawing.Point(6, 86);
             this.radioBtnPhyLayerTesting.Name = "radioBtnPhyLayerTesting";
-            this.radioBtnPhyLayerTesting.Size = new System.Drawing.Size(193, 17);
+            this.radioBtnPhyLayerTesting.Size = new System.Drawing.Size(279, 24);
             this.radioBtnPhyLayerTesting.TabIndex = 1;
             this.radioBtnPhyLayerTesting.Text = "RF / Physical Layer Testing section";
             this.radioBtnPhyLayerTesting.UseVisualStyleBackColor = true;
@@ -599,10 +559,9 @@
             // 
             this.radioBtnAppLayerTesting.AutoSize = true;
             this.radioBtnAppLayerTesting.Checked = true;
-            this.radioBtnAppLayerTesting.Location = new System.Drawing.Point(4, 26);
-            this.radioBtnAppLayerTesting.Margin = new System.Windows.Forms.Padding(2);
+            this.radioBtnAppLayerTesting.Location = new System.Drawing.Point(6, 40);
             this.radioBtnAppLayerTesting.Name = "radioBtnAppLayerTesting";
-            this.radioBtnAppLayerTesting.Size = new System.Drawing.Size(181, 17);
+            this.radioBtnAppLayerTesting.Size = new System.Drawing.Size(266, 24);
             this.radioBtnAppLayerTesting.TabIndex = 0;
             this.radioBtnAppLayerTesting.TabStop = true;
             this.radioBtnAppLayerTesting.Text = "Application Layer Testing section";
@@ -610,10 +569,9 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(233, 203);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSave.Location = new System.Drawing.Point(350, 312);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(189, 26);
+            this.btnSave.Size = new System.Drawing.Size(284, 40);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save test points setting table";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -621,10 +579,9 @@
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(4, 203);
-            this.btnLoad.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLoad.Location = new System.Drawing.Point(6, 312);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(189, 21);
+            this.btnLoad.Size = new System.Drawing.Size(284, 32);
             this.btnLoad.TabIndex = 2;
             this.btnLoad.Text = "Load test points setting table";
             this.btnLoad.UseVisualStyleBackColor = true;
@@ -644,11 +601,10 @@
             this.colBandwidth,
             this.colChannel,
             this.colPower});
-            this.dataGridViewPointSettings.Location = new System.Drawing.Point(4, 5);
-            this.dataGridViewPointSettings.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewPointSettings.Location = new System.Drawing.Point(6, 8);
             this.dataGridViewPointSettings.Name = "dataGridViewPointSettings";
             this.dataGridViewPointSettings.RowTemplate.Height = 28;
-            this.dataGridViewPointSettings.Size = new System.Drawing.Size(417, 193);
+            this.dataGridViewPointSettings.Size = new System.Drawing.Size(626, 297);
             this.dataGridViewPointSettings.TabIndex = 1;
             // 
             // colSelectedFlag
@@ -670,7 +626,7 @@
             this.colRadius.HeaderText = "Radius";
             this.colRadius.Name = "colRadius";
             this.colRadius.ReadOnly = true;
-            this.colRadius.Width = 65;
+            this.colRadius.Width = 95;
             // 
             // colAngle
             // 
@@ -711,11 +667,10 @@
             // tabPageIperfLog
             // 
             this.tabPageIperfLog.Controls.Add(this.textBoxIperfTestLog);
-            this.tabPageIperfLog.Location = new System.Drawing.Point(4, 22);
-            this.tabPageIperfLog.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPageIperfLog.Location = new System.Drawing.Point(4, 29);
             this.tabPageIperfLog.Name = "tabPageIperfLog";
-            this.tabPageIperfLog.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPageIperfLog.Size = new System.Drawing.Size(1045, 831);
+            this.tabPageIperfLog.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPageIperfLog.Size = new System.Drawing.Size(1572, 1285);
             this.tabPageIperfLog.TabIndex = 1;
             this.tabPageIperfLog.Text = "iPerf log";
             this.tabPageIperfLog.UseVisualStyleBackColor = true;
@@ -724,13 +679,12 @@
             // 
             this.textBoxIperfTestLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxIperfTestLog.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxIperfTestLog.Location = new System.Drawing.Point(2, 2);
-            this.textBoxIperfTestLog.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxIperfTestLog.Location = new System.Drawing.Point(3, 3);
             this.textBoxIperfTestLog.Multiline = true;
             this.textBoxIperfTestLog.Name = "textBoxIperfTestLog";
             this.textBoxIperfTestLog.ReadOnly = true;
             this.textBoxIperfTestLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxIperfTestLog.Size = new System.Drawing.Size(1041, 827);
+            this.textBoxIperfTestLog.Size = new System.Drawing.Size(1566, 1279);
             this.textBoxIperfTestLog.TabIndex = 0;
             this.textBoxIperfTestLog.WordWrap = false;
             // 
@@ -739,10 +693,9 @@
             this.tabPageResults.Controls.Add(this.groupBoxRFTesting);
             this.tabPageResults.Controls.Add(this.groupBoxApplicationLayerTesting);
             this.tabPageResults.Controls.Add(this.labelFilePathToSave);
-            this.tabPageResults.Location = new System.Drawing.Point(4, 22);
-            this.tabPageResults.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPageResults.Location = new System.Drawing.Point(4, 29);
             this.tabPageResults.Name = "tabPageResults";
-            this.tabPageResults.Size = new System.Drawing.Size(1045, 831);
+            this.tabPageResults.Size = new System.Drawing.Size(1572, 1285);
             this.tabPageResults.TabIndex = 2;
             this.tabPageResults.Text = "Test results";
             this.tabPageResults.UseVisualStyleBackColor = true;
@@ -753,11 +706,9 @@
             this.groupBoxRFTesting.Controls.Add(this.btnSaveRFTestResults);
             this.groupBoxRFTesting.Controls.Add(this.dataGridViewRFTestResults);
             this.groupBoxRFTesting.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBoxRFTesting.Location = new System.Drawing.Point(0, 410);
-            this.groupBoxRFTesting.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBoxRFTesting.Location = new System.Drawing.Point(0, 637);
             this.groupBoxRFTesting.Name = "groupBoxRFTesting";
-            this.groupBoxRFTesting.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBoxRFTesting.Size = new System.Drawing.Size(1045, 421);
+            this.groupBoxRFTesting.Size = new System.Drawing.Size(1572, 648);
             this.groupBoxRFTesting.TabIndex = 8;
             this.groupBoxRFTesting.TabStop = false;
             this.groupBoxRFTesting.Text = "Test results for RF / Physical Layer Testing";
@@ -765,10 +716,9 @@
             // btnClearPhysicalTestResultsTable
             // 
             this.btnClearPhysicalTestResultsTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearPhysicalTestResultsTable.Location = new System.Drawing.Point(772, 377);
-            this.btnClearPhysicalTestResultsTable.Margin = new System.Windows.Forms.Padding(2);
+            this.btnClearPhysicalTestResultsTable.Location = new System.Drawing.Point(1162, 580);
             this.btnClearPhysicalTestResultsTable.Name = "btnClearPhysicalTestResultsTable";
-            this.btnClearPhysicalTestResultsTable.Size = new System.Drawing.Size(63, 26);
+            this.btnClearPhysicalTestResultsTable.Size = new System.Drawing.Size(94, 40);
             this.btnClearPhysicalTestResultsTable.TabIndex = 5;
             this.btnClearPhysicalTestResultsTable.Text = "Clear";
             this.btnClearPhysicalTestResultsTable.UseVisualStyleBackColor = true;
@@ -777,10 +727,9 @@
             // btnSaveRFTestResults
             // 
             this.btnSaveRFTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveRFTestResults.Location = new System.Drawing.Point(859, 377);
-            this.btnSaveRFTestResults.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSaveRFTestResults.Location = new System.Drawing.Point(1292, 580);
             this.btnSaveRFTestResults.Name = "btnSaveRFTestResults";
-            this.btnSaveRFTestResults.Size = new System.Drawing.Size(182, 26);
+            this.btnSaveRFTestResults.Size = new System.Drawing.Size(273, 40);
             this.btnSaveRFTestResults.TabIndex = 6;
             this.btnSaveRFTestResults.Text = "Save RF/Physical layer test results";
             this.btnSaveRFTestResults.UseVisualStyleBackColor = true;
@@ -802,11 +751,10 @@
             this.colmRssi,
             this.colmTimeStamp});
             this.dataGridViewRFTestResults.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridViewRFTestResults.Location = new System.Drawing.Point(2, 15);
-            this.dataGridViewRFTestResults.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewRFTestResults.Location = new System.Drawing.Point(3, 22);
             this.dataGridViewRFTestResults.Name = "dataGridViewRFTestResults";
             this.dataGridViewRFTestResults.RowTemplate.Height = 28;
-            this.dataGridViewRFTestResults.Size = new System.Drawing.Size(1041, 359);
+            this.dataGridViewRFTestResults.Size = new System.Drawing.Size(1566, 552);
             this.dataGridViewRFTestResults.TabIndex = 4;
             // 
             // colmPointNo
@@ -871,10 +819,8 @@
             this.groupBoxApplicationLayerTesting.Controls.Add(this.btnClearTestResults);
             this.groupBoxApplicationLayerTesting.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxApplicationLayerTesting.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxApplicationLayerTesting.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxApplicationLayerTesting.Name = "groupBoxApplicationLayerTesting";
-            this.groupBoxApplicationLayerTesting.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBoxApplicationLayerTesting.Size = new System.Drawing.Size(1045, 390);
+            this.groupBoxApplicationLayerTesting.Size = new System.Drawing.Size(1572, 600);
             this.groupBoxApplicationLayerTesting.TabIndex = 7;
             this.groupBoxApplicationLayerTesting.TabStop = false;
             this.groupBoxApplicationLayerTesting.Text = "Test results for Application Layer Testing";
@@ -902,12 +848,11 @@
             this.columnUdpDownlinkPacketLoss,
             this.columnTimeStamp});
             this.dataGridViewTestResults.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridViewTestResults.Location = new System.Drawing.Point(2, 15);
-            this.dataGridViewTestResults.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewTestResults.Location = new System.Drawing.Point(3, 22);
             this.dataGridViewTestResults.Name = "dataGridViewTestResults";
             this.dataGridViewTestResults.ReadOnly = true;
             this.dataGridViewTestResults.RowTemplate.Height = 28;
-            this.dataGridViewTestResults.Size = new System.Drawing.Size(1041, 341);
+            this.dataGridViewTestResults.Size = new System.Drawing.Size(1566, 525);
             this.dataGridViewTestResults.TabIndex = 0;
             // 
             // columnPointNo
@@ -1021,10 +966,9 @@
             // btnSaveTestResults
             // 
             this.btnSaveTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveTestResults.Location = new System.Drawing.Point(859, 359);
-            this.btnSaveTestResults.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSaveTestResults.Location = new System.Drawing.Point(1292, 552);
             this.btnSaveTestResults.Name = "btnSaveTestResults";
-            this.btnSaveTestResults.Size = new System.Drawing.Size(182, 26);
+            this.btnSaveTestResults.Size = new System.Drawing.Size(273, 40);
             this.btnSaveTestResults.TabIndex = 1;
             this.btnSaveTestResults.Text = "Save application layer test results";
             this.btnSaveTestResults.UseVisualStyleBackColor = true;
@@ -1033,10 +977,9 @@
             // btnClearTestResults
             // 
             this.btnClearTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearTestResults.Location = new System.Drawing.Point(772, 359);
-            this.btnClearTestResults.Margin = new System.Windows.Forms.Padding(2);
+            this.btnClearTestResults.Location = new System.Drawing.Point(1162, 552);
             this.btnClearTestResults.Name = "btnClearTestResults";
-            this.btnClearTestResults.Size = new System.Drawing.Size(63, 26);
+            this.btnClearTestResults.Size = new System.Drawing.Size(94, 40);
             this.btnClearTestResults.TabIndex = 2;
             this.btnClearTestResults.Text = "Clear";
             this.btnClearTestResults.UseVisualStyleBackColor = true;
@@ -1045,19 +988,17 @@
             // labelFilePathToSave
             // 
             this.labelFilePathToSave.AutoSize = true;
-            this.labelFilePathToSave.Location = new System.Drawing.Point(782, 372);
-            this.labelFilePathToSave.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelFilePathToSave.Location = new System.Drawing.Point(1173, 572);
             this.labelFilePathToSave.Name = "labelFilePathToSave";
-            this.labelFilePathToSave.Size = new System.Drawing.Size(0, 13);
+            this.labelFilePathToSave.Size = new System.Drawing.Size(0, 20);
             this.labelFilePathToSave.TabIndex = 3;
             // 
             // progressBarTesting
             // 
             this.progressBarTesting.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBarTesting.Location = new System.Drawing.Point(266, 840);
-            this.progressBarTesting.Margin = new System.Windows.Forms.Padding(2);
+            this.progressBarTesting.Location = new System.Drawing.Point(398, 1292);
             this.progressBarTesting.Name = "progressBarTesting";
-            this.progressBarTesting.Size = new System.Drawing.Size(1053, 17);
+            this.progressBarTesting.Size = new System.Drawing.Size(1580, 26);
             this.progressBarTesting.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBarTesting.TabIndex = 6;
             // 
@@ -1068,31 +1009,30 @@
             this.removeCurrentTestPointToolStripMenuItem,
             this.modifySettingsToolStripMenuItem});
             this.contextMenuStripModify.Name = "contextMenuStripModify";
-            this.contextMenuStripModify.Size = new System.Drawing.Size(212, 48);
+            this.contextMenuStripModify.Size = new System.Drawing.Size(290, 64);
             // 
             // removeCurrentTestPointToolStripMenuItem
             // 
             this.removeCurrentTestPointToolStripMenuItem.Name = "removeCurrentTestPointToolStripMenuItem";
-            this.removeCurrentTestPointToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.removeCurrentTestPointToolStripMenuItem.Size = new System.Drawing.Size(289, 30);
             this.removeCurrentTestPointToolStripMenuItem.Text = "Remove current test point";
             // 
             // modifySettingsToolStripMenuItem
             // 
             this.modifySettingsToolStripMenuItem.Name = "modifySettingsToolStripMenuItem";
-            this.modifySettingsToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.modifySettingsToolStripMenuItem.Size = new System.Drawing.Size(289, 30);
             this.modifySettingsToolStripMenuItem.Text = "Modify settings";
             this.modifySettingsToolStripMenuItem.Click += new System.EventHandler(this.modifySettingsToolStripMenuItem_Click);
             // 
             // GMVehicleAntennaTesting
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1319, 857);
+            this.ClientSize = new System.Drawing.Size(1978, 1318);
             this.Controls.Add(this.progressBarTesting);
             this.Controls.Add(this.tabControlTesting);
             this.Controls.Add(this.groupBoxTestPointsSetting);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "GMVehicleAntennaTesting";
             this.Text = "GM vehicle Wi-Fi antenna testing";
