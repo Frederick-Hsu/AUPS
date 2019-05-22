@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using AUPS.Tools;
+using AUPS.Tools.Postgresql_Database_Tool;
 
 namespace Amphenol.AUPS
 {
@@ -80,6 +81,24 @@ namespace Amphenol.AUPS
             {
                 GMVehicleAntennaTesting vehicleAntenna = new GMVehicleAntennaTesting(this);
                 vehicleAntenna.Show();
+            }
+        }
+
+        private void postgresqlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool openedFlag = false;
+            foreach (Form frm in this.MdiChildren)
+            {
+                if (frm.GetType().ToString() == "AUPS.Tools.Postgresql_Database_Tool.PostgresqlDatabaseToolPanel")
+                {
+                    openedFlag = true;
+                    return;
+                }
+            }
+            if (openedFlag == false)
+            {
+                PostgresqlDatabaseToolPanel pgDbToolPanel = new PostgresqlDatabaseToolPanel(this);
+                pgDbToolPanel.Show();
             }
         }
         #endregion

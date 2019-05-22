@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AUPS</RootNamespace>
     <AssemblyName>AUPS</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -28,6 +28,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,6 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>1D00C932ADE95ECF5B0F929D935F734FFD4E214D</ManifestCertificateThumbprint>
@@ -141,6 +144,12 @@
     <Compile Include="Tools\GMVehicleAntennaTesting.Designer.cs">
       <DependentUpon>GMVehicleAntennaTesting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Postgresql_Database_Tool\PostgresqlDatabaseToolPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\Postgresql_Database_Tool\PostgresqlDatabaseToolPanel.Designer.cs">
+      <DependentUpon>PostgresqlDatabaseToolPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\TestItems.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +193,10 @@
     <ProjectReference Include="..\Amphenol.Instruments\Amphenol.Instruments.csproj">
       <Project>{3589c3eb-f46a-42e6-b7de-9c4471302719}</Project>
       <Name>Amphenol.Instruments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Amphenol.PostgreSQL_Database.Library\Amphenol.PostgreSQL_Database.Library.csproj">
+      <Project>{1d468d57-2220-4517-9384-1ac67119a48b}</Project>
+      <Name>Amphenol.PostgreSQL_Database.Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\Amphenol.Project.X577\Amphenol.Project.X577.csproj">
       <Project>{ead45f69-6789-4ff5-a44e-6db3e69b96a6}</Project>

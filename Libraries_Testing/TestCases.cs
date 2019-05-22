@@ -10,7 +10,8 @@ namespace Libraries_Testing
         public static void TestCase_PerformingLimitTest()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
             error = analyzer.ClearAllErrorQueue();
@@ -40,6 +41,9 @@ namespace Libraries_Testing
             error = analyzer.TurnOnOffContinuousInitiationModeForChannel(2, "ON");
             error = analyzer.AutoScaleTraceDisplay(1, 1);
             error = analyzer.AutoScaleTraceDisplay(2, 1);
+
+            error = analyzer.SelectTriggerSource("BUS");
+            error = analyzer.SingleTriggerMeasurement();
 
             List<double> frequencies1, primaryAmplitudes1, secondaryAmplitudes1;
             error = analyzer.ReadOutFormattedDataArray(1, 1, out primaryAmplitudes1, out secondaryAmplitudes1);
@@ -94,15 +98,15 @@ namespace Libraries_Testing
                 segment.type = 1;
                 segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
                 segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] + 1.50);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] + 1.50);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] + 1.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] + 1.00);
                 limitLines.Add(segment);
                 /* channel 1: lower limit line */
                 segment.type = 2;
                 segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
                 segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] - 1.50);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] - 1.50);
+                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] - 1.00);
+                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] - 1.00);
                 limitLines.Add(segment);
             }
             error = analyzer.SetLimitTable(1, (uint)limitLines.Count, limitLines);
@@ -182,18 +186,19 @@ namespace Libraries_Testing
             /* Save channel 1 limit table */
             error = analyzer.ActivateChannelAt(1);
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\Test\\CH1_Limit_Table.csv");
+            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\CH1_Limit_Table.csv");
 
             error = analyzer.ActivateChannelAt(2);
             error = analyzer.ActivateTraceAt(2, 1);
-            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\Test\\CH2_Limit_Table.csv");
+            error = analyzer.StoreLimitLineSegmentsIntoCsvFile("D:\\CH2_Limit_Table.csv");
             error = analyzer.Close();
         }
 
         public static void TestCases_ConfigureTraces()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
             error = analyzer.ClearAllErrorQueue();
@@ -237,7 +242,8 @@ namespace Libraries_Testing
         public static void TestCases_LoadLimitTable()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
             error = analyzer.ClearAllErrorQueue();
@@ -271,17 +277,20 @@ namespace Libraries_Testing
             /* Load limit table */
             error = analyzer.ActivateChannelAt(1);
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\Test\\CH1_Limit_Table.csv");
+            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\CH1_Limit_Table.csv");
             error = analyzer.TurnOnOffLimitLineDisplay(1, "ON");
             error = analyzer.TurnOnOffLimitTestFunction(1, "ON");
             error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
 
             error = analyzer.ActivateChannelAt(2);
             error = analyzer.ActivateTraceAt(2, 1);
-            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\Test\\CH2_Limit_Table.csv");
+            error = analyzer.ConfigureLimitLineSegmentsCsvFile("D:\\CH2_Limit_Table.csv");
             error = analyzer.TurnOnOffLimitLineDisplay(2, "ON");
             error = analyzer.TurnOnOffLimitTestFunction(2, "ON");
             error = analyzer.TurnOnOffFailIndicatorOnScreen("ON");
+
+            error = analyzer.SelectTriggerSource("BUS");
+            error = analyzer.SingleTriggerMeasurement();
 
             /* Retrieve the limit test result */
             int ch1FailedPoints, ch2FailedPoints;
@@ -309,7 +318,8 @@ namespace Libraries_Testing
         public static void TestCases_MarkerSearch()
         {
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
             error = analyzer.ClearAllErrorQueue();
@@ -419,14 +429,15 @@ namespace Libraries_Testing
             Console.WriteLine("The size of float is : " + sizeof(float) + " bytes.");
             NetworkAnalyzer_E5071C analyzer = new NetworkAnalyzer_E5071C();
             // int error = analyzer.Open("TCPIP0::192.168.30.66::inst0::INSTR");
-            int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            // int error = analyzer.Open("TCPIP0::192.168.30.64::inst0::INSTR");
+            int error = analyzer.Open("USB0::0x0957::0x0D09::MY46632182::0::INSTR");
             string idn;
             error = analyzer.GetInstrumentIdentifier(out idn);
-            // error = analyzer.Preset();
+            error = analyzer.Preset();
             error = analyzer.ClearAllErrorQueue();
             error = analyzer.SetSweepMeasurementPoints(1, 500);
-            error = analyzer.SetSweepStartFreqValueForChannel(1, "2E9");
-            error = analyzer.SetSweepStopFreqValueForChannel(1, "6.5E9");
+            error = analyzer.SetSweepStartFreqValueForChannel(1, "4.5E9");
+            error = analyzer.SetSweepStopFreqValueForChannel(1, "5E9");
 
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOGarithmic");
             double[] real, imag;

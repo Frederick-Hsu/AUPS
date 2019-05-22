@@ -12,11 +12,11 @@ namespace Libraries_Testing
         {
             // TestCases.TestCases_MarkerSearch();
 
-            // TestCases.TestCases_RetrieveFormattedFullTraceData();
+            TestCases.TestCases_RetrieveFormattedFullTraceData();
 
-            TestCases.TestCases_ConfigureTraces();
-            TestCases.TestCase_PerformingLimitTest();
-            TestCases.TestCases_LoadLimitTable();
+            // TestCases.TestCases_ConfigureTraces();
+            // TestCases.TestCase_PerformingLimitTest();
+            // TestCases.TestCases_LoadLimitTable();
         }
     }
 }

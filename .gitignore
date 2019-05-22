@@ -51,6 +51,9 @@ UserChangeControlLocationSizeInRunTime/
 # RsScopeMeasuring/
 RS_Scope/
 Application Files/
+ConnectManipulateDB/
+PostgreSQL_Database/
+TestForm/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
