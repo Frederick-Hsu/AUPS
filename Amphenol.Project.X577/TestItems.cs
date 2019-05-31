@@ -240,6 +240,69 @@ namespace Amphenol.Project.X577
             return functionsList;
         }
 
+        public static Dictionary<string, List<string>> GatherTestFunctionsInfo()
+        {
+            Dictionary<string, List<string>> testFnctInfo = new Dictionary<string, List<string>>();
+            /* How to add the hints for each test function and its parameters? 
+             * 
+             * Dictionary<string,               // the key (string type) represents the test function name
+             *            List<string>          // the value (List<string> type) represents hints for test function and 
+             *                                  // parameter1, parameter2 ... according one-by-one.
+             *           >
+             */
+
+            // List<string> hints = new List<string>(IEnumerable<string> collection);
+            testFnctInfo.Add("InitializeNetworkAnalyzer", new List<string>(new string[] 
+            {
+                "Initialize the Keysight network analyzer E5071C \nover the connection between instrument and host computer",
+                "VISA address string of instrument, \nplease retrieve the string on the application \"Keysight Connection Expert\". " +
+                "You'd better select the string with \"::INSTR\" suffix.",
+            }));
+            testFnctInfo.Add("CloseNetworkAnalyzer", new List<string>(new string[]
+            {
+                "Close the connection with network analyzer instrument"
+            }));
+            testFnctInfo.Add("PresetNetworkAnalyzer", new List<string>(new string[]
+            {
+                "Preset the Keysight network analyzer E5071C"
+            }));
+            testFnctInfo.Add("SetNetAnalyzerWindowLayout", new List<string>(new string[] 
+            {
+                "Set the window display layout for network analyzer",
+                "the code name of window display layout, such as D1, D1_2, D12, D12_34, ... etc."
+            }));
+            testFnctInfo.Add("SetNetAnalyzerGraphLayout", new List<string>(new string[] 
+            {
+                "Configure the trace display mode for network analyzer",
+                "How many windows do you want to display?",
+                "Trace display layout, such as D1, D12, D1_2, D123, D12_34, ..., etc."
+            }));
+            testFnctInfo.Add("ConfigureTraceCount", new List<string>(new string[]
+            {
+                "Configure how many traces do you want to display in which window.",
+                "The window number you want to select",
+                "How many traces do you want to display in this window?"
+            }));
+            testFnctInfo.Add("GetTraceCount", new List<string>(new string[] 
+            {
+                "Retrieve the trace count from the window you specified",
+                "The window number you specified, e.g. 1, 2, ... "
+            }));
+            testFnctInfo.Add("SelectActiveChannel", new List<string>(new string[] 
+            {
+                "Select which channel/window you want to activate",
+                "The no. of active channel/window"
+            }));
+            testFnctInfo.Add("SelectActiveTrace", new List<string>(new string[] 
+            {
+                "Select which trace you want to activate in which channel/window",
+                "The no. of channel/window you specified",
+                "The no. of active trace, such as 1, 2, 3, ..."
+            }));
+
+            return testFnctInfo;
+        }
+
         private static void DummyStep()
         {
         }

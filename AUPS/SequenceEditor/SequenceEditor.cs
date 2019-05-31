@@ -26,12 +26,13 @@ namespace Amphenol.AUPS
             MdiParent = parent;
 
             this.KeyPreview = true;     /* Allow to accept the shortcut key pressing event. */
-            Initial(TestItems.GatherTestFunctionsList());
+            // Initial(TestItems.GatherTestFunctionsList());
+            Initial(TestItems.GatherTestFunctionsInfo().Keys.ToList<string>());
         }
 
         private void Initial(List<string> testFunctionNameList)
         {
-            /* Clean up the olde items */
+            /* Clean up the old items */
             comboBoxTestFunctionName.Items.Clear();
 
             foreach (string item in testFunctionNameList)
@@ -175,6 +176,14 @@ namespace Amphenol.AUPS
                 TreeNode blockTreeNode = treeViewSequence.SelectedNode.Parent;
                 blockTreeNode.Text = enteredBlockNameText;
             }
+        }
+
+        private void comboBoxTestFunctionName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox current = sender as ComboBox;
+            string key = current.Text;
+            List<string> hints = TestItems.GatherTestFunctionsInfo()[key];
+            AssignHintsOntoCtrlsAsToolTip(hints);
         }
     }
 }

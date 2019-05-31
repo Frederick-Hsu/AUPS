@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 
 using Amphenol.SequenceLib;
+using Amphenol.Project.X577;
 
 namespace Amphenol.AUPS
 {
@@ -87,11 +88,81 @@ namespace Amphenol.AUPS
                 textBoxStepDescription.Text = stepNode.StepDescription;
 
             if (stepNode.StepFunctionName != null)
+            {
                 comboBoxTestFunctionName.Text = stepNode.StepFunctionName;
+                /* Assign the hints onto comboBoxTestFunctionName and textBoxParameter1...6 respectively 
+                 * as their ToolTip, when the mouse hovers on those controls.
+                 */
+                try
+                {
+                    List<string> hints = TestItems.GatherTestFunctionsInfo()[stepNode.StepFunctionName];
+                    AssignHintsOntoCtrlsAsToolTip(hints);
+                }
+                catch (KeyNotFoundException exception)
+                {
+                    // throw new KeyNotFoundException(exception.ToString());
+                    MessageBox.Show(exception.Message, "Exception", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                }
+            }
             if (stepNode.ParamList != null)
                 AssignParameterList(stepNode.ParamList);
             if ((stepNode.LimitType != null) && (stepNode.LimitList != null))
                 AssignSpecification(stepNode.LimitType, stepNode.LimitList);
+        }
+
+        private void AssignHintsOntoCtrlsAsToolTip(List<string> hints)
+        {
+            int count = hints.Count;
+            toolTipHints.RemoveAll();
+            switch (count)
+            {
+                case 0:
+                    return;
+                case 1:
+                    toolTipHints.SetToolTip(comboBoxTestFunctionName, hints[0]);
+                    break;
+                case 2:
+                    toolTipHints.SetToolTip(comboBoxTestFunctionName, hints[0]);
+                    toolTipHints.SetToolTip(textBoxParameter1, hints[1]);
+                    break;
+                case 3:
+                    toolTipHints.SetToolTip(comboBoxTestFunctionName, hints[0]);
+                    toolTipHints.SetToolTip(textBoxParameter1, hints[1]);
+                    toolTipHints.SetToolTip(textBoxParameter2, hints[2]);
+                    break;
+                case 4:
+                    toolTipHints.SetToolTip(comboBoxTestFunctionName, hints[0]);
+                    toolTipHints.SetToolTip(textBoxParameter1, hints[1]);
+                    toolTipHints.SetToolTip(textBoxParameter2, hints[2]);
+                    toolTipHints.SetToolTip(textBoxParameter3, hints[3]);
+                    break;
+                case 5:
+                    toolTipHints.SetToolTip(comboBoxTestFunctionName, hints[0]);
+                    toolTipHints.SetToolTip(textBoxParameter1, hints[1]);
+                    toolTipHints.SetToolTip(textBoxParameter2, hints[2]);
+                    toolTipHints.SetToolTip(textBoxParameter3, hints[3]);
+                    toolTipHints.SetToolTip(textBoxParameter4, hints[4]);
+                    break;
+                case 6:
+                    toolTipHints.SetToolTip(comboBoxTestFunctionName, hints[0]);
+                    toolTipHints.SetToolTip(textBoxParameter1, hints[1]);
+                    toolTipHints.SetToolTip(textBoxParameter2, hints[2]);
+                    toolTipHints.SetToolTip(textBoxParameter3, hints[3]);
+                    toolTipHints.SetToolTip(textBoxParameter4, hints[4]);
+                    toolTipHints.SetToolTip(textBoxParameter5, hints[5]);
+                    break;
+                case 7:
+                    toolTipHints.SetToolTip(comboBoxTestFunctionName, hints[0]);
+                    toolTipHints.SetToolTip(textBoxParameter1, hints[1]);
+                    toolTipHints.SetToolTip(textBoxParameter2, hints[2]);
+                    toolTipHints.SetToolTip(textBoxParameter3, hints[3]);
+                    toolTipHints.SetToolTip(textBoxParameter4, hints[4]);
+                    toolTipHints.SetToolTip(textBoxParameter5, hints[5]);
+                    toolTipHints.SetToolTip(textBoxParameter6, hints[6]);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void AssignParameterList(ParameterList paramList)
