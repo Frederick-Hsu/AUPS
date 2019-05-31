@@ -96,6 +96,7 @@
             this.labelStepDescription = new System.Windows.Forms.Label();
             this.labelStepName = new System.Windows.Forms.Label();
             this.labelStepNo = new System.Windows.Forms.Label();
+            this.toolTipHints = new System.Windows.Forms.ToolTip(this.components);
             this.sequenceEditorToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitContainer)).BeginInit();
             this.editorSplitContainer.Panel1.SuspendLayout();
@@ -606,6 +607,7 @@
             this.comboBoxTestFunctionName.Name = "comboBoxTestFunctionName";
             this.comboBoxTestFunctionName.Size = new System.Drawing.Size(1162, 28);
             this.comboBoxTestFunctionName.TabIndex = 1;
+            this.comboBoxTestFunctionName.SelectedIndexChanged += new System.EventHandler(this.comboBoxTestFunctionName_SelectedIndexChanged);
             // 
             // labelTestFunctionName
             // 
@@ -793,5 +795,6 @@
         private System.Windows.Forms.TextBox textBoxBlockName;
         private System.Windows.Forms.ToolStripMenuItem addNewBlockBeforeBlockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewStepBeforeToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTipHints;
     }
 }
