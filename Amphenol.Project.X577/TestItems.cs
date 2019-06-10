@@ -388,6 +388,62 @@ namespace Amphenol.Project.X577
                 "Channel number,  from 1 to 16",
                 "Number of measurement points, from 2 to 1601, 201 by default"
             }));
+            testFnctInfo.Add("SetIFBandwidth", new List<string>(new string[] 
+            {
+                "Set the IF bandwidth for the nth channel",
+                "Channel number from 1 to 16",
+                "IF bandwidth, range : 10 to 1e5, unit : Hertz"
+            }));
+            testFnctInfo.Add("SetPowerLevel", new List<string>(new string[] 
+            {
+                "Set the power level for the nth channel",
+                "Channel number, from 1 to 16",
+                "Power level value in dBm"
+            }));
+            testFnctInfo.Add("SaveInstrumentState", new List<string>(new string[] 
+            {
+                "Save the instrument state into a file",
+                "File name (.sta) in which you want to save the instrument state"
+            }));
+            testFnctInfo.Add("SelectNetworkAnalyzerCalibrationKit", new List<string>(new string[] 
+            {
+                "Select the calibration kit type for the channel you specified",
+                "Channel number from 1 to 16",
+                "Calibration kit type, please find the calibration kit type name on the instrument screen."
+            }));
+            testFnctInfo.Add("QueryNetworkAnalyzerCalibrationKitNumber", new List<string>(new string[] 
+            {
+                "Query the calibration kit type number for the nth channel",
+                "Channel number, from 1 to 16",
+            }));
+            testFnctInfo.Add("PerformOpenCalibration", new List<string>(new string[] 
+            {
+                "Perform the OPEN calibration on the port you specified",
+                "Channel number from 1 to 16",
+                "Port number from 1 to 4"
+            }));
+            testFnctInfo.Add("SaveCalibrationCoefficientsAndTakeEffect", new List<string>(new string[] 
+            {
+                "After performed calibration, save calibration coefficients and take effect.",
+                "Channel number from 1 to 16",
+                "The data file name of calibration coefficients",
+                "Calibration coefficient type, such as : ES, ER, ED, EL, ET, EX",
+                "Response port number from 1 to 4",
+                "Stimulus port number from 1 to 4"
+            }));
+            testFnctInfo.Add("PerformECalFull4PortAutoCalibration", new List<string>(new string[] 
+            {
+                "Execute full 4-port auto calibration for the nth channel, using ECal kit module",
+                "Channel number from 1 to 16"
+            }));
+            testFnctInfo.Add("VerifyECalAppliedCalibration", new List<string>(new string[] 
+            {
+                "Read out the information (calibration type, port number) of the applied \n" +
+                "calibration coefficients for the actual error correction, for the nth trace \n" +
+                "of nth channel.",
+                "Channel number from 1 to 16",
+                "Trace number from 1 to 16"
+            }));
 
             return testFnctInfo;
         }
