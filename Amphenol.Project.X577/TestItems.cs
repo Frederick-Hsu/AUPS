@@ -252,6 +252,7 @@ namespace Amphenol.Project.X577
              */
 
             // List<string> hints = new List<string>(IEnumerable<string> collection);
+            testFnctInfo.Add("", new List<string>());
             testFnctInfo.Add("InitializeNetworkAnalyzer", new List<string>(new string[] 
             {
                 "Initialize the Keysight network analyzer E5071C \nover the connection between instrument and host computer",
