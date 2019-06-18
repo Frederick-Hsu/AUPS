@@ -90,6 +90,9 @@
             this.comboBoxTestFunctionName = new System.Windows.Forms.ComboBox();
             this.labelTestFunctionName = new System.Windows.Forms.Label();
             this.groupBoxBasicTestStepInfo = new System.Windows.Forms.GroupBox();
+            this.textBoxStepField = new System.Windows.Forms.TextBox();
+            this.checkBoxStepFieldEnabled = new System.Windows.Forms.CheckBox();
+            this.labelStepField = new System.Windows.Forms.Label();
             this.textBoxStepDescription = new System.Windows.Forms.TextBox();
             this.textBoxStepName = new System.Windows.Forms.TextBox();
             this.textBoxStepNo = new System.Windows.Forms.TextBox();
@@ -406,6 +409,8 @@
             // 
             // groupBoxBlockInfo
             // 
+            this.groupBoxBlockInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxBlockInfo.Controls.Add(this.textBoxBlockName);
             this.groupBoxBlockInfo.Controls.Add(this.labelBlockName);
             this.groupBoxBlockInfo.Controls.Add(this.textBoxBlockNum);
@@ -418,6 +423,8 @@
             // 
             // textBoxBlockName
             // 
+            this.textBoxBlockName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxBlockName.Location = new System.Drawing.Point(548, 28);
             this.textBoxBlockName.Name = "textBoxBlockName";
             this.textBoxBlockName.Size = new System.Drawing.Size(774, 26);
@@ -460,7 +467,7 @@
             this.groupBoxSpecification.Controls.Add(this.dataGridViewTestSpec);
             this.groupBoxSpecification.Controls.Add(this.comboBoxLimitType);
             this.groupBoxSpecification.Controls.Add(this.labelLimitType);
-            this.groupBoxSpecification.Location = new System.Drawing.Point(10, 500);
+            this.groupBoxSpecification.Location = new System.Drawing.Point(10, 545);
             this.groupBoxSpecification.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxSpecification.Name = "groupBoxSpecification";
             this.groupBoxSpecification.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -471,6 +478,8 @@
             // 
             // dataGridViewTestSpec
             // 
+            this.dataGridViewTestSpec.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewTestSpec.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTestSpec.Location = new System.Drawing.Point(8, 55);
             this.dataGridViewTestSpec.Name = "dataGridViewTestSpec";
@@ -480,6 +489,8 @@
             // 
             // comboBoxLimitType
             // 
+            this.comboBoxLimitType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxLimitType.FormattingEnabled = true;
             this.comboBoxLimitType.Items.AddRange(new object[] {
             "Numerical",
@@ -514,7 +525,7 @@
             this.groupBoxTestFunctionParams.Controls.Add(this.labelParameters);
             this.groupBoxTestFunctionParams.Controls.Add(this.comboBoxTestFunctionName);
             this.groupBoxTestFunctionParams.Controls.Add(this.labelTestFunctionName);
-            this.groupBoxTestFunctionParams.Location = new System.Drawing.Point(9, 283);
+            this.groupBoxTestFunctionParams.Location = new System.Drawing.Point(10, 328);
             this.groupBoxTestFunctionParams.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxTestFunctionParams.Name = "groupBoxTestFunctionParams";
             this.groupBoxTestFunctionParams.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -605,7 +616,7 @@
             this.comboBoxTestFunctionName.Location = new System.Drawing.Point(170, 38);
             this.comboBoxTestFunctionName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxTestFunctionName.Name = "comboBoxTestFunctionName";
-            this.comboBoxTestFunctionName.Size = new System.Drawing.Size(1162, 28);
+            this.comboBoxTestFunctionName.Size = new System.Drawing.Size(1170, 28);
             this.comboBoxTestFunctionName.TabIndex = 1;
             this.comboBoxTestFunctionName.SelectedIndexChanged += new System.EventHandler(this.comboBoxTestFunctionName_SelectedIndexChanged);
             // 
@@ -623,19 +634,53 @@
             // 
             this.groupBoxBasicTestStepInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxBasicTestStepInfo.Controls.Add(this.textBoxStepField);
+            this.groupBoxBasicTestStepInfo.Controls.Add(this.checkBoxStepFieldEnabled);
+            this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepField);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.textBoxStepDescription);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.textBoxStepName);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.textBoxStepNo);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepDescription);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepName);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepNo);
-            this.groupBoxBasicTestStepInfo.Location = new System.Drawing.Point(9, 88);
+            this.groupBoxBasicTestStepInfo.Location = new System.Drawing.Point(10, 88);
             this.groupBoxBasicTestStepInfo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxBasicTestStepInfo.Name = "groupBoxBasicTestStepInfo";
             this.groupBoxBasicTestStepInfo.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxBasicTestStepInfo.Size = new System.Drawing.Size(852, 186);
+            this.groupBoxBasicTestStepInfo.Size = new System.Drawing.Size(852, 225);
             this.groupBoxBasicTestStepInfo.TabIndex = 0;
             this.groupBoxBasicTestStepInfo.TabStop = false;
+            // 
+            // textBoxStepField
+            // 
+            this.textBoxStepField.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxStepField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxStepField.Enabled = false;
+            this.textBoxStepField.Location = new System.Drawing.Point(274, 181);
+            this.textBoxStepField.Name = "textBoxStepField";
+            this.textBoxStepField.Size = new System.Drawing.Size(562, 26);
+            this.textBoxStepField.TabIndex = 8;
+            // 
+            // checkBoxStepFieldEnabled
+            // 
+            this.checkBoxStepFieldEnabled.AutoSize = true;
+            this.checkBoxStepFieldEnabled.Location = new System.Drawing.Point(170, 181);
+            this.checkBoxStepFieldEnabled.Name = "checkBoxStepFieldEnabled";
+            this.checkBoxStepFieldEnabled.Size = new System.Drawing.Size(97, 24);
+            this.checkBoxStepFieldEnabled.TabIndex = 7;
+            this.checkBoxStepFieldEnabled.Text = "Disabled";
+            this.checkBoxStepFieldEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxStepFieldEnabled.CheckedChanged += new System.EventHandler(this.checkBoxStepFieldEnabled_CheckedChanged);
+            // 
+            // labelStepField
+            // 
+            this.labelStepField.AutoSize = true;
+            this.labelStepField.Location = new System.Drawing.Point(24, 181);
+            this.labelStepField.Name = "labelStepField";
+            this.labelStepField.Size = new System.Drawing.Size(93, 20);
+            this.labelStepField.TabIndex = 6;
+            this.labelStepField.Text = "Step Field : ";
             // 
             // textBoxStepDescription
             // 
@@ -708,6 +753,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1784, 1002);
             this.Controls.Add(this.editorSplitContainer);
             this.Controls.Add(this.sequenceEditorToolStrip);
@@ -796,5 +842,8 @@
         private System.Windows.Forms.ToolStripMenuItem addNewBlockBeforeBlockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewStepBeforeToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTipHints;
+        private System.Windows.Forms.Label labelStepField;
+        private System.Windows.Forms.CheckBox checkBoxStepFieldEnabled;
+        private System.Windows.Forms.TextBox textBoxStepField;
     }
 }
