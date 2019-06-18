@@ -86,6 +86,9 @@ namespace Amphenol.AUPS
                 textBoxStepName.Text = stepNode.StepName;
             if (stepNode.StepDescription != null)
                 textBoxStepDescription.Text = stepNode.StepDescription;
+            checkBoxStepFieldEnabled.Checked = stepNode.StepFieldEnabled;
+            if (stepNode.StepFieldName != null)
+                textBoxStepField.Text = stepNode.StepFieldName;
 
             if (stepNode.StepFunctionName != null)
             {
@@ -242,9 +245,7 @@ namespace Amphenol.AUPS
                 dataGridViewTestSpec.Columns.Add("TypicalLimit", "Typical");
                 dataGridViewTestSpec.Columns.Add("UpperLimit", "Upper");
                 dataGridViewTestSpec.Columns.Add("Result", "Result");
-
                 dataGridViewTestSpec.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
                 dataGridViewTestSpec.Rows[0].Cells[0].Value = spec.Limits[0];
                 dataGridViewTestSpec.Rows[0].Cells[1].Value = spec.Limits[1];
                 dataGridViewTestSpec.Rows[0].Cells[2].Value = spec.Limits[2];
@@ -253,9 +254,7 @@ namespace Amphenol.AUPS
             {
                 dataGridViewTestSpec.Columns.Add("ExpectLimit", "Expect");
                 dataGridViewTestSpec.Columns.Add("Result", "Result");
-
                 dataGridViewTestSpec.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
                 dataGridViewTestSpec.Rows[0].Cells[0].Value = spec.Limits[0];
             }
         }
@@ -267,6 +266,8 @@ namespace Amphenol.AUPS
             textBoxStepDescription.Text = "";
 
             comboBoxTestFunctionName.Text = "";
+            checkBoxStepFieldEnabled.Checked = false;
+            textBoxStepField.Text = "";
 
             textBoxParameter1.Text = "";
             textBoxParameter2.Text = "";
@@ -399,6 +400,16 @@ namespace Amphenol.AUPS
             string stepName = textBoxStepName.Text;
             string stepDescription = textBoxStepDescription.Text;
             string stepFunctionName = comboBoxTestFunctionName.Text;
+            bool stepFieldEnabled = checkBoxStepFieldEnabled.Checked;
+            string stepFieldName;
+            if (stepFieldEnabled == true)
+            {
+                stepFieldName = textBoxStepField.Text;
+            }
+            else
+            {
+                stepFieldName = "";
+            }
 
             List<string> parameterList = new List<string>();
             string parameter1 = textBoxParameter1.Text;
@@ -445,7 +456,16 @@ namespace Amphenol.AUPS
 
             /*=============================================================================*/
             /* MUST modify current step node firstly */
-            currentStepNode.ModifyCurrentStep(stepNum, stepName, stepDescription, stepFunctionName, stepParameterList, stepLimitType, stepSpec);
+            // currentStepNode.ModifyCurrentStep(stepNum, stepName, stepDescription, stepFunctionName, stepParameterList, stepLimitType, stepSpec);
+            currentStepNode.ModifyCurrentStep(stepNum,
+                                              stepName,
+                                              stepDescription,
+                                              stepFieldEnabled,
+                                              stepFieldName,
+                                              stepFunctionName,
+                                              stepParameterList,
+                                              stepLimitType,
+                                              stepSpec);
             /* then modify its parent block node for current step node */
             currentBlockNode.ModifyStepAt(indexOfCurrentSelectedStepTreeNode, currentStepNode);
 
