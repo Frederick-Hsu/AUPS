@@ -170,7 +170,9 @@ namespace Amphenol.AUPS
                                         paramlist, 
                                         stepLimitType, 
                                         limits, 
-                                        seq.SeqXml);
+                                        seq.SeqXml,
+                                        false,
+                                        "");
                 currentBlockNode.AddNewStep(newStep);
                 seq.SaveSequenceToXml();
 
@@ -202,7 +204,9 @@ namespace Amphenol.AUPS
                                         paramlist,
                                         stepLimitType,
                                         limits,
-                                        seq.SeqXml);
+                                        seq.SeqXml,
+                                        false,
+                                        "");
                 blockNode.InsertNewStepAfter(currentStepTreeNodeIndex, newStep);
                 seq.SaveSequenceToXml();
 
@@ -225,6 +229,8 @@ namespace Amphenol.AUPS
             string stepName = textBoxStepName.Text;
             string stepDescription = textBoxStepDescription.Text;
             string stepFunctionName = comboBoxTestFunctionName.Text;
+            bool stepFieldEnabled = checkBoxStepFieldEnabled.Checked;
+            string stepField = textBoxStepField.Text;
 
             List<string> parameterList = new List<string>();
             string parameter1 = textBoxParameter1.Text;
@@ -295,7 +301,9 @@ namespace Amphenol.AUPS
                                         paramlist, 
                                         stepLimitType, 
                                         limits, 
-                                        seq.SeqXml);
+                                        seq.SeqXml,
+                                        stepFieldEnabled,
+                                        stepField);
                 blockNode.InsertNewStepBefore(index, newStep);
                 seq.SaveSequenceToXml();
 
