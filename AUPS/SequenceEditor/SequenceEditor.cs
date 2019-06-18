@@ -185,5 +185,19 @@ namespace Amphenol.AUPS
             List<string> hints = TestItems.GatherTestFunctionsInfo()[key];
             AssignHintsOntoCtrlsAsToolTip(hints);
         }
+
+        private void checkBoxStepFieldEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxStepFieldEnabled.Checked == true)
+            {
+                checkBoxStepFieldEnabled.Text = "Enabled";
+                textBoxStepField.Enabled = true;
+            }
+            else
+            {
+                checkBoxStepFieldEnabled.Text = "Disabled";
+                textBoxStepField.Enabled = false;
+            }
+        }
     }
 }
