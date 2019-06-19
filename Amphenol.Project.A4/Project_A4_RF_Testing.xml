@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sequence>
+  <block>
+    <blocknum>B1</blocknum>
+    <blockname>Initalize and configure the network analyzer Keysight E5071C</blockname>
+    <step>
+      <stepnum>1.1</stepnum>
+      <stepname>Initialize Keysight network analyzer E5071C, and open the connection.</stepname>
+      <stepdescription>Intialize Keysight E5071C, and open the connection over Ethernet cable. </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>InitializeNetworkAnalyzerE5071C</functionname>
+      <parameterlist>
+        <parameter>TCPIP0::192.168.30.105::inst0::INSTR</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>Agilent Technologies,E5071C,MY46629634,B.13.30</limit>
+      </spec>
+    </step>
+  </block>
+</sequence>
