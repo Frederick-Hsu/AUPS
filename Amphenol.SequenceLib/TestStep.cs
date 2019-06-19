@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Amphenol.Project.X577;
+// using Amphenol.Project.X577;
+using Amphenol.Project.A4;
 
 namespace Amphenol.SequenceLib
 {
