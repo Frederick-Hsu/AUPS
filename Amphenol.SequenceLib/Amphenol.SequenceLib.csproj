@@ -59,9 +59,9 @@
     <Compile Include="TestStep.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Amphenol.Project.X577\Amphenol.Project.X577.csproj">
-      <Project>{ead45f69-6789-4ff5-a44e-6db3e69b96a6}</Project>
-      <Name>Amphenol.Project.X577</Name>
+    <ProjectReference Include="..\Amphenol.Project.A4\Amphenol.Project.A4.csproj">
+      <Project>{251f6ad2-5656-4307-836e-80026c66eedb}</Project>
+      <Name>Amphenol.Project.A4</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
