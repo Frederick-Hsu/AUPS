@@ -25,11 +25,11 @@ namespace Libraries_Testing
             error = analyzer.ConfigTraceNumInChannel(2, 1);
 
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.SelectMeasurementParameterFor(1, 1, "S22");
+            error = analyzer.SelectMeasurementSParameterFor(1, 1, "S22");
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
             
             error = analyzer.ActivateTraceAt(2, 1);
-            error = analyzer.SelectMeasurementParameterFor(2, 1, "S22");
+            error = analyzer.SelectMeasurementSParameterFor(2, 1, "S22");
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(2, 1, "MLOG");
 
             error = analyzer.SetSweepStartFreqValueForChannel(1, "4.8e9");
@@ -212,10 +212,10 @@ namespace Libraries_Testing
             error = analyzer.ConfigTraceNumInChannel(1, 1);
             error = analyzer.ConfigTraceNumInChannel(2, 1);
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.SelectMeasurementParameterFor(1, 1, "S22");
+            error = analyzer.SelectMeasurementSParameterFor(1, 1, "S22");
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.SelectMeasurementParameterFor(1, 1, "S22");
+            error = analyzer.SelectMeasurementSParameterFor(1, 1, "S22");
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
             error = analyzer.SetSweepStartFreqValueForChannel(1, "4.8e9");
             error = analyzer.SetSweepStopFreqValueForChannel(1, "6.8e9");
@@ -257,11 +257,11 @@ namespace Libraries_Testing
             error = analyzer.ConfigTraceNumInChannel(2, 1);
 
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.SelectMeasurementParameterFor(1, 1, "S22");
+            error = analyzer.SelectMeasurementSParameterFor(1, 1, "S22");
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
 
             error = analyzer.ActivateTraceAt(2, 1);
-            error = analyzer.SelectMeasurementParameterFor(2, 1, "S22");
+            error = analyzer.SelectMeasurementSParameterFor(2, 1, "S22");
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(2, 1, "MLOG");
 
             error = analyzer.SetSweepStartFreqValueForChannel(1, "4.8e9");
@@ -330,7 +330,7 @@ namespace Libraries_Testing
             error = analyzer.SelectTraceDisplayMode(1, "D1");
             error = analyzer.ConfigTraceNumInChannel(1, 1);
             error = analyzer.ActivateTraceAt(1, 1);
-            error = analyzer.SelectMeasurementParameterFor(1, 1, "S11");
+            error = analyzer.SelectMeasurementSParameterFor(1, 1, "S11");
             error = analyzer.SelectDataFormatForActiveTraceOfChannel(1, 1, "MLOG");
             error = analyzer.AutoScaleTraceDisplay(1, 1);
             error = analyzer.SetSweepMeasurementPoints(1, 500);
