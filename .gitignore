@@ -9,6 +9,7 @@
 *.stackdump
 *.pdf
 *.xml
+*.doc
 *.chw
 *.zip
 *.ico
