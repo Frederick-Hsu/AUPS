@@ -30,18 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SequenceEditor));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Open COM port");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Communicate with DMM");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Configure network");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Initialization", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Measure VDD");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Measure Vref");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Voltage measurement", new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Open COM port");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Communicate with DMM");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Configure network");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Initialization", new System.Windows.Forms.TreeNode[] {
+            treeNode8,
+            treeNode9,
+            treeNode10});
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Measure VDD");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Measure Vref");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Voltage measurement", new System.Windows.Forms.TreeNode[] {
+            treeNode12,
+            treeNode13});
             this.sequenceEditorToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripBtnNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnOpen = new System.Windows.Forms.ToolStripButton();
@@ -261,24 +261,24 @@
             this.treeViewSequence.Location = new System.Drawing.Point(0, 20);
             this.treeViewSequence.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeViewSequence.Name = "treeViewSequence";
-            treeNode1.Name = "Block1_Item1";
-            treeNode1.Text = "Open COM port";
-            treeNode2.Name = "Block1_Item2";
-            treeNode2.Text = "Communicate with DMM";
-            treeNode3.Name = "Block1_Item3";
-            treeNode3.Text = "Configure network";
-            treeNode4.Checked = true;
-            treeNode4.Name = "Block1";
-            treeNode4.Text = "Initialization";
-            treeNode5.Name = "Block2_Item1";
-            treeNode5.Text = "Measure VDD";
-            treeNode6.Name = "Block2_Item2";
-            treeNode6.Text = "Measure Vref";
-            treeNode7.Name = "Block2";
-            treeNode7.Text = "Voltage measurement";
+            treeNode8.Name = "Block1_Item1";
+            treeNode8.Text = "Open COM port";
+            treeNode9.Name = "Block1_Item2";
+            treeNode9.Text = "Communicate with DMM";
+            treeNode10.Name = "Block1_Item3";
+            treeNode10.Text = "Configure network";
+            treeNode11.Checked = true;
+            treeNode11.Name = "Block1";
+            treeNode11.Text = "Initialization";
+            treeNode12.Name = "Block2_Item1";
+            treeNode12.Text = "Measure VDD";
+            treeNode13.Name = "Block2_Item2";
+            treeNode13.Text = "Measure Vref";
+            treeNode14.Name = "Block2";
+            treeNode14.Text = "Voltage measurement";
             this.treeViewSequence.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode7});
+            treeNode11,
+            treeNode14});
             this.treeViewSequence.ShowNodeToolTips = true;
             this.treeViewSequence.Size = new System.Drawing.Size(396, 930);
             this.treeViewSequence.TabIndex = 3;
@@ -748,6 +748,13 @@
             this.labelStepNo.Size = new System.Drawing.Size(83, 20);
             this.labelStepNo.TabIndex = 0;
             this.labelStepNo.Text = "Step No. : ";
+            // 
+            // toolTipHints
+            // 
+            this.toolTipHints.AutoPopDelay = 5000;
+            this.toolTipHints.InitialDelay = 1000;
+            this.toolTipHints.ReshowDelay = 500;
+            this.toolTipHints.ShowAlways = true;
             // 
             // SequenceEditor
             // 
