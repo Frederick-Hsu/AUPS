@@ -751,9 +751,10 @@
             // 
             // toolTipHints
             // 
-            this.toolTipHints.AutoPopDelay = 5000;
-            this.toolTipHints.InitialDelay = 1000;
-            this.toolTipHints.ReshowDelay = 500;
+            this.toolTipHints.AutomaticDelay = 3000;
+            this.toolTipHints.AutoPopDelay = 30000;
+            this.toolTipHints.InitialDelay = 300;
+            this.toolTipHints.ReshowDelay = 600;
             this.toolTipHints.ShowAlways = true;
             // 
             // SequenceEditor
