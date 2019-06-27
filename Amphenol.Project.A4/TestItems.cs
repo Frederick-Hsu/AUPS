@@ -45,6 +45,15 @@ namespace Amphenol.Project.A4
                 case "ConfigSweepFreqRange":
                     success = ConfigSweepFreqRange(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "AutoScallTraceDisplay":
+                    success = AutoScallTraceDisplay(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "ConfigureChannelTraceDisplayScale":
+                    success = ConfigureChannelTraceDisplayScale(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "MaximizeOnOffChannelTraceDisplay":
+                    success = MaximizeOnOffChannelTraceDisplay(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
             }
             stepResult = result;
             stepStatus = status;
@@ -110,6 +119,58 @@ namespace Amphenol.Project.A4
                 "frequency value e.g. 500E6 as scientific notation",
                 "Sweep stop frequency (unit : Hertz), directly enter the frequency value" +
                 "e.g. 3.15E9 as scientific notation"
+            }));
+            testFnctInfo.Add("AutoScallTraceDisplay", new List<string>(new string[]
+            {
+                "Auto-scall the trace display at the trace number of channel number you specified",
+                "Channel number, range : 1 ~ 9",
+                "Trace number , range : 1 ~ 9"
+            }));
+            testFnctInfo.Add("ConfigureChannelTraceDisplayScale", new List<string>(new string[] 
+            {
+                "Configure the display scale of the user-specified trace inside one certain channel",
+                "Channel number, range : 1 ~ 9",
+                "Trace number inside the channel you specify, range : 1 ~ 9",
+                "Number of divisions for the graticule, it is a channel-wide setting, \n" +
+                "shared among all traces inside one certain channel, \n" +
+                "Range : 4 to 30 \n" +
+                "Preset value : 10 \n" +
+                "Resolution : 2",
+                "The scale per division, when you use the rectangular display format, or \n" +
+                "the full scale value (i.e. the value of outermost circle), when Smith chart / Polar formats \n" +
+                "Range : 1e-18 to 1e8\n" +
+                "Preset value : Varies depending on the data format as follows: \n" +
+                "               Logarithmic Magnitude : 10\n" +
+                "               Phase, Expand Phase, Positive Phase : 90\n" +
+                "               Group Delay : 1e-8\n" +
+                "               Smith, Polar, SWR : 1\n" +
+                "               Linear Magnitude : 0.1\n" +
+                "               Real, Imaginary : 0.2\n" +
+                "Unit : Varies depending on the data format as follows:\n" +
+                "       Logarithmic Magnitude : dB(decibel)\n" +
+                "       Phase, Expand Phase, Positive Phase : degree\n" +
+                "       Group Delay : second\n" +
+                "       Others : No unit",
+                "Number of graticule line\n" +
+                "Range : 0 to number of divisions\n" +
+                "Preset value : 5 (when the data format is \"Linear Magnitude\" or \"SWR\", the preset value is 1.)\n" +
+                "Resolution : 1",
+                "Value of reference graticule line\n" +
+                "Range : -5e8 to 5e8\n" +
+                "Preset value : 0 (When the data format is \"SWR\", the preset value is 1.)\n" +
+                "Unit : Varies depending on the data format as follows:\n" +
+                "       Logarithmic Magnitude : dB(decibel)\n" +
+                "       Phase, Expand Phase, Positive Phase : degree\n" +
+                "       Group Delay : second\n" +
+                "       Others : No unit"
+            }));
+            testFnctInfo.Add("MaximizeOnOffChannelTraceDisplay", new List<string>(new string[]
+            {
+                "Maximize ON/OFF the channel or trace display",
+                "Channel number you want to choose, range : 1 ~ 9",
+                "Channel max display ON/OFF, range : \"ON\" or \"OFF\"",
+                "Trace number you want to choose, range : 1 ~ 9",
+                "Trace max ON/OFF display, range : \"ON\" or \"OFF\""
             }));
             return testFnctInfo;
         }
