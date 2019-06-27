@@ -179,6 +179,8 @@ namespace Amphenol.Project.A4
             successFlag = networkAnalyzer.SelectMeasurementSParameterFor(channelNr, traceNr, measurementSParameter);
             successFlag = networkAnalyzer.SelectDataFormatForActiveTraceOfChannel(channelNr, traceNr, traceDataFormat);
             successFlag = networkAnalyzer.DisplayOnOffDataTrace((uint)channelNr, (uint)traceNr);
+            successFlag = networkAnalyzer.TurnOnOffContinuousInitiationModeForChannel(channelNr, "ON");
+            successFlag = networkAnalyzer.AutoScaleTraceDisplay(channelNr, traceNr);
 
             if (successFlag == 0)
             {
@@ -220,6 +222,129 @@ namespace Amphenol.Project.A4
                 stepStatus = "FAIL";
                 stepErrorCode = "SWPFREQ";
                 stepErrorDesc = "Failed in setting up the sweep frequency range.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool AutoScallTraceDisplay(List<string> stepParameters,
+                                                  out string stepResult,
+                                                  out string stepStatus,
+                                                  out string stepErrorCode,
+                                                  out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]),
+                traceNr = Convert.ToInt32(stepParameters[1]);
+            int successFlag = networkAnalyzer.ActivateChannelAt(channelNr);
+            successFlag = networkAnalyzer.ActivateTraceAt(channelNr, traceNr);
+            successFlag = networkAnalyzer.AutoScaleTraceDisplay(channelNr, traceNr);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "PASS";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "FAIL";
+                stepErrorCode = "AUTOSCL";
+                stepErrorDesc = "Failed in auto-scalling the trace display.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool ConfigureChannelTraceDisplayScale(List<string> stepParameters,
+                                                              out string stepResult,
+                                                              out string stepStatus,
+                                                              out string stepErrorCode,
+                                                              out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]),
+                traceNr = Convert.ToInt32(stepParameters[1]),
+                numOfDivisions = Convert.ToInt32(stepParameters[2]);
+            string scalePerDivision = stepParameters[3];
+            int graticuleLineNr = Convert.ToInt32(stepParameters[4]);
+            string graticuleLineValue = stepParameters[5];
+
+            int successFlag = networkAnalyzer.ActivateChannelAt(channelNr);
+            successFlag = networkAnalyzer.ActivateTraceAt(channelNr, traceNr);
+
+            string traceDataFormat;
+            successFlag = networkAnalyzer.QueryDataFormatForActiveTraceOfChannel(channelNr, traceNr, out traceDataFormat);
+            switch (traceDataFormat)
+            {
+                case "MLOG\n":    // Log Mag
+                case "PHAS\n":    // Phase
+                case "GDEL\n":    // Group Delay
+                case "MLIN\n":    // Lin Mag
+                case "SWR\n":     // SWR
+                case "REAL\n":    // Real
+                case "IMAG\n":    // Imaginary
+                case "UPH\n":     // Expanded Phase
+                case "PPH\n":     // Positive Phase
+                    successFlag = networkAnalyzer.SetTraceDivisionNumberForChannel(channelNr, numOfDivisions);
+                    successFlag = networkAnalyzer.SetScalePerDivisionForChannelTrace(channelNr, traceNr, scalePerDivision);
+                    successFlag = networkAnalyzer.SetReferenceGraticuleLineNumber(channelNr, traceNr, graticuleLineNr);
+                    successFlag = networkAnalyzer.SetReferenceGraticuleLineLevel(channelNr, traceNr, graticuleLineValue);
+                    break;
+                case "SLIN\n":    // Smith Lin/Phase
+                case "SLOG\n":    // Smith Log/Phase
+                case "SCOM\n":    // Smith Real/Imag
+                case "SMIT\n":    // Smith R + jX
+                case "SADM\n":    // Smith G + jB
+                case "PLIN\n":    // Polar Lin/Phase
+                case "PLOG\n":    // Polar Log/Phase
+                case "POL\n":     // Polar Real/Imag
+                    successFlag = networkAnalyzer.SetScalePerDivisionForChannelTrace(channelNr, traceNr, scalePerDivision);
+                    break;
+            }
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "PASS";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "FAIL";
+                stepErrorCode = "DISPSCL";
+                stepErrorDesc = "Failed in configuring the trace display scale";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool MaximizeOnOffChannelTraceDisplay(List<string> stepParameters,
+                                                             out string stepResult,
+                                                             out string stepStatus,
+                                                             out string stepErrorCode,
+                                                             out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]);
+            string channelMaxOnOff = stepParameters[1];
+            int traceNr = Convert.ToInt32(stepParameters[2]);
+            string traceMaxOnOff = stepParameters[3];
+
+            int successFlag = networkAnalyzer.ActivateChannelAt(channelNr);
+            successFlag = networkAnalyzer.MaximizeOnOffActiveChannel(channelMaxOnOff);
+
+            successFlag = networkAnalyzer.ActivateTraceAt(channelNr, traceNr);
+            successFlag = networkAnalyzer.MaximizeOnOffActiveTraceForChannel(channelNr, traceMaxOnOff);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "PASS";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "FAIL";
+                stepErrorCode = "MAXONOFF";
+                stepErrorDesc = "Failed to setup the MAX ON/OFF display";
             }
             return (successFlag == 0);
         }
