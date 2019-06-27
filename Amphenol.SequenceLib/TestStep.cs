@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Amphenol.Project.X577;
+// using Amphenol.Project.X577;
+using Amphenol.Project.A4;
 
 namespace Amphenol.SequenceLib
 {
@@ -13,6 +14,8 @@ namespace Amphenol.SequenceLib
         private string stepNum;
         private string stepName;
         private string stepDescription;
+        private bool stepFieldEnabled;
+        private string stepFieldName;
         private string stepFunctionName;
         private TestParameterList stepParamList;
         private string stepLimitType;
@@ -39,6 +42,18 @@ namespace Amphenol.SequenceLib
             if (stepDescriptionNode != null)
             {
                 stepDescription = stepDescriptionNode.InnerText;
+            }
+            /* Retrieve the <stepfieldenabled> node */
+            XmlNode stepFieldEnabledNode = stepNode.SelectSingleNode("stepfieldenabled");
+            if (stepFieldEnabledNode != null)
+            {
+                stepFieldEnabled = ((stepFieldEnabledNode.InnerText.ToLower() == "true") ? true : false);
+            }
+            /* Retrieve the <stepfieldname> node */
+            XmlNode stepFieldNameNode = stepNode.SelectSingleNode("stepfieldname");
+            if (stepFieldNameNode != null)
+            {
+                stepFieldName = stepFieldNameNode.InnerText;
             }
             /* Retrieve the <functionname> node */
             XmlNode stepFunctionNameNode = stepNode.SelectSingleNode("functionname");
@@ -90,6 +105,16 @@ namespace Amphenol.SequenceLib
         {
             get { return stepDescription; }
             set { stepDescription = value; }
+        }
+        public bool StepFieldEnabled
+        {
+            get { return stepFieldEnabled; }
+            set { stepFieldEnabled = value; }
+        }
+        public string StepFieldName
+        {
+            get { return stepFieldName; }
+            set { stepFieldName = value; }
         }
         public string StepFunctionName
         {

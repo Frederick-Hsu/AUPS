@@ -301,7 +301,7 @@ namespace Amphenol.Project.X577
         {
             int channelNum = Convert.ToInt32(stepParameters[0]), traceNum = Convert.ToInt32(stepParameters[1]);
             string measParam = stepParameters[2];
-            int successFlag = networkAnalyzer.SelectMeasurementParameterFor(channelNum, traceNum, measParam);
+            int successFlag = networkAnalyzer.SelectMeasurementSParameterFor(channelNum, traceNum, measParam);
             if (successFlag == 0)
             {
                 stepResult = "OK";
@@ -329,7 +329,7 @@ namespace Amphenol.Project.X577
             int channelNum = Convert.ToInt32(stepParameters[0]), traceNum = Convert.ToInt32(stepParameters[1]);
             string expected = stepLimits[0];
 
-            int successFlag = networkAnalyzer.QueryMeasurementParameterFor(channelNum, traceNum, out stepResult);
+            int successFlag = networkAnalyzer.QueryMeasurementSParameterFor(channelNum, traceNum, out stepResult);
             if (successFlag == 0)
             {
                 if (stepResult.Contains(expected))

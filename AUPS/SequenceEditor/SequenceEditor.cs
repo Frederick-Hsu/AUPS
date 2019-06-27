@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Amphenol.SequenceLib;
-using Amphenol.Project.X577;
+// using Amphenol.Project.X577;
+using Amphenol.Project.A4;
 
 namespace Amphenol.AUPS
 {

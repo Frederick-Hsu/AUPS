@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA0A37C1-F916-43E8-A0CC-10EB2098F0D2}</ProjectGuid>
+    <ProjectGuid>{251F6AD2-5656-4307-836E-80026C66EEDB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Amphenol.SequenceLib</RootNamespace>
-    <AssemblyName>Amphenol.SequenceLib</AssemblyName>
+    <RootNamespace>Amphenol.Project.A4</RootNamespace>
+    <AssemblyName>Amphenol.Project.A4</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,46 +29,30 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Block.cs" />
-    <Compile Include="ObjectCopier.cs" />
-    <Compile Include="ParameterList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sequence.cs" />
-    <Compile Include="Serialization.cs" />
-    <Compile Include="Spec.cs" />
-    <Compile Include="Step.cs" />
-    <Compile Include="TestBlock.cs" />
-    <Compile Include="TestConclusion.cs" />
-    <Compile Include="TestParameterList.cs" />
-    <Compile Include="TestSequence.cs" />
-    <Compile Include="TestSpec.cs" />
-    <Compile Include="TestStep.cs" />
+    <Compile Include="TestItems.cs" />
+    <Compile Include="TestItems_NetworkAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Amphenol.Project.A4\Amphenol.Project.A4.csproj">
-      <Project>{251f6ad2-5656-4307-836e-80026c66eedb}</Project>
-      <Name>Amphenol.Project.A4</Name>
+    <ProjectReference Include="..\Amphenol.Instruments\Amphenol.Instruments.csproj">
+      <Project>{3589c3eb-f46a-42e6-b7de-9c4471302719}</Project>
+      <Name>Amphenol.Instruments</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Project_A4_RF_Testing.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

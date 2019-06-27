@@ -4,7 +4,8 @@ using System.Windows.Forms;
 using System.IO;
 
 using Amphenol.SequenceLib;
-using Amphenol.Project.X577;
+// using Amphenol.Project.X577;
+using Amphenol.Project.A4;
 
 namespace Amphenol.AUPS
 {
