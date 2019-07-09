@@ -370,23 +370,23 @@ namespace Libraries_Testing
 
             Console.WriteLine("Marker search in Smith chart");
             Console.WriteLine("Marker 1: ");
-            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 1, out markerPointFreq);
-            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 1, out markerPointResp);
+            error = analyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(1, 1, 1, out markerPointFreq);
+            error = analyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(1, 1, 1, out markerPointResp);
             Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
 
             Console.WriteLine("Marker 2: ");
-            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 2, out markerPointFreq);
-            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 2, out markerPointResp);
+            error = analyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(1, 1, 2, out markerPointFreq);
+            error = analyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(1, 1, 2, out markerPointResp);
             Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
 
             Console.WriteLine("Marker 3: ");
-            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 3, out markerPointFreq);
-            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 3, out markerPointResp);
+            error = analyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(1, 1, 3, out markerPointFreq);
+            error = analyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(1, 1, 3, out markerPointResp);
             Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
 
             Console.WriteLine("Marker 4: ");
-            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 4, out markerPointFreq);
-            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 4, out markerPointResp);
+            error = analyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(1, 1, 4, out markerPointFreq);
+            error = analyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(1, 1, 4, out markerPointResp);
             Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
 
             error = analyzer.TurnOnOffStatisticsValueDisplay(1, "ON");
