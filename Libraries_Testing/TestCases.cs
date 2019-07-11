@@ -389,9 +389,9 @@ namespace Libraries_Testing
             error = analyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(1, 1, 4, out markerPointResp);
             Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
 
-            error = analyzer.TurnOnOffStatisticsValueDisplay(1, "ON");
+            error = analyzer.TurnOnOffStatisticsValueDisplay(1, 1, "ON");
             double[] statisticsValues = new double[3];
-            error = analyzer.RetrieveTraceStatisticsAnalysisValues(1, out statisticsValues[0], out statisticsValues[1], out statisticsValues[2]);
+            error = analyzer.RetrieveTraceStatisticsAnalysisValues(1, 1, out statisticsValues[0], out statisticsValues[1], out statisticsValues[2]);
             Console.WriteLine("Trace statistics values : ");
             Console.WriteLine("Mean \t\t Standard deviation \t\t Peak-Peak");
             Console.WriteLine("{0} \t\t {1} \t\t {2}", statisticsValues[0], statisticsValues[1], statisticsValues[2]);
