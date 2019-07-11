@@ -388,96 +388,163 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
-
-
-        /* :CALC1:FUNC:PEXC? 
-         * :CALC1:FUNC:PPOL?
-         */
-        public int QueryMarkerPeakSearch(int channelNum,
-                                         int traceNum,
-                                         out string peakExcursionLowerLimit,
-                                         out string polarity)
+        /* :CALCulate4:SELected:FUNCtion:DOMain:COUPle? */
+        public int AnalysisSearchQuerySearchRangeTraceCouplingState(int channelNo, out string couplingStateOnOff)
         {
             int error = 0, count = 0;
-            string command = ":DISP:WIND" + channelNum + ":ACT\n";
+            string command = ":CALCulate" + channelNo + ":SELected:FUNCtion:DOMain:COUPle?\n";
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-
-            command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
-            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-
-            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:PEXCursion?\n";
-            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            byte[] response = new byte[64];
-            error = visa32.viRead(analyzerSession, response, 64, out count);
-            peakExcursionLowerLimit = Encoding.ASCII.GetString(response, 0, count - 1);
-
-            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:PPOLarity?\n";
-            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            error = visa32.viRead(analyzerSession, response, 64, out count);
-            polarity = Encoding.ASCII.GetString(response, 0, count - 1);
+            byte[] response = new byte[256];
+            error = visa32.viRead(analyzerSession, response, 256, out count);
+            int state = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count));
+            if (state == 1)
+            {
+                couplingStateOnOff = "ON";
+            }
+            else
+            {
+                couplingStateOnOff = "OFF";
+            }
             return error;
         }
-        /* :CALC1:FUNC:TARG -12.5
-         * :CALC1:FUNC:TTR  NEG
-         */
-        public int SetMarkerTargetSearch(int channelNum, int traceNum, string targetValue, string transitionalDirection)
-        {
-            int errorno, count;
-            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n", response;
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
-            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:TARGet " + targetValue + "\n";
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-
-            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:TTRansition " + transitionalDirection + "\n";
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            return QueryErrorStatus(out response);
-        }
-
-        /* :CALC1:FUNC:TARG?
-         * :CALC1:FUNC:TTR?
-         */
-        public int QueryMarkerTargetSearch(int channelNum, int traceNum, out string targetValue, out string transitionDirection)
-        {
-            int error = 0, cout = 0;
-            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
-            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out cout);
-
-            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:TARGet?\n";
-            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out cout);
-            byte[] response = new byte[64];
-            error = visa32.viRead(analyzerSession, response, 64, out cout);
-            targetValue = Encoding.ASCII.GetString(response, 0, cout - 1);
-
-            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:TTRansition?\n";
-            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out cout);
-            error = visa32.viRead(analyzerSession, response, 64, out cout);
-            transitionDirection = Encoding.ASCII.GetString(response, 0, cout - 1);
-            return error;
-        }
-        
-        /* :CALC1:FUNC:EXEC */
-        public int PerformMarkerSearch(int channelNum = 1)
-        {
-            int errorno, count;
-            string command = ":CALCulate" + channelNum + ":SELected:FUNCtion:EXECute\n", response;
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            return QueryErrorStatus(out response);
-        }
-
-        /* :CALCulate1:SELected:MARKer2:FUNCtion:TRACking ON */
-        public int TurnOnOffSearchTrackingFeature(uint channelNum, uint traceNum, uint markerNum, string on_off = "OFF")
+        /* :CALCulate3:SELected:FUNCtion:TYPE PEAK */
+        public int AnalysisSearchSelectSearchType(int channelNo, int traceNo, string searchType = "PTPeak")
         {
             int error = 0, count = 0;
-            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
+            string command = ":CALC" + channelNo + ":PAR" + traceNo + ":SEL\n";
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
-            command = ":CALCulate" + channelNum + ":SELected:MARKer" + markerNum + ":FUNCtion:TRACking " + on_off + "\n";
+            command = ":CALCulate" + channelNo + ":SELected:FUNCtion:TYPE " + searchType.ToUpper() + "\n";
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             string response;
             return QueryErrorStatus(out response);
         }
 
+        /* :CALCulate3:SELected:FUNCtion:TYPE? */
+        public int AnalysisSearchQuerySearchType(int channelNo, int traceNo, out string searchType)
+        {
+            int error = 0, count = 0;
+            string command = ":CALC" + channelNo + ":PAR" + traceNo + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNo + ":SELected:FUNCtion:TYPE?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            byte[] response = new byte[256];
+            error = visa32.viRead(analyzerSession, response, 256, out count);
+            searchType = Encoding.ASCII.GetString(response, 0, count);
+            return error;
+        }
+
+        /* :CALCulate3:SELected:FUNCtion:PEXCursion 0.2
+         * :CALCulate3:SELected:FUNCtion:PPOLarity BOTH
+         */
+        public int AnalysisSearchDefinePeak(int channelNo, int traceNo,
+                                            string peakExcursionValue,  /* range : 0 to 5e8, use double or scientific notation */
+                                            string peakPolarity)        /* selected from 3 values : POSitive, NEGative, BOTH */
+        {
+            int error = 0, count = 0;
+            string command = ":CALC" + channelNo + ":PAR" + traceNo + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNo + ":SELected:FUNCtion:PEXCursion " + peakExcursionValue + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNo + ":SELected:FUNCtion:PPOLarity " + peakPolarity.ToUpper() + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALCulate3:SELected:FUNCtion:TARGet -12.5
+         * :CALCulate3:SELected:FUNCtion:TTRansition BOTH
+         */
+        public int AnalysisSearchDefineTarget(int channelNo, int traceNo, string targetValue, string transitionType)
+        {
+            int error = 0, count = 0;
+            string command = ":CALC" + channelNo + ":PAR" + traceNo + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNo + ":SELected:FUNCtion:TARGet " + targetValue + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNo + ":SELected:FUNCtion:TTRansition " + transitionType.ToUpper() + "\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        /* :CALCulate3:SELected:FUNCtion:EXECute */
+        public int AnalysisSearchPerformSearch(int channelNo, int traceNo)
+        {
+            int error = 0, count = 0;
+            string command = ":CALC" + channelNo + ":PAR" + traceNo + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNo + ":SELected:FUNCtion:EXECute\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            string response;
+            return QueryErrorStatus(out response);
+        }
+
+        public struct AnalysisSearch_MeasuredResults
+        {
+            double response_value;
+            double stimulus_value;
+            public AnalysisSearch_MeasuredResults(double response, double stimulus)
+            {
+                response_value = response;
+                stimulus_value = stimulus;
+            }
+            public double Response_Value
+            {
+                get { return response_value; }
+                set { response_value = value; }
+            }
+            public double Stimulus_Value
+            {
+                get { return stimulus_value; }
+                set { stimulus_value = value; }
+            }
+        }
+        /* :CALCulate3:SELected:FUNCtion:DATA? 
+         * :CALCulate3:SELected:FUNCtion:POINts?
+         */
+        public int AnalysisSearchRetrieveSearchResults(int channelNo, int traceNo, 
+                                                       out List<AnalysisSearch_MeasuredResults> results, 
+                                                       out int measuredPointsAmount)
+        {
+            int error = 0, count = 0;
+            string command = ":CALC" + channelNo + ":PAR" + traceNo + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNo + ":SELected:FUNCtion:POINts?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            byte[] points = new byte[256];
+            error = visa32.viRead(analyzerSession, points, 256, out count);
+            measuredPointsAmount = Convert.ToInt32(Encoding.ASCII.GetString(points, 0, count));
+
+            command = ":CALCulate" + channelNo + ":SELected:FUNCtion:DATA?\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            byte[] data = new byte[100 * 0x0400];       // 100KByte
+            error = visa32.viRead(analyzerSession, data, 100 * 0x0400, out count);
+            string[] array = Encoding.ASCII.GetString(data, 0, count).Split(new char[] { ',', ' ', '\n' });
+
+            results = new List<AnalysisSearch_MeasuredResults>();
+            for (int index = 0; index < (array.Length - 1); index = index + 2)
+            {
+                double response = Convert.ToDouble(array[index]);
+                double stimulus = Convert.ToDouble(array[index + 1]);
+                results.Add(new AnalysisSearch_MeasuredResults(response, stimulus));
+            }
+            return ((results.Count == measuredPointsAmount) ? 0 : (-1));
+        }
+        #endregion
+
+        #region Multiple search ranges and markers
         /* :CALCulate1:SELected:MARKer1:FUNCtion:DOMain:MULTiple:STATe ON */
         public int SetMultipleSearchRangeState(uint channelNum, uint markerNum, string on_off = "ON")
         {
@@ -503,33 +570,6 @@ namespace Amphenol.Instruments.Keysight
             command = ":CALCulate" + channleNum + ":SELected:MARKer" + markerNum + ":FUNCtion:DOMain:MULTiple:STARt " + rangeNum + ", " + rangeStopFreq + "\n";
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             return error;
-        }
-
-        /* :CALC1:FUNC:DATA? 
-         * :CALC1:FUNC:POIN?
-         */
-        public int RetrieveSearchResults(int channelNum, out int pointNum, out double[] results)
-        {
-            int errorno, count;
-            string command = ":CALCulate" + channelNum + ":SELected:FUNCtion:POINts?\n";
-            byte[] response = new byte[256];
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, response, 256, out count);
-            pointNum = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count-1));
-
-            command = ":CALCulate" + channelNum + ":SELected:FUNCtion:DATA?\n";
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, response, 256, out count);
-
-            string[] array = Encoding.ASCII.GetString(response, 0, count-1).Split(new char[] { ',', ' ', '\n' });
-            int itemNumber = array.Length;
-            results = new double[itemNumber];
-
-            for (int index = 0; index < itemNumber; index++)
-            {
-                results[index] = Convert.ToDouble(array[index]);
-            }
-            return errorno;
         }
 
         /* :CALC1:SEL:MARK1:STATE 1
@@ -612,12 +652,17 @@ namespace Amphenol.Instruments.Keysight
             }
             return error;
         }
+        #endregion
 
+        #region Statistical Analysis
         /* :CALCULATE1:SELected:MSTatistics:DATA? */
-        public int RetrieveTraceStatisticsAnalysisValues(uint channelNum, out double meanValue, out double standardDeviation, out double peak2PeakValue)
+        public int RetrieveTraceStatisticsAnalysisValues(uint channelNum, int traceNum, out double meanValue, out double standardDeviation, out double peak2PeakValue)
         {
             int error = 0, count = 0;
-            string command = ":CALCulate" + channelNum + ":SELected:MSTatistics:DATA?\n";
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MSTatistics:DATA?\n";
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             byte[] response = new byte[256];
             error = visa32.viRead(analyzerSession, response, 256, out count);
@@ -630,17 +675,20 @@ namespace Amphenol.Instruments.Keysight
         }
 
         /* :CALCulate1:SELected:MSTatistics:STATe ON */
-        public int TurnOnOffStatisticsValueDisplay(uint channelNum, string on_off = "OFF")
+        public int TurnOnOffStatisticsValueDisplay(uint channelNum, int traceNum, string on_off = "OFF")
         {
             int error = 0, count = 0;
-            string command = ":CALCulate" + channelNum + ":SELected:MSTatistics:STATe " + on_off + "\n";
+            string command = ":CALC" + channelNum + ":PAR" + traceNum + ":SEL\n";
+            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+
+            command = ":CALCulate" + channelNum + ":SELected:MSTatistics:STATe " + on_off + "\n";
             error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             string response;
             return QueryErrorStatus(out response);
         }
-#endregion
+        #endregion
 
-#region Analysis Using the Fixture Simulator
-#endregion
+        #region Analysis Using the Fixture Simulator
+        #endregion
     }
 }
