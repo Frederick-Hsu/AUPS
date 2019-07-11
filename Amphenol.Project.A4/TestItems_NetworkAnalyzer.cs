@@ -348,5 +348,152 @@ namespace Amphenol.Project.A4
             }
             return (successFlag == 0);
         }
+
+        private static bool ShowHideRegularMarker(List<string> stepParameters,
+                                                  out string stepResult,
+                                                  out string stepStatus,
+                                                  out string stepErrorCode,
+                                                  out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]);
+            int traceNr = Convert.ToInt32(stepParameters[1]);
+            int markerNr = Convert.ToInt32(stepParameters[2]);
+            string onOffState = stepParameters[3];
+            int successFlag = networkAnalyzer.MarkerSearchShowHideRegularMarkerForActiveTrace(channelNr, traceNr, markerNr, onOffState);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "MARKONF";
+                stepErrorDesc = "Failed to turn ON/OFF the regular marker display.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool ShowHideReferenceMarker(List<string> stepParameters,
+                                                    out string stepResult,
+                                                    out string stepStatus,
+                                                    out string stepErrorCode,
+                                                    out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]);
+            int traceNr = Convert.ToInt32(stepParameters[1]);
+            string onOffState = stepParameters[2];
+            int successFlag = networkAnalyzer.MarkerSearchShowOnOffReferenceMarkerMode(channelNr, traceNr, onOffState);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "REFMARK";
+                stepErrorDesc = "Turning ON/OFF the reference marker failed.";
+            }
+            return (successFlag == 0);
+        }
+
+
+        private static bool TargetMarkerSearch(List<string> stepParameters,
+                                               out string stepResult,
+                                               out string stepStatus,
+                                               out string stepErrorCode,
+                                               out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]);
+            int traceNr = Convert.ToInt32(stepParameters[1]);
+            int markerNr = Convert.ToInt32(stepParameters[2]);
+            string markerSearchType = stepParameters[3];
+            string targetResponseValue = stepParameters[4];
+            string searchDirection = stepParameters[5];
+
+            int successFlag = networkAnalyzer.ActivateChannelAt(channelNr);
+            successFlag = networkAnalyzer.ActivateTraceAt(channelNr, traceNr);
+            successFlag = networkAnalyzer.MarkerSearchSelectSearchType(channelNr, traceNr, markerNr, markerSearchType);
+            successFlag = networkAnalyzer.MarkerSearchDefineTarget(channelNr, traceNr, markerNr, targetResponseValue, searchDirection);
+
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "TARSRCH";
+                stepErrorDesc = "Failed to set the target marker search.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool TurnOnOffMarkerSearchTrackingFeature(List<string> stepParameters,
+                                                                 out string stepResult,
+                                                                 out string stepStatus,
+                                                                 out string stepErrorCode,
+                                                                 out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]);
+            int traceNr = Convert.ToInt32(stepParameters[1]);
+            int markerNr = Convert.ToInt32(stepParameters[2]);
+            string onOff = stepParameters[3];
+
+            int successFlag = networkAnalyzer.MarkerSearchTurnOnOffSearchTrackingFeature(channelNr, traceNr, markerNr, onOff);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "MARKTRK";
+                stepErrorDesc = "Failed to turn ON or OFF the marker search tracking feature.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool PerformMarkerSearch(List<string> stepParameters,
+                                                out string stepResult,
+                                                out string stepStatus,
+                                                out string stepErrorCode,
+                                                out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]);
+            int traceNr = Convert.ToInt32(stepParameters[1]);
+            int markerNr = Convert.ToInt32(stepParameters[2]);
+            int successFlag = networkAnalyzer.MarkerSearchPerformSearchWithMarker(channelNr, traceNr, markerNr);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "PERFMRK";
+                stepErrorDesc = "Failed to perform the marker search.";
+            }
+            return (successFlag == 0);
+        }
     }
 }
