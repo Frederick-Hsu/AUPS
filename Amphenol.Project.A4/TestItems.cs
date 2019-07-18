@@ -57,6 +57,9 @@ namespace Amphenol.Project.A4
                 case "ShowHideRegularMarker":
                     success = ShowHideRegularMarker(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "SelectMarkerSearchType":
+                    success = SelectMarkerSearchType(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
                 case "TargetMarkerSearch":
                     success = TargetMarkerSearch(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
@@ -65,6 +68,18 @@ namespace Amphenol.Project.A4
                     break;
                 case "PerformMarkerSearch":
                     success = PerformMarkerSearch(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "RetrieveMarkerSearchResults":
+                    success = RetrieveMarkerSearchResults(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "PlotMaskLineForA4":
+                    success = PlotMaskLineForA4(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "ShowHideSoftkeyLabel":
+                    success = ShowHideSoftkeyLabel(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "DisplayOnOffMaskLimitLine":
+                    success = DisplayOnOffMaskLimitLine(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
             }
             stepResult = result;
@@ -198,6 +213,22 @@ namespace Amphenol.Project.A4
                 "Marker number, range : 1 ~ 9",
                 "Marker display status, ON or OFF"
             }));
+            testFnctInfo.Add("SelectMarkerSearchType", new List<string>(new string[]
+            {
+                "Select the search type for marker search",
+                "Channel number, range : 1 ~ 9",
+                "Trace number, range : 1 ~ 9",
+                "Marker number, range : 1 ~ 9",
+                "Marker search type, please select one you desired from the below list :\n" +
+                "MAXimum,        specifies the maximum value search\n" +
+                "MINimum,        specifies the minimum value search\n" +
+                "PEAK,           specifies the maximum positive (or minimum negative) peak search\n" +
+                "LPEak,          specifies the peak search to the left from the marker position\n" +
+                "RPEak,          specifies the peak search to the right from the marker position\n" +
+                "TARGet,         specifies the search for the target closest to the current marker position\n" +
+                "LTARget,        specifies the target search to the left from the marker position\n" +
+                "RTARget,        specifies the target search to the right from the marker position\n"
+            }));
             testFnctInfo.Add("TargetMarkerSearch", new List<string>(new string[]
             {
                 /* test function name description */
@@ -245,6 +276,33 @@ namespace Amphenol.Project.A4
                 "Channel number, range : 1 ~ 9",
                 "Trace number, range : 1 ~ 9",
                 "Marker number, range : 1 ~ 9"
+            }));
+            testFnctInfo.Add("RetrieveMarkerSearchResults", new List<string>(new string[]
+            {
+                "After performed the marker search, retrieve the search results.",
+                "Channel number at which you performed marker search",
+                "Trace number at which you performed marker search",
+                "Marker number you want to retrieve the results"
+            }));
+            testFnctInfo.Add("PlotMaskLineForA4", new List<string>(new string[]
+            {
+                "Plot the mask line of limit test for A4 project, according to the target search",
+                "Channel number, rang : 1 ~ 9",
+                "Trace number, range : 1 ~ 9",
+                "Marker number, range : 1 ~ 9",
+                "Search type, select TARGet",
+                "Target value, usually the response value in Log Magnitude format"
+            }));
+            testFnctInfo.Add("ShowHideSoftkeyLabel", new List<string>(new string[]
+            {
+                "Show or hide the soft key labels placed alongside the right-hand edge of the LCD screen.",
+                "State : ON or OFF"
+            }));
+            testFnctInfo.Add("DisplayOnOffMaskLimitLine", new List<string>(new string[] 
+            {
+                "Show or hide the mask limit line",
+                "Channel number on which you want to display or hide the mask limit line, range : 1 ~ 9",
+                "State, ON or OFF"
             }));
             return testFnctInfo;
         }
