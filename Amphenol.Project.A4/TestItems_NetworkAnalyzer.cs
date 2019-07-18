@@ -111,6 +111,31 @@ namespace Amphenol.Project.A4
             return (successFlag == 0);
         }
 
+        private static bool ShowHideSoftkeyLabel(List<string> stepParameters,
+                                                 out string stepResult,
+                                                 out string stepStatus,
+                                                 out string stepErrorCode,
+                                                 out string stepErrorDesc)
+        {
+            string state = stepParameters[0];
+            int successFlag = networkAnalyzer.ShowHideSoftkeyLabels(state);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "SOFTKEY";
+                stepErrorDesc = "Failed to turn ON/OFF the soft key labels.";
+            }
+            return (successFlag == 0);
+        }
+
         private static bool AllocateTraceAmountForChannel(List<string> stepParameters,
                                                           out string stepResult,
                                                           out string stepStatus,
@@ -349,6 +374,7 @@ namespace Amphenol.Project.A4
             return (successFlag == 0);
         }
 
+        #region Marker Search
         private static bool ShowHideRegularMarker(List<string> stepParameters,
                                                   out string stepResult,
                                                   out string stepStatus,
@@ -404,6 +430,33 @@ namespace Amphenol.Project.A4
             return (successFlag == 0);
         }
 
+        private static bool SelectMarkerSearchType(List<string> stepParameters,
+                                                   out string stepResult,
+                                                   out string stepStatus,
+                                                   out string stepErrorCode,
+                                                   out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]),
+                traceNr = Convert.ToInt32(stepParameters[1]),
+                markerNr = Convert.ToInt32(stepParameters[2]);
+            string searchType = stepParameters[3];
+            int successFlag = networkAnalyzer.MarkerSearchSelectSearchType(channelNr, traceNr, markerNr, searchType);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "SRCHTYP";
+                stepErrorDesc = "Failed to set the marker search type";
+            }
+            return (successFlag == 0);
+        }
 
         private static bool TargetMarkerSearch(List<string> stepParameters,
                                                out string stepResult,
@@ -478,7 +531,205 @@ namespace Amphenol.Project.A4
             int channelNr = Convert.ToInt32(stepParameters[0]);
             int traceNr = Convert.ToInt32(stepParameters[1]);
             int markerNr = Convert.ToInt32(stepParameters[2]);
-            int successFlag = networkAnalyzer.MarkerSearchPerformSearchWithMarker(channelNr, traceNr, markerNr);
+            string errormesg;
+            int successFlag = networkAnalyzer.MarkerSearchPerformSearchWithMarker(channelNr, traceNr, markerNr, out errormesg);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+                return true;
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "PERFMRK";
+                stepErrorDesc = errormesg;
+                return false;
+            }
+        }
+
+        private static bool RetrieveMarkerSearchResults(List<string> stepParameters,
+                                                        List<string> stepLimits,
+                                                        out string stepResult,
+                                                        out string stepStatus,
+                                                        out string stepErrorCode,
+                                                        out string stepErrorDesc)
+        {
+            int channelNr = Convert.ToInt32(stepParameters[0]),
+                traceNr = Convert.ToInt32(stepParameters[1]),
+                markerNr = Convert.ToInt32(stepParameters[2]);
+            double freq;
+            List<double> magnitudes;
+            int successFlag = networkAnalyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(channelNr, traceNr, markerNr, out freq);
+            successFlag = networkAnalyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(channelNr, traceNr, markerNr, out magnitudes);
+
+            string dataFormat;
+            successFlag = networkAnalyzer.QueryDataFormatForActiveTraceOfChannel(channelNr, traceNr, out dataFormat);
+            switch (dataFormat)
+            {
+                case "MLOG\n":    // Log Mag
+                case "PHAS\n":    // Phase
+                case "GDEL\n":    // Group Delay
+                case "MLIN\n":    // Lin Mag
+                case "SWR\n":     // SWR
+                case "REAL\n":    // Real
+                case "IMAG\n":    // Imaginary
+                case "UPH\n":     // Expanded Phase
+                case "PPH\n":     // Positive Phase
+                    stepResult = magnitudes[0].ToString();
+                    break;
+                case "SLIN\n":    // Smith Lin/Phase
+                case "SLOG\n":    // Smith Log/Phase
+                case "SCOM\n":    // Smith Real/Imag
+                case "SMIT\n":    // Smith R + jX
+                case "SADM\n":    // Smith G + jB
+                case "PLIN\n":    // Polar Lin/Phase
+                case "PLOG\n":    // Polar Log/Phase
+                case "POL\n":     // Polar Real/Imag
+                    stepResult = magnitudes[0].ToString() + ", " + magnitudes[1].ToString();
+                    break;
+                default:
+                    stepResult = "";
+                    break;
+            }
+            double lower = Convert.ToDouble(stepLimits[0]), 
+                   typical = Convert.ToDouble(stepLimits[1]), 
+                   upper = Convert.ToDouble(stepLimits[2]);
+            if ((lower < magnitudes[0]) && (magnitudes[0] < upper))
+            {
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+                return true;
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "MARKRES";
+                stepErrorDesc = "The result retrieved by marker search is out of range.";
+                return false;
+            }
+        }
+        #endregion
+
+        private static bool PlotMaskLineForA4(List<string> stepParameters,
+                                              out string stepResult,
+                                              out string stepStatus,
+                                              out string stepErrorCode,
+                                              out string stepErrorDesc)
+        {
+            int channelNo = Convert.ToInt32(stepParameters[0]),
+                traceNo = Convert.ToInt32(stepParameters[1]),
+                markerNo = Convert.ToInt32(stepParameters[2]);
+            string targetType = stepParameters[3];      /* Marker search type : TARGet */
+            string targetValueIndB = stepParameters[4];
+
+            int successFlag = networkAnalyzer.MarkerSearchActivateRegularMarkerNo(channelNo, traceNo, markerNo);
+            successFlag = networkAnalyzer.MarkerSearchSetStimulusValueAtMarkerPosition(channelNo, traceNo, markerNo, "1.0E9");
+
+            /* Store the trace data to memory */
+            successFlag = networkAnalyzer.CopyMeasurementDateToMemoryTrace((uint)channelNo);
+            successFlag = networkAnalyzer.DisplayOnOffDataTrace((uint)channelNo, (uint)traceNo, "OFF");
+            successFlag = networkAnalyzer.DisplayOnOffMemoryTrace((uint)channelNo, (uint)traceNo, "ON");
+
+            List<double> freqValues = new List<double>();
+            List<double> magnitudes = new List<double>();
+            string errorMesg;
+            do
+            {
+                successFlag = networkAnalyzer.MarkerSearchSelectSearchType(channelNo, traceNo, markerNo, targetType);
+                successFlag = networkAnalyzer.MarkerSearchDefineTarget(channelNo, traceNo, markerNo, targetValueIndB, "BOTH");
+                successFlag = networkAnalyzer.MarkerSearchPerformSearchWithMarker(channelNo, traceNo, markerNo, out errorMesg);
+                if ((successFlag != 0))    /* If no target value searched */
+                {
+                    break;
+                }
+                double freq;
+                List<double> magnitude;
+                successFlag = networkAnalyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(channelNo, traceNo, markerNo, out magnitude);
+                if ((-10.02 < magnitude[0]) && (magnitude[0] < -9.98))    /* Filter the points whose magnitude is not -10.0dB */
+                {
+                    magnitudes.Add(magnitude[0]);
+                    successFlag = networkAnalyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(channelNo, traceNo, markerNo, out freq);
+                    freqValues.Add(freq);
+                }
+            }
+            while (successFlag == 0);
+
+            /* Plot the mask line, according to the 6 marker points captured */
+            NetworkAnalyzer_E5071C.LimitLineSegment maskLineSegm1, 
+                                                    maskLineSegm2, 
+                                                    maskLineSegm3, 
+                                                    maskLineSegm4, 
+                                                    maskLineSegm5,
+                                                    maskLineSegm6,
+                                                    maskLineSegm7;
+            {
+                maskLineSegm1.type = 1;
+                maskLineSegm1.startPointHaxisValue  = (freqValues[0] - Convert.ToDouble("500e6")).ToString();
+                maskLineSegm1.endPointHaxisValue    = (freqValues[0] - Convert.ToDouble("20e6")).ToString();
+                maskLineSegm1.startPointVaxisValue  = "-10.0";
+                maskLineSegm1.endPointVaxisValue    = "-10.0";
+            }
+            {
+                maskLineSegm2.type = 1;
+                maskLineSegm2.startPointHaxisValue  = (freqValues[0] + Convert.ToDouble("20e6")).ToString();
+                maskLineSegm2.endPointHaxisValue    = (freqValues[1] - Convert.ToDouble("20e6")).ToString();
+                maskLineSegm2.startPointVaxisValue  = "-10.0";
+                maskLineSegm2.endPointVaxisValue    = "-10.0";
+            }
+            {
+                maskLineSegm3.type = 1;
+                maskLineSegm3.startPointHaxisValue  = (freqValues[1] + Convert.ToDouble("20e6")).ToString();
+                maskLineSegm3.endPointHaxisValue    = (freqValues[2] - Convert.ToDouble("20e6")).ToString();
+                maskLineSegm3.startPointVaxisValue  = "-10.0";
+                maskLineSegm3.endPointVaxisValue    = "-10.0";
+            }
+            {
+                maskLineSegm4.type = 1;
+                maskLineSegm4.startPointHaxisValue  = (freqValues[2] + Convert.ToDouble("20e6")).ToString();
+                maskLineSegm4.endPointHaxisValue    = (freqValues[3] - Convert.ToDouble("10e6")).ToString();
+                maskLineSegm4.startPointVaxisValue  = "-10.0";
+                maskLineSegm4.endPointVaxisValue    = "-10.0";
+            }
+            {
+                maskLineSegm5.type = 1;
+                maskLineSegm5.startPointHaxisValue  = (freqValues[3] + Convert.ToDouble("10e6")).ToString();
+                maskLineSegm5.endPointHaxisValue    = (freqValues[4] - Convert.ToDouble("10e6")).ToString();
+                maskLineSegm5.startPointVaxisValue  = "-10.0";
+                maskLineSegm5.endPointVaxisValue    = "-10.0";
+            }
+            {
+                maskLineSegm6.type = 1;
+                maskLineSegm6.startPointHaxisValue  = (freqValues[4] + Convert.ToDouble("10e6")).ToString();
+                maskLineSegm6.endPointHaxisValue    = (freqValues[5] - Convert.ToDouble("10e6")).ToString();
+                maskLineSegm6.startPointVaxisValue  = "-10.0";
+                maskLineSegm6.endPointVaxisValue    = "-10.0";
+            }
+            {
+                maskLineSegm7.type = 1;
+                maskLineSegm7.startPointHaxisValue  = (freqValues[5] + Convert.ToDouble("10e6")).ToString();
+                maskLineSegm7.endPointHaxisValue    = (freqValues[5] + Convert.ToDouble("500e6")).ToString();
+                maskLineSegm7.startPointVaxisValue  = "-10.0";
+                maskLineSegm7.endPointVaxisValue    = "-10.0";
+            }
+            List<NetworkAnalyzer_E5071C.LimitLineSegment> maskLineSegments = new List<NetworkAnalyzer_E5071C.LimitLineSegment>();
+            maskLineSegments.Add(maskLineSegm1);
+            maskLineSegments.Add(maskLineSegm2);
+            maskLineSegments.Add(maskLineSegm3);
+            maskLineSegments.Add(maskLineSegm4);
+            maskLineSegments.Add(maskLineSegm5);
+            maskLineSegments.Add(maskLineSegm6);
+            maskLineSegments.Add(maskLineSegm7);
+
+            successFlag = networkAnalyzer.TurnOnOffLimitLineDisplay((uint)channelNo, "ON");
+            successFlag = networkAnalyzer.SetLimitTable((uint)channelNo, (uint)maskLineSegments.Count, maskLineSegments);
+            
+            successFlag = networkAnalyzer.DisplayOnOffMemoryTrace((uint)channelNo, (uint)traceNo, "OFF");
+            successFlag = networkAnalyzer.DisplayOnOffDataTrace((uint)channelNo, (uint)traceNo, "ON");
             if (successFlag == 0)
             {
                 stepResult = "OK";
@@ -490,8 +741,34 @@ namespace Amphenol.Project.A4
             {
                 stepResult = "NG";
                 stepStatus = "Fail";
-                stepErrorCode = "PERFMRK";
-                stepErrorDesc = "Failed to perform the marker search.";
+                stepErrorCode = "PLOTMSK";
+                stepErrorDesc = errorMesg;
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool DisplayOnOffMaskLimitLine(List<string> stepParameters,
+                                                      out string stepResult,
+                                                      out string stepStatus,
+                                                      out string stepErrorCode,
+                                                      out string stepErrorDesc)
+        {
+            uint channelNo = Convert.ToUInt32(stepParameters[0]);
+            string state = stepParameters[1];
+            int successFlag = networkAnalyzer.TurnOnOffLimitLineDisplay(channelNo, state);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "MASKLIN";
+                stepErrorDesc = "Failed to display ON/OFF the mask limit line";
             }
             return (successFlag == 0);
         }
