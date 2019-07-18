@@ -96,17 +96,17 @@ namespace Libraries_Testing
             {
                 /* channel 1 : upper limit line */
                 segment.type = 1;
-                segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
-                segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] + 1.00);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] + 1.00);
+                segment.startPointHaxisValue = Convert.ToString(frequencies1[index]);
+                segment.endPointHaxisValue = Convert.ToString(frequencies1[index + 4]);
+                segment.startPointVaxisValue = Convert.ToString(primaryAmplitudes1[index] + 1.00);
+                segment.endPointVaxisValue = Convert.ToString(primaryAmplitudes1[index + 4] + 1.00);
                 limitLines.Add(segment);
                 /* channel 1: lower limit line */
                 segment.type = 2;
-                segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
-                segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] - 1.00);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] - 1.00);
+                segment.startPointHaxisValue = Convert.ToString(frequencies1[index]);
+                segment.endPointHaxisValue = Convert.ToString(frequencies1[index + 4]);
+                segment.startPointVaxisValue = Convert.ToString(primaryAmplitudes1[index] - 1.00);
+                segment.endPointVaxisValue = Convert.ToString(primaryAmplitudes1[index + 4] - 1.00);
                 limitLines.Add(segment);
             }
             error = analyzer.SetLimitTable(1, (uint)limitLines.Count, limitLines);
@@ -165,17 +165,17 @@ namespace Libraries_Testing
             {
                 /* channel 2 : uppert limit line */
                 segment.type = 1;
-                segment.startPointHAxisValue = Convert.ToString(frequencies2[index]);
-                segment.endPointHAxisValue = Convert.ToString(frequencies2[index + 2]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[index] + 0.50);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[index + 2] + 0.50);
+                segment.startPointHaxisValue = Convert.ToString(frequencies2[index]);
+                segment.endPointHaxisValue = Convert.ToString(frequencies2[index + 2]);
+                segment.startPointVaxisValue = Convert.ToString(primaryAmplitudes2[index] + 0.50);
+                segment.endPointVaxisValue = Convert.ToString(primaryAmplitudes2[index + 2] + 0.50);
                 ch2LimitLines.Add(segment);
                 /* channel 2 : lower limit line */
                 segment.type = 2;
-                segment.startPointHAxisValue = Convert.ToString(frequencies2[index]);
-                segment.endPointHAxisValue = Convert.ToString(frequencies2[index + 2]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[index] - 0.50);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[index + 2] - 0.50);
+                segment.startPointHaxisValue = Convert.ToString(frequencies2[index]);
+                segment.endPointHaxisValue = Convert.ToString(frequencies2[index + 2]);
+                segment.startPointVaxisValue = Convert.ToString(primaryAmplitudes2[index] - 0.50);
+                segment.endPointVaxisValue = Convert.ToString(primaryAmplitudes2[index + 2] - 0.50);
                 ch2LimitLines.Add(segment);
             }
             error = analyzer.SetLimitTable(2, (uint)ch2LimitLines.Count, ch2LimitLines);
