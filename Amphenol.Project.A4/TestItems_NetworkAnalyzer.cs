@@ -668,7 +668,7 @@ namespace Amphenol.Project.A4
                                                     maskLineSegm6,
                                                     maskLineSegm7;
             {
-                maskLineSegm1.type = 1;
+                maskLineSegm1.type = 2;
                 maskLineSegm1.startPointHaxisValue  = (freqValues[0] - Convert.ToDouble("500e6")).ToString();
                 maskLineSegm1.endPointHaxisValue    = (freqValues[0] - Convert.ToDouble("20e6")).ToString();
                 maskLineSegm1.startPointVaxisValue  = "-10.0";
@@ -682,7 +682,7 @@ namespace Amphenol.Project.A4
                 maskLineSegm2.endPointVaxisValue    = "-10.0";
             }
             {
-                maskLineSegm3.type = 1;
+                maskLineSegm3.type = 2;
                 maskLineSegm3.startPointHaxisValue  = (freqValues[1] + Convert.ToDouble("20e6")).ToString();
                 maskLineSegm3.endPointHaxisValue    = (freqValues[2] - Convert.ToDouble("20e6")).ToString();
                 maskLineSegm3.startPointVaxisValue  = "-10.0";
@@ -696,7 +696,7 @@ namespace Amphenol.Project.A4
                 maskLineSegm4.endPointVaxisValue    = "-10.0";
             }
             {
-                maskLineSegm5.type = 1;
+                maskLineSegm5.type = 2;
                 maskLineSegm5.startPointHaxisValue  = (freqValues[3] + Convert.ToDouble("10e6")).ToString();
                 maskLineSegm5.endPointHaxisValue    = (freqValues[4] - Convert.ToDouble("10e6")).ToString();
                 maskLineSegm5.startPointVaxisValue  = "-10.0";
@@ -710,7 +710,7 @@ namespace Amphenol.Project.A4
                 maskLineSegm6.endPointVaxisValue    = "-10.0";
             }
             {
-                maskLineSegm7.type = 1;
+                maskLineSegm7.type = 2;
                 maskLineSegm7.startPointHaxisValue  = (freqValues[5] + Convert.ToDouble("10e6")).ToString();
                 maskLineSegm7.endPointHaxisValue    = (freqValues[5] + Convert.ToDouble("500e6")).ToString();
                 maskLineSegm7.startPointVaxisValue  = "-10.0";
@@ -771,6 +771,136 @@ namespace Amphenol.Project.A4
                 stepErrorDesc = "Failed to display ON/OFF the mask limit line";
             }
             return (successFlag == 0);
+        }
+
+        private static bool CleanUpMaskLimitLine(List<string> stepParameters, 
+                                                 out string stepResult,
+                                                 out string stepStatus,
+                                                 out string stepErrorCode,
+                                                 out string stepErrorDesc)
+        {
+            uint channelNo = Convert.ToUInt32(stepParameters[0]);
+            int successFlag = networkAnalyzer.ClearLimitTable(channelNo);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "CLRMASK";
+                stepErrorDesc = "Failed in cleaning up the mask limit line.";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool EnableOnOffLimitTestFunction(List<string> stepParameters,
+                                                         out string stepResult,
+                                                         out string stepStatus,
+                                                         out string stepErrorCode,
+                                                         out string stepErrorDesc)
+        {
+            uint channelNo = Convert.ToUInt32(stepParameters[0]);
+            string state = stepParameters[1];
+            int successFlag = networkAnalyzer.TurnOnOffLimitTestFunction(channelNo, state);
+            successFlag = networkAnalyzer.TurnOnOffFailIndicatorOnScreen(state);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "LIMTEST";
+                stepErrorDesc = "Enable or disable the limit test function failed";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool LoadMaskLimitLineFromCsvFileInLocalDisk(List<string> stepParameters,
+                                                                    out string stepResult,
+                                                                    out string stepStatus,
+                                                                    out string stepErrorCode,
+                                                                    out string stepErrorDesc)
+        {
+            string csvFilePathName = stepParameters[0];
+            int successFlag = networkAnalyzer.ConfigureLimitLineSegmentsCsvFile(csvFilePathName);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "LOADLIM";
+                stepErrorDesc = "Failed to load the csv file of mask limit line from local disk";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool SaveMaskLimitLineIntoCsvFileInLocalDisk(List<string> stepParameters,
+                                                                    out string stepResult,
+                                                                    out string stepStatus,
+                                                                    out string stepErrorCode,
+                                                                    out string stepErrorDesc)
+        {
+            string csvFileName = stepParameters[0];
+            int successFlag = networkAnalyzer.StoreLimitLineSegmentsIntoCsvFile(csvFileName);
+            if (successFlag == 0)
+            {
+                stepResult = "OK";
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+            }
+            else
+            {
+                stepResult = "NG";
+                stepStatus = "Fail";
+                stepErrorCode = "SAVELIM";
+                stepErrorDesc = "Failed to save the mask limit line into the .csv file in local disk";
+            }
+            return (successFlag == 0);
+        }
+
+        private static bool QueryLimitTestConclusion(List<string> stepParameters,
+                                                     out string stepResult,
+                                                     out string stepStatus,
+                                                     out string stepErrorCode,
+                                                     out string stepErrorDesc)
+        {
+            uint channelNo = Convert.ToUInt32(stepParameters[0]);
+            string conclusion;
+            int successFlag = networkAnalyzer.RetrieveLimitTestResult(channelNo, out conclusion);
+            stepResult = conclusion;
+            if (conclusion == "PASS")
+            {
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+                return true;
+            }
+            else
+            {
+                stepStatus = "Fail";
+                int points;
+                successFlag = networkAnalyzer.ReportLimitTestFailedPointCounts(channelNo, out points);
+                stepErrorCode = "LIMFAIL";
+                stepErrorDesc = "The final conclusion of limit test failed, total " + points + " points exceeded the mask limit line.";
+                return false;
+            }
         }
     }
 }
