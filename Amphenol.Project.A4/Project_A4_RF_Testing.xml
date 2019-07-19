@@ -437,5 +437,86 @@
         <limit>OK</limit>
       </spec>
     </step>
+    <step>
+      <stepnum>2.8</stepnum>
+      <stepname>Enable the limit test feature, and show PASS/FAIL indicator on the screen</stepname>
+      <stepdescription>Turn on limit test function</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>EnableOnOffLimitTestFunction</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.9</stepnum>
+      <stepname>Save the mask limit line into the local disk</stepname>
+      <stepdescription>.csv file name : D:\A4_Mask_Limit_Line.csv</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>SaveMaskLimitLineIntoCsvFileInLocalDisk</functionname>
+      <parameterlist>
+        <parameter>D:\A4_Mask_Limit_Line.csv</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.10</stepnum>
+      <stepname>Clean up the mask limit line</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>CleanUpMaskLimitLine</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.11</stepnum>
+      <stepname>Load the mask limit line from .csv file in local disk</stepname>
+      <stepdescription>.csv file name : D:\A4_Mask_Limit_Line.csv</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>LoadMaskLimitLineFromCsvFileInLocalDisk</functionname>
+      <parameterlist>
+        <parameter>D:\A4_Mask_Limit_Line.csv</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.12</stepnum>
+      <stepname>Query the final conclusion of limit test.</stepname>
+      <stepdescription>on channel 2</stepdescription>
+      <stepfieldenabled>true</stepfieldenabled>
+      <stepfieldname>limit_test_conclusion</stepfieldname>
+      <functionname>QueryLimitTestConclusion</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>PASS</limit>
+      </spec>
+    </step>
   </block>
 </sequence>
