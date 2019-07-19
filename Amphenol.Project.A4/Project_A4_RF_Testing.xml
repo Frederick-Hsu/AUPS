@@ -20,20 +20,6 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.2</stepnum>
-      <stepname>Preset the window layout and display format.</stepname>
-      <stepdescription>Clean up the window display of network analyzer.</stepdescription>
-      <stepfieldenabled>false</stepfieldenabled>
-      <stepfieldname>
-      </stepfieldname>
-      <functionname>PresetNetworkAnalyzerWindowLayoutDisplay</functionname>
-      <parameterlist />
-      <limittype>String</limittype>
-      <spec>
-        <limit>OK</limit>
-      </spec>
-    </step>
-    <step>
       <stepnum>1.3</stepnum>
       <stepname>Configure the channel display mode</stepname>
       <stepdescription>Select the window layout for the network analyzer front panel.</stepdescription>
@@ -278,5 +264,178 @@
   <block>
     <blocknum>B2</blocknum>
     <blockname>Set up the test limits and mask line</blockname>
+    <step>
+      <stepnum>2.1</stepnum>
+      <stepname>Open the marker search mode</stepname>
+      <stepdescription>Display ON the marker 1 on Channel1.Trace1.</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ShowHideRegularMarker</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.2</stepnum>
+      <stepname>Specify the target for marker search</stepname>
+      <stepdescription>Target value : -10.0dB, data format : Log Magnitude</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TargetMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>TARGet</parameter>
+        <parameter>-10.00</parameter>
+        <parameter>BOTH</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.3</stepnum>
+      <stepname>Turn ON the marker search tracking feature</stepname>
+      <stepdescription>Tracking feature : ON</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TurnOnOffMarkerSearchTrackingFeature</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.4</stepnum>
+      <stepname>Perform marker search</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>PerformMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.5</stepnum>
+      <stepname>Retrieve the results, after performed marker search.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>RetrieveMarkerSearchResults</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>-10.20</limit>
+        <limit>-10.00</limit>
+        <limit>-9.80</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.6</stepnum>
+      <stepname>Change the channel display layout</stepname>
+      <stepdescription>Channel display layout : D1_2</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigWindowDisplayLayout</functionname>
+      <parameterlist>
+        <parameter>D1_2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.6.1</stepnum>
+      <stepname>Maximize the window 2.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>MaximizeOnOffChannelTraceDisplay</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>ON</parameter>
+        <parameter>1</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.6.2</stepnum>
+      <stepname>Change the sweep frequency range for channel 2.</stepname>
+      <stepdescription>freq. range : 500MHz to 3GHz</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigSweepFreqRange</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1.4e9</parameter>
+        <parameter>2.6e9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.7</stepnum>
+      <stepname>Perform target marker search, plot the mask line</stepname>
+      <stepdescription>Target value : -10dB</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>PlotMaskLineForA4</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>RTARget</parameter>
+        <parameter>-10.00</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
   </block>
 </sequence>

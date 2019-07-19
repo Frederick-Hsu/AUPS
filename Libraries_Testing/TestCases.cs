@@ -96,17 +96,17 @@ namespace Libraries_Testing
             {
                 /* channel 1 : upper limit line */
                 segment.type = 1;
-                segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
-                segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] + 1.00);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] + 1.00);
+                segment.startPointHaxisValue = Convert.ToString(frequencies1[index]);
+                segment.endPointHaxisValue = Convert.ToString(frequencies1[index + 4]);
+                segment.startPointVaxisValue = Convert.ToString(primaryAmplitudes1[index] + 1.00);
+                segment.endPointVaxisValue = Convert.ToString(primaryAmplitudes1[index + 4] + 1.00);
                 limitLines.Add(segment);
                 /* channel 1: lower limit line */
                 segment.type = 2;
-                segment.startPointHAxisValue = Convert.ToString(frequencies1[index]);
-                segment.endPointHAxisValue = Convert.ToString(frequencies1[index + 4]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes1[index] - 1.00);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes1[index + 4] - 1.00);
+                segment.startPointHaxisValue = Convert.ToString(frequencies1[index]);
+                segment.endPointHaxisValue = Convert.ToString(frequencies1[index + 4]);
+                segment.startPointVaxisValue = Convert.ToString(primaryAmplitudes1[index] - 1.00);
+                segment.endPointVaxisValue = Convert.ToString(primaryAmplitudes1[index + 4] - 1.00);
                 limitLines.Add(segment);
             }
             error = analyzer.SetLimitTable(1, (uint)limitLines.Count, limitLines);
@@ -165,17 +165,17 @@ namespace Libraries_Testing
             {
                 /* channel 2 : uppert limit line */
                 segment.type = 1;
-                segment.startPointHAxisValue = Convert.ToString(frequencies2[index]);
-                segment.endPointHAxisValue = Convert.ToString(frequencies2[index + 2]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[index] + 0.50);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[index + 2] + 0.50);
+                segment.startPointHaxisValue = Convert.ToString(frequencies2[index]);
+                segment.endPointHaxisValue = Convert.ToString(frequencies2[index + 2]);
+                segment.startPointVaxisValue = Convert.ToString(primaryAmplitudes2[index] + 0.50);
+                segment.endPointVaxisValue = Convert.ToString(primaryAmplitudes2[index + 2] + 0.50);
                 ch2LimitLines.Add(segment);
                 /* channel 2 : lower limit line */
                 segment.type = 2;
-                segment.startPointHAxisValue = Convert.ToString(frequencies2[index]);
-                segment.endPointHAxisValue = Convert.ToString(frequencies2[index + 2]);
-                segment.startPointVAxisValue = Convert.ToString(primaryAmplitudes2[index] - 0.50);
-                segment.endPointVAxisValue = Convert.ToString(primaryAmplitudes2[index + 2] - 0.50);
+                segment.startPointHaxisValue = Convert.ToString(frequencies2[index]);
+                segment.endPointHaxisValue = Convert.ToString(frequencies2[index + 2]);
+                segment.startPointVaxisValue = Convert.ToString(primaryAmplitudes2[index] - 0.50);
+                segment.endPointVaxisValue = Convert.ToString(primaryAmplitudes2[index + 2] - 0.50);
                 ch2LimitLines.Add(segment);
             }
             error = analyzer.SetLimitTable(2, (uint)ch2LimitLines.Count, ch2LimitLines);
@@ -370,28 +370,28 @@ namespace Libraries_Testing
 
             Console.WriteLine("Marker search in Smith chart");
             Console.WriteLine("Marker 1: ");
-            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 1, out markerPointFreq);
-            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 1, out markerPointResp);
+            error = analyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(1, 1, 1, out markerPointFreq);
+            error = analyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(1, 1, 1, out markerPointResp);
             Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
 
             Console.WriteLine("Marker 2: ");
-            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 2, out markerPointFreq);
-            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 2, out markerPointResp);
+            error = analyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(1, 1, 2, out markerPointFreq);
+            error = analyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(1, 1, 2, out markerPointResp);
             Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
 
             Console.WriteLine("Marker 3: ");
-            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 3, out markerPointFreq);
-            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 3, out markerPointResp);
+            error = analyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(1, 1, 3, out markerPointFreq);
+            error = analyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(1, 1, 3, out markerPointResp);
             Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
 
             Console.WriteLine("Marker 4: ");
-            error = analyzer.RetrieveFrequencyValueAtRegularMarker(1, 1, 4, out markerPointFreq);
-            error = analyzer.RetrieveMeasurementResultAtRegularMarker(1, 1, 4, out markerPointResp);
+            error = analyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(1, 1, 4, out markerPointFreq);
+            error = analyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(1, 1, 4, out markerPointResp);
             Console.WriteLine("{0}, \t\t {1}, \t\t {2}", markerPointFreq, markerPointResp[0], markerPointResp[1]);
 
-            error = analyzer.TurnOnOffStatisticsValueDisplay(1, "ON");
+            error = analyzer.TurnOnOffStatisticsValueDisplay(1, 1, "ON");
             double[] statisticsValues = new double[3];
-            error = analyzer.RetrieveTraceStatisticsAnalysisValues(1, out statisticsValues[0], out statisticsValues[1], out statisticsValues[2]);
+            error = analyzer.RetrieveTraceStatisticsAnalysisValues(1, 1, out statisticsValues[0], out statisticsValues[1], out statisticsValues[2]);
             Console.WriteLine("Trace statistics values : ");
             Console.WriteLine("Mean \t\t Standard deviation \t\t Peak-Peak");
             Console.WriteLine("{0} \t\t {1} \t\t {2}", statisticsValues[0], statisticsValues[1], statisticsValues[2]);

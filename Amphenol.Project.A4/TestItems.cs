@@ -54,6 +54,48 @@ namespace Amphenol.Project.A4
                 case "MaximizeOnOffChannelTraceDisplay":
                     success = MaximizeOnOffChannelTraceDisplay(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "ShowHideRegularMarker":
+                    success = ShowHideRegularMarker(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SelectMarkerSearchType":
+                    success = SelectMarkerSearchType(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "TargetMarkerSearch":
+                    success = TargetMarkerSearch(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "TurnOnOffMarkerSearchTrackingFeature":
+                    success = TurnOnOffMarkerSearchTrackingFeature(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "PerformMarkerSearch":
+                    success = PerformMarkerSearch(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "RetrieveMarkerSearchResults":
+                    success = RetrieveMarkerSearchResults(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "PlotMaskLineForA4":
+                    success = PlotMaskLineForA4(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "ShowHideSoftkeyLabel":
+                    success = ShowHideSoftkeyLabel(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "DisplayOnOffMaskLimitLine":
+                    success = DisplayOnOffMaskLimitLine(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "EnableOnOffLimitTestFunction":
+                    success = EnableOnOffLimitTestFunction(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "CleanUpMaskLimitLine":
+                    success = CleanUpMaskLimitLine(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "LoadMaskLimitLineFromCsvFileInLocalDisk":
+                    success = LoadMaskLimitLineFromCsvFileInLocalDisk(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SaveMaskLimitLineIntoCsvFileInLocalDisk":
+                    success = SaveMaskLimitLineIntoCsvFileInLocalDisk(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "QueryLimitTestConclusion":
+                    success = QueryLimitTestConclusion(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
             }
             stepResult = result;
             stepStatus = status;
@@ -128,14 +170,18 @@ namespace Amphenol.Project.A4
             }));
             testFnctInfo.Add("ConfigureChannelTraceDisplayScale", new List<string>(new string[] 
             {
+                /* test function name description */
                 "Configure the display scale of the user-specified trace inside one certain channel",
+                /* parameter 1 description */
                 "Channel number, range : 1 ~ 9",
+                /* parameter 2 description */
                 "Trace number inside the channel you specify, range : 1 ~ 9",
                 "Number of divisions for the graticule, it is a channel-wide setting, \n" +
                 "shared among all traces inside one certain channel, \n" +
                 "Range : 4 to 30 \n" +
                 "Preset value : 10 \n" +
                 "Resolution : 2",
+                /* parameter 3 description */
                 "The scale per division, when you use the rectangular display format, or \n" +
                 "the full scale value (i.e. the value of outermost circle), when Smith chart / Polar formats \n" +
                 "Range : 1e-18 to 1e8\n" +
@@ -151,10 +197,12 @@ namespace Amphenol.Project.A4
                 "       Phase, Expand Phase, Positive Phase : degree\n" +
                 "       Group Delay : second\n" +
                 "       Others : No unit",
+                /* parameter 4 description */
                 "Number of graticule line\n" +
                 "Range : 0 to number of divisions\n" +
                 "Preset value : 5 (when the data format is \"Linear Magnitude\" or \"SWR\", the preset value is 1.)\n" +
                 "Resolution : 1",
+                /* parameter 5 description */
                 "Value of reference graticule line\n" +
                 "Range : -5e8 to 5e8\n" +
                 "Preset value : 0 (When the data format is \"SWR\", the preset value is 1.)\n" +
@@ -171,6 +219,131 @@ namespace Amphenol.Project.A4
                 "Channel max display ON/OFF, range : \"ON\" or \"OFF\"",
                 "Trace number you want to choose, range : 1 ~ 9",
                 "Trace max ON/OFF display, range : \"ON\" or \"OFF\""
+            }));
+            testFnctInfo.Add("ShowHideRegularMarker", new List<string>(new string[]
+            {
+                "Turn ON/OFF the regular marker display",
+                "Channel number, range : 1 ~ 9",
+                "Trace number, range : 1 ~ 9",
+                "Marker number, range : 1 ~ 9",
+                "Marker display status, ON or OFF"
+            }));
+            testFnctInfo.Add("SelectMarkerSearchType", new List<string>(new string[]
+            {
+                "Select the search type for marker search",
+                "Channel number, range : 1 ~ 9",
+                "Trace number, range : 1 ~ 9",
+                "Marker number, range : 1 ~ 9",
+                "Marker search type, please select one you desired from the below list :\n" +
+                "MAXimum,        specifies the maximum value search\n" +
+                "MINimum,        specifies the minimum value search\n" +
+                "PEAK,           specifies the maximum positive (or minimum negative) peak search\n" +
+                "LPEak,          specifies the peak search to the left from the marker position\n" +
+                "RPEak,          specifies the peak search to the right from the marker position\n" +
+                "TARGet,         specifies the search for the target closest to the current marker position\n" +
+                "LTARget,        specifies the target search to the left from the marker position\n" +
+                "RTARget,        specifies the target search to the right from the marker position\n"
+            }));
+            testFnctInfo.Add("TargetMarkerSearch", new List<string>(new string[]
+            {
+                /* test function name description */
+                "Define the marker target search by specifying the target value (response value) \n" +
+                "and transitional direction (positive or negative value change).",
+                /* parameter 1 description */
+                "Channel number, range : 1 ~ 9",
+                /* parameter 2 description */
+                "Trace number, range : 1 ~ 9",
+                /* parameter 3 description */
+                "Regular marker number, range : 1 ~ 9",
+                /* parameter 4 description */
+                "Marker search type, by default TARGet, \n" +
+                "MINimum\n" +
+                "MAXimum\n" +
+                "PEAK\n" +
+                "LPEak\n" +
+                "RPEak\n" +
+                "TARGet\n" +
+                "LTARget\n" +
+                "RTARget",
+                /* parameter 5 description */
+                "Target response value for target search, " +
+                "range : -5e8 to 5e8\n" +
+                "unit : varies depending on the data format as follows:\n" +
+                "       Logarithmic Magnitude : dB\n" +
+                "       Phase, Expand Phase, Positive Phase : degree\n" +
+                "       Group Delay : second\n" +
+                "       Others : no unit",
+                /* parameter 6 description */
+                "Target search transitional direction, range : POSitive, NEGative, BOTH by default."
+            }));
+            testFnctInfo.Add("TurnOnOffMarkerSearchTrackingFeature", new List<string>(new string[] 
+            {
+                "Turn ON or OFF the marker search tracking feature for the active trace of channel, \n" +
+                "which performs the marker search every time the trace is updated.",
+                "Channel number, range : 1 ~ 9",
+                "Trace number, range : 1 ~ 9",
+                "Marker number, range : 1 ~ 9",
+                "ON or OFF"
+            }));
+            testFnctInfo.Add("PerformMarkerSearch", new List<string>(new string[]
+            {
+                "Perform the marker search",
+                "Channel number, range : 1 ~ 9",
+                "Trace number, range : 1 ~ 9",
+                "Marker number, range : 1 ~ 9"
+            }));
+            testFnctInfo.Add("RetrieveMarkerSearchResults", new List<string>(new string[]
+            {
+                "After performed the marker search, retrieve the search results.",
+                "Channel number at which you performed marker search",
+                "Trace number at which you performed marker search",
+                "Marker number you want to retrieve the results"
+            }));
+            testFnctInfo.Add("PlotMaskLineForA4", new List<string>(new string[]
+            {
+                "Plot the mask line of limit test for A4 project, according to the target search",
+                "Channel number, rang : 1 ~ 9",
+                "Trace number, range : 1 ~ 9",
+                "Marker number, range : 1 ~ 9",
+                "Search type, select TARGet",
+                "Target value, usually the response value in Log Magnitude format"
+            }));
+            testFnctInfo.Add("ShowHideSoftkeyLabel", new List<string>(new string[]
+            {
+                "Show or hide the soft key labels placed alongside the right-hand edge of the LCD screen.",
+                "State : ON or OFF"
+            }));
+            testFnctInfo.Add("DisplayOnOffMaskLimitLine", new List<string>(new string[] 
+            {
+                "Show or hide the mask limit line",
+                "Channel number on which you want to display or hide the mask limit line, range : 1 ~ 9",
+                "State, ON or OFF"
+            }));
+            testFnctInfo.Add("EnableOnOffLimitTestFunction", new List<string>(new string[]
+            {
+                "Enable or disable the limit test function and Pass/Fail indicator on the screen",
+                "Channel number in which you want to check, range : 1 ~ 9",
+                "State : ON or OFF"
+            }));
+            testFnctInfo.Add("CleanUpMaskLimitLine", new List<string>(new string[]
+            {
+                "Clean up, remove the mask limit line.",
+                "Channel number in which you want to remove the mask line, range : 1 ~ 9"
+            }));
+            testFnctInfo.Add("LoadMaskLimitLineFromCsvFileInLocalDisk", new List<string>(new string[]
+            {
+                "Load the csv file of mask limit line from local disk",
+                "The .csv file name, including the full path."
+            }));
+            testFnctInfo.Add("SaveMaskLimitLineIntoCsvFileInLocalDisk", new List<string>(new string[]
+            {
+                "Save the mask limit line into the .csv file in local disk",
+                "The .csv file name, including the full path."
+            }));
+            testFnctInfo.Add("QueryLimitTestConclusion", new List<string>(new string[]
+            {
+                "Query the final conclusion of limit test, PASS or FAIL?",
+                "Channel number you want to query, range : 1 ~ 9"
             }));
             return testFnctInfo;
         }
