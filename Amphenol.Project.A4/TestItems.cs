@@ -81,6 +81,21 @@ namespace Amphenol.Project.A4
                 case "DisplayOnOffMaskLimitLine":
                     success = DisplayOnOffMaskLimitLine(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "EnableOnOffLimitTestFunction":
+                    success = EnableOnOffLimitTestFunction(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "CleanUpMaskLimitLine":
+                    success = CleanUpMaskLimitLine(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "LoadMaskLimitLineFromCsvFileInLocalDisk":
+                    success = LoadMaskLimitLineFromCsvFileInLocalDisk(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "SaveMaskLimitLineIntoCsvFileInLocalDisk":
+                    success = SaveMaskLimitLineIntoCsvFileInLocalDisk(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "QueryLimitTestConclusion":
+                    success = QueryLimitTestConclusion(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
             }
             stepResult = result;
             stepStatus = status;
@@ -303,6 +318,32 @@ namespace Amphenol.Project.A4
                 "Show or hide the mask limit line",
                 "Channel number on which you want to display or hide the mask limit line, range : 1 ~ 9",
                 "State, ON or OFF"
+            }));
+            testFnctInfo.Add("EnableOnOffLimitTestFunction", new List<string>(new string[]
+            {
+                "Enable or disable the limit test function and Pass/Fail indicator on the screen",
+                "Channel number in which you want to check, range : 1 ~ 9",
+                "State : ON or OFF"
+            }));
+            testFnctInfo.Add("CleanUpMaskLimitLine", new List<string>(new string[]
+            {
+                "Clean up, remove the mask limit line.",
+                "Channel number in which you want to remove the mask line, range : 1 ~ 9"
+            }));
+            testFnctInfo.Add("LoadMaskLimitLineFromCsvFileInLocalDisk", new List<string>(new string[]
+            {
+                "Load the csv file of mask limit line from local disk",
+                "The .csv file name, including the full path."
+            }));
+            testFnctInfo.Add("SaveMaskLimitLineIntoCsvFileInLocalDisk", new List<string>(new string[]
+            {
+                "Save the mask limit line into the .csv file in local disk",
+                "The .csv file name, including the full path."
+            }));
+            testFnctInfo.Add("QueryLimitTestConclusion", new List<string>(new string[]
+            {
+                "Query the final conclusion of limit test, PASS or FAIL?",
+                "Channel number you want to query, range : 1 ~ 9"
             }));
             return testFnctInfo;
         }
