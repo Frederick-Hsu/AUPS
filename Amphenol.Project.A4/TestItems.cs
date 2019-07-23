@@ -96,6 +96,9 @@ namespace Amphenol.Project.A4
                 case "QueryLimitTestConclusion":
                     success = QueryLimitTestConclusion(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "RetrieveMarkerSearchStimulusResult":
+                    success = RetrieveMarkerSearchStimulusResult(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
+                    break;
             }
             stepResult = result;
             stepStatus = status;
@@ -344,6 +347,13 @@ namespace Amphenol.Project.A4
             {
                 "Query the final conclusion of limit test, PASS or FAIL?",
                 "Channel number you want to query, range : 1 ~ 9"
+            }));
+            testFnctInfo.Add("RetrieveMarkerSearchStimulusResult", new List<string>(new string[]
+            {
+                "Retrieve the frequency measured at the marker position, after performed target marker search.",
+                "Channel number, range : 1 ~ 9",
+                "Trace number, range : 1 ~ 9",
+                "Marker number on which you want to perform marker search, range : 1 ~ 9"
             }));
             return testFnctInfo;
         }
