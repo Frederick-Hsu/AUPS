@@ -158,7 +158,7 @@ namespace Amphenol.Instruments.Keysight
             return QueryErrorStatus(out response);
         }
 
-        /* :CAL1:FORM? */
+        /* :CALC1:FORM? */
         public int QueryDataFormatForActiveTraceOfChannel(int channelNum, int traceNum, out string dataFormat)
         {
             int errorno, count;

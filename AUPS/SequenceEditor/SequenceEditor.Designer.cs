@@ -30,18 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SequenceEditor));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Open COM port");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Communicate with DMM");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Configure network");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Initialization", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Measure VDD");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Measure Vref");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Voltage measurement", new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Open COM port");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Communicate with DMM");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Configure network");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Initialization", new System.Windows.Forms.TreeNode[] {
+            treeNode8,
+            treeNode9,
+            treeNode10});
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Measure VDD");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Measure Vref");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Voltage measurement", new System.Windows.Forms.TreeNode[] {
+            treeNode12,
+            treeNode13});
             this.sequenceEditorToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripBtnNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnOpen = new System.Windows.Forms.ToolStripButton();
@@ -90,12 +90,16 @@
             this.comboBoxTestFunctionName = new System.Windows.Forms.ComboBox();
             this.labelTestFunctionName = new System.Windows.Forms.Label();
             this.groupBoxBasicTestStepInfo = new System.Windows.Forms.GroupBox();
+            this.textBoxStepField = new System.Windows.Forms.TextBox();
+            this.checkBoxStepFieldEnabled = new System.Windows.Forms.CheckBox();
+            this.labelStepField = new System.Windows.Forms.Label();
             this.textBoxStepDescription = new System.Windows.Forms.TextBox();
             this.textBoxStepName = new System.Windows.Forms.TextBox();
             this.textBoxStepNo = new System.Windows.Forms.TextBox();
             this.labelStepDescription = new System.Windows.Forms.Label();
             this.labelStepName = new System.Windows.Forms.Label();
             this.labelStepNo = new System.Windows.Forms.Label();
+            this.toolTipHints = new System.Windows.Forms.ToolTip(this.components);
             this.sequenceEditorToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitContainer)).BeginInit();
             this.editorSplitContainer.Panel1.SuspendLayout();
@@ -257,24 +261,24 @@
             this.treeViewSequence.Location = new System.Drawing.Point(0, 20);
             this.treeViewSequence.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeViewSequence.Name = "treeViewSequence";
-            treeNode1.Name = "Block1_Item1";
-            treeNode1.Text = "Open COM port";
-            treeNode2.Name = "Block1_Item2";
-            treeNode2.Text = "Communicate with DMM";
-            treeNode3.Name = "Block1_Item3";
-            treeNode3.Text = "Configure network";
-            treeNode4.Checked = true;
-            treeNode4.Name = "Block1";
-            treeNode4.Text = "Initialization";
-            treeNode5.Name = "Block2_Item1";
-            treeNode5.Text = "Measure VDD";
-            treeNode6.Name = "Block2_Item2";
-            treeNode6.Text = "Measure Vref";
-            treeNode7.Name = "Block2";
-            treeNode7.Text = "Voltage measurement";
+            treeNode8.Name = "Block1_Item1";
+            treeNode8.Text = "Open COM port";
+            treeNode9.Name = "Block1_Item2";
+            treeNode9.Text = "Communicate with DMM";
+            treeNode10.Name = "Block1_Item3";
+            treeNode10.Text = "Configure network";
+            treeNode11.Checked = true;
+            treeNode11.Name = "Block1";
+            treeNode11.Text = "Initialization";
+            treeNode12.Name = "Block2_Item1";
+            treeNode12.Text = "Measure VDD";
+            treeNode13.Name = "Block2_Item2";
+            treeNode13.Text = "Measure Vref";
+            treeNode14.Name = "Block2";
+            treeNode14.Text = "Voltage measurement";
             this.treeViewSequence.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode7});
+            treeNode11,
+            treeNode14});
             this.treeViewSequence.ShowNodeToolTips = true;
             this.treeViewSequence.Size = new System.Drawing.Size(396, 930);
             this.treeViewSequence.TabIndex = 3;
@@ -405,6 +409,8 @@
             // 
             // groupBoxBlockInfo
             // 
+            this.groupBoxBlockInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxBlockInfo.Controls.Add(this.textBoxBlockName);
             this.groupBoxBlockInfo.Controls.Add(this.labelBlockName);
             this.groupBoxBlockInfo.Controls.Add(this.textBoxBlockNum);
@@ -417,6 +423,8 @@
             // 
             // textBoxBlockName
             // 
+            this.textBoxBlockName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxBlockName.Location = new System.Drawing.Point(548, 28);
             this.textBoxBlockName.Name = "textBoxBlockName";
             this.textBoxBlockName.Size = new System.Drawing.Size(774, 26);
@@ -459,7 +467,7 @@
             this.groupBoxSpecification.Controls.Add(this.dataGridViewTestSpec);
             this.groupBoxSpecification.Controls.Add(this.comboBoxLimitType);
             this.groupBoxSpecification.Controls.Add(this.labelLimitType);
-            this.groupBoxSpecification.Location = new System.Drawing.Point(10, 500);
+            this.groupBoxSpecification.Location = new System.Drawing.Point(10, 545);
             this.groupBoxSpecification.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxSpecification.Name = "groupBoxSpecification";
             this.groupBoxSpecification.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -470,6 +478,8 @@
             // 
             // dataGridViewTestSpec
             // 
+            this.dataGridViewTestSpec.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewTestSpec.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTestSpec.Location = new System.Drawing.Point(8, 55);
             this.dataGridViewTestSpec.Name = "dataGridViewTestSpec";
@@ -479,6 +489,8 @@
             // 
             // comboBoxLimitType
             // 
+            this.comboBoxLimitType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxLimitType.FormattingEnabled = true;
             this.comboBoxLimitType.Items.AddRange(new object[] {
             "Numerical",
@@ -513,7 +525,7 @@
             this.groupBoxTestFunctionParams.Controls.Add(this.labelParameters);
             this.groupBoxTestFunctionParams.Controls.Add(this.comboBoxTestFunctionName);
             this.groupBoxTestFunctionParams.Controls.Add(this.labelTestFunctionName);
-            this.groupBoxTestFunctionParams.Location = new System.Drawing.Point(9, 283);
+            this.groupBoxTestFunctionParams.Location = new System.Drawing.Point(10, 328);
             this.groupBoxTestFunctionParams.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxTestFunctionParams.Name = "groupBoxTestFunctionParams";
             this.groupBoxTestFunctionParams.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -604,8 +616,9 @@
             this.comboBoxTestFunctionName.Location = new System.Drawing.Point(170, 38);
             this.comboBoxTestFunctionName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxTestFunctionName.Name = "comboBoxTestFunctionName";
-            this.comboBoxTestFunctionName.Size = new System.Drawing.Size(1162, 28);
+            this.comboBoxTestFunctionName.Size = new System.Drawing.Size(1170, 28);
             this.comboBoxTestFunctionName.TabIndex = 1;
+            this.comboBoxTestFunctionName.SelectedIndexChanged += new System.EventHandler(this.comboBoxTestFunctionName_SelectedIndexChanged);
             // 
             // labelTestFunctionName
             // 
@@ -621,19 +634,53 @@
             // 
             this.groupBoxBasicTestStepInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxBasicTestStepInfo.Controls.Add(this.textBoxStepField);
+            this.groupBoxBasicTestStepInfo.Controls.Add(this.checkBoxStepFieldEnabled);
+            this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepField);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.textBoxStepDescription);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.textBoxStepName);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.textBoxStepNo);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepDescription);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepName);
             this.groupBoxBasicTestStepInfo.Controls.Add(this.labelStepNo);
-            this.groupBoxBasicTestStepInfo.Location = new System.Drawing.Point(9, 88);
+            this.groupBoxBasicTestStepInfo.Location = new System.Drawing.Point(10, 88);
             this.groupBoxBasicTestStepInfo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxBasicTestStepInfo.Name = "groupBoxBasicTestStepInfo";
             this.groupBoxBasicTestStepInfo.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxBasicTestStepInfo.Size = new System.Drawing.Size(852, 186);
+            this.groupBoxBasicTestStepInfo.Size = new System.Drawing.Size(852, 225);
             this.groupBoxBasicTestStepInfo.TabIndex = 0;
             this.groupBoxBasicTestStepInfo.TabStop = false;
+            // 
+            // textBoxStepField
+            // 
+            this.textBoxStepField.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxStepField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxStepField.Enabled = false;
+            this.textBoxStepField.Location = new System.Drawing.Point(274, 181);
+            this.textBoxStepField.Name = "textBoxStepField";
+            this.textBoxStepField.Size = new System.Drawing.Size(562, 26);
+            this.textBoxStepField.TabIndex = 8;
+            // 
+            // checkBoxStepFieldEnabled
+            // 
+            this.checkBoxStepFieldEnabled.AutoSize = true;
+            this.checkBoxStepFieldEnabled.Location = new System.Drawing.Point(170, 181);
+            this.checkBoxStepFieldEnabled.Name = "checkBoxStepFieldEnabled";
+            this.checkBoxStepFieldEnabled.Size = new System.Drawing.Size(97, 24);
+            this.checkBoxStepFieldEnabled.TabIndex = 7;
+            this.checkBoxStepFieldEnabled.Text = "Disabled";
+            this.checkBoxStepFieldEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxStepFieldEnabled.CheckedChanged += new System.EventHandler(this.checkBoxStepFieldEnabled_CheckedChanged);
+            // 
+            // labelStepField
+            // 
+            this.labelStepField.AutoSize = true;
+            this.labelStepField.Location = new System.Drawing.Point(24, 181);
+            this.labelStepField.Name = "labelStepField";
+            this.labelStepField.Size = new System.Drawing.Size(93, 20);
+            this.labelStepField.TabIndex = 6;
+            this.labelStepField.Text = "Step Field : ";
             // 
             // textBoxStepDescription
             // 
@@ -702,10 +749,19 @@
             this.labelStepNo.TabIndex = 0;
             this.labelStepNo.Text = "Step No. : ";
             // 
+            // toolTipHints
+            // 
+            this.toolTipHints.AutomaticDelay = 3000;
+            this.toolTipHints.AutoPopDelay = 30000;
+            this.toolTipHints.InitialDelay = 300;
+            this.toolTipHints.ReshowDelay = 600;
+            this.toolTipHints.ShowAlways = true;
+            // 
             // SequenceEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1784, 1002);
             this.Controls.Add(this.editorSplitContainer);
             this.Controls.Add(this.sequenceEditorToolStrip);
@@ -793,5 +849,9 @@
         private System.Windows.Forms.TextBox textBoxBlockName;
         private System.Windows.Forms.ToolStripMenuItem addNewBlockBeforeBlockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewStepBeforeToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTipHints;
+        private System.Windows.Forms.Label labelStepField;
+        private System.Windows.Forms.CheckBox checkBoxStepFieldEnabled;
+        private System.Windows.Forms.TextBox textBoxStepField;
     }
 }

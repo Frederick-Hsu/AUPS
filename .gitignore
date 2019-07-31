@@ -9,6 +9,7 @@
 *.stackdump
 *.pdf
 *.xml
+*.doc
 *.chw
 *.zip
 *.ico
@@ -54,6 +55,8 @@ Application Files/
 ConnectManipulateDB/
 PostgreSQL_Database/
 TestForm/
+
+Amphenol.Project.CiscoDarlingF587/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

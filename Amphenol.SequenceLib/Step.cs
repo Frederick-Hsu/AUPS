@@ -18,6 +18,8 @@ namespace Amphenol.SequenceLib
         private string stepName;
         [DataMember]
         private string stepDescription;
+        private bool isStepFieldEnabled;
+        private string stepFieldName;
         [DataMember]
         private string stepFunctionName;
         [DataMember]
@@ -43,6 +45,18 @@ namespace Amphenol.SequenceLib
             XmlNode stepdescriptionNode = stepNode.SelectSingleNode("stepdescription");
             if (stepdescriptionNode != null)
                 stepDescription = stepdescriptionNode.InnerText;
+
+            XmlNode stepFieldEnableNode = stepNode.SelectSingleNode("stepfieldenabled");
+            if (stepFieldEnableNode != null)
+            {
+                isStepFieldEnabled = (stepFieldEnableNode.InnerText.ToLower() == "true") ? true : false;
+            }
+
+            XmlNode stepFieldNameNode = stepNode.SelectSingleNode("stepfieldname");
+            if (stepFieldNameNode != null)
+            {
+                stepFieldName = stepFieldNameNode.InnerText;
+            }
 
             XmlNode stepFunctionNameNode = stepNode.SelectSingleNode("functionname");
             if (stepFunctionNameNode != null)
@@ -100,6 +114,28 @@ namespace Amphenol.SequenceLib
             set
             {
                 stepDescription = value;
+            }
+        }
+        public bool StepFieldEnabled
+        {
+            get
+            {
+                return isStepFieldEnabled;
+            }
+            set
+            {
+                isStepFieldEnabled = value;
+            }
+        }
+        public string StepFieldName
+        {
+            get
+            {
+                return stepFieldName;
+            }
+            set
+            {
+                stepFieldName = value;
             }
         }
         public string StepFunctionName
@@ -197,6 +233,57 @@ namespace Amphenol.SequenceLib
             currentStepNode.AppendChild(stepnumNode);
             currentStepNode.AppendChild(stepnameNode);
             currentStepNode.AppendChild(stepdescriptionNode);
+            currentStepNode.AppendChild(functionnameNode);
+            currentStepNode.AppendChild(parameterlistNode);
+            currentStepNode.AppendChild(limittypeNode);
+            currentStepNode.AppendChild(specNode);
+        }
+
+        public Step(string stepnum, 
+                    string stepname, 
+                    string stepdescription, 
+                    string stepfunctionname, 
+                    ParameterList paramlist, 
+                    string limittype, 
+                    Spec limitlist,
+                    XmlDocument doc, 
+                    bool stepfieldenabled = false, 
+                    string stepfieldname = "")
+        {
+            stepNum = stepnum;
+            stepName = stepname;
+            stepDescription = stepdescription;
+            isStepFieldEnabled = stepfieldenabled;
+            stepFieldName = stepfieldname;
+            stepFunctionName = stepfunctionname;
+            parameterList = paramlist;
+            limitType = limittype;
+            limitList = limitlist;
+
+            /* new <step> node */
+            currentStepNode = doc.CreateElement("step");
+            XmlElement stepnumNode = doc.CreateElement("stepnum");      /* <stepnum> node */
+            stepnumNode.InnerText = stepnum;
+            XmlElement stepnameNode = doc.CreateElement("stepname");    /* <stepname> node */
+            stepnameNode.InnerText = stepname;
+            XmlElement stepdescriptionNode = doc.CreateElement("stepdescription");      /* <stepdescription> node */
+            stepdescriptionNode.InnerText = stepdescription;
+            XmlElement stepfieldenabledNode = doc.CreateElement("stepfieldenabled");    /* <stepfieldenabled> node */
+            stepfieldenabledNode.InnerText = ((stepfieldenabled == true) ? "true" : "false");
+            XmlElement stepfieldnameNode = doc.CreateElement("stepfieldname");          /* <stepfieldname> node */
+            stepfieldnameNode.InnerText = stepfieldname;
+            XmlElement functionnameNode = doc.CreateElement("functionname");            /* <functionname> node */
+            functionnameNode.InnerText = stepfunctionname;
+            XmlNode parameterlistNode = paramlist.CurrentParameterListNode.CloneNode(true);     /* <parameterlist> node */
+            XmlElement limittypeNode = doc.CreateElement("limittype");                  /* <limittype> node */
+            limittypeNode.InnerText = limittype;
+            XmlNode specNode = limitlist.CurrentSpecNode.CloneNode(true);               /* <spec> node */
+
+            currentStepNode.AppendChild(stepnumNode);
+            currentStepNode.AppendChild(stepnameNode);
+            currentStepNode.AppendChild(stepdescriptionNode);
+            currentStepNode.AppendChild(stepfieldenabledNode);
+            currentStepNode.AppendChild(stepfieldnameNode);
             currentStepNode.AppendChild(functionnameNode);
             currentStepNode.AppendChild(parameterlistNode);
             currentStepNode.AppendChild(limittypeNode);
@@ -377,6 +464,49 @@ namespace Amphenol.SequenceLib
             currentStepNode.ReplaceChild(stepParamListValue.CurrentParameterListNode, parameterlistNode);
             /* Change <limittype> node */
             XmlNode limittypeNode = currentStepNode.SelectSingleNode("limittype");
+            limittypeNode.InnerText = stepLimitTypeValue;
+            /* Replace <spec> node */
+            XmlNode specNode = currentStepNode.SelectSingleNode("spec");
+            currentStepNode.ReplaceChild(stepSpecValue.CurrentSpecNode, specNode);
+        }
+
+        public void ModifyCurrentStep(string stepNumValue,
+                                      string stepNameValue,
+                                      string stepDescriptionValue,
+                                      bool stepFieldEnabledValue,
+                                      string stepFieldNameValue,
+                                      string stepFunctionNameValue,
+                                      ParameterList stepParamListValue,
+                                      string stepLimitTypeValue,
+                                      Spec stepSpecValue)
+        {
+            this.stepNum = stepNumValue;
+            this.stepName = stepNameValue;
+            this.stepDescription = stepDescriptionValue;
+            this.isStepFieldEnabled = stepFieldEnabledValue;
+            this.stepFieldName = stepFieldNameValue;
+            this.stepFunctionName = stepFunctionNameValue;
+            this.parameterList = stepParamListValue;
+            this.limitType = stepLimitTypeValue;
+            this.limitList = stepSpecValue;
+
+            /* change <stepnum> node */
+            XmlNode stepnumNode = currentStepNode.SelectSingleNode("stepnum");
+            stepnumNode.InnerText = stepNumValue;
+            XmlNode stepnameNode = currentStepNode.SelectSingleNode("stepname");        /* <stepname> node */
+            stepnameNode.InnerText = stepNameValue;
+            XmlNode stepdescriptionNode = currentStepNode.SelectSingleNode("stepdescription");  /* <stepdescription> node */
+            stepdescriptionNode.InnerText = stepDescriptionValue;
+            XmlNode stepfieldenabledNode = currentStepNode.SelectSingleNode("stepfieldenabled");    /* <stepfieldenabled> node */
+            stepfieldenabledNode.InnerText = ((stepFieldEnabledValue == true) ? "true" : "false");
+            XmlNode stepfieldnameNode = currentStepNode.SelectSingleNode("stepfieldname");      /* <stepfieldname> node */
+            stepfieldnameNode.InnerText = stepFieldNameValue;
+            XmlNode functionnameNode = currentStepNode.SelectSingleNode("functionname");        /* <functionname> node */
+            functionnameNode.InnerText = stepFunctionNameValue;
+            /* Replace <parameterlist> node */
+            XmlNode parameterlistNode = currentStepNode.SelectSingleNode("parameterlist");
+            currentStepNode.ReplaceChild(stepParamListValue.CurrentParameterListNode, parameterlistNode);
+            XmlNode limittypeNode = currentStepNode.SelectSingleNode("limittype");          /* <limittype> node */
             limittypeNode.InnerText = stepLimitTypeValue;
             /* Replace <spec> node */
             XmlNode specNode = currentStepNode.SelectSingleNode("spec");

@@ -31,10 +31,10 @@ namespace Amphenol.Instruments.Keysight
         public struct LimitLineSegment
         {
             public uint type;      /* the type of the n-th line. 0 : Off, 1 : Upper limit line, 2 : Lower limit line */
-            public string startPointHAxisValue;    /* MUST use scientific notation, e.g. 1.5e9 */
-            public string endPointHAxisValue;      /* MUST use scientific notation */
-            public string startPointVAxisValue;    /* MUST be numeric format */
-            public string endPointVAxisValue;      /* MUST be numeric format */
+            public string startPointHaxisValue;    /* MUST use scientific notation, e.g. 1.5e9 */
+            public string endPointHaxisValue;      /* MUST use scientific notation */
+            public string startPointVaxisValue;     /* MUST be numeric format */
+            public string endPointVaxisValue;      /* MUST be numeric format */
         }
         public int SetLimitTable(uint channelNum, uint numberOfLineSegments, List<LimitLineSegment> segments)
         {
@@ -51,10 +51,10 @@ namespace Amphenol.Instruments.Keysight
             for (int n = 0; n < segments.Count; ++n)
             {
                 command += (segments[n].type + ", " + 
-                            segments[n].startPointHAxisValue + ", " + 
-                            segments[n].endPointHAxisValue + ", " + 
-                            segments[n].startPointVAxisValue + ", " + 
-                            segments[n].endPointVAxisValue);
+                            segments[n].startPointHaxisValue + ", " + 
+                            segments[n].endPointHaxisValue + ", " + 
+                            segments[n].startPointVaxisValue + ", " + 
+                            segments[n].endPointVaxisValue);
                 if (n == (segments.Count-1))
                 {
                     command += "\n";

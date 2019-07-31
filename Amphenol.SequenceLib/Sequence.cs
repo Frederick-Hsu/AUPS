@@ -99,7 +99,9 @@ namespace Amphenol.SequenceLib
                                       parameters,
                                       "String",
                                       spec,
-                                      SeqXml);
+                                      SeqXml,
+                                      false,
+                                      "");
             XmlNode stepNode = dummyStep.CurrentStepNode;
 
             /* Create a new <block> node */

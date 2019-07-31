@@ -39,10 +39,10 @@ namespace Amphenol.Instruments.Keysight
         }
 
         /* :CALC2:PAR3:DEF S12 */
-        public int SelectMeasurementParameterFor(int channelNum, int traceNum, string measurementParameter = "S11")
+        public int SelectMeasurementSParameterFor(int channelNum, int traceNum, string measurementSParameter = "S11")
         {
             int errorno, count;
-            string command = ":CALCulate" + channelNum + ":PARameter" + traceNum + ":DEFine " + measurementParameter + "\n";
+            string command = ":CALCulate" + channelNum + ":PARameter" + traceNum + ":DEFine " + measurementSParameter + "\n";
 
             errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
             if (errorno != visa32.VI_SUCCESS)
@@ -54,7 +54,7 @@ namespace Amphenol.Instruments.Keysight
         }
 
         /* :CAL2:PAR3:DEF? */
-        public int QueryMeasurementParameterFor(int channelNum, int traceNum, out string measurementParameter)
+        public int QueryMeasurementSParameterFor(int channelNum, int traceNum, out string measurementParameter)
         {
             int errorno, count;
             string command = ":CALCulate" + channelNum + ":PARameter" + traceNum + ":DEFine?\n";

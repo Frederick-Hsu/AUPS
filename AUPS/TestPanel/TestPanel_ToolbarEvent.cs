@@ -73,6 +73,16 @@ namespace Amphenol.AUPS
             textBoxStepNo.Text = step.StepNum;
             textBoxStepName.Text = step.StepName;
             textBoxStepDescription.Text = step.StepDescription;
+            checkBoxStepFieldEnabled.Checked = step.StepFieldEnabled;
+            if (true == checkBoxStepFieldEnabled.Checked)
+            {
+                checkBoxStepFieldEnabled.Text = "Enabled";
+            }
+            else
+            {
+                checkBoxStepFieldEnabled.Text = "Disabled";
+            }
+            textBoxStepFieldName.Text = step.StepFieldName;
 
             textBoxTestFunctionName.Text = step.StepFunctionName;
             if (step.StepParamList != null)
