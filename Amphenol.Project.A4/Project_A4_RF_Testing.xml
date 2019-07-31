@@ -677,9 +677,9 @@
       </parameterlist>
       <limittype>Numerical</limittype>
       <spec>
-        <limit>1.570e9</limit>
-        <limit>1.573e9</limit>
-        <limit>1.580e9</limit>
+        <limit>1.500e9</limit>
+        <limit>1.553e9</limit>
+        <limit>1.600e9</limit>
       </spec>
     </step>
   </block>
@@ -874,9 +874,9 @@
       </parameterlist>
       <limittype>Numerical</limittype>
       <spec>
-        <limit>1.620e9</limit>
+        <limit>1.600e9</limit>
         <limit>1.628e9</limit>
-        <limit>1.630e9</limit>
+        <limit>1.700e9</limit>
       </spec>
     </step>
   </block>
@@ -1478,7 +1478,7 @@
   </block>
   <block>
     <blocknum>B9</blocknum>
-    <blockname>Measure Channel 6</blockname>
+    <blockname>Measure channel 6</blockname>
     <step>
       <stepnum>9.1</stepnum>
       <stepname>Configure the trace mode for channel 6</stepname>
@@ -1673,6 +1673,30 @@
         <limit>2.45e9</limit>
         <limit>2.50e9</limit>
         <limit>2.55e9</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B10</blocknum>
+    <blockname>Save test results into PostgreSQL database</blockname>
+    <step>
+      <stepnum>10.1</stepnum>
+      <stepname>Configure the PostgreSQL database paramters in remote server.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConnectAndStoreTestDataIntoPostgresqlDatabase</functionname>
+      <parameterlist>
+        <parameter>192.168.30.112</parameter>
+        <parameter>amphenol_project_a4</parameter>
+        <parameter>test_results</parameter>
+        <parameter>test_xml_log</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
       </spec>
     </step>
   </block>
