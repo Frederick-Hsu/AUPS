@@ -44,7 +44,7 @@ namespace AUPS.Tools.Postgresql_Database_Tool
                 return;
             }
             postgresql = new PostgresqlDatabase(serverIPAddress, databaseName, userName, password);
-            if (postgresql.ConnectAndOpenDatabase() == ConnectionState.Closed)
+            if (postgresql.ConnectAndOpenDatabase() == ConnectionState.Open)
             {
                 buttonDisconnect.Enabled = true;
                 buttonDisconnect.Visible = true;
