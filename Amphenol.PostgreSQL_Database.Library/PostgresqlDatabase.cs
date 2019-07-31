@@ -39,6 +39,7 @@ namespace Amphenol.PostgreSQL_Database.Library
             try
             {
                 psqlConnection = new NpgsqlConnection(connectionStr);
+                psqlConnection.Open();
             }
             catch (NpgsqlException exception)
             {
