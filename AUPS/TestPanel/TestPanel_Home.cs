@@ -38,7 +38,10 @@ namespace Amphenol.AUPS
 
             listViewTestItems.Items.Clear();        /* Clean up all old test steps */
             string serialnumber = textBoxSerialNum.Text;        /* Get the serial number for current DUT */
+            if (serialnumber == "")
+                return;
 
+            testSeq.Refresh();
             Font font = new Font("Microsoft Sans Serif", (float)11, System.Drawing.FontStyle.Regular);
             PointF pt = new PointF(progressBarTestProgress.Width / 2 - 10, progressBarTestProgress.Height / 2 - 10);
             foreach (TestBlock block in testSeq.TestBlockList)
@@ -54,7 +57,7 @@ namespace Amphenol.AUPS
                     stepSubItems[0] = step.StepNum;
                     stepSubItems[1] = step.StepName;
                     stepSubItems[2] = step.StepConclusion.Status;
-                    stepSubItems[3] = step.StepSpec.Result;
+                    // stepSubItems[3] = step.StepSpec.Result;
                     ListViewItem lvi = new ListViewItem(stepSubItems);
                     listViewTestItems.Items.Add(lvi);   /* Display current step in the ListView box */
 
@@ -68,8 +71,10 @@ namespace Amphenol.AUPS
                         labelIndicator.ForeColor = System.Drawing.Color.Red;   
                         listViewTestItems.Items[index - 1].ForeColor = System.Drawing.Color.Red;
 
-                        SaveTestRecord();
+                        SaveTestRecord("FAIL");
                         exitFlag = true;
+
+                        textBoxSerialNum.SelectAll();
                         return;
                     }
                     else
@@ -81,12 +86,14 @@ namespace Amphenol.AUPS
 
             labelIndicator.Text = "PASS";
             labelIndicator.ForeColor = System.Drawing.Color.Green;
-            SaveTestRecord();
+            SaveTestRecord("PASS");
             exitFlag = true;
+
+            textBoxSerialNum.SelectAll();
             return;
         }
 
-        private void SaveTestRecord()
+        private void SaveTestRecord(string finalConclusion)
         {
             string timestamp = System.DateTime.Now.ToString("yyyyMMddHHmmss");
             string sn = textBoxSerialNum.Text;
@@ -95,6 +102,8 @@ namespace Amphenol.AUPS
             string recordFileName = currDir + "\\" + sn + "_" + timestamp + ".xml";
 
             testSeq.SaveAsTestRecord(recordFileName);
+            testSeq.StoreTestResultsIntoPostgresqlDatabase(sn, finalConclusion);
+            testSeq.StoreTestXmlLogIntoPostgresqlDatabase(sn, finalConclusion);
         }
 
 #if false

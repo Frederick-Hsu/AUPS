@@ -59,6 +59,10 @@
     <Compile Include="TestStep.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Amphenol.PostgreSQL_Database.Library\Amphenol.PostgreSQL_Database.Library.csproj">
+      <Project>{1d468d57-2220-4517-9384-1ac67119a48b}</Project>
+      <Name>Amphenol.PostgreSQL_Database.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Amphenol.Project.A4\Amphenol.Project.A4.csproj">
       <Project>{251f6ad2-5656-4307-836e-80026c66eedb}</Project>
       <Name>Amphenol.Project.A4</Name>

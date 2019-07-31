@@ -96,6 +96,12 @@ namespace Amphenol.Project.A4
                 case "QueryLimitTestConclusion":
                     success = QueryLimitTestConclusion(stepParameters, out result, out status, out errorCode, out errorDesc);
                     break;
+                case "RetrieveMarkerSearchStimulusResult":
+                    success = RetrieveMarkerSearchStimulusResult(stepParameters, stepLimits, out result, out status, out errorCode, out errorDesc);
+                    break;
+                case "ConnectAndStoreTestDataIntoPostgresqlDatabase":
+                    success = ConnectAndStoreTestDataIntoPostgresqlDatabase(stepParameters, out result, out status, out errorCode, out errorDesc);
+                    break;
             }
             stepResult = result;
             stepStatus = status;
@@ -344,6 +350,21 @@ namespace Amphenol.Project.A4
             {
                 "Query the final conclusion of limit test, PASS or FAIL?",
                 "Channel number you want to query, range : 1 ~ 9"
+            }));
+            testFnctInfo.Add("RetrieveMarkerSearchStimulusResult", new List<string>(new string[]
+            {
+                "Retrieve the frequency measured at the marker position, after performed target marker search.",
+                "Channel number, range : 1 ~ 9",
+                "Trace number, range : 1 ~ 9",
+                "Marker number on which you want to perform marker search, range : 1 ~ 9"
+            }));
+            testFnctInfo.Add("ConnectAndStoreTestDataIntoPostgresqlDatabase", new List<string>(new string[]
+            {
+                "Try to connect with PostgreSQL database server and open it.",
+                "The database server's IP address where your PostgreSQL database locates",
+                "Database name",
+                "The table name into which you want to store the test results",
+                "The table name into which you want to store the XML test log file"
             }));
             return testFnctInfo;
         }

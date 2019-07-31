@@ -20,7 +20,22 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.3</stepnum>
+      <stepnum>1.1.1</stepnum>
+      <stepname>Preset the network analyzer</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>PresetNetworkAnalyzerWindowLayoutDisplay</functionname>
+      <parameterlist />
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.2</stepnum>
       <stepname>Configure the channel display mode</stepname>
       <stepdescription>Select the window layout for the network analyzer front panel.</stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
@@ -36,7 +51,7 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.4</stepnum>
+      <stepnum>1.3</stepnum>
       <stepname>Allocate 1 traces for channel 1.</stepname>
       <stepdescription>
       </stepdescription>
@@ -54,7 +69,7 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.5</stepnum>
+      <stepnum>1.4</stepnum>
       <stepname>Configure the trace graph layout for channel 1.</stepname>
       <stepdescription>Trace graph layout : D1</stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
@@ -71,7 +86,7 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.5.1</stepnum>
+      <stepnum>1.5</stepnum>
       <stepname>Setup the trace S-Parameter and data format for Channel1.Trace1</stepname>
       <stepdescription>S-Parameter : S22, Data format : MLOG</stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
@@ -125,7 +140,7 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.7.1</stepnum>
+      <stepnum>1.8</stepnum>
       <stepname>Setup the trace S-Parameter and data format for Channel2.Trace1</stepname>
       <stepdescription>S-Parameter : S33, Data format : SMITH</stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
@@ -144,7 +159,7 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.8</stepnum>
+      <stepnum>1.9</stepnum>
       <stepname>Setup the sweep frequency range for Channel1.Trace1</stepname>
       <stepdescription>Start freq.: 500MHz, Stop freq.: 3GHz</stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
@@ -163,6 +178,393 @@
     </step>
     <step>
       <stepnum>1.9</stepnum>
+      <stepname>Max Channel1.Trace1 ON display</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>MaximizeOnOffChannelTraceDisplay</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>ON</parameter>
+        <parameter>1</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.10</stepnum>
+      <stepname>Set up the sweep frequency range for channel2.Trace1</stepname>
+      <stepdescription>Start freq: 1.8GHz, Stop freq.: 3GHz</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigSweepFreqRange</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1.8e9</parameter>
+        <parameter>3e9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>1.11</stepnum>
+      <stepname>Configure the trace display scale for Channel2.Trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureChannelTraceDisplayScale</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>10</parameter>
+        <parameter>2.0</parameter>
+        <parameter>5</parameter>
+        <parameter>-10</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B2</blocknum>
+    <blockname>Set up the test limits and mask line</blockname>
+    <step>
+      <stepnum>2.1</stepnum>
+      <stepname>Change the channel display layout</stepname>
+      <stepdescription>Channel display layout : D1_2</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigWindowDisplayLayout</functionname>
+      <parameterlist>
+        <parameter>D1_2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.2</stepnum>
+      <stepname>Maximize the window 2.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>MaximizeOnOffChannelTraceDisplay</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>ON</parameter>
+        <parameter>1</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.3</stepnum>
+      <stepname>Change the sweep frequency range for channel 2.</stepname>
+      <stepdescription>freq. range : 500MHz to 3GHz</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigSweepFreqRange</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1.4e9</parameter>
+        <parameter>2.6e9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.4</stepnum>
+      <stepname>Perform target marker search, plot the mask line</stepname>
+      <stepdescription>Target value : -10dB</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>PlotMaskLineForA4</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>RTARget</parameter>
+        <parameter>-10.00</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.5</stepnum>
+      <stepname>Enable the limit test feature, and show PASS/FAIL indicator on the screen</stepname>
+      <stepdescription>Turn on limit test function</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>EnableOnOffLimitTestFunction</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.6</stepnum>
+      <stepname>Save the mask limit line into the local disk</stepname>
+      <stepdescription>.csv file name : D:\A4_Mask_Limit_Line.csv</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>SaveMaskLimitLineIntoCsvFileInLocalDisk</functionname>
+      <parameterlist>
+        <parameter>D:\A4_Mask_Limit_Line.csv</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.7</stepnum>
+      <stepname>Clean up the mask limit line</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>CleanUpMaskLimitLine</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.8</stepnum>
+      <stepname>Load the mask limit line from .csv file in local disk</stepname>
+      <stepdescription>.csv file name : D:\A4_Mask_Limit_Line.csv</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>LoadMaskLimitLineFromCsvFileInLocalDisk</functionname>
+      <parameterlist>
+        <parameter>D:\A4_Mask_Limit_Line.csv</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>2.9</stepnum>
+      <stepname>Query the final conclusion of limit test.</stepname>
+      <stepdescription>on channel 2</stepdescription>
+      <stepfieldenabled>true</stepfieldenabled>
+      <stepfieldname>limit_test_conclusion</stepfieldname>
+      <functionname>QueryLimitTestConclusion</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>PASS</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B3</blocknum>
+    <blockname>Measure the frequencies at target marker positions</blockname>
+    <step>
+      <stepnum>3.1</stepnum>
+      <stepname>Change the window layout to separate the trace in multiple channels.</stepname>
+      <stepdescription>window layout : D123_456</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigWindowDisplayLayout</functionname>
+      <parameterlist>
+        <parameter>D123_456</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>3.2</stepnum>
+      <stepname>Hide the right-hand menu</stepname>
+      <stepdescription>Display OFF the soft key to enlarge the window size.</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ShowHideSoftkeyLabel</functionname>
+      <parameterlist>
+        <parameter>OFF</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>3.3</stepnum>
+      <stepname>Clear the mask limit line for channel 2.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>CleanUpMaskLimitLine</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>3.4</stepnum>
+      <stepname>Remove the existed old marker in channel 1.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ShowHideRegularMarker</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>OFF</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>3.5</stepnum>
+      <stepname>Remove the existed old marker in channel 2.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ShowHideRegularMarker</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>OFF</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B4</blocknum>
+    <blockname>Measure Channel 1</blockname>
+    <step>
+      <stepnum>4.1</stepnum>
+      <stepname>Configure the trace mode for channel 1.</stepname>
+      <stepdescription>1 trace per channel</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>AllocateTraceAmountForChannel</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>4.2</stepnum>
+      <stepname>Configure the trace graph in Channel 1</stepname>
+      <stepdescription>trace graph : D1</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigTraceDisplayModeInChannel</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>D1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>4.3</stepnum>
+      <stepname>Select the trace S-Parameter and data format</stepname>
+      <stepdescription>S-Parameter : S22;  Data format: </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureMeasurementSParameterAndFormat</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>S22</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>4.4</stepnum>
+      <stepname>Setup the sweep frequency range for channel 1.</stepname>
+      <stepdescription>Freq. range : 1.4GHz ~ 1.6GHz</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigSweepFreqRange</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1.4e9</parameter>
+        <parameter>1.6e9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>4.5</stepnum>
       <stepname>Configure the trace display scale for Channel1.Trace1</stepname>
       <stepdescription>
       </stepdescription>
@@ -184,17 +586,16 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.20</stepnum>
-      <stepname>Max Channel1.Trace1 ON display</stepname>
-      <stepdescription>
-      </stepdescription>
+      <stepnum>4.6</stepnum>
+      <stepname>Open the marker search mode</stepname>
+      <stepdescription>Display ON the marker 1 on Channel1.Trace1.</stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
       <stepfieldname>
       </stepfieldname>
-      <functionname>MaximizeOnOffChannelTraceDisplay</functionname>
+      <functionname>ShowHideRegularMarker</functionname>
       <parameterlist>
         <parameter>1</parameter>
-        <parameter>ON</parameter>
+        <parameter>1</parameter>
         <parameter>1</parameter>
         <parameter>ON</parameter>
       </parameterlist>
@@ -204,17 +605,152 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.21</stepnum>
-      <stepname>Set up the sweep frequency range for channel2.Trace1</stepname>
-      <stepdescription>Start freq: 1.8GHz, Stop freq.: 3GHz</stepdescription>
+      <stepnum>4.7</stepnum>
+      <stepname>Specify the target for marker search</stepname>
+      <stepdescription>Target value : -10.0dB, data format : Log Magnitude</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TargetMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>TARGet</parameter>
+        <parameter>-10.00</parameter>
+        <parameter>BOTH</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>4.8</stepnum>
+      <stepname>Turn ON the marker search tracking feature</stepname>
+      <stepdescription>Tracking feature : ON</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TurnOnOffMarkerSearchTrackingFeature</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>4.9</stepnum>
+      <stepname>Perform marker search</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>PerformMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>4.10</stepnum>
+      <stepname>Retrieve the frequency value at marker position in channel1.trace1</stepname>
+      <stepdescription>After performed target marker search, search the target level : -10dB</stepdescription>
+      <stepfieldenabled>true</stepfieldenabled>
+      <stepfieldname>marker_target_freq1</stepfieldname>
+      <functionname>RetrieveMarkerSearchStimulusResult</functionname>
+      <parameterlist>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>1.500e9</limit>
+        <limit>1.553e9</limit>
+        <limit>1.600e9</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B5</blocknum>
+    <blockname>Measure Channel 2</blockname>
+    <step>
+      <stepnum>5.1</stepnum>
+      <stepname>Configure the trace mode for channel 2.</stepname>
+      <stepdescription>1 trace per channel</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>AllocateTraceAmountForChannel</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>5.2</stepnum>
+      <stepname>Configure the trace graph in channel 2.</stepname>
+      <stepdescription>trace graph layout : D1</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigTraceDisplayModeInChannel</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>D1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>5.3</stepnum>
+      <stepname>Select the trace S-Parameter and format for channel2.trace1</stepname>
+      <stepdescription>S-Parameter : S22, Format : MLOG</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureMeasurementSParameterAndFormat</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>S22</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>5.4</stepnum>
+      <stepname>Set-up the sweep frequency range for channel 2.</stepname>
+      <stepdescription>Freq. range : 1.6GHz ~ 1.75GHz</stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
       <stepfieldname>
       </stepfieldname>
       <functionname>ConfigSweepFreqRange</functionname>
       <parameterlist>
         <parameter>2</parameter>
-        <parameter>1.8e9</parameter>
-        <parameter>3e9</parameter>
+        <parameter>1.6e9</parameter>
+        <parameter>1.75e9</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
@@ -222,8 +758,8 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.22</stepnum>
-      <stepname>Configure the trace display scale for Channel2.Trace1</stepname>
+      <stepnum>5.5</stepnum>
+      <stepname>Configure the trace display scale for channel2.trace1</stepname>
       <stepdescription>
       </stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
@@ -244,36 +780,214 @@
       </spec>
     </step>
     <step>
-      <stepnum>1.23</stepnum>
-      <stepname>Change the channel display mode to D12</stepname>
+      <stepnum>5.6</stepnum>
+      <stepname>Enable the marker search mode</stepname>
       <stepdescription>
       </stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
       <stepfieldname>
       </stepfieldname>
-      <functionname>ConfigWindowDisplayLayout</functionname>
+      <functionname>ShowHideRegularMarker</functionname>
       <parameterlist>
-        <parameter>D12</parameter>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>ON</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
         <limit>OK</limit>
       </spec>
     </step>
+    <step>
+      <stepnum>5.7</stepnum>
+      <stepname>Specify the target value for marker search</stepname>
+      <stepdescription>target value : -10dB in MLOG format</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TargetMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>TARGET</parameter>
+        <parameter>-10</parameter>
+        <parameter>BOTH</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>5.8</stepnum>
+      <stepname>Enable the marker search tracking feature</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TurnOnOffMarkerSearchTrackingFeature</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>5.9</stepnum>
+      <stepname>Perform the target marker search</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>PerformMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>5.10</stepnum>
+      <stepname>Retrieve the frequency value at marker position in channel2.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>true</stepfieldenabled>
+      <stepfieldname>marker_target_freq2</stepfieldname>
+      <functionname>RetrieveMarkerSearchStimulusResult</functionname>
+      <parameterlist>
+        <parameter>2</parameter>
+        <parameter>1</parameter>
+        <parameter>2</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>1.600e9</limit>
+        <limit>1.628e9</limit>
+        <limit>1.700e9</limit>
+      </spec>
+    </step>
   </block>
   <block>
-    <blocknum>B2</blocknum>
-    <blockname>Set up the test limits and mask line</blockname>
+    <blocknum>B6</blocknum>
+    <blockname>Measure Channel 3</blockname>
     <step>
-      <stepnum>2.1</stepnum>
+      <stepnum>6.1</stepnum>
+      <stepname>Configure the trace mode for channel 3.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>AllocateTraceAmountForChannel</functionname>
+      <parameterlist>
+        <parameter>3</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>6.2</stepnum>
+      <stepname>Configure the trace graph layout in channel 3.</stepname>
+      <stepdescription>Trace graph layout : D1</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigTraceDisplayModeInChannel</functionname>
+      <parameterlist>
+        <parameter>3</parameter>
+        <parameter>D1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>6.3</stepnum>
+      <stepname>Select the trace S-Parameter and format</stepname>
+      <stepdescription>S-Parameter : S22, Format : MLOG</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureMeasurementSParameterAndFormat</functionname>
+      <parameterlist>
+        <parameter>3</parameter>
+        <parameter>1</parameter>
+        <parameter>S22</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>6.4</stepnum>
+      <stepname>Setup the sweep frequency range for channel 3.</stepname>
+      <stepdescription>Freq. range : 1.75GHz ~ 1.95GHz</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigSweepFreqRange</functionname>
+      <parameterlist>
+        <parameter>3</parameter>
+        <parameter>1.75e9</parameter>
+        <parameter>1.95e9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>6.5</stepnum>
+      <stepname>Configure the trace display scale for channel3.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureChannelTraceDisplayScale</functionname>
+      <parameterlist>
+        <parameter>3</parameter>
+        <parameter>1</parameter>
+        <parameter>10</parameter>
+        <parameter>2.0</parameter>
+        <parameter>5</parameter>
+        <parameter>-10</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>6.6</stepnum>
       <stepname>Open the marker search mode</stepname>
-      <stepdescription>Display ON the marker 1 on Channel1.Trace1.</stepdescription>
+      <stepdescription>
+      </stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
       <stepfieldname>
       </stepfieldname>
       <functionname>ShowHideRegularMarker</functionname>
       <parameterlist>
-        <parameter>1</parameter>
+        <parameter>3</parameter>
         <parameter>1</parameter>
         <parameter>3</parameter>
         <parameter>ON</parameter>
@@ -284,17 +998,216 @@
       </spec>
     </step>
     <step>
-      <stepnum>2.2</stepnum>
-      <stepname>Specify the target for marker search</stepname>
-      <stepdescription>Target value : -10.0dB, data format : Log Magnitude</stepdescription>
+      <stepnum>6.7</stepnum>
+      <stepname>Specify the target value for marker search</stepname>
+      <stepdescription>target value : -10dB in MLOG format</stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
       <stepfieldname>
       </stepfieldname>
       <functionname>TargetMarkerSearch</functionname>
       <parameterlist>
-        <parameter>1</parameter>
+        <parameter>3</parameter>
         <parameter>1</parameter>
         <parameter>3</parameter>
+        <parameter>TARGET</parameter>
+        <parameter>-10.0</parameter>
+        <parameter>BOTH</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>6.8</stepnum>
+      <stepname>Enable the marker search tracking feature</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TurnOnOffMarkerSearchTrackingFeature</functionname>
+      <parameterlist>
+        <parameter>3</parameter>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>6.9</stepnum>
+      <stepname>Perform the target marker search</stepname>
+      <stepdescription>at target value : -10.0dB</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>PerformMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>3</parameter>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>6.10</stepnum>
+      <stepname>Retrieve the frequency value at marker position in channel3.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>true</stepfieldenabled>
+      <stepfieldname>marker_target_freq3</stepfieldname>
+      <functionname>RetrieveMarkerSearchStimulusResult</functionname>
+      <parameterlist>
+        <parameter>3</parameter>
+        <parameter>1</parameter>
+        <parameter>3</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>1.85e9</limit>
+        <limit>1.90e9</limit>
+        <limit>1.95E9</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B7</blocknum>
+    <blockname>Measure Channel 4</blockname>
+    <step>
+      <stepnum>7.1</stepnum>
+      <stepname>Configure the trace mode for channel 4.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>AllocateTraceAmountForChannel</functionname>
+      <parameterlist>
+        <parameter>4</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.2</stepnum>
+      <stepname>Configure the trace graph layout in channel 4.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigTraceDisplayModeInChannel</functionname>
+      <parameterlist>
+        <parameter>4</parameter>
+        <parameter>D1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.3</stepnum>
+      <stepname>Select the trace S-Parameter and format</stepname>
+      <stepdescription>S-Parameter : S22, Format : MLOG</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureMeasurementSParameterAndFormat</functionname>
+      <parameterlist>
+        <parameter>4</parameter>
+        <parameter>1</parameter>
+        <parameter>S22</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.4</stepnum>
+      <stepname>Setup the sweep frequency range for channel 4.</stepname>
+      <stepdescription>Freq. range : 1.95GHz ~ 2.20GHz</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigSweepFreqRange</functionname>
+      <parameterlist>
+        <parameter>4</parameter>
+        <parameter>1.95E9</parameter>
+        <parameter>2.20e9</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.5</stepnum>
+      <stepname>Configure the trace display scale for channel4.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureChannelTraceDisplayScale</functionname>
+      <parameterlist>
+        <parameter>4</parameter>
+        <parameter>1</parameter>
+        <parameter>10</parameter>
+        <parameter>2.0</parameter>
+        <parameter>5</parameter>
+        <parameter>-10.00</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.6</stepnum>
+      <stepname>Open the target marker search mode</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ShowHideRegularMarker</functionname>
+      <parameterlist>
+        <parameter>4</parameter>
+        <parameter>1</parameter>
+        <parameter>4</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>7.7</stepnum>
+      <stepname>Specify the target value for marker search</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TargetMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>4</parameter>
+        <parameter>1</parameter>
+        <parameter>4</parameter>
         <parameter>TARGet</parameter>
         <parameter>-10.00</parameter>
         <parameter>BOTH</parameter>
@@ -305,17 +1218,18 @@
       </spec>
     </step>
     <step>
-      <stepnum>2.3</stepnum>
-      <stepname>Turn ON the marker search tracking feature</stepname>
-      <stepdescription>Tracking feature : ON</stepdescription>
+      <stepnum>7.8</stepnum>
+      <stepname>Enable the marker search tracking feature</stepname>
+      <stepdescription>
+      </stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
       <stepfieldname>
       </stepfieldname>
       <functionname>TurnOnOffMarkerSearchTrackingFeature</functionname>
       <parameterlist>
+        <parameter>4</parameter>
         <parameter>1</parameter>
-        <parameter>1</parameter>
-        <parameter>3</parameter>
+        <parameter>4</parameter>
         <parameter>ON</parameter>
       </parameterlist>
       <limittype>String</limittype>
@@ -324,8 +1238,8 @@
       </spec>
     </step>
     <step>
-      <stepnum>2.4</stepnum>
-      <stepname>Perform marker search</stepname>
+      <stepnum>7.9</stepnum>
+      <stepname>Perform the target marker search</stepname>
       <stepdescription>
       </stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
@@ -333,9 +1247,9 @@
       </stepfieldname>
       <functionname>PerformMarkerSearch</functionname>
       <parameterlist>
+        <parameter>4</parameter>
         <parameter>1</parameter>
-        <parameter>1</parameter>
-        <parameter>3</parameter>
+        <parameter>4</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
@@ -343,56 +1257,41 @@
       </spec>
     </step>
     <step>
-      <stepnum>2.5</stepnum>
-      <stepname>Retrieve the results, after performed marker search.</stepname>
+      <stepnum>7.10</stepnum>
+      <stepname>Measure the frequency value at marker position in channel4.trace1</stepname>
       <stepdescription>
       </stepdescription>
-      <stepfieldenabled>false</stepfieldenabled>
-      <stepfieldname>
-      </stepfieldname>
-      <functionname>RetrieveMarkerSearchResults</functionname>
+      <stepfieldenabled>true</stepfieldenabled>
+      <stepfieldname>marker_target_freq4</stepfieldname>
+      <functionname>RetrieveMarkerSearchStimulusResult</functionname>
       <parameterlist>
+        <parameter>4</parameter>
         <parameter>1</parameter>
-        <parameter>1</parameter>
-        <parameter>3</parameter>
+        <parameter>4</parameter>
       </parameterlist>
       <limittype>Numerical</limittype>
       <spec>
-        <limit>-10.20</limit>
-        <limit>-10.00</limit>
-        <limit>-9.80</limit>
+        <limit>2.00e9</limit>
+        <limit>2.05e9</limit>
+        <limit>2.10e9</limit>
       </spec>
     </step>
+  </block>
+  <block>
+    <blocknum>B8</blocknum>
+    <blockname>Measure Channel 5</blockname>
     <step>
-      <stepnum>2.6</stepnum>
-      <stepname>Change the channel display layout</stepname>
-      <stepdescription>Channel display layout : D1_2</stepdescription>
-      <stepfieldenabled>false</stepfieldenabled>
-      <stepfieldname>
-      </stepfieldname>
-      <functionname>ConfigWindowDisplayLayout</functionname>
-      <parameterlist>
-        <parameter>D1_2</parameter>
-      </parameterlist>
-      <limittype>String</limittype>
-      <spec>
-        <limit>OK</limit>
-      </spec>
-    </step>
-    <step>
-      <stepnum>2.6.1</stepnum>
-      <stepname>Maximize the window 2.</stepname>
+      <stepnum>8.1</stepnum>
+      <stepname>Configure the trace mode for channel 5</stepname>
       <stepdescription>
       </stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
       <stepfieldname>
       </stepfieldname>
-      <functionname>MaximizeOnOffChannelTraceDisplay</functionname>
+      <functionname>AllocateTraceAmountForChannel</functionname>
       <parameterlist>
-        <parameter>2</parameter>
-        <parameter>ON</parameter>
+        <parameter>5</parameter>
         <parameter>1</parameter>
-        <parameter>ON</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
@@ -400,17 +1299,54 @@
       </spec>
     </step>
     <step>
-      <stepnum>2.6.2</stepnum>
-      <stepname>Change the sweep frequency range for channel 2.</stepname>
-      <stepdescription>freq. range : 500MHz to 3GHz</stepdescription>
+      <stepnum>8.2</stepnum>
+      <stepname>Configure the trace graphy layout in channel 5</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigTraceDisplayModeInChannel</functionname>
+      <parameterlist>
+        <parameter>5</parameter>
+        <parameter>D1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.3</stepnum>
+      <stepname>Select the S-Parameter and format</stepname>
+      <stepdescription>S-Parameter : S22, Format : MLOG</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureMeasurementSParameterAndFormat</functionname>
+      <parameterlist>
+        <parameter>5</parameter>
+        <parameter>1</parameter>
+        <parameter>S22</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.4</stepnum>
+      <stepname>Setup the sweep frequency range for channel 5.</stepname>
+      <stepdescription>Freq. range : 2.20GHz ~ 2.40GHz</stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
       <stepfieldname>
       </stepfieldname>
       <functionname>ConfigSweepFreqRange</functionname>
       <parameterlist>
-        <parameter>2</parameter>
-        <parameter>1.4e9</parameter>
-        <parameter>2.6e9</parameter>
+        <parameter>5</parameter>
+        <parameter>2.20e9</parameter>
+        <parameter>2.40e9</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>
@@ -418,19 +1354,345 @@
       </spec>
     </step>
     <step>
-      <stepnum>2.7</stepnum>
-      <stepname>Perform target marker search, plot the mask line</stepname>
-      <stepdescription>Target value : -10dB</stepdescription>
+      <stepnum>8.5</stepnum>
+      <stepname>Configure the trace display scale for channel5.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
       <stepfieldenabled>false</stepfieldenabled>
       <stepfieldname>
       </stepfieldname>
-      <functionname>PlotMaskLineForA4</functionname>
+      <functionname>ConfigureChannelTraceDisplayScale</functionname>
       <parameterlist>
-        <parameter>2</parameter>
+        <parameter>5</parameter>
         <parameter>1</parameter>
-        <parameter>2</parameter>
-        <parameter>RTARget</parameter>
+        <parameter>10</parameter>
+        <parameter>2.0</parameter>
+        <parameter>5</parameter>
         <parameter>-10.00</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.6</stepnum>
+      <stepname>Enable the target marker search mode</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ShowHideRegularMarker</functionname>
+      <parameterlist>
+        <parameter>5</parameter>
+        <parameter>1</parameter>
+        <parameter>5</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.7</stepnum>
+      <stepname>Specify the target value for marker search</stepname>
+      <stepdescription>target value : -10.00</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TargetMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>5</parameter>
+        <parameter>1</parameter>
+        <parameter>5</parameter>
+        <parameter>TARGET</parameter>
+        <parameter>-10.00</parameter>
+        <parameter>BOTH</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.8</stepnum>
+      <stepname>Enable the marker search tracking feature</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TurnOnOffMarkerSearchTrackingFeature</functionname>
+      <parameterlist>
+        <parameter>5</parameter>
+        <parameter>1</parameter>
+        <parameter>5</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.9</stepnum>
+      <stepname>Perform the target marker search</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>PerformMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>5</parameter>
+        <parameter>1</parameter>
+        <parameter>5</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>8.10</stepnum>
+      <stepname>Retrieve the frequency value at marker position in channel5.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>true</stepfieldenabled>
+      <stepfieldname>marker_target_freq5</stepfieldname>
+      <functionname>RetrieveMarkerSearchStimulusResult</functionname>
+      <parameterlist>
+        <parameter>5</parameter>
+        <parameter>1</parameter>
+        <parameter>5</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>2.30e9</limit>
+        <limit>2.35e9</limit>
+        <limit>2.40e9</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B9</blocknum>
+    <blockname>Measure channel 6</blockname>
+    <step>
+      <stepnum>9.1</stepnum>
+      <stepname>Configure the trace mode for channel 6</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>AllocateTraceAmountForChannel</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.2</stepnum>
+      <stepname>Configure the trace graph layout in channel 6</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigTraceDisplayModeInChannel</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>D1</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.3</stepnum>
+      <stepname>Select the S-Parameter and format</stepname>
+      <stepdescription>S-Parameter : S22, Format : MLOG</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureMeasurementSParameterAndFormat</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>1</parameter>
+        <parameter>S22</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.4</stepnum>
+      <stepname>Setup the sweep frequency range for channel 6</stepname>
+      <stepdescription>Freq. range : 2.40GHz ~ 2.60GHz</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigSweepFreqRange</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>2.40e9</parameter>
+        <parameter>2.60e9</parameter>
+        <parameter>MLOG</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.5</stepnum>
+      <stepname>Configure the trace display scale for channel6.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConfigureChannelTraceDisplayScale</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>1</parameter>
+        <parameter>10</parameter>
+        <parameter>2</parameter>
+        <parameter>5</parameter>
+        <parameter>-10.0</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.6</stepnum>
+      <stepname>Enable the target marker search mode</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ShowHideRegularMarker</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>1</parameter>
+        <parameter>6</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.7</stepnum>
+      <stepname>Specify the target value for marker search</stepname>
+      <stepdescription>target value : -10.00</stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TargetMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>1</parameter>
+        <parameter>6</parameter>
+        <parameter>TARGET</parameter>
+        <parameter>-10.00</parameter>
+        <parameter>BOTH</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.8</stepnum>
+      <stepname>Enable the marker search tracking feature</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>TurnOnOffMarkerSearchTrackingFeature</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>1</parameter>
+        <parameter>6</parameter>
+        <parameter>ON</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.9</stepnum>
+      <stepname>Perform the target marker search for channel6.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>PerformMarkerSearch</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>1</parameter>
+        <parameter>6</parameter>
+      </parameterlist>
+      <limittype>String</limittype>
+      <spec>
+        <limit>OK</limit>
+      </spec>
+    </step>
+    <step>
+      <stepnum>9.10</stepnum>
+      <stepname>Retrieve the frequency value at marker position in channel6.trace1</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>true</stepfieldenabled>
+      <stepfieldname>marker_target_freq6</stepfieldname>
+      <functionname>RetrieveMarkerSearchStimulusResult</functionname>
+      <parameterlist>
+        <parameter>6</parameter>
+        <parameter>1</parameter>
+        <parameter>6</parameter>
+      </parameterlist>
+      <limittype>Numerical</limittype>
+      <spec>
+        <limit>2.45e9</limit>
+        <limit>2.50e9</limit>
+        <limit>2.55e9</limit>
+      </spec>
+    </step>
+  </block>
+  <block>
+    <blocknum>B10</blocknum>
+    <blockname>Save test results into PostgreSQL database</blockname>
+    <step>
+      <stepnum>10.1</stepnum>
+      <stepname>Configure the PostgreSQL database paramters in remote server.</stepname>
+      <stepdescription>
+      </stepdescription>
+      <stepfieldenabled>false</stepfieldenabled>
+      <stepfieldname>
+      </stepfieldname>
+      <functionname>ConnectAndStoreTestDataIntoPostgresqlDatabase</functionname>
+      <parameterlist>
+        <parameter>192.168.30.112</parameter>
+        <parameter>amphenol_project_a4</parameter>
+        <parameter>test_results</parameter>
+        <parameter>test_xml_log</parameter>
       </parameterlist>
       <limittype>String</limittype>
       <spec>

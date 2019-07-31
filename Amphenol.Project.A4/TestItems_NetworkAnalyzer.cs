@@ -613,6 +613,39 @@ namespace Amphenol.Project.A4
                 return false;
             }
         }
+
+        private static bool RetrieveMarkerSearchStimulusResult(List<string> stepParameters,
+                                                               List<string> stepLimits,
+                                                               out string stepResult,
+                                                               out string stepStatus,
+                                                               out string stepErrorCode,
+                                                               out string stepErrorDesc)
+        {
+            int channelNo = Convert.ToInt32(stepParameters[0]);
+            int traceNo = Convert.ToInt32(stepParameters[1]);
+            int markerNo = Convert.ToInt32(stepParameters[2]);
+            double freq;
+            int successFlag = networkAnalyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(channelNo, traceNo, markerNo, out freq);
+
+            stepResult = freq.ToString();
+            double lower = Convert.ToDouble(stepLimits[0]),
+                   typical = Convert.ToDouble(stepLimits[1]),
+                   upper = Convert.ToDouble(stepLimits[2]);
+            if ((lower < freq) && (freq < upper))
+            {
+                stepStatus = "Pass";
+                stepErrorCode = "";
+                stepErrorDesc = "";
+                return true;
+            }
+            else
+            {
+                stepStatus = "Fail";
+                stepErrorCode = "MRKFREQ";
+                stepErrorDesc = "The frequency measured at the marker position exceeds limitation.";
+                return false;
+            }
+        }
         #endregion
 
         private static bool PlotMaskLineForA4(List<string> stepParameters,
@@ -650,7 +683,7 @@ namespace Amphenol.Project.A4
                 double freq;
                 List<double> magnitude;
                 successFlag = networkAnalyzer.MarkerSearchRetrieveResponseValueAtMarkerPosition(channelNo, traceNo, markerNo, out magnitude);
-                if ((-10.02 < magnitude[0]) && (magnitude[0] < -9.98))    /* Filter the points whose magnitude is not -10.0dB */
+                if ((-10.05 < magnitude[0]) && (magnitude[0] < -9.95))    /* Filter the points whose magnitude is not -10.0dB */
                 {
                     magnitudes.Add(magnitude[0]);
                     successFlag = networkAnalyzer.MarkerSearchRetrieveStimulusValueAtMarkerPosition(channelNo, traceNo, markerNo, out freq);

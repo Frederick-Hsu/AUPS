@@ -44,11 +44,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestItems.cs" />
     <Compile Include="TestItems_NetworkAnalyzer.cs" />
+    <Compile Include="TestItems_PostgresqlDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Amphenol.Instruments\Amphenol.Instruments.csproj">
       <Project>{3589c3eb-f46a-42e6-b7de-9c4471302719}</Project>
       <Name>Amphenol.Instruments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Amphenol.PostgreSQL_Database.Library\Amphenol.PostgreSQL_Database.Library.csproj">
+      <Project>{1d468d57-2220-4517-9384-1ac67119a48b}</Project>
+      <Name>Amphenol.PostgreSQL_Database.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
