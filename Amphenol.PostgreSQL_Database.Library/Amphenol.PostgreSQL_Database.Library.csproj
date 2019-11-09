@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\npgsql\src\Npgsql\Npgsql.csproj">
-      <Project>{1706485e-833b-4d87-9648-5190240379b9}</Project>
+      <Project>{76fc0ae7-bdc8-48c4-b20a-76eecb0d6695}</Project>
       <Name>Npgsql</Name>
     </ProjectReference>
   </ItemGroup>
